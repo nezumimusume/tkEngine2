@@ -2,27 +2,31 @@
 #include "Player.h"
 #include "tkEngine/light/tkDirectionLight.h"
 
-Player::Player()
+void Player::OnDestroy()
 {
-}
-
-
-Player::~Player()
-{
+	DeleteGO(m_skinModelRender);
 }
 bool Player::Start()
 {
-	m_skinModelData.Load(L"modelData/Thethief_H.cmo");
-	m_skinModel.Init(m_skinModelData);
+	//アニメーションクリップのロード。
+	m_animationClip[enAnimationClip_idle].Load(L"animData/idle.tka");
+	m_animationClip[enAnimationClip_run].Load(L"animData/run.tka");
+	m_animationClip[enAnimationClip_walk].Load(L"animData/walk.tka");
+	//ループフラグを設定する。
+	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
+	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
+	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
+	//スキンモデルレンダラーを作成。
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/Thethief_H.cmo", m_animationClip, enAnimationClip_num);
+	
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		20.0,			//半径。 
 		50.0f,			//高さ。
 		m_position		//初期位置。
 	);
-	//アニメーションを初期化。
-	InitAnimation();
-
+	
 	//法線マップをロード。
 	m_normalMapSRV.CreateFromDDSTextureFromFile(L"modelData/Thethief_N.dds");
 	m_specularMapSRV.CreateFromDDSTextureFromFile(L"modelData/Thethief_S.dds");
@@ -31,7 +35,7 @@ bool Player::Start()
 
 	int materialID = 1;
 	//マテリアルIDを設定
-	m_skinModel.FindMaterial([&](auto material) {
+	m_skinModelRender->FindMaterial([&](auto material) {
 		material->SetMaterialID(materialID);
 		if (material->EqualMaterialName(L"bodyMat")) {
 			//体のマテリアル。
@@ -51,21 +55,7 @@ bool Player::Start()
 	m_directionLig->SetLightingMaterialIDGroup(1 << materialID);
 	return true;
 }
-void Player::InitAnimation()
-{
-	//アニメーションクリップのロード。
-	m_animationClip[enAnimationClip_idle].Load(L"animData/idle.tka");
-	m_animationClip[enAnimationClip_run].Load(L"animData/run.tka");
-	m_animationClip[enAnimationClip_walk].Load(L"animData/walk.tka");
-	//ループフラグを設定する。
-	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
-	//アニメーションを初期化。
-	m_animation.Init(m_skinModel, m_animationClip, enAnimationClip_num);
-	//待機アニメーションを流す。
-	m_animation.Play(enAnimationClip_idle);
-}
+
 
 void Player::Move()
 {
@@ -125,7 +115,9 @@ void Player::Update()
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisX, 180.0f);	//3dsMaxで設定されているアニメーションでキャラが回転しているので、補正を入れる。
 	qRot.Multiply(m_rotation, qRot);
-	m_skinModel.Update(m_position, qRot, CVector3::One);
+	m_skinModelRender->SetPosition(m_position);
+	m_skinModelRender->SetRotation(qRot);
+	
 	//キャラには女優ライトを当てる
 	if (m_directionLig) {
 		m_directionLig->SetDirection(MainCamera().GetForward());
@@ -140,7 +132,4 @@ void Player::Update()
 		m_directionLig->SetColor(lightColor);
 	}
 }
-void Player::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc);
-}
+

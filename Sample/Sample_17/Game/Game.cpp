@@ -2,13 +2,9 @@
 #include "Game.h"
 
 
-Game::Game()
+void Game::OnDestroy()
 {
-}
-
-
-Game::~Game()
-{
+	DeleteGO(m_skinModelRender);
 }
 bool Game::Start()
 {
@@ -19,9 +15,10 @@ bool Game::Start()
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
 	
-	//モデルデータをロード。
-	skinModelData.Load(L"modelData/unityChan.cmo");
-	skinModel.Init(skinModelData);
+	//スキンモデルレンダラーを作成。
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	
 	LightManager().SetAmbientLight({ 10.0f, 10.0f, 10.0f });
 	
 	return true;
@@ -39,9 +36,6 @@ void Game::Update()
 	}
 	m_pos.z += Pad(0).GetLStickXF();
 	m_pos.y += Pad(0).GetLStickYF();
-	skinModel.Update(m_pos, CQuaternion::Identity, { 0.1f, 0.1f, 0.1f });
-}
-void Game::Render(CRenderContext& rc)
-{
-	skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	m_skinModelRender->SetPosition(m_pos);
+	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f });
 }

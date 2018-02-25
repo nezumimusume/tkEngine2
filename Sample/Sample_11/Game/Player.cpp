@@ -1,31 +1,19 @@
 #include "stdafx.h"
 #include "Player.h"
 
-
-Player::Player()
+void Player::OnDestroy()
 {
-}
-
-
-Player::~Player()
-{
+	DeleteGO(m_skinModelRender);
 }
 bool Player::Start()
 {
-	m_skinModelData.Load(L"modelData/Thethief_H.cmo");
-	m_skinModel.Init(m_skinModelData);
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		20.0,			//半径。 
 		50.0f,			//高さ。
 		m_position		//初期位置。
 	);
-	//アニメーションを初期化。
-	InitAnimation();
-	return true;
-}
-void Player::InitAnimation()
-{
+	
 	//アニメーションクリップのロード。
 	m_animationClip[enAnimationClip_idle].Load(L"animData/idle.tka");
 	m_animationClip[enAnimationClip_run].Load(L"animData/run.tka");
@@ -34,10 +22,10 @@ void Player::InitAnimation()
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
-	//アニメーションを初期化。
-	m_animation.Init(m_skinModel, m_animationClip, enAnimationClip_num);
-	//待機アニメーションを流す。
-	m_animation.Play(enAnimationClip_idle);
+
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/Thethief_H.cmo", m_animationClip, enAnimationClip_num);
+	return true;
 }
 
 void Player::Move()
@@ -78,9 +66,7 @@ void Player::Update()
 	//ワールド行列を更新。
 	CQuaternion qBias;
 	qBias.SetRotationDeg(CVector3::AxisX, 180.0f);	//3dsMaxで設定されているアニメーションでキャラが回転しているので、補正を入れる。
-	m_skinModel.Update(m_position, qBias, CVector3::One);
+	m_skinModelRender->SetPosition(m_position);
+	m_skinModelRender->SetRotation(qBias);
 }
-void Player::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc);
-}
+

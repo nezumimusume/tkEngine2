@@ -5,16 +5,11 @@
 class Player : public IGameObject
 {
 public:
-	Player();
-	~Player();
-	void Update();
-	void Render(CRenderContext& rc);
-	bool Start();
-private:
-	//アニメーションを初期化。
-	void InitAnimation();
-	//アニメーション制御。
-	void AnimationControl();
+	void Update() override;	
+	bool Start() override;
+	void OnDestroy() override;
+
+
 private:
 	////////////////////////////////////
 	// メンバ変数とか
@@ -26,9 +21,7 @@ private:
 		enAnimationClip_num,	//アニメーションクリップの総数。
 	};
 	CAnimationClip m_animationClip[enAnimationClip_num];	//アニメーションクリップ。
-	CAnimation m_animation;			//アニメーション。
-	CSkinModelData m_skinModelData;	//スキンモデルデータ。
-	CSkinModel m_skinModel;			//スキンモデル。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;	
 	CVector3 m_position = CVector3::Zero;	//座標。
 
 	CCharacterController m_charaCon;		//キャラクターコントローラー。
