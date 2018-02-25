@@ -1,0 +1,5 @@
+.fbx
+.tga
+.png
+.bmp
+.jpg

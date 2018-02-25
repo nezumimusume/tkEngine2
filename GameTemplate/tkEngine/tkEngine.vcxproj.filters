@@ -1,0 +1,587 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\gameObject">
+      <UniqueIdentifier>{c54e8c6f-ea7a-442b-86eb-f64301ae8823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\debug">
+      <UniqueIdentifier>{7b55621c-b4f1-4692-8113-c24f50987cc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{5a0d3e54-4e7b-4bcc-97db-a7a9f8eb8c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\GPUBuffer">
+      <UniqueIdentifier>{ecd55557-a3f4-489a-a99d-640239210339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\GPUView">
+      <UniqueIdentifier>{f144b973-d9e7-4196-ab95-e2cd4a92c795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{544553ca-2056-499c-ab93-0d198bc933cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\math">
+      <UniqueIdentifier>{a6a630a0-afe0-4410-8511-f333c7327ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\policy">
+      <UniqueIdentifier>{2516c515-2e1c-4a2b-8844-4d61bf64639d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resource">
+      <UniqueIdentifier>{6cb7dbe8-116e-4fd7-8541-5e8cb445832e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sound">
+      <UniqueIdentifier>{d9e33434-1e20-4051-b5de-dfcf9bc20883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thread">
+      <UniqueIdentifier>{3afe8e38-fa0c-4799-9ecd-210daabd4f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\timer">
+      <UniqueIdentifier>{0d2904e7-ab42-4d63-94c9-643069947be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{8049c32f-7105-4bbd-bf48-5ac66164be83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\preRender">
+      <UniqueIdentifier>{35c0f556-e446-4cc4-bfeb-bffa57822ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\postEffect">
+      <UniqueIdentifier>{f54b925d-d8dd-4881-ab00-7403308c7b1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\light">
+      <UniqueIdentifier>{ac8ad281-302c-4cba-bbfc-2f3334ddab60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\physics">
+      <UniqueIdentifier>{2c2e5717-6da4-49b7-87fa-c21b3eb8af5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\character">
+      <UniqueIdentifier>{94743b8a-eb4f-474c-b3dd-206970ff95e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\culling">
+      <UniqueIdentifier>{4fc964c7-08e2-40c3-82a3-c928f4c6c65e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\animation">
+      <UniqueIdentifier>{951eb993-5b6c-4e0c-94a6-e7898edcdfe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{ee265cd4-6955-4e1d-8ddd-6ed3d6d15169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\2D">
+      <UniqueIdentifier>{bc63bb32-d4bc-45af-a50d-1a6780b5d1e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\random">
+      <UniqueIdentifier>{d8a78ab4-52cd-40ff-ac95-f7b0cee31efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\font">
+      <UniqueIdentifier>{c0cb2d6c-1afb-4850-8b84-ce9bd2d27599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\animation\postProcess">
+      <UniqueIdentifier>{0b0bc95d-56d3-4a0e-83aa-7510bcf95f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\effect">
+      <UniqueIdentifier>{0b3f229e-73d3-4518-87de-e76fe4388cfc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gameObject\tkGameObjectManager.h">
+      <Filter>Source Files\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\tkTransform.h">
+      <Filter>Source Files\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\tkgameobject.h">
+      <Filter>Source Files\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\tkLog.h">
+      <Filter>Source Files\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\tkAssert.h">
+      <Filter>Source Files\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUBuffer\tkGPUBuffer.h">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUBuffer\tkStructuredBuffer.h">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUBuffer\tkVertexBuffer.h">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUBuffer\tkConstantBuffer.h">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUView\tkUnorderedAccessView.h">
+      <Filter>Source Files\graphics\GPUView</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUView\tkShaderResourceView.h">
+      <Filter>Source Files\graphics\GPUView</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkCamera.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkMapper.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkRenderContext.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkRenderTarget.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkSamplerState.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkShader.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkSkeleton.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkSkinModel.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\tkPad.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="math\tkMath.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\tkMatrix.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\tkvector.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\tkAabb.h">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="policy\tkScopedResource.h">
+      <Filter>Source Files\policy</Filter>
+    </ClInclude>
+    <ClInclude Include="policy\tkNoncopyable.h">
+      <Filter>Source Files\policy</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\tkResourceManager.h">
+      <Filter>Source Files\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\tkSoundSource.h">
+      <Filter>Source Files\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\tkWaveFile.h">
+      <Filter>Source Files\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\tkWaveFileBank.h">
+      <Filter>Source Files\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\tkSoundEngine.h">
+      <Filter>Source Files\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="thread\tkCriticalSection.h">
+      <Filter>Source Files\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="timer\tkStopwatch.h">
+      <Filter>Source Files\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="timer\tkGameTime.h">
+      <Filter>Source Files\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="util\tkNameKey.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\tkUtil.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="tkEngine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tkEnginePreCompile.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkZPrepass.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkPreRender.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkLIghtCulling.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkGraphicsEngine.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="light\tkPointLight.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\tkDirectionLight.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\tkLightBase.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\tkLightManager.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="tkEngineConst.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkLight.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkPhysics.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkCollisionAttr.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkICollider.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkRigidBody.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkSphereCollider.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkBoxCollider.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkCapsuleCollider.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkMeshCollider.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="character\tkCharacterController.h">
+      <Filter>Source Files\character</Filter>
+    </ClInclude>
+    <ClInclude Include="culling\tkObjectFrustumCulling.h">
+      <Filter>Source Files\culling</Filter>
+    </ClInclude>
+    <ClInclude Include="culling\tkObjectCulling.h">
+      <Filter>Source Files\culling</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\tkAnimationClip.h">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\tkAnimation.h">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\tkAnimationPlayController.h">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkShadowMap.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="tkEngineStruct.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkShadowCaster.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkSkinModelShaderConst.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkSkinModelData.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\tkSpringCamera.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkPostEffect.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkFxaa.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkGPUEventMarker.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkPrimitive.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GPUBuffer\tkIndexBuffer.h">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkBloom.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkTonemap.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkPresetRenderState.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\tkShaderResources.h">
+      <Filter>Source Files\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\2D\tkSprite.h">
+      <Filter>Source Files\graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\tkCameraCollisionSolver.h">
+      <Filter>Source Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="random\tkRandom.h">
+      <Filter>Source Files\random</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkDithering.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\font\tkFont.h">
+      <Filter>Source Files\graphics\font</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkGraphicsEngine_Inline.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkBlur.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkShadowBlur.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\tkGBufferRender.h">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\tkPhysicsStaticObject.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\animation\postProcess\tkAnimationFootIK.h">
+      <Filter>Source Files\graphics\animation\postProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\effect\tkEffectEngine.h">
+      <Filter>Source Files\graphics\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\effect\tkEffect.h">
+      <Filter>Source Files\graphics\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="util\tkLocData.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\tkDirectXModelResource.h">
+      <Filter>Source Files\resource</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gameObject\tkTransform.cpp">
+      <Filter>Source Files\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\tkGameObject.cpp">
+      <Filter>Source Files\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\tkgameobjectmanager.cpp">
+      <Filter>Source Files\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUBuffer\tkStructuredBuffer.cpp">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUBuffer\tkVertexBuffer.cpp">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUBuffer\tkConstantBuffer.cpp">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUBuffer\tkGPUBuffer.cpp">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUView\tkShaderResourceView.cpp">
+      <Filter>Source Files\graphics\GPUView</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUView\tkUnorderedAccessView.cpp">
+      <Filter>Source Files\graphics\GPUView</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkCamera.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkRenderContext.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkRenderTarget.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkSamplerState.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkShader.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkSkeleton.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkSkinModel.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkSkinModelData.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\tkPad.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="math\tkMatrix.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\tkVector.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\tkAabb.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\tkMath.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\tkSoundSource.cpp">
+      <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\tkWaveFile.cpp">
+      <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\tkWaveFileBank.cpp">
+      <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\tkSoundEngine.cpp">
+      <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="tkEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tkEnginePreCompile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkZPrepass.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkPreRender.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkLightCulling.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkGraphicsEngine.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkPointLight.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkDirectionLight.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkLightBase.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkLightManager.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkPhysics.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkRigidBody.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkSphereCollider.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkBoxCollider.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkCapsuleCollider.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkMeshCollider.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="character\tkCharacterController.cpp">
+      <Filter>Source Files\character</Filter>
+    </ClCompile>
+    <ClCompile Include="culling\tkObjectFrustumCulling.cpp">
+      <Filter>Source Files\culling</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\tkAnimation.cpp">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\tkAnimationClip.cpp">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\tkAnimationPlayController.cpp">
+      <Filter>Source Files\graphics\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkShadowMap.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkShadowCaster.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\tkSpringCamera.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkPostEffect.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkFxaa.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkGPUEventMarker.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkPrimitive.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GPUBuffer\tkIndexBuffer.cpp">
+      <Filter>Source Files\graphics\GPUBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkBloom.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkTonemap.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkPresetRenderState.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\tkShaderResources.cpp">
+      <Filter>Source Files\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\2D\tkSprite.cpp">
+      <Filter>Source Files\graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\tkCameraCollisionSolver.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="random\tkRandom.cpp">
+      <Filter>Source Files\random</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkDithering.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\font\tkFont.cpp">
+      <Filter>Source Files\graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkBlur.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkShadowBlur.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\tkGBufferRender.cpp">
+      <Filter>Source Files\graphics\preRender</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkPhysicsStaticObject.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\animation\postProcess\tkAnimationFootIK.cpp">
+      <Filter>Source Files\graphics\animation\postProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\effect\tkEffectEngine.cpp">
+      <Filter>Source Files\graphics\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\effect\tkEffect.cpp">
+      <Filter>Source Files\graphics\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\tkDirectXModelResource.cpp">
+      <Filter>Source Files\resource</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

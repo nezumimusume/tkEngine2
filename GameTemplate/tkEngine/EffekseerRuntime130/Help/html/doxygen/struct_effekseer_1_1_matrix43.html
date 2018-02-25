@@ -1,0 +1,716 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Effekseer: Effekseer::Matrix43 構造体</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Effekseer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Effekseer</b></li><li class="navelem"><a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="#pub-attribs">公開変数類</a> &#124;
+<a href="struct_effekseer_1_1_matrix43-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">Effekseer::Matrix43 構造体</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>4x3行列  
+ <a href="struct_effekseer_1_1_matrix43.html#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a17bf676d8a89baaa9d40637d6a643885"><td class="memItemLeft" align="right" valign="top"><a id="a17bf676d8a89baaa9d40637d6a643885"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a17bf676d8a89baaa9d40637d6a643885">Indentity</a> ()</td></tr>
+<tr class="memdesc:a17bf676d8a89baaa9d40637d6a643885"><td class="mdescLeft">&#160;</td><td class="mdescRight">単位行列化を行う。 <br /></td></tr>
+<tr class="separator:a17bf676d8a89baaa9d40637d6a643885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ace4a644fd8341ab5ebb2370b7f3cc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a1ace4a644fd8341ab5ebb2370b7f3cc9">Scaling</a> (float x, float y, float z)</td></tr>
+<tr class="memdesc:a1ace4a644fd8341ab5ebb2370b7f3cc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">拡大行列化を行う。  <a href="#a1ace4a644fd8341ab5ebb2370b7f3cc9">[詳解]</a><br /></td></tr>
+<tr class="separator:a1ace4a644fd8341ab5ebb2370b7f3cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bedcc8419aaf6587f9cfcc958b9afe4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a8bedcc8419aaf6587f9cfcc958b9afe4">RotationX</a> (float angle)</td></tr>
+<tr class="memdesc:a8bedcc8419aaf6587f9cfcc958b9afe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">反時計周り方向のX軸回転行列化を行う。  <a href="#a8bedcc8419aaf6587f9cfcc958b9afe4">[詳解]</a><br /></td></tr>
+<tr class="separator:a8bedcc8419aaf6587f9cfcc958b9afe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86c2ba3a6c47c479266218e06da905a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a86c2ba3a6c47c479266218e06da905a8">RotationY</a> (float angle)</td></tr>
+<tr class="memdesc:a86c2ba3a6c47c479266218e06da905a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">反時計周り方向のY軸回転行列化を行う。  <a href="#a86c2ba3a6c47c479266218e06da905a8">[詳解]</a><br /></td></tr>
+<tr class="separator:a86c2ba3a6c47c479266218e06da905a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e37a336a79787b7a45c836403f3bb62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a5e37a336a79787b7a45c836403f3bb62">RotationZ</a> (float angle)</td></tr>
+<tr class="memdesc:a5e37a336a79787b7a45c836403f3bb62"><td class="mdescLeft">&#160;</td><td class="mdescRight">反時計周り方向のZ軸回転行列化を行う。  <a href="#a5e37a336a79787b7a45c836403f3bb62">[詳解]</a><br /></td></tr>
+<tr class="separator:a5e37a336a79787b7a45c836403f3bb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba8560d7ee729de8d32d3e67506ac687"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#aba8560d7ee729de8d32d3e67506ac687">RotationXYZ</a> (float rx, float ry, float rz)</td></tr>
+<tr class="memdesc:aba8560d7ee729de8d32d3e67506ac687"><td class="mdescLeft">&#160;</td><td class="mdescRight">反時計周り方向のXYZ軸回転行列化を行う。  <a href="#aba8560d7ee729de8d32d3e67506ac687">[詳解]</a><br /></td></tr>
+<tr class="separator:aba8560d7ee729de8d32d3e67506ac687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96455579cd7fa90c40f9a55809b80e49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a96455579cd7fa90c40f9a55809b80e49">RotationZXY</a> (float rz, float rx, float ry)</td></tr>
+<tr class="memdesc:a96455579cd7fa90c40f9a55809b80e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">反時計周り方向のZXY軸回転行列化を行う。  <a href="#a96455579cd7fa90c40f9a55809b80e49">[詳解]</a><br /></td></tr>
+<tr class="separator:a96455579cd7fa90c40f9a55809b80e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ffc1cca84b357e8d655916eafd251c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a4ffc1cca84b357e8d655916eafd251c0">RotationAxis</a> (const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;axis, float angle)</td></tr>
+<tr class="memdesc:a4ffc1cca84b357e8d655916eafd251c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">任意軸に対する反時計周り方向回転行列化を行う。  <a href="#a4ffc1cca84b357e8d655916eafd251c0">[詳解]</a><br /></td></tr>
+<tr class="separator:a4ffc1cca84b357e8d655916eafd251c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a912fd92dbc2c19df890d5cb0da0e0143"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a912fd92dbc2c19df890d5cb0da0e0143">RotationAxis</a> (const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;axis, float s, float c)</td></tr>
+<tr class="memdesc:a912fd92dbc2c19df890d5cb0da0e0143"><td class="mdescLeft">&#160;</td><td class="mdescRight">任意軸に対する反時計周り方向回転行列化を行う。  <a href="#a912fd92dbc2c19df890d5cb0da0e0143">[詳解]</a><br /></td></tr>
+<tr class="separator:a912fd92dbc2c19df890d5cb0da0e0143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86a1212ba446b26d684b7f4b2361b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#ab86a1212ba446b26d684b7f4b2361b64">Translation</a> (float x, float y, float z)</td></tr>
+<tr class="memdesc:ab86a1212ba446b26d684b7f4b2361b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">移動行列化を行う。  <a href="#ab86a1212ba446b26d684b7f4b2361b64">[詳解]</a><br /></td></tr>
+<tr class="separator:ab86a1212ba446b26d684b7f4b2361b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd744255ba17ef26cffe31a7add9af28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#acd744255ba17ef26cffe31a7add9af28">GetSRT</a> (<a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;s, <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;r, <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;t) const</td></tr>
+<tr class="memdesc:acd744255ba17ef26cffe31a7add9af28"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列を、拡大、回転、移動の行列とベクトルに分解する。  <a href="#acd744255ba17ef26cffe31a7add9af28">[詳解]</a><br /></td></tr>
+<tr class="separator:acd744255ba17ef26cffe31a7add9af28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeae9f15d80c7d4965c307e3b3cf9462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#afeae9f15d80c7d4965c307e3b3cf9462">GetScale</a> (<a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;s) const</td></tr>
+<tr class="memdesc:afeae9f15d80c7d4965c307e3b3cf9462"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列から拡大ベクトルを取得する。  <a href="#afeae9f15d80c7d4965c307e3b3cf9462">[詳解]</a><br /></td></tr>
+<tr class="separator:afeae9f15d80c7d4965c307e3b3cf9462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66360ac2c7e8ef69819409d3d44dbba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a66360ac2c7e8ef69819409d3d44dbba1">GetRotation</a> (<a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;r) const</td></tr>
+<tr class="memdesc:a66360ac2c7e8ef69819409d3d44dbba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列から回転行列を取得する。  <a href="#a66360ac2c7e8ef69819409d3d44dbba1">[詳解]</a><br /></td></tr>
+<tr class="separator:a66360ac2c7e8ef69819409d3d44dbba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d6f78af215db6380925e866c73ad829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a1d6f78af215db6380925e866c73ad829">GetTranslation</a> (<a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;t) const</td></tr>
+<tr class="memdesc:a1d6f78af215db6380925e866c73ad829"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列から移動ベクトルを取得する。  <a href="#a1d6f78af215db6380925e866c73ad829">[詳解]</a><br /></td></tr>
+<tr class="separator:a1d6f78af215db6380925e866c73ad829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4632f96e5666f10f2029c3925aaf6a9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#a4632f96e5666f10f2029c3925aaf6a9d">SetSRT</a> (const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;s, const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;r, const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;t)</td></tr>
+<tr class="memdesc:a4632f96e5666f10f2029c3925aaf6a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列の拡大、回転、移動を設定する。  <a href="#a4632f96e5666f10f2029c3925aaf6a9d">[詳解]</a><br /></td></tr>
+<tr class="separator:a4632f96e5666f10f2029c3925aaf6a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:accff4bf845b1bfec3f6d8fb7e3e60516"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#accff4bf845b1bfec3f6d8fb7e3e60516">Multiple</a> (<a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;out, const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;in1, const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;in2)</td></tr>
+<tr class="memdesc:accff4bf845b1bfec3f6d8fb7e3e60516"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列同士の乗算を行う。  <a href="#accff4bf845b1bfec3f6d8fb7e3e60516">[詳解]</a><br /></td></tr>
+<tr class="separator:accff4bf845b1bfec3f6d8fb7e3e60516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+公開変数類</h2></td></tr>
+<tr class="memitem:ae2c06e2b30bcc9cc28d11bd72674bbd2"><td class="memItemLeft" align="right" valign="top"><a id="ae2c06e2b30bcc9cc28d11bd72674bbd2"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_matrix43.html#ae2c06e2b30bcc9cc28d11bd72674bbd2">Value</a> [4][3]</td></tr>
+<tr class="memdesc:ae2c06e2b30bcc9cc28d11bd72674bbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">行列の値 <br /></td></tr>
+<tr class="separator:ae2c06e2b30bcc9cc28d11bd72674bbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>4x3行列 </p>
+<dl class="section note"><dt>覚え書き</dt><dd>右手系(回転:反時計回り)<br />
+ V[x,y,z,1] * M の形でベクトルとの乗算が可能である。<br />
+ [0,0][0,1][0,2]<br />
+ [1,0][1,1][1,2]<br />
+ [2,0][2,1][2,2]<br />
+ [3,0][3,1][3,2]<br />
+ </dd></dl>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a66360ac2c7e8ef69819409d3d44dbba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66360ac2c7e8ef69819409d3d44dbba1">&#9670;&nbsp;</a></span>GetRotation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::GetRotation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>行列から回転行列を取得する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>[out] 回転行列 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afeae9f15d80c7d4965c307e3b3cf9462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afeae9f15d80c7d4965c307e3b3cf9462">&#9670;&nbsp;</a></span>GetScale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::GetScale </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>行列から拡大ベクトルを取得する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>[out] 拡大ベクトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acd744255ba17ef26cffe31a7add9af28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd744255ba17ef26cffe31a7add9af28">&#9670;&nbsp;</a></span>GetSRT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::GetSRT </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>行列を、拡大、回転、移動の行列とベクトルに分解する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>[out] 拡大行列 </td></tr>
+    <tr><td class="paramname">r</td><td>[out] 回転行列 </td></tr>
+    <tr><td class="paramname">t</td><td>[out] 位置 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1d6f78af215db6380925e866c73ad829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d6f78af215db6380925e866c73ad829">&#9670;&nbsp;</a></span>GetTranslation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::GetTranslation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>行列から移動ベクトルを取得する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>[out] 移動ベクトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="accff4bf845b1bfec3f6d8fb7e3e60516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accff4bf845b1bfec3f6d8fb7e3e60516">&#9670;&nbsp;</a></span>Multiple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Effekseer::Matrix43::Multiple </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>in1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>in2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>行列同士の乗算を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>[out] 結果 </td></tr>
+    <tr><td class="paramname">in1</td><td>[in] 乗算の左側 </td></tr>
+    <tr><td class="paramname">in2</td><td>[in] 乗算の右側 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4ffc1cca84b357e8d655916eafd251c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ffc1cca84b357e8d655916eafd251c0">&#9670;&nbsp;</a></span>RotationAxis() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationAxis </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>axis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>angle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>任意軸に対する反時計周り方向回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">axis</td><td>[in] 回転軸 </td></tr>
+    <tr><td class="paramname">angle</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a912fd92dbc2c19df890d5cb0da0e0143"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a912fd92dbc2c19df890d5cb0da0e0143">&#9670;&nbsp;</a></span>RotationAxis() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationAxis </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>axis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>任意軸に対する反時計周り方向回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">axis</td><td>[in] 回転軸 </td></tr>
+    <tr><td class="paramname">s</td><td>[in] サイン </td></tr>
+    <tr><td class="paramname">c</td><td>[in] コサイン </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8bedcc8419aaf6587f9cfcc958b9afe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bedcc8419aaf6587f9cfcc958b9afe4">&#9670;&nbsp;</a></span>RotationX()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationX </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>反時計周り方向のX軸回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aba8560d7ee729de8d32d3e67506ac687"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba8560d7ee729de8d32d3e67506ac687">&#9670;&nbsp;</a></span>RotationXYZ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationXYZ </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>ry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>反時計周り方向のXYZ軸回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rx</td><td>[in] 角度(ラジアン) </td></tr>
+    <tr><td class="paramname">ry</td><td>[in] 角度(ラジアン) </td></tr>
+    <tr><td class="paramname">rz</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86c2ba3a6c47c479266218e06da905a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86c2ba3a6c47c479266218e06da905a8">&#9670;&nbsp;</a></span>RotationY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationY </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>反時計周り方向のY軸回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5e37a336a79787b7a45c836403f3bb62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e37a336a79787b7a45c836403f3bb62">&#9670;&nbsp;</a></span>RotationZ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationZ </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>反時計周り方向のZ軸回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a96455579cd7fa90c40f9a55809b80e49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96455579cd7fa90c40f9a55809b80e49">&#9670;&nbsp;</a></span>RotationZXY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::RotationZXY </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>ry</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>反時計周り方向のZXY軸回転行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rz</td><td>[in] 角度(ラジアン) </td></tr>
+    <tr><td class="paramname">rx</td><td>[in] 角度(ラジアン) </td></tr>
+    <tr><td class="paramname">ry</td><td>[in] 角度(ラジアン) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1ace4a644fd8341ab5ebb2370b7f3cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ace4a644fd8341ab5ebb2370b7f3cc9">&#9670;&nbsp;</a></span>Scaling()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::Scaling </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>拡大行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>[in] X方向拡大率 </td></tr>
+    <tr><td class="paramname">y</td><td>[in] Y方向拡大率 </td></tr>
+    <tr><td class="paramname">z</td><td>[in] Z方向拡大率 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4632f96e5666f10f2029c3925aaf6a9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4632f96e5666f10f2029c3925aaf6a9d">&#9670;&nbsp;</a></span>SetSRT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::SetSRT </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_matrix43.html">Matrix43</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_effekseer_1_1_vector3_d.html">Vector3D</a> &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>行列の拡大、回転、移動を設定する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>[in] 拡大行列 </td></tr>
+    <tr><td class="paramname">r</td><td>[in] 回転行列 </td></tr>
+    <tr><td class="paramname">t</td><td>[in] 位置 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab86a1212ba446b26d684b7f4b2361b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab86a1212ba446b26d684b7f4b2361b64">&#9670;&nbsp;</a></span>Translation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Effekseer::Matrix43::Translation </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>移動行列化を行う。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>[in] X方向移動 </td></tr>
+    <tr><td class="paramname">y</td><td>[in] Y方向移動 </td></tr>
+    <tr><td class="paramname">z</td><td>[in] Z方向移動 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>この構造体詳解は次のファイルから抽出されました:<ul>
+<li>Dev/Cpp/Effekseer/<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2017年10月31日(火) 22時33分34秒作成 - Effekseer / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

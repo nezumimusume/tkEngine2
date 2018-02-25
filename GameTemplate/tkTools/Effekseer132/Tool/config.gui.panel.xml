@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.-->
+<!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!-->
+<DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.5" DockTopPortion="0.25" DockBottomPortion="0.150000005960464" ActiveDocumentPane="0" ActivePane="4">
+  <Contents Count="10">
+    <Content ID="0" PersistString="Effekseer.GUI.DockViewer" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="1" PersistString="Effekseer.GUI.DockViewerController" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="2" PersistString="Effekseer.GUI.DockNodeTreeView" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="3" PersistString="Effekseer.GUI.DockNodeLocationValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="4" PersistString="Effekseer.GUI.DockNodeRendererValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="5" PersistString="Effekseer.GUI.DockNodeRotationValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="6" PersistString="Effekseer.GUI.DockNodeScaleValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="7" PersistString="Effekseer.GUI.DockNodeCommonValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="8" PersistString="Effekseer.GUI.DockNodeRendererCommonValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+    <Content ID="9" PersistString="Effekseer.GUI.DockNodeSoundValues" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+  </Contents>
+  <Panes Count="8">
+    <Pane ID="0" DockState="Document" ActiveContent="0">
+      <Contents Count="1">
+        <Content ID="0" RefID="0" />
+      </Contents>
+    </Pane>
+    <Pane ID="1" DockState="DockBottom" ActiveContent="1">
+      <Contents Count="1">
+        <Content ID="0" RefID="1" />
+      </Contents>
+    </Pane>
+    <Pane ID="2" DockState="DockRight" ActiveContent="2">
+      <Contents Count="1">
+        <Content ID="0" RefID="2" />
+      </Contents>
+    </Pane>
+    <Pane ID="3" DockState="DockRight" ActiveContent="3">
+      <Contents Count="1">
+        <Content ID="0" RefID="3" />
+      </Contents>
+    </Pane>
+    <Pane ID="4" DockState="DockRight" ActiveContent="4">
+      <Contents Count="3">
+        <Content ID="0" RefID="4" />
+        <Content ID="1" RefID="9" />
+        <Content ID="2" RefID="8" />
+      </Contents>
+    </Pane>
+    <Pane ID="5" DockState="DockRight" ActiveContent="5">
+      <Contents Count="1">
+        <Content ID="0" RefID="5" />
+      </Contents>
+    </Pane>
+    <Pane ID="6" DockState="DockRight" ActiveContent="6">
+      <Contents Count="1">
+        <Content ID="0" RefID="6" />
+      </Contents>
+    </Pane>
+    <Pane ID="7" DockState="DockRight" ActiveContent="7">
+      <Contents Count="1">
+        <Content ID="0" RefID="7" />
+      </Contents>
+    </Pane>
+  </Panes>
+  <DockWindows>
+    <DockWindow ID="0" DockState="Document" ZOrderIndex="1">
+      <NestedPanes Count="1">
+        <Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+      </NestedPanes>
+    </DockWindow>
+    <DockWindow ID="1" DockState="DockLeft" ZOrderIndex="4">
+      <NestedPanes Count="0" />
+    </DockWindow>
+    <DockWindow ID="2" DockState="DockRight" ZOrderIndex="3">
+      <NestedPanes Count="6">
+        <Pane ID="0" RefID="2" PrevPane="-1" Alignment="Bottom" Proportion="0.5" />
+        <Pane ID="1" RefID="3" PrevPane="2" Alignment="Right" Proportion="0.65" />
+        <Pane ID="2" RefID="4" PrevPane="3" Alignment="Right" Proportion="0.5" />
+        <Pane ID="3" RefID="5" PrevPane="3" Alignment="Bottom" Proportion="0.5" />
+        <Pane ID="4" RefID="6" PrevPane="5" Alignment="Bottom" Proportion="0.5" />
+        <Pane ID="5" RefID="7" PrevPane="2" Alignment="Bottom" Proportion="0.75" />
+      </NestedPanes>
+    </DockWindow>
+    <DockWindow ID="3" DockState="DockTop" ZOrderIndex="5">
+      <NestedPanes Count="0" />
+    </DockWindow>
+    <DockWindow ID="4" DockState="DockBottom" ZOrderIndex="2">
+      <NestedPanes Count="1">
+        <Pane ID="0" RefID="1" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+      </NestedPanes>
+    </DockWindow>
+  </DockWindows>
+  <FloatWindows Count="0" />
+</DockPanel>

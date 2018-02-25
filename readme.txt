@@ -1,0 +1,12 @@
+・setup.bat
+　　tkEngineを使えるようにするためのバッチファイル。
+　　一番最初だけ管理者権限で実行してください。
+・cleanup.bat
+　　クリーンアップ。使わなくていい。
+・GameTemplate
+　　tkEngineを使用してゲームを作る場合の空のプロジェクト。
+　　こいつをコピーして新規プロジェクトを作成する。
+・Sample
+　　tkEngineの使い方のサンプルプロジェクト集。
+・Movie
+　　tkEngineの使い方の動画。

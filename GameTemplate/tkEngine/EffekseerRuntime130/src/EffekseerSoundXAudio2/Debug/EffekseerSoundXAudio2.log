@@ -1,0 +1,5 @@
+﻿  EffekseerSoundXAudio2.Sound.cpp
+  EffekseerSoundXAudio2.SoundLoader.cpp
+  EffekseerSoundXAudio2.SoundPlayer.cpp
+  EffekseerSoundXAudio2.SoundVoice.cpp
+  EffekseerSoundXAudio2.vcxproj -> C:\GitHub\EffekseerRuntime130\EffekseerRuntime130\src\EffekseerSoundXAudio2\..\lib\x86\EffekseerSoundXAudio2.Debug.lib

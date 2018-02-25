@@ -1,0 +1,8 @@
+・モデルデータ(*.fbx)
+  ->MeshContentPipelineを指定する。
+    VisualStudioにインポートすると自動的に設定されるので
+    触る必要なし。
+・画像データ(*.jpg、*.png、*.bmpなど)
+  ->ImageContentPipelineを指定する。
+・その他のアセット
+  ->カスタムビルドツールを指定する。
