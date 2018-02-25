@@ -17,18 +17,9 @@ bool Game::Start()
 	MainCamera().SetPosition({ 0.0f, 70.0f, 200.0f });
 	MainCamera().Update();
 
-	//モデルデータをロード。
-	m_skinModelData.Load(L"modelData/unityChan.cmo");
-	m_skinModel.Init(m_skinModelData);
+	//スキンモデルレンダラーを作成。
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	return true;
 }
-void Game::Update()
-{
-	//ワールド行列の更新。
-	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
-}
-void Game::Render(CRenderContext& rc)
-{
-	//描画。
-	m_skinModel.Draw(rc);
-}
+

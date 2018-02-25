@@ -8,12 +8,10 @@ public:
 	Game();
 	~Game();
 	bool Start();
-	void Update();
-	void Render(CRenderContext& rc);
 	//////////////////////////////////////
 	// メンバ変数。
 	//////////////////////////////////////
-	CSkinModel m_skinModel;			//スキンモデル。
-	CSkinModelData m_skinModelData;	//スキンモデルデータ。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;
+	
 };
 

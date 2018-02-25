@@ -2,13 +2,11 @@
 #include "Game.h"
 #include "tkEngine/light/tkDirectionLight.h"
 
-Game::Game()
-{
-}
 
-
-Game::~Game()
+void Game::OnDestroy()
 {
+	DeleteGO(m_lig);
+	DeleteGO(m_skinModelRender);
 }
 bool Game::Start()
 {
@@ -26,9 +24,10 @@ bool Game::Start()
 	MainCamera().SetPosition({ 0.0f, 15.0f, 30.0f });
 	MainCamera().Update();
 
-	//モデルデータをロード。
-	m_skinModelData.Load(L"modelData/Thethief_H.cmo");
-	m_skinModel.Init(m_skinModelData);
+	//スキンモデルレンダラーを設定。
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/Thethief_H.cmo");
+	
 
 	return true;
 }
@@ -39,10 +38,4 @@ void Game::Update()
 	qRot.SetRotationDeg(CVector3::AxisY, 2.0f);
 	qRot.Multiply(m_lightDir);
 	m_lig->SetDirection(m_lightDir);
-	//ワールド行列を更新。
-	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
-}
-void Game::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 }

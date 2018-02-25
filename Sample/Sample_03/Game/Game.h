@@ -5,8 +5,7 @@ public:
 	////////////////////////////////////////////
 	//メンバ関数。
 	////////////////////////////////////////////
-	Game();
-	~Game();
+	
 	/*!
 	*@brief	Updateの直前で呼ばれる開始処理。
 	*@details
@@ -20,16 +19,13 @@ public:
 	 *@brief	更新。
 	 */
 	void Update();
-	/*!
-	 *@brief	描画。
-	 */
-	void Render(CRenderContext& rc);
+	
 	/*!
 	*@brief	削除されるときに呼ばれる。
 	*@details	CGameManager::DeleteGameObjectを呼んだときに実行されます。
 	* デストラクタより前に実行されます。
 	*/
-	virtual void OnDestroy() {}
+	virtual void OnDestroy();
 
 	////////////////////////////////////////////
 	//メンバ変数や列挙とか。
@@ -40,9 +36,8 @@ public:
 		enAnimationClip_walk,	//歩きアニメーション。
 		enAnimationClip_Num,	//アニメーションクリップの数。
 	};
-	CSkinModel m_skinModel;					//スキンモデル。
-	CSkinModelData m_skinModelData;			//スキンモデルデータ。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;
 	CAnimationClip m_animClips[enAnimationClip_Num];	//アニメーションクリップ。
-	CAnimation m_animation;								//アニメーション。
+	
 };
 

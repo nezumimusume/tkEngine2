@@ -3,14 +3,14 @@ class Game : public IGameObject
 {
 public:
 	//メンバ関数。
-	Game();
-	~Game();
-	bool Start();
-	void Update();
-	void Render(CRenderContext& rc);
+	
+	void OnDestroy() override final;
+	bool Start() override final;
+	void Update() override final;
+	
 	//メンバ変数。
-	CSkinModel m_skinModel;			//スキンモデル。
-	CSkinModelData m_skinModelData;	//スキンモデルデータ。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;
+	
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
 
 };

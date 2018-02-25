@@ -2,13 +2,9 @@
 #include "Game.h"
 
 
-Game::Game()
+void Game::OnDestroy()
 {
-}
-
-
-Game::~Game()
-{
+	DeleteGO(m_skinModelRender);
 }
 bool Game::Start()
 {
@@ -18,8 +14,9 @@ bool Game::Start()
 	MainCamera().Update();
 
 	//モデルデータをロード。
-	m_skinModelData.Load(L"modelData/Thethief_H.cmo");
-	m_skinModel.Init(m_skinModelData);
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/Thethief_H.cmo");
+	
 	return true;
 }
 void Game::Update()
@@ -57,12 +54,6 @@ void Game::Update()
 	//回転を加算する。
 	m_rotation.Multiply(qRot);
 	
-
-	//ワールド行列を更新。
-	m_skinModel.Update(CVector3::Zero, m_rotation, CVector3::One);
-}
-void Game::Render(CRenderContext& rc)
-{
-	//描画。
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	//回転を設定。
+	m_skinModelRender->SetRotation(m_rotation);
 }
