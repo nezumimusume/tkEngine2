@@ -16,25 +16,23 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
-	//スキンモデルの初期化。
-	m_skinModelData.Load(L"modelData/enemy_00.cmo");
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.SetShadowCasterFlag(true);
-	m_skinModel.SetShadowReceiverFlag(true);
-	//アニメーションの初期化。
+	//アニメーションクリップのロード。
 	m_animClips[enAnimationClip_Idle].Load(L"animData/enemy/idle.tka");
 	m_animClips[enAnimationClip_Idle].SetLoopFlag(true);
-	m_animation.Init(m_skinModel, m_animClips, enANimationClip_Num);
-	m_animation.Play(enAnimationClip_Idle);
+	//スキンモデルの初期化。
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(
+		0, nullptr, L"modelData/enemy_00.cmo", m_animClips, enANimationClip_Num);
+	
+	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowReceiverFlag(true);
+	m_skinModelRender->PlayAnimation(enAnimationClip_Idle);
+	
 	return true;
 }
 
 void Enemy::Update()
 {
-	m_skinModel.Update(m_position, CQuaternion::Identity, {4.0f, 4.0f, 4.0f});
-}
-
-void Enemy::Render(CRenderContext& rc) 
-{
-	m_skinModel.Draw(rc);
+	m_skinModelRender->SetPosition(m_position);
+	m_skinModelRender->SetRotation(m_rotation);
+	m_skinModelRender->SetScale({ 4.0f, 4.0f, 4.0f });
 }

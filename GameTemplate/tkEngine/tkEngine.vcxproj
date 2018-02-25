@@ -313,6 +313,7 @@
     <ClInclude Include="graphics\tkSkeleton.h" />
     <ClInclude Include="graphics\tkSkinModel.h" />
     <ClInclude Include="graphics\tkSkinModelData.h" />
+    <ClInclude Include="graphics\tkSkinModelRender.h" />
     <ClInclude Include="graphics\tkSkinModelShaderConst.h" />
     <ClInclude Include="Input\tkPad.h" />
     <ClInclude Include="light\tkDirectionLight.h" />
@@ -401,6 +402,7 @@
     <ClCompile Include="graphics\tkSkeleton.cpp" />
     <ClCompile Include="graphics\tkSkinModel.cpp" />
     <ClCompile Include="graphics\tkSkinModelData.cpp" />
+    <ClCompile Include="graphics\tkSkinModelRender.cpp" />
     <ClCompile Include="Input\tkPad.cpp" />
     <ClCompile Include="light\tkDirectionLight.cpp" />
     <ClCompile Include="light\tkLightBase.cpp" />

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "tkEngine/graphics/tkSkinModelRender.h"
+
 class Enemy : public IGameObject{
 public:
 	/*!
@@ -22,11 +24,7 @@ public:
 	 * @brief	更新。
 	 */
 	void Update() override;
-	/*!
-	 * @brief	描画
-	 *@param[in]	rc		レンダリングコンテキスト。
-	 */
-	void Render(CRenderContext& rc) override;
+	
 	/*!
 	 *@brief	座標を設定。
 	 */
@@ -39,11 +37,9 @@ private:
 		enAnimationClip_Idle,
 		enANimationClip_Num,
 	};
-	EnAnimationClip m_currentAnimClip = enAnimationClip_Idle;		//!<現在再生中のアニメーションクリップ。
-	CAnimationClip m_animClips[enANimationClip_Num];	//!<アニメーションクリップ；。
-	CAnimation m_animation;								//!<アニメーション。
-	CSkinModelData	m_skinModelData;	//!<スキンモデルデータ。
-	CSkinModel		m_skinModel;		//!<スキンモデル。
-	CVector3		m_position;			//!<座標。
-	CQuaternion		m_rotation;			//!<回転。
+	EnAnimationClip m_currentAnimClip = enAnimationClip_Idle;	//!<現在再生中のアニメーションクリップ。
+	CAnimationClip m_animClips[enANimationClip_Num];			//!<アニメーションクリップ；。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;		//!<スキンモデルレンダラー。
+	CVector3		m_position;									//!<座標。
+	CQuaternion		m_rotation = CQuaternion::Identity;			//!<回転。
 };

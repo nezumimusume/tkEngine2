@@ -71,7 +71,7 @@ void CPlayerAnimator::OnInvokeAnimationEvent(
 		soundSource->Init("sound/Footstep_00.wav");
 		soundSource->Play(false);
 	}
-}a
+}
 bool CPlayerAnimator::Start()
 {
 	//ステート切り換えのリスナーを登録する。
@@ -96,13 +96,15 @@ bool CPlayerAnimator::Start()
 	m_animClips[enAnimationClip_JumpEnd].Load(L"animData/player/jump_end.tka");
 	m_animClips[enAnimationClip_JumpEnd].SetLoopFlag(false);
 
-	m_animation.Init(m_player->GetPlayerRenderer().GetSkinModel(), m_animClips, enANimationClip_Num);
+	m_skinModelRender = m_player->GetPlayerRenderer().GetSkinModelRender();
+	m_skinModelRender->InitAnimation(m_animClips, enANimationClip_Num);
+	
 	m_currentAnimClip = enAnimationClip_Idle;
-	m_animation.Play(enAnimationClip_Idle);
-
-	m_animation.AddAnimationEventListener([&](auto clipName, auto eventName) {
+	m_skinModelRender->PlayAnimation(enAnimationClip_Idle);
+	m_skinModelRender->AddAnimationEventListener([&](auto clipName, auto eventName) {
 		OnInvokeAnimationEvent(clipName, eventName);
 	});
+	
 	//FootIKのパラメータを作成する。
 	/*CAnimationFootIK::SFootIKParam footIKParam;
 	footIKParam.footBoneName_0 = L"thief_Bip01_L_Toe0";

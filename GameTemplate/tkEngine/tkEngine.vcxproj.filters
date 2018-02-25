@@ -365,6 +365,9 @@
     <ClInclude Include="Resource\tkDirectXModelResource.h">
       <Filter>Source Files\resource</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\tkSkinModelRender.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -582,6 +585,9 @@
     </ClCompile>
     <ClCompile Include="Resource\tkDirectXModelResource.cpp">
       <Filter>Source Files\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkSkinModelRender.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

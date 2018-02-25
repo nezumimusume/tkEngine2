@@ -68,13 +68,13 @@ public:
 	 */
 	bool IsPlaying() const
 	{
-		return m_animation.IsPlaying();
+		return m_skinModelRender->IsPlayingAnimation();
 	}
 	
 	void PlayAnimation(EnAnimationClip animClip, float interpolateTime)
 	{
 		m_currentAnimClip = animClip;
-		m_animation.Play(animClip, interpolateTime);
+		m_skinModelRender->PlayAnimation(animClip, interpolateTime);
 	}
 	/*!
 	 *@brief	状態が変更されたときのコールバック関数。
@@ -87,7 +87,7 @@ public:
 	*/
 	CVector3 GetFreezeBoneTranslate() const
 	{
-		return m_animation.GetFreezeBoneTranslate();
+		return m_skinModelRender->GetFreezeBoneTranslate();
 	}
 	/*!
 	*@brief	アニメーションイベントが起きた時に呼ばれる処理。
@@ -96,8 +96,7 @@ public:
 private:
 	EnAnimationClip m_currentAnimClip = enAnimationClip_Idle;		//!<現在再生中のアニメーションクリップ。
 	CAnimationClip m_animClips[enANimationClip_Num];	//!<アニメーションクリップ；。
-	CAnimation m_animation;								//!<アニメーション。
 	CPlayer* m_player = nullptr;						//!<プレイヤーレンダラー。
-	
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;
 	CPlayerJumpAnimCtr m_jumpAnimCtr;
 };

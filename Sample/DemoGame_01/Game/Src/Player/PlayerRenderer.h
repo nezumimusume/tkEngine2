@@ -6,6 +6,7 @@
 
 #pragma once
 
+
 class CPlayer;
 
 class CPlayerRenderer : public IGameObject {
@@ -23,34 +24,30 @@ public:
 	 */
 	void Update() override;
 	/*!
-	 * @brief	描画
-	 *@param[in]	rc		レンダリングコンテキスト。
-	 */
-	void Render(CRenderContext& rc) override;
-	/*!
 	* @brief	スキンモデルデータの取得。
 	*/
 	CSkinModelData& GetSkinModelData()
 	{
-		return m_skinModelData;
+		return m_skinModelRender->GetSkinModelData();
 	}
 	/*!
 	* @brief	スキンモデルデータの取得。
 	*/
 	const CSkinModelData& GetSkinModelData() const
 	{
-		return m_skinModelData;
+		return m_skinModelRender->GetSkinModelData();
 	}
 	/*!
-	 *@brief	スキンモデルの取得。
-	 */
-	CSkinModel& GetSkinModel()
+	* @brief	スキンモデルレンダラの取得。
+	*/
+	prefab::CSkinModelRender* GetSkinModelRender()
 	{
-		return m_skinModel;
+		return m_skinModelRender;
 	}
 private:
-	CSkinModelData m_skinModelData;		//!<スキンモデルデータ。
-	CSkinModel m_skinModel;				//!<スキンモデル。
+	/*CSkinModelData m_skinModelData;		//!<スキンモデルデータ。
+	CSkinModel m_skinModel;				//!<スキンモデル。*/
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;
 	CShaderResourceView m_normalMap;	//!<法線マップ。
 	CShaderResourceView m_specMap;		//!<スペキュラマップ。
 	CShaderResourceView m_wnormalMap;	//!<武器の法線マップ。
