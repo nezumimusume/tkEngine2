@@ -368,6 +368,9 @@
     <ClInclude Include="graphics\tkSkinModelRender.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\2D\tkSpriteRender.h">
+      <Filter>Source Files\graphics\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -588,6 +591,9 @@
     </ClCompile>
     <ClCompile Include="graphics\tkSkinModelRender.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\2D\tkSpriteRender.cpp">
+      <Filter>Source Files\graphics\2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

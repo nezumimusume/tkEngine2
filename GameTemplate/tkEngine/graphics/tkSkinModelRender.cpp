@@ -7,22 +7,14 @@
 
 namespace tkEngine{
 namespace prefab{
-	/*!
-	 * @brief	コンストラクタ。
-	 *@param[in]	filePath	ファイルパス。
-	 */
-	CSkinModelRender::CSkinModelRender(
-		const wchar_t* filePath, 
-		CAnimationClip* animationClips, 
-		int numAnimationClips,
-		CSkinModel::EnFbxUpAxis fbxUpAxis
-	) :
-		m_filePath(filePath),
-		m_animationClips(animationClips),
-		m_numAnimationClips(numAnimationClips),
-		m_enFbxUpAxis(fbxUpAxis)
+
+	void CSkinModelRender::Init(
+		const wchar_t* filePath,
+		CAnimationClip* animationClips,
+		int numAnimationClips ,
+		CSkinModel::EnFbxUpAxis fbxUpAxis)
 	{
-		m_skinModelData.Load(m_filePath.c_str());
+		m_skinModelData.Load(filePath);
 		m_skinModel.Init(m_skinModelData);
 		InitAnimation(animationClips, numAnimationClips);
 	}

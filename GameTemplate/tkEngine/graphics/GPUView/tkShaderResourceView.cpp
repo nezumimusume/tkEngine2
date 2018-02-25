@@ -87,7 +87,7 @@ namespace tkEngine{
 			D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
 			false, nullptr, &m_srv);
 		if (FAILED(hr)) {
-			TK_WARNING("Failed create texture");
+			TK_WARNING_MESSAGE_BOX("Failed create texture");
 			return false;
 		}
 		return true;

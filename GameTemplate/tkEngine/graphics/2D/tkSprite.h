@@ -10,6 +10,7 @@ namespace tkEngine{
 	 */
 	class CSprite : Noncopyable {
 	public:
+		static const CVector2	DEFAULT_PIVOT;					//!<ピボット。
 		/*!
 		 * @brief	コンストラクタ。
 		 */
@@ -75,7 +76,7 @@ namespace tkEngine{
 		CPrimitive				m_primitive;					//!<プリミティブ。
 		CShaderResourceView*	m_textureSRV = nullptr;			//!<テクスチャ。
 		CConstantBuffer			m_cb;
-		static const CVector2	DEFAULT_PIVOT;					//!<ピボット。
+		
 		CVector2				m_size = CVector2::Zero;		//!<サイズ。
 	};
 }

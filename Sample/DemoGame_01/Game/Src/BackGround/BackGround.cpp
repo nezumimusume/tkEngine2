@@ -16,12 +16,13 @@ CBackGround::CBackGround()
  */
 CBackGround::~CBackGround()
 {
+	DeleteGO(m_skinModelRender);
 }
 
 bool CBackGround::Start()
 {
-	m_skinModelRender = NewGO<prefab::CSkinModelRender>(
-		0, nullptr, L"modelData/background.cmo" );
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/background.cmo" );
 	m_skinModelRender->SetShadowCasterFlag(false);
 	m_skinModelRender->SetShadowReceiverFlag(true);
 

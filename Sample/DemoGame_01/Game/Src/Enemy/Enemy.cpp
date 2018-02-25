@@ -21,9 +21,8 @@ bool Enemy::Start()
 	m_animClips[enAnimationClip_Idle].Load(L"animData/enemy/idle.tka");
 	m_animClips[enAnimationClip_Idle].SetLoopFlag(true);
 	//スキンモデルの初期化。
-	m_skinModelRender = NewGO<prefab::CSkinModelRender>(
-		0, nullptr, L"modelData/enemy_00.cmo", m_animClips, enANimationClip_Num);
-	
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init( L"modelData/enemy_00.cmo", m_animClips, enANimationClip_Num);
 	m_skinModelRender->SetShadowCasterFlag(true);
 	m_skinModelRender->SetShadowReceiverFlag(true);
 	m_skinModelRender->PlayAnimation(enAnimationClip_Idle);

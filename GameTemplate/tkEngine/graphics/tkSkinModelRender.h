@@ -11,18 +11,19 @@ namespace prefab{
 	public:
 		/*!
 		 * @brief	コンストラクタ。
-		 *@param[in]	filePath	ファイルパス。
-		 *@param[in]	animationClips		アニメーションクリップ。
-		 *@param[in]	numAnimClip			アニメーションクリップの数。
-		 *@param[in]	enUpdateAxis		fbxの上方向。
 		 */
-		CSkinModelRender(
-			const wchar_t* filePath,
+		CSkinModelRender() {}
+		/*!
+		* @brief	初期化。
+		*@param[in]	filePath	ファイルパス。
+		*@param[in]	animationClips		アニメーションクリップ。
+		*@param[in]	numAnimClip			アニメーションクリップの数。
+		*@param[in]	enUpdateAxis		fbxの上方向。
+		*/
+		void Init(const wchar_t* filePath,
 			CAnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
-			CSkinModel::EnFbxUpAxis fbxUpAxis = CSkinModel::enFbxUpAxisZ
-		);
-		
+			CSkinModel::EnFbxUpAxis fbxUpAxis = CSkinModel::enFbxUpAxisZ);
 		
 		/*!
 		 * @brief	更新前に呼ばれる関数。

@@ -9,12 +9,14 @@ Game::Game()
 
 Game::~Game()
 {
+	DeleteGO(m_spriteRender);
 }
 bool Game::Start()
 {
-	//テクスチャをロード。
-	m_texture.CreateFromDDSTextureFromFile(L"sprite/mikyan.dds");
-	m_sprite.Init(m_texture, 400, 300);
+	//スプライトを初期化。
+	m_spriteRender = NewGO<prefab::CSpriteRender>(0);
+	m_spriteRender->Init(L"sprite/mikyan.dds", 400, 300);
+
 	return true;
 }
 void Game::Update()
@@ -28,12 +30,8 @@ void Game::Update()
 	m_position.y += Pad(0).GetLStickYF() * 10.0f;
 	m_position.z = 0.0f;	//2D空間で描画するならzは0でいい。
 
-	//ワールド行列の更新。
-	m_sprite.Update(m_position, m_rotation, CVector3::One);
+	//座標と回転を設定。
+	m_spriteRender->SetPosition(m_position);
+	m_spriteRender->SetRotation(m_rotation);
 }
 
-void Game::PostRender(CRenderContext& rc)
-{
-	//スプライトを描画。
-	m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
-}

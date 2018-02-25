@@ -15,7 +15,8 @@ CPlayerRenderer::~CPlayerRenderer()
 }
 void CPlayerRenderer::Awake()
 {
-	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0, nullptr, L"modelData/Thethief_H.cmo");
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/Thethief_H.cmo");
 	m_skinModelRender->SetShadowCasterFlag(true);
 	m_skinModelRender->SetShadowReceiverFlag(true);
 

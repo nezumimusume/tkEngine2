@@ -271,6 +271,7 @@
     <ClInclude Include="gameObject\tkGameObjectManager.h" />
     <ClInclude Include="gameObject\tkTransform.h" />
     <ClInclude Include="graphics\2D\tkSprite.h" />
+    <ClInclude Include="graphics\2D\tkSpriteRender.h" />
     <ClInclude Include="graphics\animation\postProcess\tkAnimationFootIK.h" />
     <ClInclude Include="graphics\animation\tkAnimation.h" />
     <ClInclude Include="graphics\animation\tkAnimationClip.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="gameObject\tkgameobjectmanager.cpp" />
     <ClCompile Include="gameObject\tkTransform.cpp" />
     <ClCompile Include="graphics\2D\tkSprite.cpp" />
+    <ClCompile Include="graphics\2D\tkSpriteRender.cpp" />
     <ClCompile Include="graphics\animation\postProcess\tkAnimationFootIK.cpp" />
     <ClCompile Include="graphics\animation\tkAnimation.cpp" />
     <ClCompile Include="graphics\animation\tkAnimationClip.cpp" />

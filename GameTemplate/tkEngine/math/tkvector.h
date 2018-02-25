@@ -81,7 +81,10 @@ namespace tkEngine{
 			vec = _v.vec;
 			return *this;
 		}
-		CVector3() {}
+		CVector3() 
+		{
+			x = y = z = 0.0f;
+		}
 		/*!
 		* @brief	コンストラクタ。
 		*/
@@ -301,7 +304,10 @@ namespace tkEngine{
 		{
 			return DirectX::XMLoadFloat4(&vec);
 		}
-		CVector4(){}
+		CVector4()
+		{
+			x = y = z = w = 0.0f;
+		}
 		/*!
 		*@brief	代入演算子。
 		*/
@@ -438,7 +444,11 @@ namespace tkEngine{
 	class CQuaternion : public CVector4{
 	public:
 		static const CQuaternion Identity;		//!<単位クォータニオン。
-		CQuaternion() {}
+		CQuaternion() 
+		{
+			x = y = z = 0.0f;
+			w = 1.0f;
+		}
 		CQuaternion(float x, float y, float z, float w) :
 			CVector4(x, y, z, w)
 		{
