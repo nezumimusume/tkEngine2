@@ -114,12 +114,20 @@ namespace prefab{
 		{
 			return m_skinModelData;
 		}
-		/*!
-		* @brief	スキンモデルデータの取得。
-		*/
 		const CSkinModelData& GetSkinModelData() const
 		{
 			return m_skinModelData;
+		}
+		/*!
+		*@brief	スキンモデル取得。
+		*/
+		CSkinModel& GetSkinModel()
+		{
+			return m_skinModel;
+		}
+		const CSkinModel& GetSkinModel() const
+		{
+			return m_skinModel;
 		}
 		/*!
 		*@brief	モデルマテリアルの検索。

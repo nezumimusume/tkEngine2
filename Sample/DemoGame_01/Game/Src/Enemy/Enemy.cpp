@@ -12,6 +12,7 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
+	DeleteGO(m_skinModelRender);
 }
 
 bool Enemy::Start()

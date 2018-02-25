@@ -28,6 +28,7 @@ namespace tkEngine{
 		 *@param[in]	rot			回転。
 		 */
 		void CreateMeshObject(CSkinModel& skinModel, CVector3 pos, CQuaternion rot);
+		void CreateMeshObject(prefab::CSkinModelRender* skinModelRender, CVector3 pos, CQuaternion rot);
 	private:
 		CMeshCollider m_meshCollider;		//!<メッシュコライダー。
 		CRigidBody m_rigidBody;				//!<剛体。

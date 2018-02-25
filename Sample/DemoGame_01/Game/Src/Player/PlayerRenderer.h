@@ -15,6 +15,7 @@ public:
 		m_player(pl)
 	{
 	}
+	~CPlayerRenderer();
 	/*!
 	 * @brief	スタート。
 	 */

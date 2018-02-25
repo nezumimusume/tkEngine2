@@ -9,6 +9,10 @@
 #include "Player/PlayerRenderer.h"
 
 
+CPlayerRenderer::~CPlayerRenderer()
+{
+	DeleteGO(m_skinModelRender);
+}
 void CPlayerRenderer::Awake()
 {
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0, nullptr, L"modelData/Thethief_H.cmo");

@@ -20,22 +20,13 @@ CBackGround::~CBackGround()
 
 bool CBackGround::Start()
 {
-	m_skinModelData.Load(L"modelData/background.cmo");
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.SetShadowCasterFlag(false);
-	m_skinModel.SetShadowReceiverFlag(true);
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(
+		0, nullptr, L"modelData/background.cmo" );
+	m_skinModelRender->SetShadowCasterFlag(false);
+	m_skinModelRender->SetShadowReceiverFlag(true);
 
 	//静的物理オブジェクトを作成。
-	m_phyStaticObject.CreateMeshObject(m_skinModel, CVector3::Zero, CQuaternion::Identity);
+	m_phyStaticObject.CreateMeshObject(m_skinModelRender, CVector3::Zero, CQuaternion::Identity);
 	return true;
 }
 
-void CBackGround::Update()
-{
-	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
-}
-
-void CBackGround::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-}

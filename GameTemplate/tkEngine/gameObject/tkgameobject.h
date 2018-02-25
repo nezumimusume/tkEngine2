@@ -41,7 +41,7 @@ namespace tkEngine{
 		/*!
 		 *@brief	XV
 		 */
-		virtual void Update() = 0;
+		virtual void Update() {}
 		/*!
 		 *@brief	•`‰æ
 		 */
