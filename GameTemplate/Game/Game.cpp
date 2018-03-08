@@ -19,17 +19,14 @@ bool Game::Start()
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
 	
-	//モデルデータをロード。
-	skinModelData.Load(L"modelData/unityChan.cmo");
-	skinModel.Init(skinModelData);
-	
+	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );
 	return true;
 }
 void Game::Update()
 {
-	skinModel.Update(m_pos, CQuaternion::Identity, { 0.1f, 0.1f, 0.1f });
 }
 void Game::Render(CRenderContext& rc)
 {
-	skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 }

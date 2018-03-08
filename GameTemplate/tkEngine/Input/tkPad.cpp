@@ -62,16 +62,11 @@ namespace tkEngine{
 			{ enButtonLB3		, 'M' },
 		};
 	}
-	CPad::CPad() :
-		m_padNo(0)
+	CPad::CPad() 
 	{
 		memset(&m_state, 0, sizeof(m_state));
 		memset(m_trigger, 0, sizeof(m_trigger));
 		memset(m_press, 0, sizeof(m_press));
-		m_lStickX = 0.0f;
-		m_lStickY = 0.0f;
-		m_rStickX = 0.0f;
-		m_rStickY = 0.0f;
 	}
 	CPad::~CPad()
 	{
