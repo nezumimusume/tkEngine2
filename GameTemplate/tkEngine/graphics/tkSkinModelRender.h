@@ -139,6 +139,13 @@ namespace prefab{
 			m_skinModel.FindMaterial(findMaterial);
 		}
 		/*!
+		*@brief	アニメーションの更新フラグを設定。
+		*/
+		void SetUpdateAnimationFlag(bool flag)
+		{
+			m_isUpdateAnimation = flag;
+		}
+		/*!
 		* @brief	アニメーションの初期化。
 		*/
 		void InitAnimation(CAnimationClip* animationClips, int numAnimationClips);
@@ -153,6 +160,7 @@ namespace prefab{
 		CSkinModel					m_skinModel;						//!<スキンモデル。
 		CSkinModelData				m_skinModelData;					//!<スキンモデルデータ。
 		const std::wstring			m_filePath;							//!<ファイルパス。
+		bool						m_isUpdateAnimation = true;			//!<アニメーションを更新する？
 	};
 }
 }

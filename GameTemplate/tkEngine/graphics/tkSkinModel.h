@@ -95,11 +95,13 @@ namespace tkEngine{
 		*@param[in] renderContext	レンダリングコンテキスト。
 		*@param[in]	viewMatrix		ビュー行列。
 		*@param[in]	projMatrix		プロジェクション行列。
+		*@param[in]	isUpdateAnimation	アニメーションを更新する？
 		*/
 		void Draw(
 			CRenderContext& renderContext, 
 			const CMatrix& viewMatrix, 
-			const CMatrix& projMatrix
+			const CMatrix& projMatrix,
+			bool isUpdateAnimation = true
 		);
 		/*!
 		*@brief	メッシュの検索。

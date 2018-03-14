@@ -47,6 +47,13 @@ namespace tkEngine{
 		{
 			m_tonemapParam.midddleGray = lum;
 		}
+		/*!
+		*@brief	 トーンマップの有効無効を設定。
+		*/
+		void SetEnable(bool flag)
+		{
+			m_isEnable = flag;
+		}
 	public:
 		static const int MAX_SAMPLES = 16;
 	private:

@@ -136,21 +136,31 @@ namespace tkEngine{
 				for (auto go : goList) {
 					if (go->m_nameKey == nameKey) {
 						//見つけた。
-						return dynamic_cast<T*>(go);
+						T* p = dynamic_cast<T*>(go);
+						if (p == nullptr) {
+							//型変換に失敗。
+							TK_WARNING_MESSAGE_BOX("FingGameObject ： 型変換に失敗しました。テンプレート引数を確認してください。");
+						}
+						return p;
 					}
 				}
 			}
 			//見つからなかった。
 			return nullptr;
 		}
-		/*!
-		*@brief	ゲームオブジェクトの検索のヘルパー関数。
-		*@param[in]	objectName	ゲームオブジェクトの名前。
-		*/
 		template<class T>
-		static inline T* FindGO(const char* objectName)
+		void FindGameObjects(const char* objectName, std::function<void(T* go)> func)
 		{
-			return GameObjectManager().FindGameObject<T>(objectName);
+			unsigned int nameKey = CUtil::MakeHash(objectName);
+			for (auto goList : m_gameObjectListArray) {
+				for (auto go : goList) {
+					if (go->m_nameKey == nameKey) {
+						//見つけた。
+						T* p = dynamic_cast<T*>(go);
+						func(p);						
+					}
+				}
+			}
 		}
 		/*!
 		*@brief	指定したタグのいずれかがが含まれるゲームオブジェクトを検索して、見つかった場合指定されたコールバック関数を呼び出す。
@@ -250,6 +260,18 @@ namespace tkEngine{
 	static inline T* FindGO(const char* objectName)
 	{
 		return GameObjectManager().FindGameObject<T>(objectName);
+	}
+	/*!
+	*@brief	ゲームオブジェクトの検索のヘルパー関数。
+	*@details
+	* 同名のゲームオブジェクトに全てに対して、クエリを行いたい場合に使用してください。
+	*@param[in]	objectName	ゲームオブジェクトの名前。
+	*@param[in]	func		ゲームオブジェクトが見つかったときに呼ばれるコールバック関数。
+	*/
+	template<class T>
+	static inline void FindGOs(const char* objectName, std::function<void(T* go)> func)
+	{
+		return GameObjectManager().FindGameObjects<T>(objectName, func);
 	}
 }
 #endif // _CGAMEOBJECTMANAGER_H_
