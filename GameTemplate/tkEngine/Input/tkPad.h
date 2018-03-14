@@ -137,12 +137,12 @@ namespace tkEngine{
 		}
 	private:
 		PAD_STATE m_state;	//!<パッドステート。
-		int m_padNo;		//!<パッド番号。
+		int m_padNo = 0;			//!<パッド番号。
 		int m_trigger[enButtonNum];	//!<トリガー入力のフラグ。
 		int m_press[enButtonNum];	//!<press入力のフラグ。
-		float m_lStickX;			//!<左スティックのX軸の入力量。
-		float m_lStickY;			//!<左スティックのY軸の入力量。
-		float m_rStickX;			//!<右スティックのX軸の入力量。
-		float m_rStickY;			//!<右スティックのY軸の入力量。
+		float m_lStickX = 0.0f;		//!<左スティックのX軸の入力量。
+		float m_lStickY = 0.0f;		//!<左スティックのY軸の入力量。
+		float m_rStickX = 0.0f;		//!<右スティックのX軸の入力量。
+		float m_rStickY = 0.0f;		//!<右スティックのY軸の入力量。
 	};
 }

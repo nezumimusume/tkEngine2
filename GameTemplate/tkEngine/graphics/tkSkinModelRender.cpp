@@ -14,6 +14,7 @@ namespace prefab{
 		int numAnimationClips ,
 		CSkinModel::EnFbxUpAxis fbxUpAxis)
 	{
+		m_enFbxUpAxis = fbxUpAxis;
 		m_skinModelData.Load(filePath);
 		m_skinModel.Init(m_skinModelData);
 		InitAnimation(animationClips, numAnimationClips);

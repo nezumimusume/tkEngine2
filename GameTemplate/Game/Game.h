@@ -10,9 +10,8 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CSkinModel skinModel;							//スキンモデル。
-	CSkinModelData skinModelData;					//スキンモデルデータ。
-	CAnimationClip m_animClip[1];					//アニメーションクリップ。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
+	CAnimationClip m_animClip[1];							//アニメーションクリップ。
 	CAnimation m_animation;
 	CVector3 m_pos = CVector3::Zero;
 };

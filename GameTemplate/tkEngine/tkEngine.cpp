@@ -35,7 +35,12 @@ namespace tkEngine {
 		m_physicsWorld.Init();
 		//乱数を初期化。
 		m_random.Init((unsigned long)time(NULL));
-
+		//パッドを初期化。
+		int padNo = 0;
+		for (auto& pad : m_pad) {
+			pad.Init(padNo);
+			padNo++;
+		}
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		m_font = std::make_unique<CFont>();
 #endif
