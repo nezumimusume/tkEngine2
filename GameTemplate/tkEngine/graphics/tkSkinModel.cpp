@@ -110,7 +110,8 @@ namespace tkEngine{
 	void CSkinModel::Draw(
 		CRenderContext& renderContext, 
 		const CMatrix& viewMatrix, 
-		const CMatrix& projMatrix
+		const CMatrix& projMatrix,
+		bool isUpdateAnimation
 	)
 	{
 		
@@ -171,6 +172,7 @@ namespace tkEngine{
 
 		//アニメーションを更新。
 		if (renderContext.GetRenderStep() == enRenderStep_Render3DModelToScene 
+			&& isUpdateAnimation
 			&& m_animation != nullptr) {
 			m_animation->Update(GameTime().GetFrameDeltaTime());
 		}
