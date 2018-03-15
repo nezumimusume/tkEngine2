@@ -31,6 +31,7 @@ void Game::OnDestroy()
 }
 bool Game::Start()
 {
+	hoge
 	m_directionLig = NewGO<prefab::CDirectionLight>(0, nullptr);
 	CVector3 lightDir = { 0.707f, -0.707f, -0.707f };
 	lightDir.Normalize();
