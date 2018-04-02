@@ -371,6 +371,9 @@
     <ClInclude Include="graphics\2D\tkSpriteRender.h">
       <Filter>Source Files\graphics\2D</Filter>
     </ClInclude>
+    <ClInclude Include="Input\tkMouse.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -594,6 +597,9 @@
     </ClCompile>
     <ClCompile Include="graphics\2D\tkSpriteRender.cpp">
       <Filter>Source Files\graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\tkMouse.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

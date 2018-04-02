@@ -156,6 +156,12 @@ namespace tkEngine {
 
 		switch (msg)
 		{
+		case WM_LBUTTONDOWN:
+			Mouse().OnLButtonDown();
+			break;
+		case WM_MBUTTONDOWN:
+			Mouse().OnRButtonDown();
+			break;
 		case WM_PAINT:
 			hdc = BeginPaint(hWnd, &ps);
 			EndPaint(hWnd, &ps);
