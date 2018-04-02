@@ -26,6 +26,9 @@ struct AnimationClip(
 --オブジェクトパラメータの配列。
 g_objectParams = #()
 
+startFrame = 0
+endFrame = 0
+
 rollout tkExporter "tkExporter" width:194 height:248
 (
 	groupBox grp1 "Animation clip" pos:[10,97] width:171 height:135
@@ -75,6 +78,7 @@ rollout tkExporter "tkExporter" width:194 height:248
 		
 		if filepath != undefined then
 		(
+			
 			file = fopen filepath "wb"
 			
 			try(
@@ -111,13 +115,11 @@ rollout tkExporter "tkExporter" width:194 height:248
 	 */
 	fn SaveAnimationClip=
 	(
-		AnimationClip animClip string #()
 		filepath = getSaveFileName caption:"" types: "animation clip (*tka)|*.tka|All Files (*.*)|*.*|"
 
 		if filepath != undefined then
 		(
-			startFrame = animClipStartFrame.text as integer + 1
-			endFrame = animClipEndFrame.text as integer + 1
+			
 			numKey = endFrame - startFrame + 1
 			if numKey <= 0 then(
 				--1フレームだけ出す。
@@ -156,56 +158,45 @@ rollout tkExporter "tkExporter" width:194 height:248
 				WriteLong file 0
 			)
 			
+			fclose file
 			--アニメーションの情報を出力。
+			slidertime=startFrame
+
+			file = fopen filepath "ab"
+			
 			for i=startFrame to endFrame do(
 				boneId = 0
 				keyTime = (i - startFrame) * deltaTime
+				
 				for o in g_objectParams do (
-					
 					n = o.n
-					transCtr = n.pos.track
-					rotCtr = n.rotation.track
-					
-					matTrans = matrix3 1
-					pos = Point3 0.0 0.0 0.0
-					if matTransList.count <= boneId then(
-						pos.x = o.localPos.x
-						pos.y = o.localPos.y
-						pos.z = o.localPos.z
-						translate matTrans pos
-						append matTransList matTrans
-					)
-					if matRotList.count <= boneId then(
-						matRot = o.localRot as matrix3
-						append matRotList matRot
-					)
-					if transCtr.x_position.keys.count >= i  then(
-						pos.x = transCtr.x_position.keys[i].value
-						pos.y = transCtr.y_position.keys[i].value 
-						pos.z = transCtr.z_position.keys[i].value 
-						 matTransList[boneId+1] = transMatrix(pos)
-					)
-					
-					if rotCtr.x_rotation.keys.count >= i then(
-						xRot = rotCtr.x_rotation.keys[i].value
-						yRot = rotCtr.y_rotation.keys[i].value
-						zRot = rotCtr.z_rotation.keys[i].value
-						matRotList[boneId+1] = rotateXMatrix (xRot) * rotateYMatrix (yRot) * rotateZMatrix (zRot)
-					)
 
-					transformMatrix = matRotList[boneId+1] * matTransList[boneId+1]
 					--出力
 					WriteLong file boneId -- 骨ID
 					WriteFloat file keyTime -- 時間
+					
+					--ボーンローカル行列に変換する。
+					
+					transformMatrix = Matrix3 1
+					if n.parent == undefined then(
+						transformMatrix =n.transform
+					)else(
+						transformMatrix = n.transform * inverse n.parent.transform
+					)
 					for i = 1 to 4 do(
+						
 						WriteFloat file transformMatrix[i].x
 						WriteFloat file transformMatrix[i].y
 						WriteFloat file transformMatrix[i].z
 					)
 					boneId +=1
+					
 				)
+				slidertime += 1
 			)
+			
 			fclose file
+
 		)
 	)
 	/*
@@ -217,8 +208,14 @@ rollout tkExporter "tkExporter" width:194 height:248
 			Messagebox "出力するスケルトンのルートのオブジェクトを選択して下さい。。。"
 		)else(
 			g_objectParams = #()
-			BuildOutputNodeInfo selection[1] -1
-			SaveSkeleton()
+			--アニメーション時間を0にする。
+			animationRange = interval 0 animationRange.end
+			slidertime = 0
+			at time 0(
+				--アニメーション進行中の処理。
+				BuildOutputNodeInfo selection[1] -1
+				SaveSkeleton()
+			)
 		)
 	)
 	/*
@@ -231,13 +228,21 @@ rollout tkExporter "tkExporter" width:194 height:248
 		)else(
 			--とりあえず全クリップ出力する。
 			g_objectParams = #()
-			BuildOutputNodeInfo selection[1] -1
-			try(
-				SaveAnimationClip()
-			)catch(
-				messageBox "ファイルの保存に失敗しました"
+			--アニメーション時間を0にする。
+			startFrame = animClipStartFrame.text as integer
+			endFrame = animClipEndFrame.text as integer
+			animationRange = interval startFrame endFrame
+			slidertimer = 0
+			animate on(
+				--アニメーション進行中の処理。
+				BuildOutputNodeInfo selection[1] -1
+				try(
+					SaveAnimationClip()
+				)catch(
+					messageBox "ファイルの保存に失敗しました"
+				)
 			)
 		)
 	)
 )
-createDialog tkExporter style:#(#style_titlebar, #style_sysmenu)
+addrollout tkExporter style:#(#style_titlebar, #style_sysmenu)

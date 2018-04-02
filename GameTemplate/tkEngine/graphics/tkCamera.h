@@ -150,6 +150,20 @@ namespace tkEngine{
 			m_height = h;
 		}
 		/*!
+		* @brief	平行投影の幅を取得
+		*/
+		float GetWidth() const
+		{
+			return m_width;
+		}
+		/*!
+		* @brief	平行投影の高さを取得
+		*/
+		float GetHeight() const
+		{
+			return m_height;
+		}
+		/*!
 		* @brief	平行投影の高さを設定。
 		*@details
 		* m_updateProjMatrixFuncがenUpdateProjMatrixFunc_Orthoの時に使用される。

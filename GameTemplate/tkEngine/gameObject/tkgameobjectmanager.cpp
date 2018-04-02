@@ -37,6 +37,7 @@ namespace tkEngine{
 				obj->PostUpdateWrapper();
 			}
 		}
+		
 		//シーングラフを更新。
 		UpdateSceneGraph();
 		//ライトを更新。

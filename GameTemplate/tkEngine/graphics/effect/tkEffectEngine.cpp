@@ -40,7 +40,7 @@ namespace tkEngine {
 			GraphicsEngine().GetD3DDeviceContext(),
 			2000);
 		//エフェクトマネージャを初期化。
-		m_manager = Effekseer::Manager::Create(2000);
+		m_manager = Effekseer::Manager::Create(10000);
 
 		// 描画用インスタンスから描画機能を設定
 		m_manager->SetSpriteRenderer(m_renderer->CreateSpriteRenderer());

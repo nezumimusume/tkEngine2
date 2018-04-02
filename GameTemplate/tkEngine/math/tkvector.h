@@ -501,8 +501,8 @@ namespace tkEngine{
 			float pw, px, py, pz;
 			float qw, qx, qy, qz;
 
-			pw = w; px = x; py = y; pz = z;
-			qw = rot.w; qx = rot.x; qy = rot.y; qz = rot.z;
+			qw = w; qx = x; qy = y; qz = z;
+			pw = rot.w; px = rot.x; py = rot.y; pz = rot.z;
 
 			w = pw * qw - px * qx - py * qy - pz * qz;
 			x = pw * qx + px * qw + py * qz - pz * qy;
@@ -520,8 +520,8 @@ namespace tkEngine{
 			float pw, px, py, pz;
 			float qw, qx, qy, qz;
 
-			pw = rot0.w; px = rot0.x; py = rot0.y; pz = rot0.z;
-			qw = rot1.w; qx = rot1.x; qy = rot1.y; qz = rot1.z;
+			qw = rot0.w; qx = rot0.x; qy = rot0.y; qz = rot0.z;
+			pw = rot1.w; px = rot1.x; py = rot1.y; pz = rot1.z;
 
 			w = pw * qw - px * qx - py * qy - pz * qz;
 			x = pw * qx + px * qw + py * qz - pz * qy;

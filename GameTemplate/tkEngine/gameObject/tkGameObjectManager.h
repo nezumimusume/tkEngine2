@@ -149,7 +149,7 @@ namespace tkEngine{
 			return nullptr;
 		}
 		template<class T>
-		void FindGameObjects(const char* objectName, std::function<void(T* go)> func)
+		void FindGameObjects(const char* objectName, std::function<bool(T* go)> func)
 		{
 			unsigned int nameKey = CUtil::MakeHash(objectName);
 			for (auto goList : m_gameObjectListArray) {
@@ -157,7 +157,10 @@ namespace tkEngine{
 					if (go->m_nameKey == nameKey) {
 						//見つけた。
 						T* p = dynamic_cast<T*>(go);
-						func(p);						
+						if (func(p) == false) {
+							//クエリ中断。
+							return;
+						}
 					}
 				}
 			}
@@ -269,7 +272,7 @@ namespace tkEngine{
 	*@param[in]	func		ゲームオブジェクトが見つかったときに呼ばれるコールバック関数。
 	*/
 	template<class T>
-	static inline void FindGOs(const char* objectName, std::function<void(T* go)> func)
+	static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> func)
 	{
 		return GameObjectManager().FindGameObjects<T>(objectName, func);
 	}

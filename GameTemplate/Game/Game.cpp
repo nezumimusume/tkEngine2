@@ -18,10 +18,12 @@ bool Game::Start()
 	MainCamera().SetFar(100.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
-	
+	m_animClip[0].Load(L"animData/test.tka");
+	m_animClip[0].SetLoopFlag(true);
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	m_skinModelRender->Init(L"modelData/unityChan.cmo", m_animClip, 1, CSkinModel::enFbxUpAxisY);
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );
+	
 	return true;
 }
 void Game::Update()
