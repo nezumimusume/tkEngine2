@@ -73,6 +73,7 @@ namespace tkEngine {
 				m_topBoneKeyFramList = &m_keyFramePtrListArray[keyframe->boneIndex];
 			}
 		}
+		m_loaded = true;
 	}
 
 #if BUILD_LEVEL!=BUILD_LEVEL_MASTER

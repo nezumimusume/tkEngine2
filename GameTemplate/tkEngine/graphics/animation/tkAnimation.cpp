@@ -16,6 +16,7 @@ namespace tkEngine{
 		if (m_skeleton != nullptr) {
 		}
 	}
+	
 	void CAnimation::Init(CSkinModel& skinModel, CAnimationClip animClipList[], int numAnimClip)
 	{
 		TK_ASSERT(animClipList != nullptr, "animClipListÇ™NULLÇ≈Ç∑ÅB");

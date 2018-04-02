@@ -49,15 +49,7 @@ namespace tkEngine{
 		{
 			m_position = pos;
 		}
-		
-		/*!
-		 * @brief	ジャンプさせる。
-		 */
-		void Jump( )
-		{
-			m_isJump = true;
-			m_isOnGround = false;
-		}
+
 		/*!
 		 * @brief	ジャンプ中か判定
 		 */

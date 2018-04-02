@@ -1,2 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<EffekseerProject />
+<EffekseerProject>
+  <Option>
+    <ExternalMagnification>300</ExternalMagnification>
+  </Option>
+</EffekseerProject>

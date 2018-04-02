@@ -161,5 +161,13 @@
     <CustomBuild Include="Assets\effect\Texture\wind02.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\test.tka">
+      <Filter>Assets\animData</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\dummy.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

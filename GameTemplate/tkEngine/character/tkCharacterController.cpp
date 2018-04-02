@@ -122,6 +122,11 @@ namespace tkEngine {
 	}
 	const CVector3& CCharacterController::Execute(float deltaTime, CVector3& moveSpeed)
 	{
+		if (moveSpeed.y > 0.0f) {
+			//吹っ飛び中にする。
+			m_isJump = true;
+			m_isOnGround = false;
+		}
 		//次の移動先となる座標を計算する。
 		CVector3 nextPosition = m_position;
 		//速度からこのフレームでの移動量を求める。オイラー積分。

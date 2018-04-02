@@ -200,6 +200,13 @@ namespace tkEngine{
 		{
 			return m_numAnimationEvent;
 		}
+		/*!
+		*@brief	アニメーションクリップはロード済み？
+		*/
+		bool IsLoaded() const
+		{
+			return m_loaded;
+		}
 	private:
 		using KeyframePtr = std::unique_ptr<Keyframe>;
 		std::wstring m_clipName;	//!<アニメーションクリップの名前。
@@ -210,6 +217,7 @@ namespace tkEngine{
 		int									m_numAnimationEvent = 0;	//アニメーションイベントの数。
 		keyFramePtrList*				m_topBoneKeyFramList = nullptr;
 		SFreezeBoneInfo m_freezeBoneInfo;	//!<フリーズさせるボーン情報。
+		bool m_loaded = false;	//アニメーションクリップがロードされている？
 	};
 	using CAnimationClipPtr = std::unique_ptr<CAnimationClip>;
 }

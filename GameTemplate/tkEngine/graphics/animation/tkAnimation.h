@@ -9,7 +9,9 @@
 #include "tkEngine/graphics/animation/postProcess/tkAnimationFootIK.h"
 
 namespace tkEngine{
-	
+	namespace prefab {
+		class CSkinModelRender;
+	}
 	class CSkeleton;
 	using AnimationEventListener = std::function<void(const wchar_t* clipName, const wchar_t* eventName)>;
 	/*!
@@ -26,6 +28,7 @@ namespace tkEngine{
 		 *@param[in]	numAnimClip		アニメーションクリップの数。
 		 */
 		void Init(CSkinModel& skinModel, CAnimationClip animClipList[], int numAnimClip);
+
 		
 		/*!
 		 *@brief	アニメーションの再生。
@@ -152,6 +155,11 @@ namespace tkEngine{
 	private:
 		void PlayCommon(CAnimationClip* nextClip, float interpolateTime)
 		{
+			if (nextClip->IsLoaded() == false) {
+				//アニメーションクリップがロードされていない。
+				TK_WARNING_MESSAGE_BOX("警告 : アニメーションクリップがロードされていません。");
+				return;
+			}
 			int index = GetLastAnimationControllerIndex();
 			if (m_animationPlayController[index].GetAnimClip() == nextClip) {
 				return;
