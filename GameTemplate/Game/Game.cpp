@@ -21,9 +21,15 @@ bool Game::Start()
 	m_animClip[0].Load(L"animData/test.tka");
 	m_animClip[0].SetLoopFlag(true);
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/unityChan.cmo", m_animClip, 1, CSkinModel::enFbxUpAxisY);
+	m_skinModelRender->Init(L"modelData/unityChan.cmo", m_animClip, 1);
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );
 	
+	//エネミーを２体生成する。
+	NewGO<Enemy>(0, "Enemy01");
+	NewGO<Enemy>(0, "Enemy02");
+	m_player = NewGO<Player>(0);
+	//Enemy01という名前が付けられている、インスタンスを検索する。
+	Enemy* enemy = FindGO<Enemy>("Enemy01");
 	return true;
 }
 void Game::Update()

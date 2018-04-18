@@ -11,7 +11,6 @@
 #include "tkEngine/physics/tkPhysics.h"
 #include "tkEngine/random/tkRandom.h"
 #include "tkEngine/graphics/font/tkFont.h"
-#include "tkEngine/Input/tkMouse.h"
 
 namespace tkEngine{
 	/*!
@@ -32,7 +31,7 @@ namespace tkEngine{
 		 *@brief	初期化。
 		 *@param[in]	initParam		初期化パラメータ。
 		 */
-		bool Init(const SInitParam& initParam);
+		bool Init( const SInitParam& initParam );
 		/*!
 		 *@brief	終了処理。
 		 */
@@ -47,12 +46,12 @@ namespace tkEngine{
 		static CEngine& GetInstance()
 		{
 			static CEngine* instance = nullptr;
-			if (instance == nullptr) {
+			if(instance == nullptr){
 				instance = new CEngine;
 			}
 			return *instance;
 		}
-
+		
 		/*!
 		* @brief	ゲームパッドの取得。
 		*@param[in]	padNo	パッド番号
@@ -112,13 +111,6 @@ namespace tkEngine{
 			return m_random;
 		}
 		/*!
-		*@brief		マウスを取得。
-		*/
-		CMouse& GetMouse()
-		{
-			return m_mouse;
-		}
-		/*!
 		*@brief		リソースのアンロード。
 		*@details
 		* 常駐リソース以外のリソースをすべてアンロードします。
@@ -148,7 +140,6 @@ namespace tkEngine{
 		int						m_screenWidth = 0;							//!<スクリーンの幅。
 		int						m_screenHeight = 0;							//!<スクリーンの高さ。
 		CPad					m_pad[CPad::CONNECT_PAD_MAX];				//!<ゲームパッド。
-		CMouse					m_mouse;									//!<マウス。
 		CRandom					m_random;									//!<乱数。
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		std::unique_ptr<CFont>	m_font;
@@ -235,13 +226,6 @@ namespace tkEngine{
 	static inline CRandom& Random()
 	{
 		return Engine().GetRandom();
-	}
-	/*!
-	*@brief		マウスを取得。
-	*/
-	static inline CMouse& Mouse()
-	{
-		return Engine().GetMouse();
 	}
 	
 }
