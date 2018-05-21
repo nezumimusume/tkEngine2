@@ -12,6 +12,7 @@ pushd %CURRENT_DIR%
 @copy "%CURRENT_DIR%GameTemplate\tkTools\3dsMaxScripts\tkExporter.ms" "c:\Program Files\Autodesk\3ds Max 2015\scripts\"
 @copy "%CURRENT_DIR%GameTemplate\tkTools\3dsMaxScripts\tkExporter.ms" "c:\Program Files\Autodesk\3ds Max 2016\scripts\"
 @copy "%CURRENT_DIR%GameTemplate\tkTools\3dsMaxScripts\tkExporter.ms" "c:\Program Files\Autodesk\3ds Max 2017\scripts\"
+@copy "%CURRENT_DIR%GameTemplate\tkTools\3dsMaxScripts\tkExporter.ms" "c:\Program Files\Autodesk\3ds Max 2018\scripts\"
 
 
 

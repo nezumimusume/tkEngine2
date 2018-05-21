@@ -82,7 +82,6 @@ void Player::Move()
 	) {
 		//ジャンプする。
 		m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
-		m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
 	}
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
