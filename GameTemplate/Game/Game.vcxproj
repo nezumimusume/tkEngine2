@@ -645,9 +645,9 @@
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\modelData\unityChan.tks">
+    <CustomBuild Include="Assets\modelData\unityChan.tks">
       <FileType>Document</FileType>
-    </None>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\bloom.fx">

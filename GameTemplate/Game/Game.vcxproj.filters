@@ -161,15 +161,13 @@
     <CustomBuild Include="Assets\animData\test.tka">
       <Filter>Assets\animData</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\modelData\unityChan.tks">
+      <Filter>Assets\modelData</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\modelData\unityChan.tks">
-      <Filter>Assets\modelData</Filter>
-    </None>
   </ItemGroup>
 </Project>
