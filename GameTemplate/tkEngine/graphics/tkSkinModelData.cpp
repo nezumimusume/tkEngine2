@@ -32,9 +32,17 @@ namespace tkEngine{
 			effect->SetMatrialName(info.name);
 			if (info.diffuseTexture && *info.diffuseTexture)
 			{
-				ID3D11ShaderResourceView* texSRV;
-				DirectX::EffectFactory::CreateTexture(info.diffuseTexture, deviceContext, &texSRV);
-				effect->SetDiffuseTexture(texSRV);
+				try {
+					ID3D11ShaderResourceView* texSRV;
+					DirectX::EffectFactory::CreateTexture(info.diffuseTexture, deviceContext, &texSRV);
+					effect->SetDiffuseTexture(texSRV);
+				}
+				catch (std::exception& exception) {
+					if (strcmp(exception.what(), "CreateTexture") == 0) {
+						TK_WARNING_MESSAGE_BOX_W(L"3Dモデルに貼られているテクスチャの作成に失敗しました。%s\n"
+												 L"fbxファイルに貼られているテクスチャが、fbxファイルと同じ場所にあるか確認をお願いします。\n", info.diffuseTexture);
+					}
+				}
 			}
 			return effect;
 		}

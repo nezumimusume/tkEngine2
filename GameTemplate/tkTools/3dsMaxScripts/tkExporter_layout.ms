@@ -1,16 +1,16 @@
-rollout tkExporter "タイトルなし" width:399 height:326
+rollout tkExporter "タイトルなし" width:172 height:399
 (
-	editText 'animClipStartFrame' "" pos:[91,202] width:60 height:21 align:#left
-	label 'lbl1' "start frame" pos:[23,205] width:60 height:16 align:#left
-	groupBox 'grp1' "Animation clip" pos:[13,145] width:372 height:167 align:#left
-	groupBox 'grp2' "Skeleton" pos:[12,8] width:373 height:119 align:#left
-	button 'btn_saveAnimationClip' "Save" pos:[245,271] width:120 height:28 align:#left
-	label 'lbl2' "end frame" pos:[23,236] width:60 height:16 align:#left
-	editText 'animClipEndFrame' "" pos:[91,234] width:58 height:21 align:#left
-	button 'btn_saveSkeleton' "Save" pos:[245,79] width:120 height:28 align:#left
-	label 'lbl3' "Label" pos:[34,127] width:0 height:0 align:#left
-	label 'lbl4' "base folder" pos:[23,173] width:60 height:14 align:#left
-	editText 'animClipBaseFolder' "" pos:[91,168] width:274 height:21 align:#left
-	label 'lbl5' "base folder" pos:[23,34] width:60 height:14 align:#left
-	editText 'skeletonBaseFolder' "" pos:[91,31] width:274 height:21 align:#left
+	editText animClipStartFrame "" pos:[91,270] width:58 height:21
+	label lbl1 "start frame" pos:[23,273] width:60 height:16
+	groupBox grp1 "Animation clip" pos:[13,249] width:145 height:134
+	groupBox grp2 "Skeleton" pos:[12,172] width:145 height:64
+	button btn_saveAnimationClip "Save" pos:[28,339] width:120 height:28
+	label lbl2 "end frame" pos:[23,304] width:60 height:16
+	editText animClipEndFrame "" pos:[91,302] width:58 height:21
+	button btn_saveSkeleton "Save" pos:[23,191] width:120 height:28
+	label lbl3 "Label" pos:[34,291] width:0 height:0
+	groupBox grp5 "FBX" pos:[13,13] width:145 height:64
+	button btn_save_fbx "Save" pos:[24,33] width:120 height:28
+	groupBox grp10 "FBX And Skeleton" pos:[13,92] width:145 height:64
+	button btn_save_fbx_and_skeleton "Save" pos:[24,112] width:120 height:28
 )

@@ -72,17 +72,28 @@ namespace tkEngine {
 			}
 			localBoneIDtoGlobalBoneIDTbl.push_back(globalBoneID);
 		};
-
-		auto model = DirectX::Model::CreateFromCMO(
-			GraphicsEngine().GetD3DDevice(),
-			filePath,
-			effectFactory,
-			false,
-			false,
-			onFindBone
-		);
-		auto pRawModel = model.get();
-		m_resourceMap.insert(std::pair<int, DirectXModelPtr>(nameKey, std::move(model)));
-		return pRawModel;
+		try {
+			auto model = DirectX::Model::CreateFromCMO(
+				GraphicsEngine().GetD3DDevice(),
+				filePath,
+				effectFactory,
+				false,
+				false,
+				onFindBone
+			);
+			auto pRawModel = model.get();
+			m_resourceMap.insert(std::pair<int, DirectXModelPtr>(nameKey, std::move(model)));
+			return pRawModel;
+		}
+		catch (std::exception& exception) {
+			char cFilePath[256];
+			wcstombs(cFilePath, filePath, 255);
+			TK_WARNING_MESSAGE_BOX("%s\n"
+				"Assetsフォルダを確認して、%sと同じ場所に.tksファイルが存在するか確認してください。\n"
+				"もし存在している場合は、tksファイルの出力ミスが考えられます。\n", exception.what(), cFilePath);
+			std::abort();
+		}
+		return nullptr;
+		
 	}
 }

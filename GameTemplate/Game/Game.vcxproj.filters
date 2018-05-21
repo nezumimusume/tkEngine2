@@ -89,9 +89,6 @@
     <CustomBuild Include="Assets\shader\LightingFunction.h">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\modelData\unityChan.tks">
-      <Filter>Assets\modelData</Filter>
-    </CustomBuild>
     <CustomBuild Include="Assets\shader\dithering.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
@@ -169,5 +166,10 @@
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\modelData\unityChan.tks">
+      <Filter>Assets\modelData</Filter>
+    </None>
   </ItemGroup>
 </Project>
