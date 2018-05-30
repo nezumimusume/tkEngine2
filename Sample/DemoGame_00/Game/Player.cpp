@@ -92,7 +92,6 @@ void Player::UpdateFSM()
 		m_moveSpeed.z = 0.0f;
 		Move();
 		if (Pad(0).IsTrigger(enButtonA)) {
-			m_charaCon.Jump();
 			m_moveSpeed.y = JUMP_SPEED;
 			m_state = enState_Jump;
 		}else if (m_moveSpeed.LengthSq() > 0.001f) {
@@ -107,7 +106,6 @@ void Player::UpdateFSM()
 			//入力がなくなった。
 			m_state = enState_Idle;
 		}else if (Pad(0).IsTrigger(enButtonA)) {
-			m_charaCon.Jump();
 			//この時点でのXZ方向の速度を記憶しておく。
 			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 			m_moveSpeed.y = JUMP_SPEED;
@@ -252,12 +250,8 @@ void Player::Update()
 	
 	//キャラライトはカメラの方向にする。
 	m_charaLight->SetDirection(MainCamera().GetForward());
-	CQuaternion qRot = CQuaternion::Identity;
-	qRot.SetRotationDeg(CVector3::AxisX, 90.0f);	//寝てるので起こす。
-													//ワールド行列を更新。
-	CQuaternion q = m_rotation;
-	q.Multiply(qRot);
-	m_skinModel.Update(m_position, q, CVector3::One);
+	
+	m_skinModel.Update(m_position, m_rotation, CVector3::One, CSkinModel::enFbxUpAxisY);
 
 	CMatrix mRot;
 	mRot.MakeRotationFromQuaternion(m_rotation);

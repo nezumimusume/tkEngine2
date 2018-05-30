@@ -109,7 +109,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(ProjectDir)</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir);$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
     <IntDir>$(Configuration)Objects\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
