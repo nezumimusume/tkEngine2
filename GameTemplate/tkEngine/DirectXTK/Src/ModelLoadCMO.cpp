@@ -550,6 +550,14 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
                         auto skinv = reinterpret_cast<VertexPositionNormalTangentColorTextureSkinning*>( ptr );
 						XMUINT4 index = *reinterpret_cast<const XMUINT4*>(skinptr[v].boneIndex);
+						if (localBoneIDtoGlobalBoneIDTbl.size() >= index.x
+							|| localBoneIDtoGlobalBoneIDTbl.size() >= index.y
+							|| localBoneIDtoGlobalBoneIDTbl.size() >= index.z
+							|| localBoneIDtoGlobalBoneIDTbl.size() >= index.w 
+						) 
+						{
+							throw std::exception("スキンありのモデルをロードしていますが、スケルトンの情報が構築されていません。");
+						}
 						index.x = localBoneIDtoGlobalBoneIDTbl[index.x];
 						index.y = localBoneIDtoGlobalBoneIDTbl[index.y];
 						index.z = localBoneIDtoGlobalBoneIDTbl[index.z];

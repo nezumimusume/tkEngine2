@@ -23,6 +23,12 @@ namespace tkEngine{
 		m_filePathHash = CUtil::MakeHash(fileName);
 		m_hmmio = mmioOpen(const_cast<char*>(fileName), NULL, MMIO_ALLOCBUF | MMIO_READ);
 		if (m_hmmio == NULL) {
+			TK_WARNING_MESSAGE_BOX("waveファイルのオープンに失敗しました。filePath : %s\n"
+								   "原因として下記の２点が考えられます。\n"
+								   "①　ファイルパスが間違っている。\n"
+								   "②　ファイルがAssetsフォルダの中にない。\n"
+								   "上記２点を確認して、問題がない場合は一度VisualStudioのビルド/リビルドを行ってみてください。\n"
+								   "「無理！！！」という人は清原まで相談に来てください。\n", fileName);
 			TK_WARNING("Failed mmioOpen");
 			return;
 		}

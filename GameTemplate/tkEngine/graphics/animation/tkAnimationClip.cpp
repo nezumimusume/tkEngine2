@@ -21,7 +21,13 @@ namespace tkEngine {
 	{
 		auto fp = _wfopen(filePath, L"rb");
 		if (fp == nullptr) {
-			TK_WARNING("ファイルのオープンに失敗しました。: CAnimationClip::Load");
+			TK_WARNING_MESSAGE_BOX_W(L"アニメーションクリップのオープンに失敗しました。ファイルパス : %s\n"
+									 L"原因として、下記の２点が考えられます。\n"
+									 L"① ファイルパスが間違えている。\n"
+									 L"② Assetsフォルダの中にファイルが存在しない。\n"
+									 L"この２点を確認して、問題が存在しない場合は、一度VisualStudioのビルド/リビルドを行ってみてください。\n"
+									 L"「無理！！！」という人は清原まで相談に来てください。\n", filePath);
+			
 			return;
 		}
 		if (clipName != nullptr) {

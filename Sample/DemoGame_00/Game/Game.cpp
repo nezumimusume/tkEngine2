@@ -61,7 +61,12 @@ void Game::InitSceneLight()
 		m_pointLight.push_back(ptLig);
 	}
 
-	
+	LightManager().SetAmbientLight({ 5.0f, 5.0f, 5.0f });
+
+	if (m_directionLight != nullptr) {
+		GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
+	}
+
 
 }
 bool Game::Start()

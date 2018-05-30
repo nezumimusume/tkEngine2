@@ -89,9 +89,6 @@
     <CustomBuild Include="Assets\shader\LightingFunction.h">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\modelData\unityChan.tks">
-      <Filter>Assets\modelData</Filter>
-    </CustomBuild>
     <CustomBuild Include="Assets\shader\dithering.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
@@ -163,6 +160,9 @@
     </CustomBuild>
     <CustomBuild Include="Assets\animData\test.tka">
       <Filter>Assets\animData</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\unityChan.tks">
+      <Filter>Assets\modelData</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
