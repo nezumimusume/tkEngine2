@@ -31,9 +31,9 @@ namespace tkEngine{
 		}
 		/*!
 		 *@brief	カリングアルゴリズムの実行。
-		 *@param[in]	aabb	カリングを行いたいオブジェクトを内包するAABB。
+		 *@param[in]	box	カリングを行いたいオブジェクトをバウンディングボックス。
 		 */
-		void Execute(const CAabb& aabb) override;
+		void Execute(const CBox& box) override;
 	private:
 		const CCamera*	m_camera = nullptr;
 	};

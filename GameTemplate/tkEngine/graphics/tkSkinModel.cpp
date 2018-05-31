@@ -15,6 +15,38 @@ namespace tkEngine{
 	CSkinModel::~CSkinModel()
 	{
 	}
+	void CSkinModel::InitBoudingBox()
+	{
+		m_skinModelData->FindMesh([&](auto& mesh) {
+			auto vMax = CVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+			auto vMin = CVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+			auto deviceContext = GraphicsEngine().GetD3DDeviceContext();
+			{
+				D3D11_MAPPED_SUBRESOURCE subresource;
+				auto hr = deviceContext->Map(mesh->vertexBuffer.Get(), 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &subresource);
+				if (FAILED(hr)) {
+					TK_WARNING("Failed map vertexBuffer");
+					return;
+				}
+				D3D11_BUFFER_DESC bufferDesc;
+				mesh->vertexBuffer->GetDesc(&bufferDesc);
+				auto vertexCount = (int)(bufferDesc.ByteWidth / mesh->vertexStride);
+				auto pData = reinterpret_cast<char*>(subresource.pData);
+				for (int i = 0; i < vertexCount; i++) {
+					auto pos = *reinterpret_cast<CVector3*>(pData);
+					vMax.Max(pos);
+					vMin.Min(pos);
+					//次の頂点へ。
+					pData += mesh->vertexStride;
+				}
+				//頂点バッファをアンロック
+				deviceContext->Unmap(mesh->vertexBuffer.Get(), 0);
+			}
+
+			auto halfSize = (vMax - vMin) * 0.5f;
+			m_boundingBox.Init(halfSize);
+		});
+	}
 	void CSkinModel::Init(CSkinModelData& modelData, int maxInstance)
 	{
 		m_maxInstance = maxInstance;
@@ -41,6 +73,8 @@ namespace tkEngine{
 			desc.StructureByteStride = sizeof(CMatrix);
 			m_instancingDataSB.Create(m_instancingData.get(), desc);
 		}
+
+		InitBoudingBox();
 	}
 	
 	void CSkinModel::UpdateWorldMatrix(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
@@ -58,6 +92,8 @@ namespace tkEngine{
 		mTrans.MakeTranslation(trans);
 		m_worldMatrix.Mul(mScale, mRot);
 		m_worldMatrix.Mul(m_worldMatrix, mTrans);
+		//バウンディングボックスの8頂点を更新する。
+		m_boundingBox.Update(m_worldMatrix);
 	}
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
 	{		

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "tkEngine/culling/tkObjectFrustumCulling.h"
 
 namespace tkEngine{
 namespace prefab{
@@ -131,6 +132,15 @@ namespace prefab{
 			return m_skinModel;
 		}
 		/*!
+		*@brief	視推台カリングを行うかどうかのフラグを設定・
+		*@details
+		* このフラグをtrueにすると画面に映っていないオブジェクトは表示されなくなります。
+		*/
+		void SetFrustumCulling(bool flag)
+		{
+			m_isFrustumCulling = flag;
+		}
+		/*!
 		*@brief	モデルマテリアルの検索。
 		*@param[in]	findEffect		マテリアルを見つけた時に呼ばれるコールバック関数
 		*/
@@ -160,6 +170,8 @@ namespace prefab{
 		CSkinModel					m_skinModel;						//!<スキンモデル。
 		CSkinModelData				m_skinModelData;					//!<スキンモデルデータ。
 		const std::wstring			m_filePath;							//!<ファイルパス。
+		bool						m_isFrustumCulling = false;			//!<フラスタムカリングを行う？
+		CObjectFrustumCulling		m_frustumCulling;					//!<フラスタムカリング。
 		bool						m_isUpdateAnimation = true;			//!<アニメーションを更新する？
 	};
 }

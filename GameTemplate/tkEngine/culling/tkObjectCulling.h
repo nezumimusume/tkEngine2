@@ -25,7 +25,7 @@ namespace tkEngine{
 		/*!
 		 *@brief	カリングアルゴリズムを実行。
 		 */
-		virtual void Execute(const CAabb& aabb) = 0;
+		virtual void Execute(const CBox& aabb) = 0;
 		/*!
 		 *@brief	カリングされているか判定。
 		 */

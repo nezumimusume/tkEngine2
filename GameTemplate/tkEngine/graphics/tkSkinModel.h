@@ -5,6 +5,7 @@
 #pragma once
 
 #include "tkEngine/graphics/preRender/tkShadowCaster.h"
+#include "tkEngine/math/tkBox.h"
 
 namespace tkEngine{
 	class CSkinModelData;
@@ -163,7 +164,18 @@ namespace tkEngine{
 		{
 			m_animation = animation;
 		}
+		/*!
+		*@brief	バウンディングボックス。
+		*/
+		CBox& GetBoundingBox()
+		{
+			return m_boundingBox;
+		}
 	private:
+		/*!
+		*@brief バウンディングボックスの初期化。
+		*/
+		void InitBoudingBox();
 		/*!
 		 *@brief	ワールド行列の更新。
 		 */
@@ -188,5 +200,6 @@ namespace tkEngine{
 		CStructuredBuffer	m_instancingDataSB;				//!<インスタンシング描画用のストラクチャーバッファ。
 		int m_maxInstance = 1;								//!<インスタンスの最大数
 		int m_numInstance = 0;								//!<インスタンスの数。
+		CBox m_boundingBox;									//!<バウンディングボックス。
 	};
 }

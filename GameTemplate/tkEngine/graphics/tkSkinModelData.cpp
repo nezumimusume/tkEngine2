@@ -129,21 +129,6 @@ namespace tkEngine{
 	bool CSkinModelData::Load(const wchar_t* filePath)
 	{
 		CSkinModelEffectFactory effectFactory(GraphicsEngine().GetD3DDevice());
-		//ボーンを発見したときのコールバック。
-		
-		auto onFindBone = [&](
-			const wchar_t* boneName, 
-			const VSD3DStarter::Bone* bone,
-			std::vector<int>& localBoneIDtoGlobalBoneIDTbl
-		) {
-			int globalBoneID = m_skeleton.FindBoneID(boneName);
-			if (globalBoneID == -1) {
-				TK_WARNING("BoneID wasn't found!!!!");
-				return;
-			}
-			localBoneIDtoGlobalBoneIDTbl.push_back(globalBoneID);
-		};
-	
 		//スケルトンのデータを読み込み。
 		std::wstring skeletonFilePath = filePath;
 		int pos = (int)skeletonFilePath.find(L".cmo");
