@@ -40,10 +40,11 @@ namespace prefab{
 	 */
 	void CSkinModelRender::Update()
 	{
+		m_skinModel.Update(m_position, m_rotation, m_scale, m_enFbxUpAxis);
 		if (m_isFrustumCulling == true) {
+			m_skinModel.UpdateBoundingBox();
 			m_frustumCulling.Execute(m_skinModel.GetBoundingBox());
 		}
-		m_skinModel.Update(m_position, m_rotation, m_scale, m_enFbxUpAxis);
 	}
 	/*!
 	 * @brief	ï`âÊÅB

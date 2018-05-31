@@ -92,8 +92,6 @@ namespace tkEngine{
 		mTrans.MakeTranslation(trans);
 		m_worldMatrix.Mul(mScale, mRot);
 		m_worldMatrix.Mul(m_worldMatrix, mTrans);
-		//バウンディングボックスの8頂点を更新する。
-		m_boundingBox.Update(m_worldMatrix);
 	}
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
 	{		
@@ -106,7 +104,6 @@ namespace tkEngine{
 		m_numInstance = 1;
 		//スケルトン更新。
 		m_skinModelData->GetSkeleton().Update(m_worldMatrix);
-
 	}
 	
 	void CSkinModel::UpdateInstancingData(

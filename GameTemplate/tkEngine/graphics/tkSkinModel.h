@@ -165,6 +165,13 @@ namespace tkEngine{
 			m_animation = animation;
 		}
 		/*!
+		*@brief	バウンディングボックスの更新。
+		*/
+		void UpdateBoundingBox()
+		{
+			m_boundingBox.Update(m_worldMatrix);
+		}
+		/*!
 		*@brief	バウンディングボックス。
 		*/
 		CBox& GetBoundingBox()
