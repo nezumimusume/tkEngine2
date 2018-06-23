@@ -23,7 +23,13 @@ bool Game::Start()
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetFrustumCulling(true);
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );
-	
+
+	m_normalMap.CreateFromDDSTextureFromFile(L"modelData/utc_nomal.dds");
+	m_specMap.CreateFromDDSTextureFromFile(L"modelData/utc_spec.dds");
+	m_skinModelRender->FindMaterial([&](auto material) {
+		material->SetNormalMap(m_normalMap.GetBody());
+		material->SetSpecularMap(m_specMap.GetBody());
+	});
 	return true;
 }
 void Game::Update()

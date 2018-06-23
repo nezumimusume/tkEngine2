@@ -164,10 +164,19 @@
     <CustomBuild Include="Assets\modelData\unityChan.tks">
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\utc_nomal.tga">
+      <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\utc_spec.tga">
+      <Filter>Assets\modelData</Filter>
     </ImageContentTask>
   </ItemGroup>
 </Project>

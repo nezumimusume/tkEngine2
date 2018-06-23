@@ -116,6 +116,9 @@
     <CustomBuild Include="Assets\font\myfile.spritefont">
       <Filter>Assets\font</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\Thethief_N.tga">

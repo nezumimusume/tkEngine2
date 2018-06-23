@@ -319,6 +319,9 @@
     <CustomBuild Include="Assets\sound\Footstep_00.wav">
       <Filter>Assets\sound</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Thethief_H.FBX">

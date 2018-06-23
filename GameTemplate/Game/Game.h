@@ -11,5 +11,7 @@ public:
 	void Update();
 	void Render(CRenderContext& rc);
 	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
+	CShaderResourceView m_normalMap;	//法線マップ。
+	CShaderResourceView m_specMap;		//スペキュラマップ。	
 };
 

@@ -164,6 +164,23 @@ namespace tkEngine{
 		{
 			m_animation = animation;
 		}
+		void UpdateBoundingBox(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis = enFbxUpAxisZ)
+		{
+			CMatrix mWorld;
+			CMatrix mBias = CMatrix::Identity;
+			if (enUpdateAxis == enFbxUpAxisZ) {
+				//Z-up
+				mBias.MakeRotationX(CMath::PI * -0.5f);
+			}
+			CMatrix mScale, mTrans, mRot;
+			mScale.MakeScaling(scale);
+			mRot.MakeRotationFromQuaternion(rot);
+			mRot.Mul(mBias, mRot);
+			mTrans.MakeTranslation(trans);
+			mWorld.Mul(mScale, mRot);
+			mWorld.Mul(mWorld, mTrans);
+			m_boundingBox.Update(mWorld);
+		}
 		/*!
 		*@brief	バウンディングボックスの更新。
 		*/
@@ -192,7 +209,6 @@ namespace tkEngine{
 			CMatrix mWorld;
 			CMatrix mView;
 			CMatrix mProj;
-			CVector4 screenParam;
 			int isShadowReceiver;
 		};
 		CAnimation* m_animation = nullptr;

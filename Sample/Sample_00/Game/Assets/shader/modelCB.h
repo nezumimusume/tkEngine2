@@ -10,7 +10,6 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
-	float4 screenParam;		// スクリーンパラメータ(near, far, screenWidth, screenHeight)
 	int isShadowReceiver;	//シャドウレシーバー？
 };
 
@@ -25,13 +24,13 @@ cbuffer lightCb : register(b1)
 	int numDirectionLight 	: packoffset(c0.w);		//ディレクションライトの数。
 	float3 ambientLight		: packoffset(c1);		//アンビエントライト。
 	int numPointLight		: packoffset(c1.w);		//ポイントライトの数。
-	
+	float4 screenParam		: packoffset(c2);		// スクリーンパラメータ(near, far, screenWidth, screenHeight)
 };
 
 cbuffer MaterialParamCb : register(b2){
-	int hasNormalMap;	//!<法線マップある？
-	int hasSpecularMap;	//!<スペキュラマップある？
-	float anisotropic;	//異方性反射
+	int hasNormalMap;			//!<法線マップある？
+	int hasSpecularMap;			//!<スペキュラマップある？
+	float anisotropic;			//異方性反射
 	unsigned int materialID;	//!<マテリアルID。
 
 };

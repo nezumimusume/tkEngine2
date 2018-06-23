@@ -66,7 +66,7 @@ namespace tkEngine{
 			EnRenderStep renderStep = m_renderContext->GetRenderStep();
 			switch (renderStep)
 			{
-			case enRenderStep_Render3DModelToScene:
+			case enRenderStep_ForwardRender:
 				if (m_numInstance == 1) {
 					//’Êí•`‰æB
 					deviceContext->VSSetShader((ID3D11VertexShader*)m_pVSShader->GetBody(), NULL, 0);

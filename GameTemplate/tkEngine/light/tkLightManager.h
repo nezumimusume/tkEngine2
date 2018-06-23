@@ -99,6 +99,7 @@ namespace tkEngine{
 			int numDirectionLight;		//ディレクションライトの数。
 			CVector3 ambientLight;		//アンビエントライト。
 			int numPointLight;			//ポイントライトの数。
+			CVector4 screenParam;		//スクリーンパラメータ。
 		};
 		SLightParam							m_lightParam;
 		CConstantBuffer						m_lightParamCB;			//!<GPUで使用するライト用のパラメータの定数バッファ。

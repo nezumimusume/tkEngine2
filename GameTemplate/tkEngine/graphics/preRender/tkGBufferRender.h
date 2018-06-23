@@ -7,6 +7,16 @@
 #include "tkEngine/graphics/tkShadowBlur.h"
 
 namespace tkEngine{
+	//!<G-Bufferの定義。
+	enum EnGBuffer{
+		enGBufferAlbedo,	//!<アルベド。
+		enGBufferNormal,	//!<法線。
+		enGBufferSpecular,	//!<スペキュラ。
+		enGBufferShadow,	//!<影マップ。
+		enGBufferDepth,		//!<深度。
+		enGBufferTangent,	//!<接法線。
+		enGBufferNum,		//!<G-Bufferの数。
+	};
 	/*!
 	 * @brief	G-Buffer。
 	 */
@@ -36,15 +46,23 @@ namespace tkEngine{
 		 */
 		void Render(CRenderContext& rc);
 		/*!
-		*@brief	GBufferのパラメータをGPUに転送。
+		*@brief	GBufferのパラメータをレジスタに設定。
 		*/
-		void SendGBufferParamToGPU(CRenderContext& rc);
+		void SetGBufferParamToReg(CRenderContext& rc);
+		/*!
+		*@brief	GBufferをレジスタから外す。
+		*/
+		void UnsetGBufferParamFromReg(CRenderContext& rc);
+		/*!
+		*@brief	GBufferを取得。
+		*@param[in]	enGBuffer	取得したいG-Buffer
+		*/
+		CRenderTarget& GetRenderTarget(EnGBuffer enGBuffer) 
+		{
+			return m_GBuffer[enGBuffer];
+		}
 	private:
-		enum EnGBuffer{
-			enGBufferNormal,	//!<法線。
-			enGBufferShadow,	//!<影マップ。
-			enGBufferNum,		//!<G-Bufferの数。
-		};
+		
 		//定数パラメータ。
 		struct SCBParam {
 			bool isPCFShadowMap;		//影マップを作るときにPCFを行う。

@@ -96,7 +96,6 @@ namespace tkEngine{
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
 	{		
 		UpdateWorldMatrix(trans, rot, scale, enUpdateAxis);
-		GraphicsEngine().GetZPrepass().AddSkinModel(this);
 		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
 		if (m_isShadowCaster) {
 			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
@@ -129,7 +128,6 @@ namespace tkEngine{
 	
 	void CSkinModel::EndUpdateInstancingData()
 	{
-		GraphicsEngine().GetZPrepass().AddSkinModel(this);
 		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
 		if (m_isShadowCaster) {
 			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
@@ -164,10 +162,6 @@ namespace tkEngine{
 		vsCb.mWorld = m_worldMatrix;
 		vsCb.mProj = projMatrix;
 		vsCb.mView = viewMatrix;
-		vsCb.screenParam.x = 0.0f;
-		vsCb.screenParam.y = 0.0f;
-		vsCb.screenParam.z = static_cast<float>(GraphicsEngine().GetFrameBufferWidth());
-		vsCb.screenParam.w = static_cast<float>(GraphicsEngine().GetFrameBufferHeight());
 		vsCb.isShadowReceiver = m_isShadowReceiver ? 1 : 0;
 		
 		renderContext.UpdateSubresource(m_cb, &vsCb);
@@ -204,7 +198,7 @@ namespace tkEngine{
 		}
 
 		//アニメーションを更新。
-		if (renderContext.GetRenderStep() == enRenderStep_Render3DModelToScene 
+		if (renderContext.GetRenderStep() == enRenderStep_RenderGBuffer
 			&& isUpdateAnimation
 			&& m_animation != nullptr) {
 			m_animation->Update(GameTime().GetFrameDeltaTime());

@@ -83,13 +83,6 @@ namespace tkEngine{
 			return m_physicsWorld;
 		}
 		/*!
-		* @brief	ZPrepassの取得。
-		*/
-		CZPrepass& GetZPrepass()
-		{
-			return m_graphicsEngine.GetZPrepass();
-		}
-		/*!
 		*@brief	メインカメラを取得。
 		*/
 		CCamera& GetMainCamera()
@@ -227,5 +220,11 @@ namespace tkEngine{
 	{
 		return Engine().GetRandom();
 	}
-	
+	/*!
+	*@brief	G-BufferのSRVを取得。
+	*/
+	static inline CShaderResourceView& GetGBufferSRV(EnGBuffer gBuffer)
+	{
+		return Engine().GetGraphicsEngine().GetGBufferRender().GetRenderTarget(gBuffer).GetRenderTargetSRV();
+	}
 }

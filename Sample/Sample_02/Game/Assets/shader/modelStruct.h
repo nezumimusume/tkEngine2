@@ -52,8 +52,12 @@ struct PSInput_RenderToDepth{
  * @brief	G-Buffer描画用のピクセルシェーダーからの出力。
  */
 struct PSOutput_RenderGBuffer{
-	float4 normal		: SV_Target0;		//法線。
-	float shadow		: SV_Target1;		//シャドウ。
+	float4 albedo		: SV_Target0;		//アルベド
+	float3 normal		: SV_Target1;		//法線。
+	float2 spacular		: SV_Target2;		//スペキュラ。
+	float shadow		: SV_Target3;		//シャドウ。
+	float depth			: SV_Target4;		//深度値。
+	float3 tangent		: SV_Target5;		//接ベクトル。
 };
 
 /*!

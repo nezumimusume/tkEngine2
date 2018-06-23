@@ -143,6 +143,10 @@ namespace tkEngine{
 		
 		m_lightParam.numDirectionLight = static_cast<int>(m_directionLights.size());
 		m_lightParam.numPointLight = static_cast<int>(m_pointLights.size());
+		m_lightParam.screenParam.x = 0.0f;
+		m_lightParam.screenParam.y = 0.0f;
+		m_lightParam.screenParam.z = static_cast<float>(GraphicsEngine().GetFrameBufferWidth());
+		m_lightParam.screenParam.w = static_cast<float>(GraphicsEngine().GetFrameBufferHeight());
 		//ダーティフラグはここではおろさずに、Render関数でおろす。
 	}
 	void CLightManager::Render(CRenderContext& renderContext)

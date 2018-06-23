@@ -721,6 +721,19 @@
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\utc_nomal.tga">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\utc_spec.tga">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

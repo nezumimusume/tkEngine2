@@ -203,9 +203,6 @@
     <ClInclude Include="tkEnginePreCompile.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\preRender\tkZPrepass.h">
-      <Filter>Source Files\graphics\preRender</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\preRender\tkPreRender.h">
       <Filter>Source Files\graphics\preRender</Filter>
     </ClInclude>
@@ -459,9 +456,6 @@
     </ClCompile>
     <ClCompile Include="tkEnginePreCompile.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\preRender\tkZPrepass.cpp">
-      <Filter>Source Files\graphics\preRender</Filter>
     </ClCompile>
     <ClCompile Include="graphics\preRender\tkPreRender.cpp">
       <Filter>Source Files\graphics\preRender</Filter>

@@ -16,10 +16,10 @@ bool Player::Start()
 	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
 	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
-
+	
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/Thethief_H.cmo", m_animationClip, enAnimationClip_num);
-	
+	m_skinModelRender->SetShadowCasterFlag(true);
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		20.0,			//半径。 

@@ -6,7 +6,6 @@
 #define _TKPRERENDER_H_
 
 #include "tkEngine/graphics/tkGraphicsConfig.h"
-#include "tkEngine/graphics/preRender/tkZPrepass.h"
 #include "tkEngine/graphics/preRender/tkLightCulling.h"
 #include "tkEngine/graphics/preRender/tkShadowMap.h"
 #include "tkEngine/graphics/preRender/tkGBufferRender.h"
@@ -42,13 +41,7 @@ namespace tkEngine{
 		* @brief	更新。
 		*/
 		void Update();
-		/*!
-		* @brief	ZPrepassの取得。
-		*/
-		CZPrepass& GetZPrepass()
-		{
-			return m_zprepass;
-		}
+		
 		/*!
 		 *@brief	シャドウマップを取得。
 		 */
@@ -65,7 +58,6 @@ namespace tkEngine{
 		}
 	private:
 		SGraphicsConfig	m_config;			//!<コンフィグ。
-		CZPrepass		m_zprepass;			//!<ZPrepass。
 		CLightCulling	m_lightCulling;		//!<ライトカリング。
 		CShadowMap		m_shadowMap;		//!<シャドウマップ。
 		CGBufferRender	m_gbufferRender;	//!<G-Buffer。

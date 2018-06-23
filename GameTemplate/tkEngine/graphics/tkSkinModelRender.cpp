@@ -53,7 +53,7 @@ namespace prefab{
 	{
 		if (m_isFrustumCulling == true 
 			&& m_frustumCulling.IsCulling()
-			&& ( rc.GetRenderStep() == enRenderStep_Render3DModelToScene || rc.GetRenderStep() == enRenderStep_RenderGBuffer )
+			&& ( rc.GetRenderStep() == enRenderStep_ForwardRender || rc.GetRenderStep() == enRenderStep_RenderGBuffer )
 		) {
 			//•`‰æ‚µ‚È‚¢ƒ“ƒSB
 			return;

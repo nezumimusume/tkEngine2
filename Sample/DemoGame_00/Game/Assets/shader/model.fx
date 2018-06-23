@@ -310,7 +310,7 @@ PSInput_RenderToDepth VSMainSkin_RenderDepth(VSInputNmTxWeights In)
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
-#if 1
+#if 0
 	//アルベド。
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
 	float4 color = albedo * float4(ambientLight, 1.0f);
@@ -455,7 +455,25 @@ float4 PSMain_RenderDepth( PSInput_RenderToDepth In ) : SV_Target0
 PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 {
 	PSOutput_RenderGBuffer Out = (PSOutput_RenderGBuffer)0;
-	//法線はまだ出さない。
+	
+	//アルベド。
+	Out.albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
+	//スペキュラ。
+	Out.spacular = 0.0f;
+	if (hasSpecularMap) {
+		float4 spec = specularMap.Sample(Sampler, In.TexCoord);
+		Out.spacular.x = spec.x; 
+		Out.spacular.y = spec.y;
+	}
+	//従ベクトルを計算する。(todo これもG-Bufferに出すか・・・)
+	float3 biNormal = normalize(cross(In.Tangent, In.Normal));
+
+	//法線を計算。
+	Out.normal = CalcNormal(In.Normal, biNormal, In.Tangent, In.TexCoord);
+	
+	//接ベクトル。
+	Out.tangent = In.Tangent;
+
 	//シャドウマスク出力する。
 	if(isPCFShadowMap){
 		//PCFをかける。
@@ -464,6 +482,7 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 		//何もしない。
 		Out.shadow = CalcShadow(In.Pos);
 	}
+	Out.depth = In.posInProj.z / In.posInProj.w;
 	return Out;
 }
 /*!

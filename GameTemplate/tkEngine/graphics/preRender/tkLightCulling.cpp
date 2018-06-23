@@ -39,7 +39,7 @@ namespace tkEngine{
 		CGraphicsEngine& ge = GraphicsEngine();
 		rc.CSSetShader(m_csLightCulling);
 		//深度テクスチャを設定。
-		rc.CSSetShaderResource(0, ge.GetZPrepass().GetDepthTextureSRV());
+		rc.CSSetShaderResource(0, GetGBufferSRV(enGBufferDepth));
 		//ポイントライトのリストを設定。
 		rc.CSSetShaderResource(1, ge.GetLightManager().GetPointLightsSRV());
 		//出力先を設定。

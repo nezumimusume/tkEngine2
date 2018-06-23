@@ -45,7 +45,17 @@ namespace tkEngine{
 			m_pd3dDevice = nullptr;
 		}
 	}
-	
+	/*!
+	*@brief	ディファードシェーディングの初期化。
+	*/
+	void CGraphicsEngine::InitDefferdShading()
+	{
+		//ディファードシェーディング用のシェーダーをロード。
+		m_vsDefferd.Load("shader/defferdShading.fx", "VSMain", CShader::EnType::VS);
+		m_psDefferd.Load("shader/defferdShading.fx", "PSMain", CShader::EnType::PS);
+		//定数バッファを初期化。
+		m_cbDefferd.Create(nullptr, sizeof(PSDefferdCb));
+	}
 	bool CGraphicsEngine::InitD3DDeviceAndSwapChain(HWND hwnd, const SInitParam& initParam)
 	{
 		UINT createDeviceFlags = 0;
@@ -153,6 +163,44 @@ namespace tkEngine{
 		}
 		return true;
 	}
+	/*!
+	*@brief	ディファードシェーディング。
+	*/
+	void CGraphicsEngine::DefferdShading(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_DefferdShading");
+		rc.SetRenderStep(enRenderStep_ForwardRender);
+		//ライトの情報を転送転送。
+		LightManager().Render(rc);
+		//影を落とすための情報を転送。
+		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
+		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
+		//定数バッファを更新。
+		PSDefferdCb cb;
+		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
+		rc.UpdateSubresource(m_cbDefferd, &cb);
+		//定数バッファをb0のレジスタに設定。
+		rc.PSSetConstantBuffer(0, m_cbDefferd);
+		//シェーダーを設定。
+		rc.VSSetShader(m_vsDefferd);
+		rc.PSSetShader(m_psDefferd);
+		//入力レイアウトを設定。
+		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
+		
+		//ディファードレンダリング用のデプスステンシルステート。
+		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
+		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		//ポストエフェクトのフルスクリーン描画の機能を使う。
+		m_postEffect.DrawFullScreenQuad(rc);
+		
+		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
+
+		rc.OMSetDepthStencilState(depthStencil, 0);
+
+		EndGPUEvent();
+		
+	}
 	bool CGraphicsEngine::Init(HWND hwnd, const SInitParam& initParam)
 	{
 		//D3Dデバイスとスワップチェインの作成。
@@ -185,6 +233,9 @@ namespace tkEngine{
 		//コピー用のシェーダーをロード。
 		m_copyVS.Load("shader/copy.fx", "VSMain", CShader::EnType::VS);
 		m_copyPS.Load("shader/copy.fx", "PSMain", CShader::EnType::PS);
+
+		//ディファードシェーディング用の初期化を行う。
+		InitDefferdShading();
 
 		//フォント用のデータの初期化。
 		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pImmediateContext);
@@ -243,6 +294,6 @@ namespace tkEngine{
 		m_lightManager.EndRender(m_renderContext);
 		
 		//フラーッシュ
-		m_pSwapChain->Present(2, 0);
+		m_pSwapChain->Present(0, 0);
 	}
 }

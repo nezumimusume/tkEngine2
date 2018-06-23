@@ -49,10 +49,10 @@ float3 CalcDirectionLight(
  *@param[in]	biNormal		従ベクトル。
  *@param[in]	toEye			視点までのベクトル。
  */
-float3 CalcPointLight(
+float3 CalcPointLightInner(
 	float4 albedo,
 	float3 posInWorld, 
-	float4 posInProj, 
+	float2 screenPos, 
 	float3 normal,
 	float3 tangent,
 	float3 biNormal,
@@ -62,9 +62,6 @@ float3 CalcPointLight(
 	float specPow
 )
 {
-	
-	//スクリーンの左上を(0,0)、右下を(1,1)とする座標系に変換する。
-	float2 screenPos = (posInProj.xy / posInProj.w) * float2(0.5f, -0.5f) + 0.5f;
 	//ビューポート座標系に変換する。
 	float2 viewportPos = screenParam.zw * screenPos;
 	//スクリーンをタイルで分割したときのセルのX座標を求める。
@@ -102,6 +99,76 @@ float3 CalcPointLight(
 	
 	return lig;
 }
+
+/*!
+ * @brief	ディレクションライトの影響を計算。
+ *@param[in]	albedo			アルベド。
+ *@param[in]	posInWorld		ワールド空間での座標。
+ *@param[in]	normal			法線。
+ *@param[in]	toEye			視点までのベクトル。
+ *@param[in]	specPow			スペキュラ強度。
+ */
+float3 CalcPointLightInner(
+	float4 albedo,
+	float3 posInWorld, 
+	float3 normal,
+	 float3 tangent,
+	float3 biNormal, 
+	float3 toEyeDir, 
+	float3 toEyeReflection, 
+	float roughness,
+	float specPow
+)
+{
+	float3 lig = 0.0f;
+	for( int i = 0; i < numDirectionLight; i++){
+		if( 1 << materialID & directionLight[i].lightingMaterialIDGroup ){
+			float3 lightDir = directionLight[i].direction;
+			float t = saturate( dot( normal, -lightDir ) );
+			lig += BRDF(-lightDir, toEyeDir, normal, tangent, biNormal, albedo, roughness, specPow ) * directionLight[i].color * t;
+		}
+	}
+	
+	return lig;
+}
+/*!
+ * @brief	ポイントライトを計算。
+ *@param[in]	posInWorld		ワールド座標系での座標。
+ *@param[in]	posInProj		射影空間での座標。
+ *@param[in]	normal			法線。
+ *@param[in]	tangent			接ベクトル。
+ *@param[in]	biNormal		従ベクトル。
+ *@param[in]	toEye			視点までのベクトル。
+ */
+float3 CalcPointLight(
+	float4 albedo,
+	float3 posInWorld, 
+	float4 posInProj, 
+	float3 normal,
+	float3 tangent,
+	float3 biNormal,
+	float3 toEyeDir,
+	float3 toEyeReflection, 
+	float roughness,
+	float specPow
+)
+{
+	
+	//スクリーンの左上を(0,0)、右下を(1,1)とする座標系に変換する。
+	float2 screenPos = (posInProj.xy / posInProj.w) * float2(0.5f, -0.5f) + 0.5f;
+	return CalcPointLightInner(
+						 	albedo, 
+							posInWorld, 
+							screenPos, 
+							normal, 
+							tangent, 
+							biNormal, 
+							toEyeDir, 
+							toEyeReflection, 
+							roughness, 
+							specPow );
+}
+
 
 /*!
  * @brief	環境光

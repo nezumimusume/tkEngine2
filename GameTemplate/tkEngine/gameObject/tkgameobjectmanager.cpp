@@ -55,29 +55,32 @@ namespace tkEngine{
 		renderContext.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
 		renderContext.RSSetState(RasterizerState::sceneRender);
 		renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		
 		//プリレンダリング。
 		GraphicsEngine().GetPreRender().Render(renderContext);
-		BeginGPUEvent(L"enRenderStep_Render3DModelToScene");
-		//レンダリングステップを3Dモデルの描画に。
-		renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
 
+		//ディファードシェーディング。
 		//ライトの情報を転送転送。
-		LightManager().Render(renderContext);
-		//影を落とすための情報を転送。
-		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(renderContext);
-		GraphicsEngine().GetGBufferRender().SendGBufferParamToGPU(renderContext);
+		
+		GraphicsEngine().DefferdShading(renderContext);
 
+		
+		BeginGPUEvent(L"enRenderStep_ForwardRender");
+		//レンダリングステップをフォワードレンダリングに。
+		renderContext.SetRenderStep(enRenderStep_ForwardRender);
+		
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->PreRenderWrapper(renderContext);
 			}
 		}
 
-		for (GameObjectList objList : m_gameObjectListArray) {
+		//ちょっとコメントアウト。
+		/*for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->RenderWrapper(renderContext);
 			}
-		}
+		}*/
 
 		
 		EndGPUEvent();		

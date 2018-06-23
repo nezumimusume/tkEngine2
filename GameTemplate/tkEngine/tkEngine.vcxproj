@@ -296,7 +296,6 @@
     <ClInclude Include="graphics\preRender\tkPreRender.h" />
     <ClInclude Include="graphics\preRender\tkShadowCaster.h" />
     <ClInclude Include="graphics\preRender\tkShadowMap.h" />
-    <ClInclude Include="graphics\preRender\tkZPrepass.h" />
     <ClInclude Include="graphics\tkBlur.h" />
     <ClInclude Include="graphics\tkCamera.h" />
     <ClInclude Include="graphics\tkGPUEventMarker.h" />
@@ -390,7 +389,6 @@
     <ClCompile Include="graphics\preRender\tkPreRender.cpp" />
     <ClCompile Include="graphics\preRender\tkShadowCaster.cpp" />
     <ClCompile Include="graphics\preRender\tkShadowMap.cpp" />
-    <ClCompile Include="graphics\preRender\tkZPrepass.cpp" />
     <ClCompile Include="graphics\tkBlur.cpp" />
     <ClCompile Include="graphics\tkCamera.cpp" />
     <ClCompile Include="graphics\tkGPUEventMarker.cpp" />

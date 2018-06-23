@@ -34,7 +34,7 @@ public:
 	 */
 	void Jump()
 	{
-		m_charaCon.Jump();
+
 	}
 	/*!
 	 *@brief	プレイヤーが地面にいるかどうか判定。

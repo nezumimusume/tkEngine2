@@ -52,13 +52,7 @@ namespace tkEngine{
 		{
 			return m_preRender.GetGBufferRender();
 		}
-		/*!
-		* @brief	ZPrepassの取得。
-		*/
-		CZPrepass& GetZPrepass()
-		{
-			return m_preRender.GetZPrepass();
-		}
+
 		/*!
 		 *@brief	エフェクトエンジンの取得。
 		 */
@@ -245,6 +239,10 @@ namespace tkEngine{
 		{
 			return m_directXModelResource;
 		}
+		/*!
+		*@brief	ディファードシェーディング。
+		*/
+		void DefferdShading(CRenderContext& rc);
 	private:
 		/*!
 		 *@brief	D3Dデバイスとスワップチェインの初期化。
@@ -258,7 +256,17 @@ namespace tkEngine{
 		 *@brief	メインレンダリングターゲットの初期化。
 		 */
 		bool InitMainRenderTarget();
+		/*!
+		*@brief	ディファードシェーディングの初期化。
+		*/
+		void InitDefferdShading();
 	private:
+		/*!
+		*@brief	これのメンバを変更したら、defferdShading.fxのPSDefferdCbも変更するように！！！
+		*/
+		struct PSDefferdCb {
+			CMatrix mViewProjInv;		//!<ビュープロジェクション行列の逆行列。
+		};
 		ID3D11Device*			m_pd3dDevice = nullptr;						//!<D3D11デバイス。
 		CRenderContext			m_renderContext;							//!<レンダリングコンテキスト。
 		ID3D11DeviceContext*	m_pImmediateContext = nullptr;				//!<D3D11即時デバイスコンテキスト。
@@ -285,5 +293,9 @@ namespace tkEngine{
 		int						m_2dSpaceScreenWidth = 1280;				//!<2D空間のスクリーンの幅。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 		int						m_2dSpaceScreenHeight = 720;				//!<2D空間のスクリーンの高さ。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 		CDirectXModelResource	m_directXModelResource;						//!<DirectXモデルリソースの管理者。
+		CConstantBuffer			m_cbDefferd;								//!<ディファードシェーディング用の定数バッファ。
+		CShader					m_vsDefferd;								//!<ディファードシェーディング用の頂点シェーダー。
+		CShader					m_psDefferd;								//!<ディファードシェーディング用のピクセルシェーダー。
+
 	};
 }
