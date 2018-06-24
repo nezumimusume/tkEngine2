@@ -48,6 +48,9 @@
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Assets\shader\modelPSFunction.h">
+      <Filter>Assets\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -129,5 +132,10 @@
     <CustomBuild Include="Assets\shader\blur.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

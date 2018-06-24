@@ -41,6 +41,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Assets\shader\modelPSFunction.h">
+      <Filter>Assets\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">

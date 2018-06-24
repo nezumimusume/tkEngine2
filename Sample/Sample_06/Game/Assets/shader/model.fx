@@ -6,8 +6,7 @@
 #include "modelStruct.h"
 #include "modelSRV.h"
 #include "sampleBRDF.h"
-
-#include "LightingFunction.h"
+#include "modelPSFunction.h"
 
 
 /*!
@@ -358,83 +357,26 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
 	//法線を計算。
 	float3 normal = CalcNormal( In.Normal, biNormal, In.Tangent, In.TexCoord);
-		
-	float specPow = 0.0f;
-	float roughness = 1.0f;
-	if(hasSpecularMap){
-		float4 t = specularMap.Sample(Sampler, In.TexCoord);
-		specPow = t.x;
-		roughness = 1.0f - t.w;
-		roughness *= 0.8f;	//@todo マテリアルパラメータにすべきだな。
-	}
-	float toEyeLen = length(toEye);
-	float3 toEyeDir = float3(1.0f, 0.0f, 0.0f);
-	if(toEyeLen > 0.001f){
-		toEyeDir = toEye / toEyeLen;
-	}
-
-	float3 toEyeReflection = -toEyeDir + 2.0f * dot(normal, toEyeDir) * normal;
 	
-	//影を計算。
+	float4 spec = 0.0f;
+	if(hasSpecularMap){
+		spec = specularMap.Sample(Sampler, In.TexCoord);
+	}
+	//影マップを参照する。
 	float2 uv = In.posInProj.xy / In.posInProj.w;
 	uv = (uv * float2(0.5f, -0.5f)) + 0.5f;
 	float shadow = softShadowMap.Sample(Sampler, uv).r ;	
-	//ディレクションライト
-	float3 finalColor = 0.0f;
-	if(shadow < 0.99f){ 
-		//影が落ちる可能性が低い場合のみ計算する。
-		finalColor = CalcDirectionLight(
-			albedo,
-			In.Pos, 
-			normal, 
-			In.Tangent,
-			biNormal,
-			toEyeDir,
-			toEyeReflection, 
-			roughness,
-			specPow
-		) * (1.0f - shadow);
-	}
 	
-	//ポイントライトを計算。
-	finalColor += CalcPointLight(
-		albedo,
+	return PBR(
+		albedo, 
+		In.Tangent, 
+		normal, 
+		biNormal, 
 		In.Pos, 
-		In.posInProj, 
-		normal,
-		In.Tangent,
-		biNormal,
-		toEyeDir,
-		toEyeReflection, 
-		roughness,
-		specPow
+		spec,
+		shadow,
+		In.posInProj
 	);
-    
-	//アンビエントライト。
-	finalColor += CalcAmbientLight(
-		albedo,
-		normal,
-		In.Tangent,
-		biNormal,
-		toEyeDir,
-		roughness,
-		specPow
-	);
-	
-	// brightness
-	float brightness = 1.0f;
-    finalColor *= brightness;
-/*
-    // exposure
-    float exposure = 1.0f;
-    finalColor *= pow( 2.0, exposure );
-  */  
-    float gamma = 2.2f;
-    finalColor = max( 0.0f, pow( finalColor, 1.0 / gamma ) );
-    if(isnan(finalColor.x) || isnan(finalColor.y) || isnan(finalColor.z)){
-		return float4(1.0f, 0.0f, 0.0f, 1.0f);
-	}
-    return float4(finalColor, 1.0f); 
 #endif
 }
 

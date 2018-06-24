@@ -98,7 +98,7 @@ float4 PSXBlur( PS_BlurInput In ) : SV_Target0
 		offset[i] = (pos.xy / pos.w) * float2(0.5f, -0.5f) + 0.5f;
 		float4 posInCamera2 = CalcUVToPosInCamera(offset[i]);
 		
-		if(abs(posInCamera.z - posInCamera2.z) < 1.0f){
+		if(abs(posInCamera.z - posInCamera2.z) < 5.0f){
 			offset[i] -= In.uv ;
 		}else{
 			offset[i] = 0.0f;

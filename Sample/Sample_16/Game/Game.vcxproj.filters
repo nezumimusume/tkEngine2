@@ -41,6 +41,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Assets\shader\modelPSFunction.h">
+      <Filter>Assets\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -130,5 +133,10 @@
     <ImageContentTask Include="Assets\modelData\Thethief_wuqi_S.tga">
       <Filter>Assets\modelData</Filter>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

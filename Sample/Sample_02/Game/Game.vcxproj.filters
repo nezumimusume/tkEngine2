@@ -32,6 +32,9 @@
     </CLInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Assets\shader\modelPSFunction.h">
+      <Filter>Assets\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -95,5 +98,10 @@
     <CustomBuild Include="Assets\shader\dithering.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\shader\defferdShading.fx">
+      <Filter>Assets\shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

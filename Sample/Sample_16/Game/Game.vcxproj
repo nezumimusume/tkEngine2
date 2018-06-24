@@ -639,6 +639,7 @@
     <CustomBuild Include="Assets\shader\modelSRV.h" />
     <CustomBuild Include="Assets\shader\modelStruct.h" />
     <CustomBuild Include="Assets\shader\sampleBRDF.h" />
+    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
@@ -739,6 +740,11 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\shader\shadowBlur.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

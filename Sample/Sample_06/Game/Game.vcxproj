@@ -636,6 +636,7 @@
     <CustomBuild Include="Assets\shader\modelSRV.h" />
     <CustomBuild Include="Assets\shader\modelStruct.h" />
     <CustomBuild Include="Assets\shader\sampleBRDF.h" />
+    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
     <ClInclude Include="Game.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -690,6 +691,11 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
