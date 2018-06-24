@@ -10,6 +10,7 @@ namespace tkEngine{
 namespace prefab{
 	class CSkinModelRender : public IGameObject {
 	public:
+		
 		/*!
 		 * @brief	コンストラクタ。
 		 */
@@ -20,24 +21,31 @@ namespace prefab{
 		*@param[in]	animationClips		アニメーションクリップ。
 		*@param[in]	numAnimClip			アニメーションクリップの数。
 		*@param[in]	enUpdateAxis		fbxの上方向。
+		*@param[in] maxInstance			インスタンスの数
 		*/
 		void Init(const wchar_t* filePath,
 			CAnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
-			CSkinModel::EnFbxUpAxis fbxUpAxis = CSkinModel::enFbxUpAxisZ);
+			EnFbxUpAxis fbxUpAxis = enFbxUpAxisZ,
+			int maxInstance = 1 );
 		
 		/*!
-		 * @brief	更新前に呼ばれる関数。
-		 */
-		bool Start() override final;
+		* @brief	描画の直前にフックしたい関数を設定する。
+		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		*/
+		void SetPreDrawFookFunction(CSkinModel::OnDrawFookFunction func)
+		{
+			m_skinModel.SetPreDrawFookFunction(func);
+		}
 		/*!
-		 * @brief	更新。
-		 */
-		void Update() override final;
-		/*!
-		 * @brief	描画。
-		 */
-		void Render(CRenderContext& rc) override final;
+		* @brief	描画が終わった後にフックしたい関数を設定する。
+		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		*/
+		void SetPostDrawFookFunction(CSkinModel::OnDrawFookFunction func)
+		{
+			m_skinModel.SetPostDrawFookFunction(func);
+		}
+	
 		/*!
 		* @brief	アニメーションを再生。
 		*@param[in]	clipNo	アニメーションクリップの番号。コンストラクタに渡したanimClipListの並びとなる。
@@ -110,6 +118,28 @@ namespace prefab{
 			m_scale = scale;
 		}
 		/*!
+		*@brief	座標、回転、拡大をすべて更新。
+		*@param[in]	pos			座標。
+		*@param[in]	rot			回転。
+		*@param[in] scale		拡大。
+		*/
+		void SetPRS(const CVector3& trans, const CQuaternion& rot, const CVector3& scale)
+		{
+			SetPosition(trans);
+			SetRotation(rot);
+			SetScale(scale);
+		}
+		/*!
+		*@brief	インスタンシングデータを更新。
+		*@param[in]	pos			座標。
+		*@param[in]	rot			回転。
+		*@param[in] scale		拡大。
+		*/
+		void UpdateInstancingData(const CVector3& trans, const CQuaternion& rot, const CVector3& scale)
+		{
+			m_skinModel.UpdateInstancingData(trans, rot, scale);
+		}
+		/*!
 		*@brief	スキンモデルデータを取得。
 		*/
 		CSkinModelData& GetSkinModelData() 
@@ -156,16 +186,54 @@ namespace prefab{
 			m_isUpdateAnimation = flag;
 		}
 		/*!
+		*@brief	フォワードレンダリングのフラグを設定。
+		*@details
+		* フラグを立てるとフォワードレンダリングを行います。
+		* 物理ベースレンダリング以外の特殊なレンダリングを行いたい場合は有効にしてください。
+		*/
+		void SetForwardRenderFlag(bool flag)
+		{
+			m_isForwardRender = flag;
+		}
+
+
+	private:
+		void ForwardRender(CRenderContext& rc) override final;
+		/*!
+		* @brief	更新前に呼ばれる関数。
+		*/
+		bool Start() override final;
+		/*!
+		* @brief	事前更新。
+		*/
+		void PreUpdate() override final
+		{
+			m_skinModel.BeginUpdateInstancingData();
+		}
+		/*!
+		* @brief	更新。
+		*/
+		void Update() override final;
+		/*!
+		* @brief	遅延更新。
+		*/
+		void PostUpdate() override final
+		{
+			m_skinModel.EndUpdateInstancingData();
+		}
+		
+		/*!
 		* @brief	アニメーションの初期化。
 		*/
 		void InitAnimation(CAnimationClip* animationClips, int numAnimationClips);
 	private:
+		bool						m_isForwardRender = false;		//!<フォワードレンダリング。
 		CAnimationClip*				m_animationClips = nullptr;			//!<アニメーションクリップ。
 		int							m_numAnimationClips = 0;			//!<アニメーションクリップの数。
 		CVector3 					m_position = CVector3::Zero;		//!<座標。
 		CQuaternion	 				m_rotation = CQuaternion::Identity;	//!<回転。
 		CVector3					m_scale = CVector3::One;			//!<拡大率。
-		CSkinModel::EnFbxUpAxis		m_enFbxUpAxis = CSkinModel::enFbxUpAxisZ;	//!<FBXの上方向。
+		EnFbxUpAxis					m_enFbxUpAxis = enFbxUpAxisZ;		//!<FBXの上方向。
 		CAnimation					m_animation;						//!<アニメーション。
 		CSkinModel					m_skinModel;						//!<スキンモデル。
 		CSkinModelData				m_skinModelData;					//!<スキンモデルデータ。

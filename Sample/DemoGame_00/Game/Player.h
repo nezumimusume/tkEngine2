@@ -11,7 +11,6 @@ public:
 
 	bool Start() override;
 	void Update() override;
-	void Render(CRenderContext& rc) override;
 	void OnDestroy() override;
 	const CVector3& GetPosition() const
 	{
@@ -52,7 +51,7 @@ public:
 	*/
 	CSkinModel& GetModel()
 	{
-		return m_skinModel;
+		return m_modelRender->GetSkinModel();
 	}
 private:
 	void UpdateFSM();
@@ -79,12 +78,11 @@ private:
 		enState_WaitStartGameClear,
 		enState_GameClear,
 	};
-	CSkinModel 		m_skinModel;		//!<スキンモデル。
-	CSkinModelData	m_skinModelData;	//!<スキンモデルデータ。
+	prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラ。
 	CVector3 m_position = CVector3::Zero;			//座標。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
 	CAnimationClip m_animClip[enAnimationClip_num];
-	CAnimation m_animation;
+	
 	prefab::CDirectionLight* m_charaLight = nullptr;	//!<キャラクタ用のライト。
 	CCharacterController m_charaCon;		//キャラクタコントローラ。
 	CVector3 m_moveSpeed = CVector3::Zero;

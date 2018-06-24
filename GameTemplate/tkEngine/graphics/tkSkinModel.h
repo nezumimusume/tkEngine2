@@ -10,6 +10,13 @@
 namespace tkEngine{
 	class CSkinModelData;
 	/*!
+	*@brief	FBXの上方向。
+	*/
+	enum EnFbxUpAxis {
+		enFbxUpAxisY,		//Y-up
+		enFbxUpAxisZ,		//Z-up
+	};
+	/*!
 	 *@brief	スキンモデル。
 	 *@details
 	 * スキンあり、なしモデルの表示をサポートするクラス。</br>
@@ -17,13 +24,9 @@ namespace tkEngine{
 	 */
 	class CSkinModel : Noncopyable{
 	public:
-		/*!
-		*@brief	FBXの上方向。
-		*/
-		enum EnFbxUpAxis {
-			enFbxUpAxisY,		//Y-up
-			enFbxUpAxisZ,		//Z-up
-		};
+		//描画を行う前に呼ばれる関数オブジェクトの型。
+		using OnDrawFookFunction = std::function<void(CRenderContext&, CSkinModel&)>;
+		
 		typedef std::function<void(CSkeleton&)>		OnPostUpdateSkeleton;
 
 		/*!
@@ -51,12 +54,14 @@ namespace tkEngine{
 		*@param[in]		rot			回転。
 		*@param[in]		scale		拡大。
 		*@param[in]		enUpdateAxis	fbxの上方向。
+		*@param[in]		isForwardRender	フォワードレンダリングを行う？
 		*/
 		void Update(
 			const CVector3& trans, 
 			const CQuaternion& rot, 
 			const CVector3& scale,
-			EnFbxUpAxis enUpdateAxis = enFbxUpAxisZ
+			EnFbxUpAxis enUpdateAxis = enFbxUpAxisZ,
+			bool isForwardRender = false
 		);
 		/*!
 		 *@brief	インスタンシング用のデータの更新。
@@ -67,7 +72,6 @@ namespace tkEngine{
 		 *@param[in]		rot			回転。
 		 *@param[in]		scale		拡大。
 		 *@param[in]		enUpdateAxis	fbxの上方向。
-
 		 */
 		void UpdateInstancingData(
 			const CVector3& trans,
@@ -80,12 +84,15 @@ namespace tkEngine{
 		*/
 		void BeginUpdateInstancingData()
 		{
-			m_numInstance = 0;
+			if (m_maxInstance > 1) {
+				m_numInstance = 0;
+			}
 		}
 		/*!
 		 *@brief	全てのインスタンスデータの更新終わったら呼び出してください。
+		 *@param[in]		isForwardRender	フォワードレンダリングを行う？
 		 */
-		void EndUpdateInstancingData();
+		void EndUpdateInstancingData(bool isForwardRender = false);
 		/*!
 		*@brief	描画
 		*@param[in] renderContext	レンダリングコンテキスト。
@@ -96,13 +103,11 @@ namespace tkEngine{
 		*@param[in] renderContext	レンダリングコンテキスト。
 		*@param[in]	viewMatrix		ビュー行列。
 		*@param[in]	projMatrix		プロジェクション行列。
-		*@param[in]	isUpdateAnimation	アニメーションを更新する？
 		*/
 		void Draw(
 			CRenderContext& renderContext, 
 			const CMatrix& viewMatrix, 
-			const CMatrix& projMatrix,
-			bool isUpdateAnimation = true
+			const CMatrix& projMatrix
 		);
 		/*!
 		*@brief	メッシュの検索。
@@ -195,6 +200,22 @@ namespace tkEngine{
 		{
 			return m_boundingBox;
 		}
+		/*!
+		* @brief	描画の直前にフックしたい関数を設定する。
+		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		*/
+		void SetPreDrawFookFunction(OnDrawFookFunction func)
+		{
+			m_preDrawFookFunction = func;
+		}
+		/*!
+		* @brief	描画が終わった後にフックしたい関数を設定する。
+		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		*/
+		void SetPostDrawFookFunction(OnDrawFookFunction func)
+		{
+			m_postDrawFookFunction = func;
+		}
 	private:
 		/*!
 		*@brief バウンディングボックスの初期化。
@@ -224,5 +245,7 @@ namespace tkEngine{
 		int m_maxInstance = 1;								//!<インスタンスの最大数
 		int m_numInstance = 0;								//!<インスタンスの数。
 		CBox m_boundingBox;									//!<バウンディングボックス。
+		OnDrawFookFunction m_preDrawFookFunction = nullptr;		//描画の直前に呼ばれるフック関数。
+		OnDrawFookFunction m_postDrawFookFunction = nullptr;	//描画が終わった後で呼ばれるフック関数。
 	};
 }

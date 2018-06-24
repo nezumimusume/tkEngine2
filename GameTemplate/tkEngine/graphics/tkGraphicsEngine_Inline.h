@@ -9,7 +9,7 @@ namespace tkEngine{
 	*/
 	inline void CRenderTarget::ResovleMSAATexture(CRenderContext& rc)
 	{
-		if (m_isMSAA) {
+		if (m_isMSAA || m_isResolveTexture) {
 			//MSAA‚ª—LŒø‚Å‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢B
 			rc.ResolveSubresource(m_resolveTextureMSAA, 0, m_renderTarget, 0, m_textureFormat);
 		}

@@ -8,14 +8,21 @@
 
 bool Background::Start()
 {
-
-	m_skinModelData.Load(L"modelData/Background.cmo");
-
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.SetShadowReceiverFlag(true);
-	m_skinModel.SetShadowCasterFlag(true);
-
-	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
+	m_modelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_modelRender->Init(L"modelData/Background.cmo");
+	m_modelRender->SetShadowReceiverFlag(true);
+	m_modelRender->SetShadowCasterFlag(true);
+	m_modelRender->SetPreDrawFookFunction([&](auto& renderContext, auto& model) {
+		//”w–Ê•`‰æ‚É‚·‚éB
+		(void)model;
+		renderContext.RSSetState(m_rasterizerState);
+	});
+	m_modelRender->SetPostDrawFookFunction([&](auto& renderContext, auto& model) {
+		//–ß‚·B
+		(void)model;
+		renderContext.RSSetState(RasterizerState::sceneRender);
+	});
+	m_meshCollider.CreateFromSkinModel(m_modelRender->GetSkinModel(), nullptr);
 	RigidBodyInfo rbInfo;
 	rbInfo.collider = &m_meshCollider;
 
@@ -41,14 +48,5 @@ void Background::OnDestroy()
 	if (m_rasterizerState) {
 		m_rasterizerState->Release();
 	}
-}
-void Background::Update()
-{
-	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
-}
-void Background::Render(CRenderContext& rc)
-{
-	rc.RSSetState(m_rasterizerState);
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-	rc.RSSetState(RasterizerState::sceneRender);
+	DeleteGO(m_modelRender);
 }

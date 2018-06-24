@@ -93,11 +93,17 @@ namespace tkEngine{
 		m_worldMatrix.Mul(mScale, mRot);
 		m_worldMatrix.Mul(m_worldMatrix, mTrans);
 	}
-	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
-	{		
+	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis, bool isForwardRender)
+	{
+		if (m_maxInstance > 1) {
+			//インスタンシング描画はこの関数では更新しない。
+			return;
+		}
 		UpdateWorldMatrix(trans, rot, scale, enUpdateAxis);
-		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
-		if (m_isShadowCaster) {
+		if (isForwardRender == false) {
+			GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+		}
+		if (m_isShadowCaster == true) {
 			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
 		}
 		m_numInstance = 1;
@@ -120,17 +126,26 @@ namespace tkEngine{
 		else {
 			TK_WARNING("invalid UpdateInstancingData.");
 		}
-
+		if (m_animation != nullptr) {
+			m_animation->Update(GameTime().GetFrameDeltaTime());
+		}
 		//スケルトン更新。
 		m_skinModelData->GetSkeleton().Update(m_worldMatrix);
 
 	}
 	
-	void CSkinModel::EndUpdateInstancingData()
+	void CSkinModel::EndUpdateInstancingData(bool isForwardRender)
 	{
-		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
-		if (m_isShadowCaster) {
-			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
+		if( m_animation != nullptr) {
+			m_animation->Update(GameTime().GetFrameDeltaTime());
+		}
+		if (m_maxInstance > 1) {
+			if (isForwardRender == false) {
+				GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+			}
+			if (m_isShadowCaster == true) {
+				GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
+			}
 		}
 	}
 	
@@ -141,8 +156,7 @@ namespace tkEngine{
 	void CSkinModel::Draw(
 		CRenderContext& renderContext, 
 		const CMatrix& viewMatrix, 
-		const CMatrix& projMatrix,
-		bool isUpdateAnimation
+		const CMatrix& projMatrix
 	)
 	{
 		
@@ -168,6 +182,7 @@ namespace tkEngine{
 		renderContext.VSSetConstantBuffer(enSkinModelCBReg_VSPS, m_cb);
 		renderContext.PSSetConstantBuffer(enSkinModelCBReg_VSPS, m_cb);
 		renderContext.PSSetSampler(0, m_samplerState);
+		
 		m_skinModelData->GetSkeleton().Render(renderContext);
 
 		
@@ -176,7 +191,7 @@ namespace tkEngine{
 			//レンダリングコンテキストをエフェクトに設定する。
 			effect->SetRenderContext(renderContext);
 			//インスタンスの数を設定。
-			if (m_numInstance > 1) {
+			if (m_numInstance > 0) {
 				effect->SetNumInstance(m_numInstance);
 			}
 			else {
@@ -184,8 +199,14 @@ namespace tkEngine{
 			}
 			
 		});
+		if (m_preDrawFookFunction != nullptr) {
+			//フック関数が指定されている。
+			m_preDrawFookFunction(renderContext, *this);
+		}
+	
+
 		if (m_numInstance > 0) {
-			m_skinModelData->GetBody().Draw(
+		 	m_skinModelData->GetBody().Draw(
 				GraphicsEngine().GetD3DDeviceContext(),
 				state,
 				m_worldMatrix,
@@ -197,11 +218,10 @@ namespace tkEngine{
 			);
 		}
 
-		//アニメーションを更新。
-		if (renderContext.GetRenderStep() == enRenderStep_RenderGBuffer
-			&& isUpdateAnimation
-			&& m_animation != nullptr) {
-			m_animation->Update(GameTime().GetFrameDeltaTime());
+		
+		if (m_postDrawFookFunction != nullptr) {
+			m_postDrawFookFunction(renderContext, *this);
+		
 		}
 	}
 }

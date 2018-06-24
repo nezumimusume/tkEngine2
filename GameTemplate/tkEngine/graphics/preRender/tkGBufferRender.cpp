@@ -44,6 +44,9 @@ namespace tkEngine{
 			DXGI_FORMAT_D32_FLOAT,
 			msaaDesc
 		);
+		m_GBuffer[enGBufferAlbedo].SetDepthStencilView(
+			ge.GetMainRenderTarget().GetDepthStencilView()
+		);
 		//法線バッファの初期化。
 		m_GBuffer[enGBufferNormal].Create(
 			ge.GetFrameBufferWidth(),

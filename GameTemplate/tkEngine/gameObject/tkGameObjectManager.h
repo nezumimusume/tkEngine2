@@ -195,6 +195,15 @@ namespace tkEngine{
 		*@brief	シーングラフの更新。
 		*/
 		void UpdateSceneGraph();
+
+		void Start();
+		void PreUpdate();
+		void Update();
+		void PostUpdate();
+		void BeginRender(CRenderContext& rc);
+		void ForwardPreRender(CRenderContext& rc);
+		void ForwardRender(CRenderContext& rc);
+		void PostRender(CRenderContext& rc);
 	private:
 		CTransform m_transform;												//!<Transform。
 		typedef std::list<IGameObject*>	GameObjectList;

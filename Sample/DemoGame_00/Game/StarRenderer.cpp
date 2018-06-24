@@ -15,10 +15,10 @@ StarRenderer::~StarRenderer()
 */
 bool StarRenderer::Start()
 {
-	m_skinModelData.Load(L"modelData/star.cmo");
-	m_skinModel.Init(m_skinModelData, m_numStar);
-	m_skinModel.SetShadowCasterFlag(true);
-	m_skinModel.FindMaterial([&](CModelEffect* material) {
+	m_modelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_modelRender->Init(L"modelData/star.cmo", nullptr, 0, enFbxUpAxisZ, m_numStar);
+	m_modelRender->SetShadowCasterFlag(true);
+	m_modelRender->FindMaterial([&](CModelEffect* material) {
 		//ƒ}ƒeƒŠƒAƒ‹‚h‚c‚ðÝ’è‚·‚éB
 		material->SetMaterialID(enMaterialID_Star);
 	});
@@ -26,27 +26,8 @@ bool StarRenderer::Start()
 	return true;
 }
 
-void StarRenderer::PreUpdate() 
-{
-	m_skinModel.BeginUpdateInstancingData();
-}
 
-void StarRenderer::PostUpdate()
-{
-	m_skinModel.EndUpdateInstancingData();
-}
 void StarRenderer::UpdateWorldMatrix(const CVector3& trans, const CQuaternion& rot, const CVector3& scale)
 {
-	m_skinModel.UpdateInstancingData(trans, rot, scale);	
-}
-/*!
-*@brief	•`‰æ
-*/
-void StarRenderer::Render(CRenderContext& renderContext)
-{
-	m_skinModel.Draw(
-		renderContext, 
-		MainCamera().GetViewMatrix(), 
-		MainCamera().GetProjectionMatrix()
-	);
+	m_modelRender->UpdateInstancingData(trans, rot, scale);
 }

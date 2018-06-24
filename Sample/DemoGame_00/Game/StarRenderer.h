@@ -23,24 +23,11 @@ public:
 	void Update() override
 	{
 	}
-	/*!
-	 *@brief	事前アップデート。
-	 */
-	void PreUpdate() override;
-	
-	/*!
-	 *@brief	遅延更新。
-	 */
-	void PostUpdate() override;
-	/*!
-	*@brief	描画
-	*/
-	void Render(CRenderContext& renderContext) override;
+
 	void UpdateWorldMatrix(const CVector3& trans,	const CQuaternion& rot,	const CVector3& scale );
 	
 private:
-	CSkinModelData	m_skinModelData;	//!<スキンモデルデータ。
-	CSkinModel		m_skinModel;		//!<スキンモデル。	
+	prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラ。
 	int m_numStar = 0;
 };
 

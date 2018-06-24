@@ -12,11 +12,12 @@ namespace prefab{
 		const wchar_t* filePath,
 		CAnimationClip* animationClips,
 		int numAnimationClips ,
-		CSkinModel::EnFbxUpAxis fbxUpAxis)
+		EnFbxUpAxis fbxUpAxis,
+		int maxInstance )
 	{
 		m_enFbxUpAxis = fbxUpAxis;
 		m_skinModelData.Load(filePath);
-		m_skinModel.Init(m_skinModelData);
+		m_skinModel.Init(m_skinModelData, maxInstance);
 		m_frustumCulling.Init(MainCamera());
 		InitAnimation(animationClips, numAnimationClips);
 	}
@@ -40,25 +41,25 @@ namespace prefab{
 	 */
 	void CSkinModelRender::Update()
 	{
-		m_skinModel.Update(m_position, m_rotation, m_scale, m_enFbxUpAxis);
 		if (m_isFrustumCulling == true) {
 			m_skinModel.UpdateBoundingBox();
 			m_frustumCulling.Execute(m_skinModel.GetBoundingBox());
 		}
+		
+		m_skinModel.Update(m_position, m_rotation, m_scale, m_enFbxUpAxis, m_isForwardRender);
 	}
 	/*!
 	 * @brief	ï`âÊÅB
 	 */
-	void CSkinModelRender::Render(CRenderContext& rc)
+	void CSkinModelRender::ForwardRender(CRenderContext& rc)
 	{
-		if (m_isFrustumCulling == true 
-			&& m_frustumCulling.IsCulling()
-			&& ( rc.GetRenderStep() == enRenderStep_ForwardRender || rc.GetRenderStep() == enRenderStep_RenderGBuffer )
-		) {
-			//ï`âÊÇµÇ»Ç¢ÉìÉSÅB
+		if (m_isForwardRender == false
+			|| (m_isFrustumCulling == true
+				&& m_frustumCulling.IsCulling())
+			) {
 			return;
 		}
-		m_skinModel.Draw(rc);
+		m_skinModel.Draw(rc); 
 	}
 }
 }

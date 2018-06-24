@@ -27,6 +27,7 @@ namespace tkEngine {
 		enRenderStep_RenderToShadowMap,			//!<シャドウマップへの書き込みステップ。
 		enRenderStep_RenderGBuffer,				//!<G-Bufferの作成ステップ。
 		enRenderStep_DefferdShading,			//!<ディファードシェーディング。
+		enRenderStep_ForwardPreRender,			//!<フォワードプリレンダリング。(特殊な表現を行いたいオブジェクトはここで描く。)
 		enRenderStep_ForwardRender,				//!<フォワードレンダリング。(特殊な表現を行いたいオブジェクトはここで描く。)
 		enRenderStep_RenderTransObject,			//!<半透明オブジェクトをレンダリング。
 		enRenderStep_RenderEffect,				//!<エフェクトをシーンに描画。

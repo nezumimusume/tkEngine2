@@ -217,6 +217,13 @@ namespace tkEngine{
 			return m_aspect;
 		}
 		/*!
+		*@brief　カメラのコピーを作成。。
+		*/
+		void CopyTo(CCamera& dst) 
+		{
+			memcpy(&dst, this, sizeof(dst));
+		}
+		/*!
 		* @brief	ワールド座標からスクリーン座標を計算する。
 		*@details
 		* 計算されるスクリーン座標は画面の中心を{0,0}、左上を{画面の幅*-0.5,画面の高さ*-0.5}</br>

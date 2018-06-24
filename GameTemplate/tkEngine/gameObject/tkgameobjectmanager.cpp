@@ -10,97 +10,129 @@
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
 namespace tkEngine{
-	void CGameObjectManager::Execute()
+	void CGameObjectManager::Start()
 	{
-		ExecuteDeleteGameObjects();
-
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->StartWrapper();
 			}
 		}
+	}
+	void CGameObjectManager::PreUpdate()
+	{
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->PreUpdateWrapper();
 			}
 		}
-		CRenderContext& renderContext = GraphicsEngine().GetRenderContext();
-		//プリレンダリング。
-		GraphicsEngine().GetPreRender().Update();
+	}
+	void CGameObjectManager::Update()
+	{
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->UpdateWrapper();
 			}
 		}
+	}
+	void CGameObjectManager::PostUpdate()
+	{
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->PostUpdateWrapper();
 			}
 		}
-		
-		//シーングラフを更新。
-		UpdateSceneGraph();
-		//ライトを更新。
-		LightManager().Update();
-		//エフェクトを更新。
-		GraphicsEngine().GetEffectEngine().Update();
-
-		//画面をクリア
+	}
+	void CGameObjectManager::BeginRender(CRenderContext& rc)
+	{
 		float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
 		CRenderTarget* renderTargets[] = {
 			&GraphicsEngine().GetMainRenderTarget()
 		};
-		renderContext.OMSetRenderTargets(1, renderTargets);
-		renderContext.ClearRenderTargetView(0, ClearColor);
-		renderContext.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
-		renderContext.RSSetState(RasterizerState::sceneRender);
-		renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
-		
-		//プリレンダリング。
-		GraphicsEngine().GetPreRender().Render(renderContext);
-
-		//ディファードシェーディング。
-		//ライトの情報を転送転送。
-		
-		GraphicsEngine().DefferdShading(renderContext);
-
-		
-		BeginGPUEvent(L"enRenderStep_ForwardRender");
+		rc.OMSetRenderTargets(1, renderTargets);
+		rc.ClearRenderTargetView(0, ClearColor);
+		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
+		rc.RSSetState(RasterizerState::sceneRender);
+		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+	}
+	void CGameObjectManager::ForwardPreRender(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_ForwardPreRender");
 		//レンダリングステップをフォワードレンダリングに。
-		renderContext.SetRenderStep(enRenderStep_ForwardRender);
+		rc.SetRenderStep(enRenderStep_ForwardPreRender);
 		
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
-				obj->PreRenderWrapper(renderContext);
-			}
-		}
-
-		//ちょっとコメントアウト。
-		/*for (GameObjectList objList : m_gameObjectListArray) {
-			for (IGameObject* obj : objList) {
-				obj->RenderWrapper(renderContext);
-			}
-		}*/
-
-		
-		EndGPUEvent();		
-
-		//ポストエフェクト。
-		GraphicsEngine().GetPostEffect().Render(renderContext);
-
-		//2D的なものの描画。
-		BeginGPUEvent(L"enRenderStep_Render2DToScene");
-		float blendFactor[4] = { 0.0f };
-		renderContext.OMSetBlendState(AlphaBlendState::trans, blendFactor, 0xFFFFFFFF);
-		renderContext.RSSetState(RasterizerState::spriteRender);
-		renderContext.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
-		renderContext.SetRenderStep(enRenderStep_Render2DToScene);
-		for (GameObjectList objList : m_gameObjectListArray) {
-			for (IGameObject* obj : objList) {
-				obj->PostRenderWrapper(renderContext);
+				obj->PreForwardRenderWrapper(rc);
 			}
 		}
 		EndGPUEvent();
+	}
+	void CGameObjectManager::ForwardRender(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_ForwardRender");
+		rc.SetRenderStep(enRenderStep_ForwardRender);
+		for (GameObjectList objList : m_gameObjectListArray) {
+			for (IGameObject* obj : objList) {
+				obj->ForwardRenderWrapper(rc);
+			}
+		}
+		EndGPUEvent();
+	}
+	void CGameObjectManager::PostRender(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_Render2DToScene");
+		float blendFactor[4] = { 0.0f };
+		rc.OMSetBlendState(AlphaBlendState::trans, blendFactor, 0xFFFFFFFF);
+		rc.RSSetState(RasterizerState::spriteRender);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		rc.SetRenderStep(enRenderStep_Render2DToScene);
+		for (GameObjectList objList : m_gameObjectListArray) {
+			for (IGameObject* obj : objList) {
+				obj->PostRenderWrapper(rc);
+			}
+		}
+		EndGPUEvent();
+	}
+	void CGameObjectManager::Execute()
+	{
+		ExecuteDeleteGameObjects();
+		//更新系の処理。
+		{
+			//Start
+			Start();
+			//事前アップデート。
+			PreUpdate();
+			//プリレンダリングの更新処理。
+			GraphicsEngine().GetPreRender().Update();
+			//アップデート。
+			Update();
+			//遅延アップデート。
+			PostUpdate();
+			//シーングラフを更新。
+			UpdateSceneGraph();
+			//ライトを更新。
+			LightManager().Update();
+			//エフェクトを更新。
+			GraphicsEngine().GetEffectEngine().Update();
+		}
+		//描画系の処理。
+		{
+			CRenderContext& renderContext = GraphicsEngine().GetRenderContext();
+			//画面をクリア
+			BeginRender(renderContext);
+			//プリレンダリング。
+			GraphicsEngine().GetPreRender().Render(renderContext);
+			//ディファードシェーディング。
+			GraphicsEngine().DefferdShading(renderContext);
+			//事前フォワードレンダリング。
+			ForwardPreRender(renderContext);
+			//フォワードレンダリング。
+			ForwardRender(renderContext);
+			//ポストエフェクト。
+			GraphicsEngine().GetPostEffect().Render(renderContext);
+			//2D的なものの描画。
+			PostRender(renderContext);
+		}
 	}
 	void CGameObjectManager::UpdateSceneGraph()
 	{

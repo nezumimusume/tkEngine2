@@ -20,10 +20,7 @@ public:
 	 *@brief	更新。
 	 */
 	void Update();
-	/*!
-	 *@brief	描画。
-	 */
-	void Render(CRenderContext& rc);
+
 	/*!
 	*@brief	削除されるときに呼ばれる。
 	*@details	CGameManager::DeleteGameObjectを呼んだときに実行されます。
@@ -37,10 +34,9 @@ public:
 	////////////////////////////////////////////
 	//メンバ変数。
 	////////////////////////////////////////////
-	CSkinModel m_charaSkinModel;			//キャラクタ用のスキンモデル。
-	CSkinModelData m_charaSkinModelData;	//キャラクタ用のスキンモデルデータ。
-	CSkinModel m_bgSkinModel;				//背景用のキャラクタスキンモデル。
-	CSkinModelData m_bgSkinModelData;		//背景用のスキンモデルデータ。
+	prefab::CSkinModelRender* m_charaRender = nullptr;	//キャラのレンダリング。
+	prefab::CSkinModelRender* m_bgRender = nullptr;		//背景レンダリング。
+	
 
 	prefab::CDirectionLight* m_directionLig = nullptr;		//ディレクションライト。
 	std::vector<prefab::CPointLight*>	m_pointLightList;	//ポイントライトのリスト。

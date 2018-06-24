@@ -36,7 +36,8 @@ namespace tkEngine{
 			DXGI_FORMAT depthStencilFormat,
 			DXGI_SAMPLE_DESC multiSampleDesc,
 			ID3D11Texture2D* renderTarget = nullptr,
-			ID3D11Texture2D* depthStencil = nullptr
+			ID3D11Texture2D* depthStencil = nullptr,
+			bool isResolveTexture = false
 		);
 		/*!
 		 *@brief	レンダリングターゲットの破棄。
@@ -139,6 +140,7 @@ namespace tkEngine{
 		bool						m_isMSAA = false;					//!<MSAAが有効？
 		DXGI_FORMAT					m_textureFormat = DXGI_FORMAT_UNKNOWN;	//!<テクスチャのフォーマット。
 		DXGI_FORMAT					m_depthStencliFormat = DXGI_FORMAT_UNKNOWN;	//!<デプスステンシルバッファのフォーマット。
+		bool m_isResolveTexture = false;
 		int m_width = 0;
 		int m_height = 0;
 	};

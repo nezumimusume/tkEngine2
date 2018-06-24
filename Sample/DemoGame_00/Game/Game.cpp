@@ -41,7 +41,7 @@ void Game::InitSceneLight()
 		pos.z = -mat.m[3][1];
 		ptLig->SetPosition(pos);
 		ptLig->SetColor({
-#if 0 //@todo 物理ベースの時のライト。
+#if 1 //@todo 物理ベースの時のライト。
 			400.0f,
 			400.0f,
 			100.0f,
@@ -240,10 +240,7 @@ void Game::Update()
 	GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
 #endif
 }
-void Game::Render(CRenderContext& rc)
-{
-	(void)rc;
-}
+
 void Game::PostRender(CRenderContext& rc) 
 {
 	wchar_t text[256];

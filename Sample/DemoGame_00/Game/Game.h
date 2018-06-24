@@ -22,7 +22,7 @@ public:
 	~Game();
 	bool Start() override;
 	void Update() override;
-	void Render(CRenderContext& rc) override;
+	
 	void PostRender(CRenderContext& rc) override;
 	void OnDestroy()override;
 	void NotifyGameOver();

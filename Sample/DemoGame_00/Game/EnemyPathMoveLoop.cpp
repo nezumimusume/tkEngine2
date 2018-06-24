@@ -18,16 +18,16 @@ EnemyPathMoveLoop::~EnemyPathMoveLoop()
 void EnemyPathMoveLoop::ChangeTurnState(EnState stateWhenTurnEnd, const CVector3& targetDir)
 {
 	//エネミーの前方方向を取得。
-	const CVector3& forward = m_enemy->GetForward();
+	const auto& forward = m_enemy->GetForward();
 	m_angleWhenStartTurn = atan2f(forward.x, forward.z);
 	m_angleWhenEndTurn = atan2f(targetDir.x, targetDir.z);
 	m_stateWhenTurnEnd = stateWhenTurnEnd;
 	//角度の差が180.0以上ないか調べる。
-	float diff = m_angleWhenEndTurn - m_angleWhenStartTurn;
-	float diff_abs = fabsf(diff);
+	auto diff = m_angleWhenEndTurn - m_angleWhenStartTurn;
+	auto diff_abs = fabsf(diff);
 	if (diff_abs > CMath::PI) {
 		//差が180.0f以上なので大回りしている。
-		float angle = 2.0f * CMath::PI - fabsf(diff);
+		auto angle = 2.0f * CMath::PI - fabsf(diff);
 		angle *= -diff / diff_abs;
 		m_angleWhenEndTurn = m_angleWhenStartTurn + angle;
 	}
@@ -36,7 +36,7 @@ void EnemyPathMoveLoop::ChangeTurnState(EnState stateWhenTurnEnd, const CVector3
 }
 void EnemyPathMoveLoop::Update()
 {
-	float deltaTime = GameTime().GetFrameDeltaTime();
+	auto deltaTime = GameTime().GetFrameDeltaTime();
 	switch (m_state) {
 	case enState_FindNearEdge: {
 		//近いエッジを検索する。
@@ -56,9 +56,9 @@ void EnemyPathMoveLoop::Update()
 	}break;
 	case enState_MoveNearEdge: { //最も近いエッジに移動する。
 		
-		CVector3 toEdgeVector = m_currentEdge->CalcVectorToEdge(m_enemy->GetPosition());
+		auto toEdgeVector = m_currentEdge->CalcVectorToEdge(m_enemy->GetPosition());
 		toEdgeVector.y = 0.0f;
-		CVector3 toEdgeVectorDir = toEdgeVector;
+		auto toEdgeVectorDir = toEdgeVector;
 		toEdgeVectorDir.Normalize();
 		float move = m_enemy->MOVE_SPEED * deltaTime;
 		if (toEdgeVector.Length() < m_enemy->RADIUS) {
@@ -71,16 +71,16 @@ void EnemyPathMoveLoop::Update()
 		
 	}break;
 	case enState_MovePath: {	//順方向のパス移動。
-		const PathEdge* edge = m_currentEdge;
+		const auto edge = m_currentEdge;
 		//移動量を計算。
-		float move = m_enemy->MOVE_SPEED * deltaTime;
-		CVector3 moveSpeed = edge->directionXZ;
+		auto move = m_enemy->MOVE_SPEED * deltaTime;
+		auto moveSpeed = edge->directionXZ;
 		moveSpeed *= move;
 		//次の移動先を計算。
-		CVector3 nextPos = m_enemy->GetPosition() + moveSpeed;
+		auto nextPos = m_enemy->GetPosition() + moveSpeed;
 
 		//終点までの距離を計算。
-		CVector3 toEndPoint = m_currentEdge->endPos - nextPos;
+		auto toEndPoint = m_currentEdge->endPos - nextPos;
 		toEndPoint.y = 0.0f; //Yはいらない。
 		if (toEndPoint.Dot(m_currentEdge->directionXZ) < 0.0f) {
 			//終点を超えた。
@@ -101,21 +101,21 @@ void EnemyPathMoveLoop::Update()
 		m_enemy->Move(deltaTime, (nextPos-m_enemy->GetPosition()) / deltaTime);
 	}break;
 	case enState_MovePath_Reverse: {	//逆方向のパス移動。
-		const PathEdge* edge = m_currentEdge;
+		const auto edge = m_currentEdge;
 		//移動量を計算。
-		float move = m_enemy->MOVE_SPEED * GameTime().GetFrameDeltaTime();
-		CVector3 moveSpeed = edge->directionXZ;
+		auto move = m_enemy->MOVE_SPEED * GameTime().GetFrameDeltaTime();
+		auto moveSpeed = edge->directionXZ;
 		moveSpeed *= -move;
 		//次の移動先を計算。
-		CVector3 nextPos = m_enemy->GetPosition() + moveSpeed;
+		auto nextPos = m_enemy->GetPosition() + moveSpeed;
 
 		//始点までの距離を計算。
-		CVector3 toStartPoint = m_currentEdge->startPos - nextPos;
+		auto toStartPoint = m_currentEdge->startPos - nextPos;
 		toStartPoint.y = 0.0f; //Yはいらない。
 		if (toStartPoint.Dot(m_currentEdge->directionXZ) > 0.0f) {
 			//始点を超えた。
 			
-			CVector3 pos = m_currentEdge->startPos;
+			auto pos = m_currentEdge->startPos;
 			nextPos.y = m_enemy->GetPosition().y;
 
 			//次のエッジへゴー。
@@ -154,7 +154,7 @@ void EnemyPathMoveLoop::Update()
 				ChangeState(m_stateWhenTurnEnd);
 			}
 		}
-		CQuaternion qRot;
+		auto qRot = CQuaternion::Identity;
 		qRot.SetRotation(CVector3::AxisY, m_angle);
 		m_enemy->SetRotation(qRot);
 		

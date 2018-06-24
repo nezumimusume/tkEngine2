@@ -17,8 +17,8 @@ PlayerSilhouette::~PlayerSilhouette()
 }
 bool PlayerSilhouette::Start()
 {
-	Player* pl = FindGO<Player>("Player");
-	m_playerModel = &pl->GetModel();
+	m_player = FindGO<Player>("Player");
+	
 	//深度ステンシルステートを作成。
 	D3D11_DEPTH_STENCIL_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
@@ -45,18 +45,20 @@ bool PlayerSilhouette::Start()
 void PlayerSilhouette::Update()
 {
 }
-void PlayerSilhouette::Render(CRenderContext& rc)
+void PlayerSilhouette::ForwardRender(CRenderContext& rc)
 {
+	return;
+	auto model = &m_player->GetModel();
 	rc.OMSetDepthStencilState(m_depthStencilState, 0);
 	//シルエット描画用のシェーダーに差し替える。
-	m_playerModel->FindMaterial([&](CModelEffect* effect) {
+	model->FindMaterial([&](CModelEffect* effect) {
 		effect->SetRender3DModelPSShader(m_psShader);
 	});
 	rc.PSSetShaderResource(enSkinModelSRVReg_SilhouetteTexture, m_texture);
-	m_playerModel->Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	model->Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 	//
-	m_playerModel->FindMaterial([&](CModelEffect* effect) {
+	model->FindMaterial([&](CModelEffect* effect) {
 		effect->SetRender3DModelDefaultShader();
 	});
 }

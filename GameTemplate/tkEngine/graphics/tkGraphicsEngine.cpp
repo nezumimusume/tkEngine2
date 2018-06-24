@@ -134,6 +134,7 @@ namespace tkEngine{
 		ZeroMemory(&m_mainRenderTargetMSAADesc, sizeof(m_mainRenderTargetMSAADesc));
 		m_mainRenderTargetMSAADesc.Count = 1;
 		m_mainRenderTargetMSAADesc.Quality = 0;
+#if 0
 		//ç≈çÇÇ≈MSAAx4
 		for (int i = 1; i <= 4; i <<= 1)
 		{
@@ -147,6 +148,7 @@ namespace tkEngine{
 				}
 			}
 		}
+#endif
 		bool ret = m_mainRenderTarget.Create(
 			m_frameBufferWidth,
 			m_frameBufferHeight,
@@ -154,7 +156,10 @@ namespace tkEngine{
 			1,
 			DXGI_FORMAT_R16G16B16A16_FLOAT,
 			DXGI_FORMAT_D32_FLOAT,
-			m_mainRenderTargetMSAADesc
+			m_mainRenderTargetMSAADesc,
+			nullptr,
+			nullptr,
+			true
 		);
 		
 		if (!ret) {

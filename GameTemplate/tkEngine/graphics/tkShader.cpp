@@ -108,7 +108,7 @@ namespace tkEngine{
 	bool CShader::Load(const char* filePath, const char* entryFuncName, EnType shaderType)
 	{
 		Release();
-		CGraphicsEngine& ge = Engine().GetGraphicsEngine();
+		auto& ge = Engine().GetGraphicsEngine();
 		bool result = ge.GetShaderResources().Load(
 			m_shader,
 			m_inputLayout,

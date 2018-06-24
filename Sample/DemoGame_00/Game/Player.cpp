@@ -24,7 +24,7 @@ public:
 	{
 		m_timer += GameTime().GetFrameDeltaTime();
 		if (m_timer > m_emitTime) {
-			prefab::CSoundSource* s = NewGO<prefab::CSoundSource>(0);
+			auto s = NewGO<prefab::CSoundSource>(0);
 			s->Init(m_filePath.c_str());
 			s->Play(false);
 			DeleteGO(this);
@@ -33,20 +33,7 @@ public:
 };
 bool Player::Start()
 {
-	//モデルデータをロード。
-	m_skinModelData.Load(L"modelData/unityChan.cmo");
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.SetShadowCasterFlag(true);
-	m_skinModel.SetShadowReceiverFlag(true);
-	m_normalMap.CreateFromDDSTextureFromFile(L"sprite/utc_nomal.dds");
-	m_specMap.CreateFromDDSTextureFromFile(L"sprite/utc_spec.dds");
-	m_skinModel.FindMaterial([&](CModelEffect* material) {
-		//マテリアルＩＤを設定する。
-		material->SetMaterialID(enMaterialID_Chara);
-		//法線マップとスペキュラマップを設定。
-		material->SetNormalMap(m_normalMap.GetBody());
-		material->SetSpecularMap(m_specMap.GetBody());
-	});
+	
 
 	m_animClip[enAnimationClip_idle].Load(L"animData/idle.tka");
 	m_animClip[enAnimationClip_walk].Load(L"animData/walk.tka");
@@ -62,8 +49,25 @@ bool Player::Start()
 	m_animClip[enAnimationClip_jump].SetLoopFlag(false);
 	m_animClip[enAnimationClip_KneelDown].SetLoopFlag(false);
 	m_animClip[enAnimationClip_Clear].SetLoopFlag(false);
-	m_animation.Init(m_skinModel, m_animClip, enAnimationClip_num);
-	m_animation.Play(enAnimationClip_idle);
+
+	//モデルデータをロード。
+	m_modelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_modelRender->Init(L"modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
+	//m_modelRender->SetForwardRenderFlag(true);
+
+	m_normalMap.CreateFromDDSTextureFromFile(L"sprite/utc_nomal.dds");
+	m_specMap.CreateFromDDSTextureFromFile(L"sprite/utc_spec.dds");
+	m_modelRender->FindMaterial([&](CModelEffect* material) {
+		//マテリアルＩＤを設定する。
+		material->SetMaterialID(enMaterialID_Chara);
+		//法線マップとスペキュラマップを設定。
+		material->SetNormalMap(m_normalMap.GetBody());
+		material->SetSpecularMap(m_specMap.GetBody());
+	});
+
+	m_modelRender->SetShadowCasterFlag(true);
+	m_modelRender->SetShadowReceiverFlag(true);
+	m_modelRender->PlayAnimation(enAnimationClip_idle);
 	m_charaLight = NewGO<prefab::CDirectionLight>(0);
 	m_charaLight->SetDirection({ 1.0f, 0.0f, 0.0f });
 	m_charaLight->SetLightingMaterialIDGroup(1 << enMaterialID_Chara);
@@ -74,7 +78,7 @@ bool Player::Start()
 }
 void Player::Turn()
 {
-	CVector3 moveSpeedXZ = m_moveSpeed;
+	auto moveSpeedXZ = m_moveSpeed;
 	moveSpeedXZ.y = 0.0f;
 	moveSpeedXZ.Normalize();
 	if (moveSpeedXZ.LengthSq() < 1.0f) {
@@ -125,7 +129,7 @@ void Player::UpdateFSM()
 		}
 		break;
 	case enState_GameOver: {
-		if (!m_animation.IsPlaying()) {
+		if (!m_modelRender->IsPlayingAnimation()) {
 			m_game->NotifyRestart();
 		}
 		m_moveSpeed.x = 0.0f;
@@ -136,7 +140,7 @@ void Player::UpdateFSM()
 		m_timer += GameTime().GetFrameDeltaTime();
 		if (m_timer > 0.5f) {
 			
-			CSoundEmitter* emitter = NewGO<CSoundEmitter>(0);
+			auto emitter = NewGO<CSoundEmitter>(0);
 			emitter->Init(0.3f, "sound/uni1518.wav");
 			m_state = enState_GameClear;
 			m_timer = 0.0f;
@@ -153,14 +157,14 @@ void Player::UpdateFSM()
 }
 void Player::Move()
 {
-	float MOVE_SPEED = 2400.0f;
+	auto MOVE_SPEED = 2400.0f;
 	static float MOVE_SPEED_JUMP = 1000.0f;
-	float x = Pad(0).GetLStickXF();
-	float y = Pad(0).GetLStickYF();
+	auto x = Pad(0).GetLStickXF();
+	auto y = Pad(0).GetLStickYF();
 
 	//加速度を計算。
-	CVector3 accForwardXZ = MainCamera().GetForward();
-	CVector3 accRightXZ = MainCamera().GetRight();
+	auto accForwardXZ = MainCamera().GetForward();
+	auto accRightXZ = MainCamera().GetRight();
 	accForwardXZ.y = 0.0f;
 	accForwardXZ.Normalize();
 	accRightXZ.y = 0.0f;
@@ -176,7 +180,7 @@ void Player::Move()
 	}
 
 	//摩擦力。
-	CVector3 friction = m_moveSpeed;
+	auto friction = m_moveSpeed;
 	if (m_state == enState_Jump) {
 		//ジャンプ中の摩擦力。
 		friction *= -1.0f;
@@ -194,7 +198,7 @@ void Player::Move()
 	if (m_state == enState_Jump) {
 		//移動速度に制限を加える。
 		//ジャンプ中にジャンプ前より早くなることはない。
-		CVector3 moveSpeedXZ = { m_moveSpeed.x, 0.0f, m_moveSpeed.z };
+		auto moveSpeedXZ = CVector3( m_moveSpeed.x, 0.0f, m_moveSpeed.z );
 
 		if (moveSpeedXZ.LengthSq() > m_moveSpeedWhenStartJump * m_moveSpeedWhenStartJump) {
 			moveSpeedXZ.Normalize();
@@ -207,29 +211,29 @@ void Player::Move()
 void Player::AnimationController()
 {
 	if (m_state == enState_Jump) {
-		m_animation.Play(enAnimationClip_jump, 0.2f);
+		m_modelRender->PlayAnimation(enAnimationClip_jump, 0.2f);
 	}
 	else if( m_state == enState_Run
 		|| m_state == enState_Idle
 	){
 		if (m_moveSpeed.LengthSq() > 600.0f * 600.0f) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_run, 0.2f);
+			m_modelRender->PlayAnimation(enAnimationClip_run, 0.2f);
 		}
 		else if (m_moveSpeed.LengthSq() > 50.0f * 50.0f) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_walk, 0.2f);
+			m_modelRender->PlayAnimation(enAnimationClip_walk, 0.2f);
 		}
 		else {
 			//待機モーション
-			m_animation.Play(enAnimationClip_idle, 0.2f);
+			m_modelRender->PlayAnimation(enAnimationClip_idle, 0.2f);
 		}
 	}
 	else if (m_state == enState_GameClear) {
-		m_animation.Play(enAnimationClip_Clear);
+		m_modelRender->PlayAnimation(enAnimationClip_Clear);
 	}
 	else if (m_state == enState_GameOver) {
-		m_animation.Play(enAnimationClip_KneelDown);
+		m_modelRender->PlayAnimation(enAnimationClip_KneelDown);
 	}
 }
 void Player::Update()
@@ -240,7 +244,7 @@ void Player::Update()
 	
 	if (m_position.y < -1000.0f && !m_game->IsGameOver()) {
 		//初期位置に戻る。
-		Game* game = FindGO<Game>("Game");
+		auto game = FindGO<Game>("Game");
 		game->NotifyGameOver();
 	}
 
@@ -250,10 +254,10 @@ void Player::Update()
 	
 	//キャラライトはカメラの方向にする。
 	m_charaLight->SetDirection(MainCamera().GetForward());
+	m_modelRender->SetPRS(m_position, m_rotation, CVector3::One );
 	
-	m_skinModel.Update(m_position, m_rotation, CVector3::One, CSkinModel::enFbxUpAxisY);
 
-	CMatrix mRot;
+	auto mRot = CMatrix::Identity;
 	mRot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
@@ -262,7 +266,7 @@ void Player::Update()
 
 void Player::NotifyGameOver()
 {
-	CSoundEmitter* emitter = NewGO<CSoundEmitter>(0);
+	auto emitter = NewGO<CSoundEmitter>(0);
 	emitter->Init(0.6f, "sound/uni1482.wav");
 	m_state = enState_GameOver;
 }
@@ -273,7 +277,7 @@ void Player::NotifyGameClear()
 }
 void Player::NotifyRestart()
 {
-	m_animation.Play(enAnimationClip_idle);
+	m_modelRender->PlayAnimation(enAnimationClip_idle);
 	m_state = enState_Idle;
 	m_position = START_POS;
 	m_charaCon.SetPosition(m_position);
@@ -282,15 +286,5 @@ void Player::NotifyRestart()
 void Player::OnDestroy()
 {
 	DeleteGO(m_charaLight);
-}
-
-void Player::Render(CRenderContext& rc)
-{
-	//描画。
-	m_skinModel.Draw(
-		rc, 
-		MainCamera().GetViewMatrix(), 
-		MainCamera().GetProjectionMatrix()
-	);
-
+	DeleteGO(m_modelRender);
 }

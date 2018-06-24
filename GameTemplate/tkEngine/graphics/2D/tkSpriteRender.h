@@ -68,7 +68,7 @@ namespace tkEngine {
 			}
 		public:
 			void Update() override final;
-			void Render(CRenderContext& rc)override final;
+			void ForwardRender(CRenderContext& rc)override final;
 			void PostRender(CRenderContext& rc) override final;
 		private:
 			bool m_isDraw3D = false;		//!<3D‹óŠÔ‚Å•`‰æ‚·‚éH

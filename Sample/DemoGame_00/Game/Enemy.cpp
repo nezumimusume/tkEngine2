@@ -13,18 +13,19 @@ Enemy::~Enemy()
 }
 bool Enemy::Start()
 {
-	m_skinModelData.Load(L"modelData/enemy.cmo");
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.SetShadowCasterFlag(true);
-	m_skinModel.SetShadowReceiverFlag(true);
+	
 
 	m_animClip[enAnimationClip_idle].Load(L"animData/enemy/idle.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
 	m_animClip[enAnimationClip_run].Load(L"animData/enemy/run.tka");
 	m_animClip[enAnimationClip_run].SetLoopFlag(true);
 
-	m_animation.Init(m_skinModel, m_animClip, enAnimationClip_num);
-	m_animation.Play(enAnimationClip_idle);
+	m_modelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_modelRender->Init(L"modelData/enemy.cmo", m_animClip, enAnimationClip_num);
+
+	m_modelRender->SetShadowCasterFlag(true);
+	m_modelRender->SetShadowReceiverFlag(true);
+	m_modelRender->PlayAnimation(enAnimationClip_idle);
 
 	m_charaCon.Init(20.0f, 100.0f, m_position);
 	m_player = FindGO<Player>("Player");
@@ -59,17 +60,12 @@ void Enemy::Update()
 		SearchPlayer();
 		m_pathMoveLoop.Update();
 	}
-	const CVector3 scale = { 3.0f, 3.0f, 3.0f };
-	m_skinModel.Update(m_position, m_rotation, scale);
-	const CMatrix& mWorld = m_skinModel.GetWorldMatrix();
+	const auto scale = CVector3( 3.0f, 3.0f, 3.0f );
+	m_modelRender->SetPRS(m_position, m_rotation, scale);
 
-	CMatrix mRot;
+	auto mRot = CMatrix::Identity;
 	mRot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
 	m_forward.z = mRot.m[2][2];
-}
-void Enemy::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 }

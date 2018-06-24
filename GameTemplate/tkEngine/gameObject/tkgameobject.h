@@ -45,7 +45,18 @@ namespace tkEngine{
 		/*!
 		 *@brief	描画
 		 */
+		[[deprecated("This function will be delete. please use ForwardRender() function.")]]
 		virtual void Render(CRenderContext& renderContext)
+		{
+			(void)renderContext;
+		}
+		/*!
+		*@brief	フォワードレンダリングのパスから呼ばれる描画処理。
+		*@details
+		* 特殊なシェーディングを行いたいものはこちらでレンダリングを行ってください。
+		* 通常のレンダリングは物理ベースシェーダーが使用されています。
+		*/
+		virtual void ForwardRender(CRenderContext& renderContext)
 		{
 			(void)renderContext;
 		}
@@ -79,8 +90,15 @@ namespace tkEngine{
 		/*!
 		 *@brief	Render関数が実行される前に呼ばれる描画処理。
 		 */
+		[[deprecated("This function will be delete. please use PreForwardRender() function.")]]
 		virtual void PreRender(CRenderContext& renderContext) { 
 			(void)renderContext; 
+		}
+		/*!
+		*@brief	Render関数が実行される前に呼ばれる描画処理。
+		*/
+		virtual void PreForwardRender(CRenderContext& renderContext) {
+			(void)renderContext;
 		}
 		/*!
 		 *@brief	Render関数が実行された後で呼ばれる描画処理
@@ -148,16 +166,16 @@ namespace tkEngine{
 				PostRender(renderContext);
 			}
 		}
-		void RenderWrapper(CRenderContext& renderContext)
+		void ForwardRenderWrapper(CRenderContext& renderContext)
 		{
 			if (m_isActive && m_isStart && !m_isDead && !m_isRegistDeadList) {
-				Render(renderContext);
+				ForwardRender(renderContext);
 			}
 		}
-		void PreRenderWrapper(CRenderContext& renderContext)
+		void PreForwardRenderWrapper(CRenderContext& renderContext)
 		{
 			if (m_isActive && m_isStart && !m_isDead && !m_isRegistDeadList) {
-				PreRender(renderContext);
+				PreForwardRender(renderContext);
 			}
 		}
 		void PostUpdateWrapper()

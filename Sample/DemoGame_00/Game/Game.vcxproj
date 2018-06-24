@@ -730,6 +730,7 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Title.h" />
     <CustomBuild Include="Assets\shader\LightingFunction.h">
@@ -1188,6 +1189,11 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\shadowBlur.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\defferdShading.fx">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

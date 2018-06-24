@@ -24,10 +24,12 @@ namespace tkEngine{
 		DXGI_FORMAT depthStencilFormat,
 		DXGI_SAMPLE_DESC multiSampleDesc,
 		ID3D11Texture2D* renderTarget,
-		ID3D11Texture2D* depthStencil
+		ID3D11Texture2D* depthStencil,
+		bool isResolveTexture
 	)
 	{
 		Release();
+		m_isResolveTexture = isResolveTexture;
 		m_width = w;
 		m_height = h;
 		m_textureFormat = colorFormat;
@@ -120,7 +122,7 @@ namespace tkEngine{
 				return false;
 			}
 		}
-		if (m_isMSAA) {
+		if (m_isMSAA || m_isResolveTexture) {
 			//MSAAが有効の時は、リゾルブされたテクスチャをSRVとして使用する。
 			//リゾルブ先となるテクスチャを作成する。
 			texDesc.SampleDesc.Count = 1;

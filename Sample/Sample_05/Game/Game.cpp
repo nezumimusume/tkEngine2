@@ -16,6 +16,8 @@ void Game::OnDestroy()
 {
 	//削除。
 	DeleteGO(m_directionLig);
+	DeleteGO(m_charaRender);
+	DeleteGO(m_bgRender);
 }
 /*!
 *@brief	ポイントライトの初期化。
@@ -66,12 +68,14 @@ bool Game::Start()
 	MainCamera().Update();
 
 	//キャラクタ用のモデルデータをロード。
-	m_charaSkinModelData.Load(L"modelData/Thethief_H.cmo");
-	m_charaSkinModel.Init(m_charaSkinModelData);
+	m_charaRender = NewGO<prefab::CSkinModelRender>(0);
+	m_charaRender->Init(L"modelData/Thethief_H.cmo");
+	
 	
 	//背景用のモデルデータをロード。
-	m_bgSkinModelData.Load(L"modelData/background.cmo");
-	m_bgSkinModel.Init(m_bgSkinModelData);
+	m_bgRender = NewGO<prefab::CSkinModelRender>(0);
+	m_bgRender->Init(L"modelData/background.cmo");
+	
 	
 	return true;
 }
@@ -86,11 +90,6 @@ void Game::Update()
 		pt->SetPosition(pos);
 	}
 	//ワールド行列を更新。
-	m_charaSkinModel.Update({ 0.0f, -30.0f, 0.0f }, CQuaternion::Identity, {2.0f, 2.0f, 2.0f});	//キャラが小さいのでちょっと大きくしてる。
-	m_bgSkinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
-}
-void Game::Render(CRenderContext& rc)
-{
-	m_charaSkinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-	m_bgSkinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	m_charaRender->SetPosition({ 0.0f, -30.0f, 0.0f });
+	m_charaRender->SetScale({ 2.0f, 2.0f, 2.0f });
 }

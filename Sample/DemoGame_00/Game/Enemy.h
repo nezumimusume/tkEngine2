@@ -20,7 +20,7 @@ public:
 	~Enemy();
 	bool Start() override;
 	void Update() override;
-	void Render(CRenderContext& rc) override;
+	
 	/*!
 	 *@brief	座標の取得。
 	 */
@@ -55,7 +55,7 @@ public:
 	 */
 	void PlayAnimation(EnAnimationClip animNo)
 	{
-		m_animation.Play(animNo);
+		m_modelRender->PlayAnimation(animNo);
 	}
 	void Move(float deltaTime, CVector3 move)
 	{
@@ -86,11 +86,8 @@ private:
 	void SearchPlayer();
 private:
 	
-	
-	CSkinModelData m_skinModelData;					//!<スキンモデルデータ。
-	CSkinModel m_skinModel;							//!<スキンモデル。
+	prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラー。
 	CAnimationClip m_animClip[enAnimationClip_num];	//!<アニメーションクリップ。
-	CAnimation m_animation;							//!<アニメーション。
 	CVector3 m_position = CVector3::Zero;			//!<座標。
 	CQuaternion m_rotation = CQuaternion::Identity;	//!<回転。
 	Path m_movePath;								//!<移動パス。

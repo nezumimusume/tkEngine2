@@ -21,17 +21,19 @@ namespace tkEngine{
 	*@brief	描画エンジン。
 	*@details
 	* 2017/08/03 release notes
-	* 	tkEngineの描画エンジンはforward+で実装されている。
+	* 	tkEngineの描画エンジンはTBDR(Tile Based Deferred Rendering)で実装されている。
 	* 	シーンの描画手順は下記となる。
 	*  	.1 プリレンダリング
-	*     		1-1 ZPrepass
-	*	   		1-2 LightCulling
-	*  	.2 モデル描画
-	*  	.3 ポストエフェクト
-	* forward+の採用により、大量の動的光源を高速に扱うことができる。
+	*     		1-1 ShadowMapの作成
+	*	   		1-2 タイルごとの LightCulling
+	*			1-3 G-Bufferの作成。
+	*  	.2 ディファードシェーディング
+	*   .3 Forwardレンダリング
+	*			特殊なシェーディングを行うマテリアル、半透明マテリアルの描画はここで行う。
+	*  	.4 ポストエフェクト
+	*	.5 HUDなど、ポストをかけたくない描画を行う。	
+	* TBDRの採用により、大量の動的光源を高速に扱うことができる。
 	* 動的光源は最大で1024個設置することができる。エンジンをカスタマイズすることで拡張も可能。
-	* 独自のモデルシェーダーを記述する場合は下記の注意が必要です。
-	*    tレジスタの100番以降とbレジスタの1番はエンジンが使用しているため、使ってはならない。
 	*/
 	class CGraphicsEngine : Noncopyable {
 	public:

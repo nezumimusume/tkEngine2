@@ -20,7 +20,7 @@ namespace tkEngine {
 			m_sprite.SetTexture(m_texture);
 			m_sprite.Update(m_position, m_rotation, m_scale, m_pivot);
 		}
-		void CSpriteRender::Render(CRenderContext& rc)
+		void CSpriteRender::ForwardRender(CRenderContext& rc)
 		{
 			if (m_isDraw3D == true) {
 				m_sprite.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
