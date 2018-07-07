@@ -150,7 +150,7 @@ namespace tkEngine{
 			float halfViewAngle = MainCamera().GetViewAngle() * 0.5f;
 			//視推台の8頂点をライト空間に変換してAABBを求めて、正射影の幅と高さを求める。
 			float w, h;
-			float fFar, fNear;
+			
 			CVector3 v[8];
 			{
 				float t = tan(halfViewAngle);

@@ -167,6 +167,7 @@
     <CustomBuild Include="Assets\shader\defferdShading.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
