@@ -33,19 +33,28 @@ endFrame = 0
 
 rollout tkExporter "tkExporter" width:194 height:248
 (
-	editText animClipStartFrame "" pos:[91,270] width:58 height:21
-	label lbl1 "start frame" pos:[23,273] width:60 height:16
-	groupBox grp1 "Animation clip" pos:[13,249] width:145 height:134
-	groupBox grp2 "Skeleton" pos:[12,172] width:145 height:64
-	button btn_saveAnimationClip "Save" pos:[28,339] width:120 height:28
-	label lbl2 "end frame" pos:[23,304] width:60 height:16
-	editText animClipEndFrame "" pos:[91,302] width:58 height:21
-	button btn_saveSkeleton "Save" pos:[23,191] width:120 height:28
-	label lbl3 "Label" pos:[34,291] width:0 height:0
-	groupBox grp5 "FBX" pos:[13,13] width:145 height:64
-	button btn_save_fbx "Save" pos:[24,33] width:120 height:28
-	groupBox grp10 "FBX And Skeleton" pos:[13,92] width:145 height:64
-	button btn_save_fbx_and_skeleton "Save" pos:[24,112] width:120 height:28
+	editText 'animClipStartFrame' "" pos:[90,384] width:58 height:21 align:#left
+	label 'lbl1' "start frame" pos:[22,387] width:60 height:16 align:#left
+	groupBox 'grp1' "Animation clip" pos:[14,358] width:147 height:134 align:#left
+	button 'btn_saveAnimationClip' "Save" pos:[27,453] width:120 height:28 align:#left
+	label 'lbl2' "end frame" pos:[22,418] width:60 height:16 align:#left
+	editText 'animClipEndFrame' "" pos:[90,416] width:58 height:21 align:#left
+	button 'btn_saveSkeleton' "Save Skeleton" pos:[22,321] width:120 height:28 align:#left
+	label 'lbl3' "Label" pos:[33,440] width:0 height:0 align:#left
+	groupBox 'grp5' "FBX" pos:[13,13] width:145 height:64 align:#left
+	button 'btn_save_fbx' "Save" pos:[24,33] width:120 height:28 align:#left
+	groupBox 'grp10' "Level" pos:[13,92] width:145 height:189 align:#left
+	button 'btn_load_locObject' "Load Object" pos:[26,172] width:120 height:28 align:#left
+	editText 'levelName' "" pos:[23,138] width:120 height:24 align:#left
+	label 'lbl4' "edit level name" pos:[23,117] width:77 height:16 align:#left
+	button 'SaveLoc' "Save Level" pos:[26,242] width:120 height:28 align:#left
+	groupBox 'grp6' "Animation" pos:[3,295] width:164 height:200 align:#left
+	button 'btn_copy_locObject' "Copy Object" pos:[26,206] width:120 height:28 align:#left
+	
+	on  tkExporter open do
+	(
+		levelName.text = "level00"
+	)
 	
 	/*
 	 *  出力するノードの情報を構築。
@@ -117,7 +126,46 @@ rollout tkExporter "tkExporter" width:194 height:248
 			FClose file
 		)
 	)
-	
+	/*
+	 * レベルデータを保存。
+	 */
+	fn SaveLevel = 
+	(
+		filepath = getSaveFileName caption:"" types: "level (*.tkl)|*.tkl|All Files (*.*)|*.*|"
+		
+		if filepath != undefined then
+		(
+			
+			file = fopen filepath "wb"
+			
+			try(
+				--ヘッダーを出力
+				WriteLong file g_objectParams.count
+				
+				for o in g_objectParams do (
+					
+					WriteByte file o.objName.count
+					WriteString file o.objName
+					WriteLong file o.parentId
+					--バインドポーズを出力。
+					for i = 1 to 4 do(
+						WriteFloat file o.bindPose[i].x
+						WriteFloat file o.bindPose[i].y
+						WriteFloat file o.bindPose[i].z
+					)
+					--バインドポーズの逆数を出力。
+					for i = 1 to 4 do(
+						WriteFloat file o.invBindPose[i].x
+						WriteFloat file o.invBindPose[i].y
+						WriteFloat file o.invBindPose[i].z
+					)
+				)
+			)catch(
+				Messagebox "ファイルの保存に失敗しました"
+			)
+			FClose file
+		)
+	)
 	/*
 	 *  アニメーションクリップの保存。
 	 */
@@ -227,6 +275,30 @@ rollout tkExporter "tkExporter" width:194 height:248
 		)
 	)
 	/*
+	* Levelを保存。
+	*/
+	on SaveLoc pressed do
+	(
+		--現在編集中のルートのレベルを取得。
+		editLevelObj = getNodeByName levelName.text
+		if editLevelObj == undefined then(
+			Messagebox "保存するレベルが存在しません。"
+		)else(
+			select editLevelObj
+		
+			--スケルトンとして保存。
+			g_objectParams = #()
+			--アニメーション時間を0にする。
+			animationRange = interval 0 animationRange.end
+			slidertime = 0
+			at time 0(
+				--アニメーション進行中の処理。
+				BuildOutputNodeInfo selection[1] -1
+				SaveLevel()
+			)
+		)
+	)
+	/*
 	 *  アニメーションクリップの保存のボタンが押されたときの処理。
 	 */
 	on btn_saveAnimationClip pressed do
@@ -249,6 +321,97 @@ rollout tkExporter "tkExporter" width:194 height:248
 				)catch(
 					messageBox "ファイルの保存に失敗しました"
 				)
+			)
+		)
+	)
+	function selectHierarchy =
+    (
+		for p in selection do
+		(
+			if p.children != undefined do
+			(
+				selectmore p.children
+			)
+		)
+    )
+    
+	/*
+	 *　配置するオブジェクトをコピー
+	 */
+	on btn_copy_locObject pressed do
+	(
+		if selection.count == 0  then(
+			Messagebox "コピーするオブジェクトを選択してください。"
+		)else(
+			selectHierarchy()
+			parentObj = copy selection[1]
+			parentObj.name = selection[1].name
+			for obj in 2 to selection.count do (
+				cloneObj = copy selection[obj]
+				cloneObj.name = selection[obj].name
+				cloneObj.parent = parentObj
+				parentObj = merge( parentObj cloneObj )
+				deselect cloneObj
+			)
+			select parentObj
+		)
+	)
+	/*
+	 * 配置するオブジェクトのロード。
+	 */
+	on btn_load_locObject pressed do
+	(
+		
+		if  levelName.text == "" then(
+			Messagebox "編集するレベルの名前を入力して下さい。"
+		)else(
+			filepath = getOpenFileName caption:"" types: "fbx (*fbx)|*.fbx|All Files (*.*)|*.*|"
+			if filepath != undefined then(
+				editLevelObj = getNodeByName levelName.text
+				if editLevelObj == undefined then(
+					--ダミーを作る。
+					editLevelObj = Dummy()
+					editLevelObj.name = levelName.text
+				)
+				
+				FBXImporterSetParam "ScaleConversion" false
+				FBXImporterSetParam "UpAxis" "Z"
+				ImportFile filepath #noPrompt
+				importObj = $
+		
+				filename = getFilenameFile filepath
+				
+				--全てを編集可能ポリゴンに変換する。
+				delObjArray = #()
+				for i=1 to $selection.count do
+				(
+					p = convertToMesh($selection[i]);
+					--編集可能ポリゴンに変換できなかった場合は、削除リストに積む。
+					if p == undefined then(
+						append delObjArray $selection[i]
+					)
+	
+				)
+				--編集可能ポリゴンに変換できなかったオブジェクトを削除。
+				for i=1 to delObjArray.count do
+				(
+					delete delObjArray[i]
+				)
+				parentBox = box length:1 width:1 height:1
+				p = convertToMesh(parentBox)
+				importObj.parent = parentBox
+				select p
+				selectMore $.children
+				--結合。
+				while  $selection.count>1 do
+				(
+					attach p $selection[$selection.count];
+				)
+
+				--ダミーをレベルの下にぽいっとな。
+				$selection[1].pivot = Point3 0 0 0
+				selection[1].name = filename
+				$selection[1].parent = editLevelObj
 			)
 		)
 	)
