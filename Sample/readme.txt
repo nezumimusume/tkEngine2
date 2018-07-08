@@ -39,7 +39,7 @@
 ・Sample_12
 　　キャラクタを進行方向に向けるサンプル。
 　　Player.cpp,hのTurn関数にサンプルが記述されている。
-・Sample_13
+・Sample_13(完了)
 　　サウンドを再生するサンプル。
 　　Game.cppにサンプルが記述されている。
 ・Sample_14
