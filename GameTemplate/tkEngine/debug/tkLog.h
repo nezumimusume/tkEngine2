@@ -42,13 +42,13 @@ namespace tkEngine{
 	/*!
 	*@brief	警告のメッセージボックス
 	*/
-	static inline void WarningMessageBox(const char* format, const char* file, long line, ...)
+	static inline void WarningMessageBox(const char* file, long line, const char* format,  ...)
 	{
 		static char log[1024 * 10];
 		va_list va;
 		va_start(va, format);
 		char fileLineInfo[256];
-		sprintf_s(fileLineInfo, "%s, %d行目", file, line);
+		sprintf_s(fileLineInfo, "\n\n%s, %d行目", file, line);
 		vsprintf_s(log, format, va);
 		strcat_s(log, fileLineInfo);
 		va_end(va);
@@ -58,18 +58,18 @@ namespace tkEngine{
 	/*!
 	*@brief	警告のメッセージボックス
 	*/
-	static inline void WarningMessageBoxW(const wchar_t* format, const char* file, long line, ...)
+	static inline void WarningMessageBoxW(const char* file, long line, const wchar_t* format,  ...)
 	{
 		static wchar_t log[1024 * 10];
+		wchar_t wFile[256];
+		size_t numStr;
+		mbstowcs_s(&numStr, wFile, 256, file, strlen(file) + 1);
+		wchar_t fileLineInfo[256];
+		swprintf_s(fileLineInfo, L"\n\n%s, %d行目", wFile, line);
 		va_list va;
 		va_start(va, format);
-		wchar_t wFile[256];
-		
-		mbstowcs(wFile, file, strlen(file)+1);
-		wchar_t fileLineInfo[256];
-		swprintf_s(fileLineInfo, L"%s, %d行目", wFile, line);
-
 		vswprintf_s(log, format, va);
+		wcscat(log, fileLineInfo);
 		OutputDebugStringW(log);
 		OutputDebugStringW(L"\n");
 		va_end(va);
@@ -81,8 +81,8 @@ namespace tkEngine{
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 	#define TK_LOG( format, ... )	tkEngine::Log(format, __VA_ARGS__)
 	#define TK_WARNING(format, ... ) tkEngine::Warning(format, __VA_ARGS__)
-	#define TK_WARNING_MESSAGE_BOX(format, ... ) tkEngine::WarningMessageBox(format, __FILE__, __LINE__, __VA_ARGS__)
-	#define TK_WARNING_MESSAGE_BOX_W(format, ... ) tkEngine::WarningMessageBoxW(format, __FILE__, __LINE__, __VA_ARGS__)
+	#define TK_WARNING_MESSAGE_BOX(format, ... ) tkEngine::WarningMessageBox(__FILE__, __LINE__,  format, __VA_ARGS__)
+	#define TK_WARNING_MESSAGE_BOX_W(format, ... ) tkEngine::WarningMessageBoxW(__FILE__, __LINE__,format, __VA_ARGS__)
 #else // _DEBUG
 #define TK_LOG( format, ... )
 #define TK_WARNING(format, ... )

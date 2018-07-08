@@ -242,7 +242,7 @@ namespace tkEngine{
 		CRenderTarget* rts[] = {
 			&rt
 		};
-		rc.RSSetViewport(0.0f, 0.0f, rt.GetWidth(), rt.GetHeight());
+		rc.RSSetViewport(0.0f, 0.0f, (float)rt.GetWidth(), (float)rt.GetHeight());
 		rc.OMSetRenderTargets(1, rts);
 		rc.PSSetShaderResource(0, sceneSRV);
 		rc.PSSetShaderResource(1, m_avgRT[m_currentAvgRT].GetRenderTargetSRV());

@@ -185,6 +185,13 @@ namespace tkEngine{
 		 *@return	trueが返ってきたらロード成功。
 		 */
 		bool Load( const wchar_t* filePath );
+		/*!
+		*@brief	インスタンスが利用可能かどうか調べる。
+		*/
+		bool IsAvailable() const
+		{
+			return m_isAvailable;
+		}
 		DirectX::Model& GetBody()
 		{
 			return *m_modelDx;
@@ -213,5 +220,6 @@ namespace tkEngine{
 	private:
 		DirectX::Model* m_modelDx = nullptr;
 		CSkeleton	m_skeleton;
+		bool m_isAvailable = false;	//インスタンスが利用可能かどうかのフラグ。
 	};
 }

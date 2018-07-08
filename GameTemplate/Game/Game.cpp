@@ -20,7 +20,7 @@ bool Game::Start()
 	MainCamera().Update();
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	m_skinModelRender->Init(L"modelData/unitychan.cmo");
 	return true;
 }
 void Game::Update()

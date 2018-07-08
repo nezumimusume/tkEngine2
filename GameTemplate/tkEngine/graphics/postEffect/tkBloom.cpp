@@ -244,7 +244,7 @@ namespace tkEngine{
 			CRenderTarget* rts[] = {
 				&finalRT
 			};
-			rc.RSSetViewport(0.0f, 0.0f, finalRT.GetWidth(), finalRT.GetHeight());
+			rc.RSSetViewport(0.0f, 0.0f, (float)finalRT.GetWidth(), (float)finalRT.GetHeight());
 			rc.OMSetRenderTargets(1, rts);
 			// アルファブレンディングを加算合成にする。
 			rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);

@@ -39,8 +39,9 @@ namespace tkEngine{
 				}
 				catch (std::exception& exception) {
 					if (strcmp(exception.what(), "CreateTexture") == 0) {
-						TK_WARNING_MESSAGE_BOX_W(L"3Dモデルに貼られているテクスチャの作成に失敗しました。%s\n"
+						TK_WARNING_MESSAGE_BOX_W(L"3Dモデルに貼られているテクスチャの作成に失敗しました。%ls\n"
 												 L"fbxファイルに貼られているテクスチャが、fbxファイルと同じ場所にあるか確認をお願いします。\n", info.diffuseTexture);
+
 					}
 				}
 			}
@@ -128,7 +129,9 @@ namespace tkEngine{
 	
 	bool CSkinModelData::Load(const wchar_t* filePath)
 	{
+		m_isAvailable = false;
 		CSkinModelEffectFactory effectFactory(GraphicsEngine().GetD3DDevice());
+		effectFactory.SetDirectory(L"modelData");
 		//スケルトンのデータを読み込み。
 		std::wstring skeletonFilePath = filePath;
 		int pos = (int)skeletonFilePath.find(L".cmo");
@@ -137,14 +140,19 @@ namespace tkEngine{
 
 		//モデルデータをロード。
 		m_modelDx = GraphicsEngine().GetDirectXModelResource().Load(filePath, m_skeleton);
-	
+		if (m_modelDx != nullptr) {
+			//インスタンスが利用可能。
+			m_isAvailable = true;
+		}
 		return true;
 	}
 	void CSkinModelData::FindMesh(OnFindMesh findMesh)
 	{
-		for (auto& modelMeshs : m_modelDx->meshes) {
-			for (std::unique_ptr<DirectX::ModelMeshPart>& mesh : modelMeshs->meshParts) {
-				findMesh(mesh);
+		if (m_modelDx != nullptr) {
+			for (auto& modelMeshs : m_modelDx->meshes) {
+				for (std::unique_ptr<DirectX::ModelMeshPart>& mesh : modelMeshs->meshParts) {
+					findMesh(mesh);
+				}
 			}
 		}
 	}

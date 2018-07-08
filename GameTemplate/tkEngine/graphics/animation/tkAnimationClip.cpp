@@ -40,7 +40,7 @@ namespace tkEngine {
 		if (header.numAnimationEvent > 0) {
 			m_animationEvent = std::make_unique<CAnimationEvent[]>(header.numAnimationEvent);
 			//アニメーションイベントがあるなら、イベント情報をロードする。
-			for (auto i = 0; i < header.numAnimationEvent; i++) {
+			for (auto i = 0; i < (int)header.numAnimationEvent; i++) {
 				AnimationEvent animEvent;
 				fread(&animEvent, sizeof(animEvent), 1, fp);
 				//イベント名をロードする。
@@ -58,7 +58,7 @@ namespace tkEngine {
 		auto keyframes = std::make_unique<KeyframeRow[]>(header.numKey);
 		fread(keyframes.get(), sizeof(KeyframeRow), header.numKey, fp);
 		fclose(fp);
-		for (auto i = 0; i < header.numKey; i++) {
+		for (auto i = 0; i < (int)header.numKey; i++) {
 			auto keyframe = std::make_unique<Keyframe>();
 			keyframe->boneIndex = keyframes[i].boneIndex;
 			keyframe->transform = CMatrix::Identity;

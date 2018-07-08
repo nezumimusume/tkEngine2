@@ -12,37 +12,29 @@ namespace tkEngine{
 	{
 	public:
 		/*!
-		 * @brief	コンストラクタ。
-		 */
-		CCapsuleCollider();
-		/*!
-		 * @brief	デストラクタ。
-		 */
-		~CCapsuleCollider();
-		/*!
 		* @brief	作成。
 		*/
 		void Create(float radius, float height)
 		{
-			shape = new btCapsuleShape(radius, height);
-			this->radius = radius;
-			this->height = height;
+			m_shape = std::make_unique<btCapsuleShape>(radius, height);
+			m_radius = radius;
+			m_height = height;
 		}
 		btCollisionShape* GetBody() const override
 		{
-			return shape;
+			return m_shape.get();
 		}
 		float GetRadius() const
 		{
-			return radius;
+			return m_radius;
 		}
 		float GetHeight() const
 		{
-			return height;
+			return m_height;
 		}
 	private:
-		btCapsuleShape*		shape = nullptr;
-		float radius = 0.0f;
-		float height = 0.0f;
+		std::unique_ptr<btCapsuleShape>	m_shape;
+		float m_radius = 0.0f;
+		float m_height = 0.0f;
 	};
 }

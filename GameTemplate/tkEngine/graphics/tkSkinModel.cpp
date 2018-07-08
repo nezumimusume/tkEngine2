@@ -116,7 +116,8 @@ namespace tkEngine{
 		const CQuaternion& rot,
 		const CVector3& scale,
 		EnFbxUpAxis enUpdateAxis )
-	{		
+	{	
+
 		UpdateWorldMatrix(trans, rot, scale, enUpdateAxis);
 		if (m_numInstance < m_maxInstance) {
 			//インスタンシングデータを更新する。
@@ -161,9 +162,13 @@ namespace tkEngine{
 	{
 		
 		(void)renderContext;
-		if (m_skinModelData == nullptr) {
+
+		if (m_skinModelData == nullptr
+			|| m_skinModelData->IsAvailable() == false
+			) {
 			return;
 		}
+		
 		if (m_maxInstance > 1) {
 			//インスタンシング用のデータを更新。
 			renderContext.UpdateSubresource(m_instancingDataSB, m_instancingData.get());
@@ -206,7 +211,7 @@ namespace tkEngine{
 	
 
 		if (m_numInstance > 0) {
-		 	m_skinModelData->GetBody().Draw(
+			m_skinModelData->GetBody().Draw(
 				GraphicsEngine().GetD3DDeviceContext(),
 				state,
 				m_worldMatrix,

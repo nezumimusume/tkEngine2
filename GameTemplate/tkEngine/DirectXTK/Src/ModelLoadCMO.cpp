@@ -104,7 +104,8 @@ static BOOL CALLBACK InitializeDecl( PINIT_ONCE initOnce, PVOID Parameter, PVOID
     return TRUE;
 }
 
-
+const char* DirectX::Model::NOT_BUILD_SKELETON_EXCEPTION_MESSAGE = "No Build Skeleton Data";
+const char* DirectX::Model::NOT_LOADED_CMO_EXCEPTION_ESSAGE = "CreateFromCMO";		
 //======================================================================================
 // Model Loader
 //======================================================================================
@@ -556,7 +557,8 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 							|| localBoneIDtoGlobalBoneIDTbl.size() <= index.w 
 						) 
 						{
-							throw std::exception("スキンありのモデルをロードしていますが、スケルトンの情報が構築されていません。");
+
+							throw std::exception(NOT_BUILD_SKELETON_EXCEPTION_MESSAGE);
 						}
 						index.x = localBoneIDtoGlobalBoneIDTbl[index.x];
 						index.y = localBoneIDtoGlobalBoneIDTbl[index.y];
@@ -752,7 +754,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
     if ( FAILED(hr) )
     {
         DebugTrace( "CreateFromCMO failed (%08X) loading '%ls'\n", hr, szFileName );
-        throw std::exception( "CreateFromCMO" );
+        throw std::exception(NOT_LOADED_CMO_EXCEPTION_ESSAGE);
     }
 
     auto model = CreateFromCMO( 
