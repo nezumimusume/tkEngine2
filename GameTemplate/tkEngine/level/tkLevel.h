@@ -12,7 +12,17 @@ namespace tkEngine{
 	struct LevelObjectData {
 		CVector3 position;		//<座標。
 		CQuaternion rotation;	//!<回転。
+		CVector3 scale;			//!<拡大率。
 		const wchar_t* name;	//!<名前。
+		/*!
+		* @brief	引数で渡したオブジェクト名のオブジェクトか調べる。
+		*@param[in]	objName		調べる名前。
+		*@return	名前が同じ場合にtrueを返します。
+		*/
+		bool EqualObjectName(const wchar_t* objName)
+		{
+			return wcscmp(objName, name) == 0;
+		}
 	};
 	/*!
 	 *@brief	レベル。

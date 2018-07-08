@@ -21,6 +21,9 @@ namespace tkEngine{
 	{
 		CMatrix mBias;
 		mBias.MakeRotationX(CMath::PI * -0.5f);
+		if (offsetMatrix != nullptr) {
+			mBias.Mul(mBias, *offsetMatrix);
+		}
 		m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
 		int numMesh = 0;
 		model.FindMesh(

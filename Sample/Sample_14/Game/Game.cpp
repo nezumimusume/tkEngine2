@@ -3,7 +3,7 @@
 #include "tkEngine/light/tkDirectionLight.h"
 #include "Player.h"
 #include "GameCamera.h"
-#include "tkEngine/level/tkMapChip.h"
+#include "Star.h"
 
 Game::Game()
 {
@@ -23,13 +23,31 @@ bool Game::Start()
 	//ライトの色を設定。
 	m_lig->SetColor({ 300.5f, 300.5f, 300.5f, 1.0f });
 
-	//プレイヤーのインスタンスを生成する。
-	m_player = NewGO<Player>(0, "Player");
-	//背景のインスタンスを生成する。
 	//GameCameraのインスタンスを生成する。
 	m_gameCamera = NewGO<GameCamera>(0);
 	//レベルを構築する。
-	m_level.Init(L"level/stage_00.tkl", nullptr);
+	m_level.Init(L"level/stage_00.tkl", [&](LevelObjectData& objData) {
+		if (objData.EqualObjectName(L"star") == true) {
+			//Starオブジェクト。
+			Star* star = NewGO<Star>(0);
+			star->m_position = objData.position;
+			star->m_rotation = objData.rotation;
+			star->m_scale = objData.scale;
+			//後で削除するのでリストに積んで記憶しておく。
+			m_starList.push_back(star);
+			//フックしたのでtrueを返す。
+			return true;
+		}
+		else if (objData.EqualObjectName(L"UnityChan") == true) {
+			//Unityちゃん。
+			//プレイヤーのインスタンスを生成する。
+			m_player = NewGO<Player>(0, "Player");
+			m_player->m_position = objData.position;
+			//フックした場合はtrueを返す。
+			return true;
+		}
+		return false;
+	});
 	return true;
 }
 /*!
@@ -41,6 +59,9 @@ void Game::OnDestroy()
 {
 	DeleteGO(m_player);
 	DeleteGO(m_gameCamera);
+	for (auto& star : m_starList) {
+		DeleteGO(star);
+	}
 }
 void Game::Update()
 {

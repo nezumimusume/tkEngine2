@@ -88,9 +88,11 @@ namespace tkEngine{
 		CMatrix mScale, mTrans, mRot;
 		mScale.MakeScaling(scale);
 		mRot.MakeRotationFromQuaternion(rot);
-		mRot.Mul(mBias, mRot);
 		mTrans.MakeTranslation(trans);
-		m_worldMatrix.Mul(mScale, mRot);
+
+
+		m_worldMatrix.Mul(mBias, mScale);
+		m_worldMatrix.Mul(m_worldMatrix, mRot);
 		m_worldMatrix.Mul(m_worldMatrix, mTrans);
 	}
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis, bool isForwardRender)

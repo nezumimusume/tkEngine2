@@ -18,6 +18,13 @@ namespace tkEngine{
 		{
 			DeleteGO(m_modelRender);
 		}
+		/*!
+		*@brief	スキンモデルレンダラーを取得。
+		*/
+		prefab::CSkinModelRender* GetSkinModelRender()
+		{
+			return m_modelRender;
+		}
 	private:
 		prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラー。
 		CPhysicsStaticObject m_physicsStaticObject;			//!<静的物理オブジェクト。

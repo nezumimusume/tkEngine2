@@ -46,7 +46,9 @@
 　　サウンドを再生するサンプル。
 　　Game.cppにサンプルが記述されている。
 ・Sample_14
-　　マップチップのサンプル。
+　　レベルデザインのサンプル。
+　　レベルデザインのやり方は下記URLの動画を参考。
+　　https://www.youtube.com/watch?v=DdugMxWZZq4
 ・Sample_15(OK)
 　　法線マップ、スペキュラマップのサンプル。
 　　Player.cpp,hにサンプルが記述されている。

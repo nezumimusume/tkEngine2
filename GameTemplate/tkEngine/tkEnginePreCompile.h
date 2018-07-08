@@ -128,3 +128,5 @@ namespace tkEngine {
 #include "tkEngine/graphics/tkSkinModelRender.h"
 #include "tkEngine/graphics/2D/tkSpriteRender.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
+#include "tkEngine/level/tkLevel.h"
+#include "tkEngine/level/tkMapChip.h"

@@ -19,6 +19,12 @@ namespace tkEngine{
 		m_modelRender->Init(filePath);
 		m_modelRender->SetPosition(objData.position);
 		m_modelRender->SetRotation(objData.rotation);
-		m_physicsStaticObject.CreateMeshObject(m_modelRender, objData.position, objData.rotation);
+		m_modelRender->SetScale(objData.scale);
+		m_physicsStaticObject.CreateMeshObject(
+			m_modelRender, 
+			objData.position, 
+			objData.rotation,
+			objData.scale
+		);
 	}
 }
