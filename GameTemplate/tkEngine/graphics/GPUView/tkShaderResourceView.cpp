@@ -87,7 +87,14 @@ namespace tkEngine{
 			D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
 			false, nullptr, &m_srv);
 		if (FAILED(hr)) {
-			TK_WARNING_MESSAGE_BOX("Failed create texture");
+			TK_WARNING_MESSAGE_BOX_W(
+				L"テクスチャの作成に失敗しました。ファイルパス : %s\n"
+				L"原因として、下記の２点が考えられます。\n"
+				L"① ファイルパスが間違えている。\n"
+				L"② Assetsフォルダの中にファイルが存在しない。\n"
+				L"この２点を確認して、問題が存在しない場合は、一度VisualStudioのビルド/リビルドを行ってみてください。\n",
+				fileName
+			);
 			return false;
 		}
 		return true;

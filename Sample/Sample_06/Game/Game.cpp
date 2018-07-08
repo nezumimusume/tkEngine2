@@ -15,7 +15,7 @@ bool Game::Start()
 {
 	//スプライトを初期化。
 	m_spriteRender = NewGO<prefab::CSpriteRender>(0);
-	m_spriteRender->Init(L"sprite/mikyan.dds", 400, 300);
+	m_spriteRender->Init(L"sprite/mikya.dds", 400, 300);
 
 	return true;
 }

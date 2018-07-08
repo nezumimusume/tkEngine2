@@ -8,17 +8,8 @@
       <UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
-    <Filter Include="Assets\modelData">
-      <UniqueIdentifier>{06086914-6aa4-4cad-9b07-6f9d357f04df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{a6ce300a-b532-440d-b914-b4661d3015ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\shader">
-      <UniqueIdentifier>{d3627b0a-69a2-43b8-9f65-d595e8bcde84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\font">
-      <UniqueIdentifier>{b9e8dc58-9b8d-4e63-971f-b3b27bdd0e95}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,9 +23,6 @@
     </CLInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Assets\shader\modelPSFunction.h">
-      <Filter>Assets\shader</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -42,71 +30,12 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Assets\modelData\unityChan.tks">
-      <Filter>Assets\modelData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelCB.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelSRV.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\bloom.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\copy.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\fxaa.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\LightCulling.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\model.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\sprite.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelStruct.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\tonemap.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\LightingFunction.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\sampleBRDF.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\shadowBlur.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\dithering.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\blur.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\font\myfile.spritefont">
-      <Filter>Assets\font</Filter>
-    </CustomBuild>
+    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
+    <CustomBuild Include="Assets\shader\defferdShading.fx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\mikyan.jpg">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Assets\shader\defferdShading.fx">
-      <Filter>Assets\shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>
