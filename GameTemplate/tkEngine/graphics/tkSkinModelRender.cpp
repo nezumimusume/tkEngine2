@@ -41,6 +41,11 @@ namespace prefab{
 	 */
 	void CSkinModelRender::Update()
 	{
+		if (m_skinModelData.IsAvailable() == false) {
+			//m_skinModelDataが利用不可。
+			//多分初期化の時にエラーが出ているはずです。エラーを直してください。
+			return;
+		}
 		if (m_isFrustumCulling == true) {
 			m_skinModel.UpdateBoundingBox();
 			m_frustumCulling.Execute(m_skinModel.GetBoundingBox());
@@ -53,6 +58,11 @@ namespace prefab{
 	 */
 	void CSkinModelRender::ForwardRender(CRenderContext& rc)
 	{
+		if (m_skinModelData.IsAvailable() == false) {
+			//m_skinModelDataが利用不可。
+			//多分初期化の時にエラーが出ているはずです。エラーを直してください。
+			return;
+		}
 		if (m_isForwardRender == false
 			|| (m_isFrustumCulling == true
 				&& m_frustumCulling.IsCulling())

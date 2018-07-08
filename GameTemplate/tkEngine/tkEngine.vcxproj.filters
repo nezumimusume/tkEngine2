@@ -87,6 +87,9 @@
     <Filter Include="Source Files\graphics\effect">
       <UniqueIdentifier>{0b3f229e-73d3-4518-87de-e76fe4388cfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\level">
+      <UniqueIdentifier>{9927bcc4-6996-4033-91b3-379331181b2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject\tkGameObjectManager.h">
@@ -356,9 +359,6 @@
     <ClInclude Include="graphics\effect\tkEffect.h">
       <Filter>Source Files\graphics\effect</Filter>
     </ClInclude>
-    <ClInclude Include="util\tkLocData.h">
-      <Filter>Source Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="Resource\tkDirectXModelResource.h">
       <Filter>Source Files\resource</Filter>
     </ClInclude>
@@ -373,6 +373,12 @@
     </ClInclude>
     <ClInclude Include="graphics\tkPresetSamplerState.h">
       <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="level\tkLevel.h">
+      <Filter>Source Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="level\tkMapChip.h">
+      <Filter>Source Files\level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -600,6 +606,12 @@
     </ClCompile>
     <ClCompile Include="graphics\tkPresetSamplerState.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="level\tkLevel.cpp">
+      <Filter>Source Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="level\tkMapChip.cpp">
+      <Filter>Source Files\level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -95,7 +95,7 @@ namespace tkEngine{
 	}
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis, bool isForwardRender)
 	{
-		if (m_maxInstance > 1) {
+		if (m_maxInstance > 1 || m_skinModelData == nullptr) {
 			//インスタンシング描画はこの関数では更新しない。
 			return;
 		}

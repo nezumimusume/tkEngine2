@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Level.h"
+#include "tkEngine/level/tkLevel.h"
 
 class Player;
 class Background;
@@ -39,8 +39,7 @@ public:
 	prefab::CDirectionLight* m_lig;			//ライト。
 	CVector3 m_lightDir;					//ライトの方向。
 	Player* m_player = nullptr;				//プレイヤー。
-	Background* m_background = nullptr;		//背景。
 	GameCamera* m_gameCamera = nullptr;		//ゲームカメラ。
-	Level m_level;							//レベル。
+	CLevel m_level;							//レベル。
 };
 

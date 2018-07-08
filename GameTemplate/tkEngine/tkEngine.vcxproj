@@ -317,6 +317,8 @@
     <ClInclude Include="graphics\tkSkinModelRender.h" />
     <ClInclude Include="graphics\tkSkinModelShaderConst.h" />
     <ClInclude Include="Input\tkPad.h" />
+    <ClInclude Include="level\tkLevel.h" />
+    <ClInclude Include="level\tkMapChip.h" />
     <ClInclude Include="light\tkDirectionLight.h" />
     <ClInclude Include="light\tkLightBase.h" />
     <ClInclude Include="light\tkLightManager.h" />
@@ -352,7 +354,6 @@
     <ClInclude Include="tkEngineConst.h" />
     <ClInclude Include="tkEnginePreCompile.h" />
     <ClInclude Include="tkEngineStruct.h" />
-    <ClInclude Include="util\tkLocData.h" />
     <ClInclude Include="util\tkNameKey.h" />
     <ClInclude Include="util\tkUtil.h" />
   </ItemGroup>
@@ -407,6 +408,8 @@
     <ClCompile Include="graphics\tkSkinModelData.cpp" />
     <ClCompile Include="graphics\tkSkinModelRender.cpp" />
     <ClCompile Include="Input\tkPad.cpp" />
+    <ClCompile Include="level\tkLevel.cpp" />
+    <ClCompile Include="level\tkMapChip.cpp" />
     <ClCompile Include="light\tkDirectionLight.cpp" />
     <ClCompile Include="light\tkLightBase.cpp" />
     <ClCompile Include="light\tkLightManager.cpp" />

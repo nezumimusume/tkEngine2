@@ -208,7 +208,9 @@ namespace prefab{
 		*/
 		void PreUpdate() override final
 		{
-			m_skinModel.BeginUpdateInstancingData();
+			if (m_skinModelData.IsAvailable() == true) {
+				m_skinModel.BeginUpdateInstancingData();
+			}
 		}
 		/*!
 		* @brief	çXêVÅB
@@ -219,7 +221,9 @@ namespace prefab{
 		*/
 		void PostUpdate() override final
 		{
-			m_skinModel.EndUpdateInstancingData();
+			if (m_skinModelData.IsAvailable() == true) {
+				m_skinModel.EndUpdateInstancingData();
+			}
 		}
 		
 		/*!

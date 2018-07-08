@@ -2,9 +2,8 @@
 #include "Game.h"
 #include "tkEngine/light/tkDirectionLight.h"
 #include "Player.h"
-#include "Background.h"
 #include "GameCamera.h"
-#include "Level.h"
+#include "tkEngine/level/tkMapChip.h"
 
 Game::Game()
 {
@@ -27,11 +26,10 @@ bool Game::Start()
 	//プレイヤーのインスタンスを生成する。
 	m_player = NewGO<Player>(0, "Player");
 	//背景のインスタンスを生成する。
-	m_background = NewGO<Background>(0);
 	//GameCameraのインスタンスを生成する。
 	m_gameCamera = NewGO<GameCamera>(0);
 	//レベルを構築する。
-	m_level.Build(L"level/level_00.tks");
+	m_level.Init(L"level/stage_00.tkl", nullptr);
 	return true;
 }
 /*!
@@ -42,7 +40,6 @@ bool Game::Start()
 void Game::OnDestroy()
 {
 	DeleteGO(m_player);
-	DeleteGO(m_background);
 	DeleteGO(m_gameCamera);
 }
 void Game::Update()
