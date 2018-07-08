@@ -371,7 +371,7 @@
     <ClInclude Include="math\tkBox.h">
       <Filter>Source Files\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.h">
+    <ClInclude Include="graphics\tkPresetSamplerState.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -598,7 +598,7 @@
     <ClCompile Include="math\tkBox.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.cpp">
+    <ClCompile Include="graphics\tkPresetSamplerState.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>

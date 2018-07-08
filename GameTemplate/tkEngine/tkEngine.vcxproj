@@ -260,7 +260,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.h" />
     <ClInclude Include="camera\tkCameraCollisionSolver.h" />
     <ClInclude Include="camera\tkSpringCamera.h" />
     <ClInclude Include="character\tkCharacterController.h" />
@@ -305,6 +304,7 @@
     <ClInclude Include="graphics\tkLight.h" />
     <ClInclude Include="graphics\tkMapper.h" />
     <ClInclude Include="graphics\tkPresetRenderState.h" />
+    <ClInclude Include="graphics\tkPresetSamplerState.h" />
     <ClInclude Include="graphics\tkPrimitive.h" />
     <ClInclude Include="graphics\tkRenderContext.h" />
     <ClInclude Include="graphics\tkRenderTarget.h" />
@@ -357,7 +357,6 @@
     <ClInclude Include="util\tkUtil.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.cpp" />
     <ClCompile Include="camera\tkCameraCollisionSolver.cpp" />
     <ClCompile Include="camera\tkSpringCamera.cpp" />
     <ClCompile Include="character\tkCharacterController.cpp" />
@@ -396,6 +395,7 @@
     <ClCompile Include="graphics\tkGPUEventMarker.cpp" />
     <ClCompile Include="graphics\tkGraphicsEngine.cpp" />
     <ClCompile Include="graphics\tkPresetRenderState.cpp" />
+    <ClCompile Include="graphics\tkPresetSamplerState.cpp" />
     <ClCompile Include="graphics\tkPrimitive.cpp" />
     <ClCompile Include="graphics\tkRenderContext.cpp" />
     <ClCompile Include="graphics\tkRenderTarget.cpp" />

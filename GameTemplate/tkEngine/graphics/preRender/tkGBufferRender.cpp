@@ -262,6 +262,9 @@ namespace tkEngine{
 			rt->ResovleMSAATexture(rc);
 		}
 #endif
+		//レンダリングターゲットを戻す。
+		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
+
 		if (ssLevel == EnSoftShadowQualityLevel::eSSSS
 			|| ssLevel == EnSoftShadowQualityLevel::eSSSS_PCF
 		) {
@@ -270,7 +273,6 @@ namespace tkEngine{
 			m_shadowBlur.Execute(rc);
 		}
 
-		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		m_skinModels.clear();
 
 		EndGPUEvent();
