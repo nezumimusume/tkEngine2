@@ -98,6 +98,17 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
+
+		//マテリアルIDバッファの初期化。
+		m_GBuffer[enGBufferMateriaID].Create(
+			ge.GetFrameBufferWidth(),
+			ge.GetFrameBufferHeight(),
+			1,
+			1,
+			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_UNKNOWN,
+			msaaDesc
+		);
 #else
 		//こっちが有効だとG-BufferにMSAAがかかる。
 		CGraphicsEngine& ge = GraphicsEngine();
@@ -175,6 +186,7 @@ namespace tkEngine{
 		rc.PSSetShaderResource(enSKinModelSRVReg_Specularmap, m_GBuffer[enGBufferSpecular].GetRenderTargetSRV());
 		rc.PSSetShaderResource(enSkinModelSRVReg_DepthMap, m_GBuffer[enGBufferDepth].GetRenderTargetSRV());
 		rc.PSSetShaderResource(enSkinModelSRVReg_Tangent, m_GBuffer[enGBufferTangent].GetRenderTargetSRV());
+		rc.PSSetShaderResource(enSkinModelSRVReg_MaterialID, m_GBuffer[enGBufferMateriaID].GetRenderTargetSRV());
 		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
 			rc.PSSetShaderResource(enSkinModelSRVReg_SoftShadowMap, m_GBuffer[enGBufferShadow].GetRenderTargetSRV());
@@ -191,7 +203,8 @@ namespace tkEngine{
 		rc.PSUnsetShaderResource(enSKinModelSRVReg_Specularmap);
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_DepthMap);
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_Tangent);
-		
+		rc.PSUnsetShaderResource(enSkinModelSRVReg_MaterialID);
+
 		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
 			rc.PSUnsetShaderResource(enSkinModelSRVReg_SoftShadowMap);

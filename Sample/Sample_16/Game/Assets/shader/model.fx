@@ -249,7 +249,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
  *@brief	Z値を書き込むためだけの描画パスで使用される頂点シェーダー。
  *			スキンなしモデル用
  *@details
- * 現在はシャドウマップ作成とZPrepassで使用されています。
+ * 現在はシャドウマップ作成で使用されています。
  */
 PSInput_RenderToDepth VSMain_RenderDepth(VSInputNmTxVcTangent In)
 {
@@ -266,7 +266,7 @@ PSInput_RenderToDepth VSMain_RenderDepth(VSInputNmTxVcTangent In)
  *@brief	Z値を書き込むためだけの描画パスで使用される頂点シェーダー。
  *			スキンなしインスタンシングモデル用
  *@details
- * 現在はシャドウマップ作成とZPrepassで使用されています。
+ * 現在はシャドウマップ作成で使用されています。
  */
 
 PSInput_RenderToDepth VSMainInstancing_RenderDepth(
@@ -287,7 +287,7 @@ PSInput_RenderToDepth VSMainInstancing_RenderDepth(
  *@brief	Z値を書き込むためだけの描画パスで使用される頂点シェーダー。
  *			スキンありモデル用。
  *@details
- * 現在はシャドウマップ作成とZPrepassで使用されています。
+ * 現在はシャドウマップ作成で使用されています。
  */
 PSInput_RenderToDepth VSMainSkin_RenderDepth(VSInputNmTxWeights In)
 {
@@ -375,7 +375,8 @@ float4 PSMain( PSInput In ) : SV_Target0
 		In.Pos, 
 		spec,
 		shadow,
-		In.posInProj
+		In.posInProj,
+		materialID
 	);
 #endif
 }
@@ -425,6 +426,8 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 		Out.shadow = CalcShadow(In.Pos);
 	}
 	Out.depth = In.posInProj.z / In.posInProj.w;
+	//マテリアルID
+	Out.materialID = (float)materialID;
 	return Out;
 }
 /*!

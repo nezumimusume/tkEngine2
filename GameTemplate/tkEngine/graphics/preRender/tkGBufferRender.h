@@ -15,6 +15,7 @@ namespace tkEngine{
 		enGBufferShadow,	//!<影マップ。
 		enGBufferDepth,		//!<深度。
 		enGBufferTangent,	//!<接法線。
+		enGBufferMateriaID,	//!<マテリアルID。
 		enGBufferNum,		//!<G-Bufferの数。
 	};
 	/*!

@@ -371,6 +371,9 @@
     <ClInclude Include="math\tkBox.h">
       <Filter>Source Files\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -594,6 +597,9 @@
     </ClCompile>
     <ClCompile Include="math\tkBox.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GameTemplate\tkEngine\graphics\tkPresetSamplerState.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

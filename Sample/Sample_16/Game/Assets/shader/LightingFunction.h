@@ -26,12 +26,13 @@ float3 CalcDirectionLight(
 	float3 toEyeDir, 
 	float3 toEyeReflection, 
 	float roughness,
-	float specPow
+	float specPow,
+	uint uMaterialID
 )
 {
 	float3 lig = 0.0f;
 	for( int i = 0; i < numDirectionLight; i++){
-		if( 1 << materialID & directionLight[i].lightingMaterialIDGroup ){
+		if( 1 << uMaterialID & directionLight[i].lightingMaterialIDGroup ){
 			float3 lightDir = directionLight[i].direction;
 			float t = saturate( dot( normal, -lightDir ) );
 			lig += BRDF(-lightDir, toEyeDir, normal, tangent, biNormal, albedo, roughness, specPow ) * directionLight[i].color * t;

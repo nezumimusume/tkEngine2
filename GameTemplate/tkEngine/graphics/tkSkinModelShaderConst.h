@@ -30,6 +30,7 @@ namespace tkEngine{
 		enSkinModelSRVReg_SoftShadowMap,			//!<ソフトシャドウマップ。
 		enSkinModelSRVReg_DepthMap,					//!<深度マップ。
 		enSkinModelSRVReg_Tangent,					//!<接ベクトル。
+		enSkinModelSRVReg_MaterialID,				//!<マテリアルID。
 
 		enSkinModelSRVReg_DirectionLight = 100,		//!<ディレクションライト。
 		enSkinModelSRVReg_PointLight,				//!<ポイントライトのリスト。

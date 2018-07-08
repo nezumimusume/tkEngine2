@@ -8,6 +8,7 @@
 #include "tkEngine/graphics/preRender/tkPreRender.h"
 #include "tkEngine/graphics/tkPresetRenderState.h"
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
+#include "tkEngine/graphics/tkPresetSamplerState.h"
 
 namespace tkEngine{
 	void CGameObjectManager::Start()
@@ -53,6 +54,7 @@ namespace tkEngine{
 		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
 		rc.RSSetState(RasterizerState::sceneRender);
 		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
 	}
 	void CGameObjectManager::ForwardPreRender(CRenderContext& rc)
 	{

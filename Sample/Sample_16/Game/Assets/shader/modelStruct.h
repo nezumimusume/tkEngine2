@@ -58,6 +58,7 @@ struct PSOutput_RenderGBuffer{
 	float shadow		: SV_Target3;		//シャドウ。
 	float depth			: SV_Target4;		//深度値。
 	float3 tangent		: SV_Target5;		//接ベクトル。
+	float materialID	: SV_Target6;		//マテリアルID。
 };
 
 /*!
