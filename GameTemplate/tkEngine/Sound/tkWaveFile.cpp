@@ -17,7 +17,7 @@ namespace tkEngine{
 		Release();
 	}
 
-	void CWaveFile::Open(const char* fileName)
+	bool CWaveFile::Open(const char* fileName)
 	{
 		m_filePath = fileName;
 		m_filePathHash = CUtil::MakeHash(fileName);
@@ -27,10 +27,9 @@ namespace tkEngine{
 								   "原因として下記の２点が考えられます。\n"
 								   "①　ファイルパスが間違っている。\n"
 								   "②　ファイルがAssetsフォルダの中にない。\n"
-								   "上記２点を確認して、問題がない場合は一度VisualStudioのビルド/リビルドを行ってみてください。\n"
-								   "「無理！！！」という人は清原まで相談に来てください。\n", fileName);
+								   "上記２点を確認して、問題がない場合は一度VisualStudioのビルド/リビルドを行ってみてください。\n", fileName);
 			TK_WARNING("Failed mmioOpen");
-			return;
+			return false;
 		}
 		MMCKINFO ckIn;           // chunk info. for general use.
 		PCMWAVEFORMAT pcmWaveFormat;  // Temp PCM structure to load in.
@@ -39,39 +38,39 @@ namespace tkEngine{
 		m_pwfx = NULL;
 
 		if ((0 != mmioDescend(m_hmmio, &m_ckRiff, NULL, 0))) {
-			TK_WARNING("Failed mmioDescend");
+			TK_WARNING_MESSAGE_BOX("Failed mmioDescend");
 			Release();
-			return;
+			return false;
 		}
 		if ((m_ckRiff.ckid != FOURCC_RIFF) ||
 			(m_ckRiff.fccType != mmioFOURCC('W', 'A', 'V', 'E'))) {
-			TK_WARNING("Failed mmioDescend");
+			TK_WARNING_MESSAGE_BOX("Failed mmioDescend");
 			Release();
-			return;
+			return false;
 		}
 
 		// Search the input file for for the 'fmt ' chunk.
 		ckIn.ckid = mmioFOURCC('f', 'm', 't', ' ');
 		if (0 != mmioDescend(m_hmmio, &ckIn, &m_ckRiff, MMIO_FINDCHUNK)) {
-			TK_WARNING("Failed mmioDescend");
+			TK_WARNING_MESSAGE_BOX("Failed mmioDescend");
 			Release();
-			return;
+			return false;
 		}
 
 		// Expect the 'fmt' chunk to be at least as large as <PCMWAVEFORMAT>;
 		// if there are extra parameters at the end, we'll ignore them
 		if (ckIn.cksize < (LONG)sizeof(PCMWAVEFORMAT)) {
-			TK_WARNING("Failed mmioDescend");
+			TK_WARNING_MESSAGE_BOX("Failed mmioDescend");
 			Release();
-			return;
+			return false;
 		}
 
 		// Read the 'fmt ' chunk into <pcmWaveFormat>.
 		if (mmioRead(m_hmmio, (HPSTR)&pcmWaveFormat,
 			sizeof(pcmWaveFormat)) != sizeof(pcmWaveFormat)) {
-			TK_WARNING("Failed mmioRead");
+			TK_WARNING_MESSAGE_BOX("Failed mmioRead");
 			Release();
-			return;
+			return false;
 		}
 
 		// Allocate the waveformatex, but if its not pcm format, read the next
@@ -89,9 +88,9 @@ namespace tkEngine{
 			// Read in length of extra bytes.
 			WORD cbExtraBytes = 0L;
 			if (mmioRead(m_hmmio, (CHAR*)&cbExtraBytes, sizeof(WORD)) != sizeof(WORD)) {
-				TK_WARNING("Failed mmioRead");
+				TK_WARNING_MESSAGE_BOX("Failed mmioRead");
 				Release();
-				return ;
+				return false;
 			}
 
 			m_pwfx = (WAVEFORMATEX*)new CHAR[sizeof(WAVEFORMATEX) + cbExtraBytes];
@@ -104,21 +103,22 @@ namespace tkEngine{
 			if (mmioRead(m_hmmio, (CHAR*)(((BYTE*)&(m_pwfx->cbSize)) + sizeof(WORD)),
 				cbExtraBytes) != cbExtraBytes)
 			{
-				TK_WARNING("Failed mmioRead");
+				TK_WARNING_MESSAGE_BOX("Failed mmioRead");
 				Release();
-				return ;
+				return false;
 			}
 		}
 
 		// Ascend the input file out of the 'fmt ' chunk.
 		if (0 != mmioAscend(m_hmmio, &ckIn, 0))
 		{
-			TK_WARNING("Failed mmioAscend");
+			TK_WARNING_MESSAGE_BOX("Failed mmioAscend");
 			Release();			
-			return ;
+			return false;
 		}
 		ResetFile();
 		m_dwSize = m_ck.cksize;
+		return true;
 	}
 	void CWaveFile::ResetFile()
 	{

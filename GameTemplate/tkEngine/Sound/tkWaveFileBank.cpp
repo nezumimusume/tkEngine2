@@ -21,6 +21,11 @@ namespace tkEngine{
 		}
 		m_waveFileMap[groupID].clear();
 	}
+	void CWaveFileBank::UnregistWaveFile(int groupID, CWaveFilePtr waveFile)
+	{
+		TK_ASSERT(groupID < MAX_GROUP, "groupID is invalid");
+		m_waveFileMap->erase(waveFile->GetFilePathHash());
+	}
 	void CWaveFileBank::RegistWaveFile(int groupID, CWaveFilePtr waveFile)
 	{
 		TK_ASSERT(groupID < MAX_GROUP, "groupID is invalid");

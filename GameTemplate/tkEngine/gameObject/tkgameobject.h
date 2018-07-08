@@ -30,6 +30,23 @@ namespace tkEngine{
 		}
 	public:
 		/*!
+		*@brief	イベント
+		*/
+		enum EnEvent {
+			enEvent_Undef,			//!<未定義イベント。
+			enEvent_Destroy,		//!<インスタンスが破棄される。
+			enBaseClassEvent_Num,	//!<基底クラスで定義されているイベントの数。
+			enEvent_User,			//!<これ以降にユーザー定義のイベントを作成してください。
+			
+		};
+		/*!
+		*@brief	イベント発生時のデータ。
+		*/
+		struct SEventParam {
+			EnEvent eEvent = enEvent_Undef;			//!<発生しているイベント。
+			IGameObject* gameObject = nullptr;		//!<イベントを通知しているゲームオブジェクトのインスタンス。
+		};
+		/*!
 		*@brief	Updateの直前で呼ばれる開始処理。
 		*@details
 		* 本関数がtrueを返すとゲームオブジェクトの準備が完了したと判断されて</br>
@@ -159,6 +176,27 @@ namespace tkEngine{
 		{
 			return m_tags;
 		}
+		/*!
+		*@brief イベントリスナーを登録
+		*@param[in]	listener	イベントリスナー。
+		*/
+		void AddEventListener(std::function<void(SEventParam& eventParam)> listener)
+		{
+			m_eventListeners.push_back(listener);
+		}
+		/*!
+		*@brief イベントリスナーを破棄
+		*@param[in]	listener	破棄するイベントリスナー。
+		*/
+		void RemoveEventListener(std::function<void(SEventParam& eventParam)> listener)
+		{
+			auto it = std::remove_if(
+				m_eventListeners.begin(), 
+				m_eventListeners.end(), 
+				[&](auto& l) { return l = listener; }
+			);
+			m_eventListeners.erase(it, m_eventListeners.end());
+		}
 	public:
 		void PostRenderWrapper(CRenderContext& renderContext)
 		{
@@ -205,6 +243,18 @@ namespace tkEngine{
 				}
 			}
 		}
+		void OnDestroyWrapper()
+		{
+			SEventParam param;
+			param.eEvent = enEvent_Destroy;
+			param.gameObject = this;
+			//デストロイイベントをリスナーに通知する。
+			for (auto& listener : m_eventListeners) {
+				listener(param);
+			}
+			OnDestroy();
+			
+		}
 		void SetMarkNewFromGameObjectManager()
 		{
 			m_isNewFromGameObjectManager = true;
@@ -225,6 +275,7 @@ namespace tkEngine{
 		bool m_isActive = true;				//!<Activeフラグ。
 		unsigned int m_tags = 0;			//!<タグ。
 		unsigned int m_nameKey = 0;			//!<名前キー。
+		std::list<std::function<void(SEventParam& eventParam)>>	m_eventListeners;	//イベントリスナー。。
 	};
 }
 #endif // _CGAMEOBJECT_H_
