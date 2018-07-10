@@ -14,27 +14,6 @@
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{a6ce300a-b532-440d-b914-b4661d3015ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\animData">
-      <UniqueIdentifier>{39c5c4a2-51e4-4530-86f1-36f659ac679e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\font">
-      <UniqueIdentifier>{277e5887-dcb1-4477-83c6-2e119db0feeb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\shader">
-      <UniqueIdentifier>{54b6fd2c-2161-4183-8b37-1b8a36deceff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\loc">
-      <UniqueIdentifier>{406e583e-64de-4bd8-8f81-f013062a50ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\animData\animData">
-      <UniqueIdentifier>{a184aebb-2fc4-4ba3-8fe1-33b59bf98545}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\pathData">
-      <UniqueIdentifier>{3bac8ca1-9e8d-4237-8c0b-7cecc3146e2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\sound">
-      <UniqueIdentifier>{3bbea22d-df1d-435f-be29-0a48b18dd17a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -98,136 +77,8 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Assets\modelData\unityChan.tks">
-      <Filter>Assets\modelData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\LightingFunction.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\model.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\LightCulling.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\fxaa.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\copy.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\bloom.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\font\myfile.spritefont">
-      <Filter>Assets\font</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\walk.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\run.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\jump.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\idle.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\damage.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\dithering.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\KneelDown.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\sprite.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\tonemap.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelStruct.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelSRV.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelCB.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\sampleBRDF.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\enemy\idle.tka">
-      <Filter>Assets\animData\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\enemy\run.tka">
-      <Filter>Assets\animData\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\modelData\enemy.tks">
-      <Filter>Assets\modelData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\loc\light.tks">
-      <Filter>Assets\loc</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\loc\enemy.tks">
-      <Filter>Assets\loc</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\pathData\enemy04_path.tks">
-      <Filter>Assets\pathData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\pathData\enemy02_path.tks">
-      <Filter>Assets\pathData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\pathData\enemy01_path.tks">
-      <Filter>Assets\pathData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\pathData\enemy05_path.tks">
-      <Filter>Assets\pathData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\uni1479.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\uni1482.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\uni1519.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\normalBGM.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\loc\star.tks">
-      <Filter>Assets\loc</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\coinGet.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\uni1518.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\clear.tka">
-      <Filter>Assets\animData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\font\hato_pop.spritefont">
-      <Filter>Assets\font</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\title.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\press_key.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\blur.fx">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
     <CustomBuild Include="Assets\shader\shadowBlur.fx" />
-    <CustomBuild Include="Assets\shader\modelPSFunction.h">
-      <Filter>Assets\shader</Filter>
-    </CustomBuild>
+    <CustomBuild Include="Assets\shader\defferdShading.fx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\utc_spec.tga">
@@ -248,10 +99,5 @@
     <ImageContentTask Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Assets\shader\defferdShading.fx">
-      <Filter>Assets\shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

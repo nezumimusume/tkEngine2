@@ -290,6 +290,7 @@
     <ClInclude Include="graphics\postEffect\tkDithering.h" />
     <ClInclude Include="graphics\postEffect\tkFxaa.h" />
     <ClInclude Include="graphics\postEffect\tkPostEffect.h" />
+    <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h" />
     <ClInclude Include="graphics\postEffect\tkTonemap.h" />
     <ClInclude Include="graphics\preRender\tkGBufferRender.h" />
     <ClInclude Include="graphics\preRender\tkLIghtCulling.h" />
@@ -385,6 +386,7 @@
     <ClCompile Include="graphics\postEffect\tkDithering.cpp" />
     <ClCompile Include="graphics\postEffect\tkFxaa.cpp" />
     <ClCompile Include="graphics\postEffect\tkPostEffect.cpp" />
+    <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp" />
     <ClCompile Include="graphics\postEffect\tkTonemap.cpp" />
     <ClCompile Include="graphics\preRender\tkGBufferRender.cpp" />
     <ClCompile Include="graphics\preRender\tkLightCulling.cpp" />

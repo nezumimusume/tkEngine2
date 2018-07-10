@@ -380,6 +380,9 @@
     <ClInclude Include="level\tkMapChip.h">
       <Filter>Source Files\level</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -612,6 +615,9 @@
     </ClCompile>
     <ClCompile Include="level\tkMapChip.cpp">
       <Filter>Source Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

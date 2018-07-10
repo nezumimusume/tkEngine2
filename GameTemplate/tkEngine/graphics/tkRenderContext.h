@@ -31,6 +31,7 @@ namespace tkEngine {
 		enRenderStep_ForwardRender,				//!<フォワードレンダリング。(特殊な表現を行いたいオブジェクトはここで描く。)
 		enRenderStep_RenderTransObject,			//!<半透明オブジェクトをレンダリング。
 		enRenderStep_RenderEffect,				//!<エフェクトをシーンに描画。
+		enRenderStep_ScreenSpaceReflection,		//!<SSR
 		enRenderStep_Bloom,						//!<ブルーム。
 		enRenderStep_Toonmap,					//!<トーンマップ。
 		enRenderStep_AntiAlias,					//!<アンチエイリアス。

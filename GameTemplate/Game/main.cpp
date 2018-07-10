@@ -14,12 +14,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	SInitParam initParam;
 	initParam.nCmdShow = nCmdShow;
 	initParam.hInstance = hInstance;
-	initParam.screenWidth = 1280;
-	initParam.screenHeight = 720;
-	initParam.frameBufferWidth = 1280;
-	initParam.frameBufferHeight = 720;
-	initParam.screenWidth2D = 1280;
-	initParam.screenHeight2D = 720;
+	initParam.screenWidth = 1920;
+	initParam.screenHeight = 1080;
+	initParam.frameBufferWidth = 1920;
+	initParam.frameBufferHeight = 1080;
+	initParam.screenWidth2D = 1920;
+	initParam.screenHeight2D = 1080;
 	//âeÇÃê›íËÅB
 	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
@@ -36,7 +36,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = true;
-
+	//SSR
+	initParam.graphicsConfing.ssrConfig.isEnable = true;
 	
 	GraphicsEngine().GetShadowMap().SetFar(1000.0f);
 	GraphicsEngine().GetShadowMap().SetNear(50.0f);

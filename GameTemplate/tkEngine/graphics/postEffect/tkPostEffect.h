@@ -8,6 +8,7 @@
 #include "tkEngine/graphics/postEffect/tkBloom.h"
 #include "tkEngine/graphics/postEffect/tkTonemap.h"
 #include "tkEngine/graphics/postEffect/tkDithering.h"
+#include "tkEngine/graphics/postEffect/tkScreenSpaceReflection.h"
 #include "tkEngine/graphics/tkPrimitive.h"
 
 
@@ -75,12 +76,13 @@ namespace tkEngine{
 		 */
 		void InitFinalRenderTarget();
 	private:
-		CFxaa		m_fxaa;						//!<FXAA。
-		CBloom		m_bloom;					//!<BLOOM。
-		CTonemap	m_tonemap;					//!<トーンマップ。
-		CDithering	m_dithering;				//!<ディザリング。
-		CPrimitive	m_fullscreenQuad;			//!<フルスクリーン描画用の矩形プリミティブ。
-		int	m_currentFinalRenderTarget = 0;				//!<現在のメインレンダリングターゲット。
-		CRenderTarget m_finalRenderTarget[2];	//!<ポストエフェクトの最終書き込み先となるレンダリングターゲット。
+		CScreenSpaceReflection	m_ssr;				//!<SSR;
+		CFxaa					m_fxaa;				//!<FXAA。
+		CBloom					m_bloom;			//!<BLOOM。
+		CTonemap				m_tonemap;			//!<トーンマップ。
+		CDithering				m_dithering;		//!<ディザリング。
+		CPrimitive				m_fullscreenQuad;	//!<フルスクリーン描画用の矩形プリミティブ。
+		int	m_currentFinalRenderTarget = 0;			//!<現在のメインレンダリングターゲット。
+		CRenderTarget m_finalRenderTarget[2];		//!<ポストエフェクトの最終書き込み先となるレンダリングターゲット。
 	};
 }

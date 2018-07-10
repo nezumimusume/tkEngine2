@@ -32,7 +32,7 @@ bool Title::Start()
 void Title::Update()
 {
 	if (m_isWaitFadeout) {
-		m_bgm->SetVolume(m_intiBgmVolume*(1.0f-m_fade->GetCurrentAlpha()));
+	//	m_bgm->SetVolume(m_intiBgmVolume*(1.0f-m_fade->GetCurrentAlpha()));
 		if (!m_fade->IsFade()) {
 			NewGO<Game>(0, "Game");
 			DeleteGO(this);

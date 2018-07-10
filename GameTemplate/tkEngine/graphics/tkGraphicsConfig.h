@@ -6,15 +6,6 @@
 
 namespace tkEngine{
 	/*!
-	 * @brief	エッジ抽出処理のコンフィグ
-	 */
-	struct SEdgeRenderConfig{
-		bool isEnable;		//!<エッジ抽出処理が有効かどうかのフラグ。
-		int	idMapWidth;		//!<IDマップの幅。
-		int idMapHeight;	//!<IDマップの高さ。
-	};
-	
-	/*!
 	 * @brief	影処理のコンフィグ。
 	 */
 	struct SShadowRenderConfig{
@@ -49,14 +40,7 @@ namespace tkEngine{
 	struct SBloomConfig {		
 		bool	isEnable = false;		//!<ブルームが有効かどうかのフラグ。
 	};
-	/*!
-	* @brief	リフレクションマップのコンフィグ
-	*/
-	struct SReflectionMapConfig {
-		bool	isEnable = false;				//!<リフレクションマップが有効かどうかのフラグ。
-		int		reflectionMapWidth;		//!<リフレクションマップの幅。
-		int		reflectionMapHeight;	//!<リフレクションマップの高さ。
-	};
+
 	/*!
 	* @brief	被写界深度のコンフィグ。
 	*/
@@ -94,17 +78,22 @@ namespace tkEngine{
 		bool isEnable = false;
 	};
 	/*!
+	* @brief	SSRのコンフィグ。
+	*/
+	struct SScreenSpaceReflectionConfig {
+		bool isEnable = false;
+	};
+	/*!
 	 * @brief	グラフィックスコンフィグ。
 	 */
 	struct SGraphicsConfig{
-		SEdgeRenderConfig		edgeRenderConfig;		//!<エッジ抽出処理のコンフィグ。
-		SShadowRenderConfig		shadowRenderConfig;		//!<影の処理のコンフィグ。
-		SBloomConfig			bloomConfig;			//!<Bloomのコンフィグ。
-		SReflectionMapConfig	reflectionMapConfig;	//!<リフレクションマップのコンフィグ。
-		SDofConfig				dofConfig;				//!<被写界深度のコンフィグ。
-		SAAConfig				aaConfig;				//!<アンチエイリアスのコンフィグ。
-		SMotionBlurConfig		motionBlurConfig;		//<!モーションブラーのコンフィグ。
-		STonemapConfig			tonemapConfig;			//!<トーンマップのコンフィグ。
-		SDitheringConfig		ditheringConfig;		//!<ディザリング。
+		SShadowRenderConfig				shadowRenderConfig;		//!<影の処理のコンフィグ。
+		SBloomConfig					bloomConfig;			//!<Bloomのコンフィグ。
+		SDofConfig						dofConfig;				//!<被写界深度のコンフィグ。
+		SAAConfig						aaConfig;				//!<アンチエイリアスのコンフィグ。
+		SMotionBlurConfig				motionBlurConfig;		//<!モーションブラーのコンフィグ。
+		STonemapConfig					tonemapConfig;			//!<トーンマップのコンフィグ。
+		SDitheringConfig				ditheringConfig;		//!<ディザリング。
+		SScreenSpaceReflectionConfig	ssrConfig;				//!<ssrコンフィグ
 	};
 }
