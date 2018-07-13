@@ -36,16 +36,19 @@
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Assets\modelData\unityChan.tks">
+    <MeshContentTask Include="Assets\modelData\background.FBX">
       <Filter>Assets\modelData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\teapot.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\test.png">
+      <Filter>Assets\modelData</Filter>
     </ImageContentTask>
   </ItemGroup>
 </Project>

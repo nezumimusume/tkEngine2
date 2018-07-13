@@ -226,16 +226,18 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuildStep>
       <Command>
@@ -248,13 +250,16 @@
       </Inputs>
     </CustomBuildStep>
     <CustomBuild>
-      <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
+      <Command>
+      </Command>
     </CustomBuild>
     <CustomBuild>
-      <Message>tkContentTools</Message>
+      <Message>
+      </Message>
       <AdditionalInputs>
       </AdditionalInputs>
-      <Outputs>$(OutDir)\%(Identity)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -293,16 +298,18 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuildStep>
       <Command>
@@ -315,13 +322,16 @@
       </Inputs>
     </CustomBuildStep>
     <CustomBuild>
-      <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
+      <Command>
+      </Command>
     </CustomBuild>
     <CustomBuild>
-      <Message>tkContentTools</Message>
+      <Message>
+      </Message>
       <AdditionalInputs>
       </AdditionalInputs>
-      <Outputs>$(OutDir)\%(Identity)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">
@@ -427,16 +437,18 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuildStep>
       <Command>
@@ -449,13 +461,16 @@
       </Inputs>
     </CustomBuildStep>
     <CustomBuild>
-      <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
+      <Command>
+      </Command>
     </CustomBuild>
     <CustomBuild>
-      <Message>tkContentTools</Message>
+      <Message>
+      </Message>
       <AdditionalInputs>
       </AdditionalInputs>
-      <Outputs>$(OutDir)\%(Identity)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
@@ -569,16 +584,18 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuildStep>
       <Command>
@@ -591,13 +608,16 @@
       </Inputs>
     </CustomBuildStep>
     <CustomBuild>
-      <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
+      <Command>
+      </Command>
     </CustomBuild>
     <CustomBuild>
-      <Message>tkContentTools</Message>
+      <Message>
+      </Message>
       <AdditionalInputs>
       </AdditionalInputs>
-      <Outputs>$(OutDir)\%(Identity)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview|X64'">
@@ -635,16 +655,18 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuildStep>
       <Command>
@@ -657,13 +679,16 @@
       </Inputs>
     </CustomBuildStep>
     <CustomBuild>
-      <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
+      <Command>
+      </Command>
     </CustomBuild>
     <CustomBuild>
-      <Message>tkContentTools</Message>
+      <Message>
+      </Message>
       <AdditionalInputs>
       </AdditionalInputs>
-      <Outputs>$(OutDir)\%(Identity)</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|X64'">

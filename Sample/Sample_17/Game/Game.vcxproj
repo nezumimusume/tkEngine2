@@ -261,13 +261,15 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -326,7 +328,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Assets\modelData\%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -375,13 +377,15 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -507,13 +511,15 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -563,13 +569,15 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/preBuild.bat</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call $(ProjectDir)../tkTools/PostBuild.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
