@@ -11,7 +11,5 @@ public:
 	void Update();
 	CVector3 pos = CVector3::Zero;
 	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
-	prefab::CSkinModelRender* m_bgSkinModelRender = nullptr;
-	CShaderResourceView m_spec;
 };
 
