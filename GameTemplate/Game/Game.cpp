@@ -14,7 +14,7 @@ bool Game::Start()
 {
 	//カメラを設定。
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	m_skinModelRender->Init(L"modelData/usagigi.cmo");
 
 	//メインカメラに注視点と視点を設定する。
 	MainCamera().SetNear(10.0f);
