@@ -27,8 +27,8 @@ namespace tkEngine {
 		CRenderTarget& mrt = GraphicsEngine().GetMainRenderTarget();
 		for (auto& rt : m_reflectionRT) {
 			rt.Create(
-				mrt.GetWidth(),
-				mrt.GetHeight() ,
+				mrt.GetWidth() >> 1,
+				mrt.GetHeight() >> 1 ,
 				1,
 				1,
 				mrt.GetRenderTargetTextureFormat(),

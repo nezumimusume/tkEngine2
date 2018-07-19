@@ -82,14 +82,14 @@ float4 PSMain( PSInput In ) : SV_Target0
 		if (posInProj.z - pixelZ > 0 && posInProj.z - pixelZ < maxThickness) {
 			//ぶつかったのでレイマーチングを小刻みに行って精度を上げる。。
 			float sign = -1.0;
-			for (int m = 1; m <= 4; ++m) {
+			/*for (int m = 1; m <= 4; ++m) {
 				rayPos += raystep * (sign * pow(0.5, m));
 				posInProj = mul(mViewProj, float4(rayPos, 1.0f));
 				posInProj.xyz /= posInProj.w;
 				posInProj.xy = posInProj.xy * float2(0.5f, -0.5f) + 0.5f;
 				float pixelZ = depthTexture.Sample(Sampler, posInProj.xy).r;
 				sign = posInProj.z - pixelZ > 0 ? -1 : 1;
-			}
+			}*/
 			float4 reflectColor = sceneTexture.Sample(Sampler, posInProj.xy);
 			return float4(reflectColor.xyz, alpha);
 		}

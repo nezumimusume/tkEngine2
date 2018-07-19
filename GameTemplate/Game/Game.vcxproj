@@ -210,7 +210,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -269,7 +269,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -328,7 +328,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -519,7 +519,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
@@ -577,7 +577,7 @@
       </Command>
     </PostBuildEvent>
     <MeshContentTask>
-      <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
+      <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
