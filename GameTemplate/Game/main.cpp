@@ -35,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//Bloom
 	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
-	initParam.graphicsConfing.tonemapConfig.isEnable = false;
+	initParam.graphicsConfing.tonemapConfig.isEnable = true;
 	//SSR
 	initParam.graphicsConfing.ssrConfig.isEnable = true;
 	//ÉfÉBÉU

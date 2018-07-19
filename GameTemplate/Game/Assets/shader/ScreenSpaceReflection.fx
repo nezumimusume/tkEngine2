@@ -57,7 +57,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		mViewProjInvLastFrame
 	);
 	float len = length(worldPos - worldPosLastFrame);
-	float alpha = lerp(0.1f, 0.4f, min(1.0f, len / 1.0f));
+	float alpha = lerp(0.1f, 0.5f, min(1.0f, len / 1.0f));
 	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv);
 	//ピクセルの法線を取得。
 	float3 normal = normalTexture.Sample(Sampler, In.uv).xyz;
@@ -94,10 +94,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 			return float4(reflectColor.xyz, alpha);
 		}
 	}
-	return float4(0.0f, 0.0f, 0.0f, alpha);//sceneTexture.Sample(Sampler, In.uv);
+	return float4(sceneColor.xyz, alpha);
 }
 
-Texture2D<float4> reflectTexture_00 : register(t1);		//反射テクスチャ。
+Texture2D<float4> reflectTexture : register(t1);		//反射テクスチャ。
 Texture2D<float4> specTexture : register(t2);	//スペキュッラ
 
 
@@ -105,7 +105,7 @@ Texture2D<float4> specTexture : register(t2);	//スペキュッラ
 float4 PSFinal(PSInput In) : SV_Target0
 {
 	//反射カラーの平均をとる。
-	float4 reflectColor = reflectTexture_00.Sample(Sampler, In.uv);
+	float4 reflectColor = reflectTexture.Sample(Sampler, In.uv);
 	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv);
 	//映り込みあり。
 	float spec = min( 1.0f, specTexture.Sample(Sampler, In.uv).r );

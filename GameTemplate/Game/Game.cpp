@@ -12,7 +12,6 @@ Game::~Game()
 }
 bool Game::Start()
 {
-	LightManager().SetAmbientLight({ 5.0f, 5.0f, 5.0f });
 	//カメラを設定。
 	MainCamera().SetTarget({ 0.0f, 100.0f, 0.0f });
 	MainCamera().SetNear(10.0f);
@@ -26,20 +25,31 @@ bool Game::Start()
 	m_bgSkinModelRender->Init(L"modelData/background.cmo");
 	m_spec.CreateFromDDSTextureFromFile(L"sprite/test.dds");
 	m_bgSkinModelRender->FindMaterial([&](CModelEffect* mat) {
-		if (mat->EqualMaterialName(L"Ground") == true){
+	//	if (mat->EqualMaterialName(L"Ground") == true){
 			mat->SetSpecularMap(m_spec.GetBody());
-		}
+	//	}
 	});
 	return true;
 }
 
 void Game::Update()
 {
+	//左スティックの入力量を受け取る。
+	float lStick_x = Pad(0).GetLStickXF();
+	float lStick_y = Pad(0).GetLStickYF();
+	//カメラの前方方向と右方向を取得。
+	CVector3 cameraForward = MainCamera().GetForward();
+	CVector3 cameraRight = MainCamera().GetRight();
+	//XZ平面での前方方向、右方向に変換する。
+	cameraForward.y = 0.0f;
+	cameraForward.Normalize();
+	cameraRight.y = 0.0f;
+	cameraRight.Normalize();
+
 	CVector3 toPos = MainCamera().GetPosition() - MainCamera().GetTarget();
-	float x = -Pad(0).GetLStickXF();
-	float z = -Pad(0).GetLStickYF();
-	pos.x += x;
-	pos.z += z;
+	pos += cameraForward * lStick_y * 2.0f;	//奥方向への移動速度を加算。
+	pos += cameraRight * lStick_x * 2.0f;		//右方向への移動速度を加算。
+
 	m_skinModelRender->SetPosition(pos);
 	//カメラを更新。
 	//注視点を計算する。
@@ -49,7 +59,7 @@ void Game::Update()
 
 	CVector3 toCameraPosOld = toPos;
 	//パッドの入力を使ってカメラを回す。
-	x = Pad(0).GetRStickXF();
+	float x = Pad(0).GetRStickXF();
 	float y = Pad(0).GetRStickYF();
 	//Y軸周りの回転
 	CQuaternion qRot;
