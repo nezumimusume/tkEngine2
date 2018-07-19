@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <random>
+#include "tkEngine/graphics/tkBlur.h"
+
 namespace tkEngine{
 	class CPostEffect;
 	/*!
@@ -32,13 +35,23 @@ namespace tkEngine{
 		*@todo 明日は定数バッファから
 		*/
 		struct SConstantBuffer {
-			CMatrix mViewProjInv;		//!<ビュープロジェクション行列の逆行列。
-			CMatrix mViewProj;			//!<ビュープロジェクション行列。
-			CVector4 cameraPos;			//!<カメラの視点。
+			CMatrix mViewProjInv;			//!<ビュープロジェクション行列の逆行列。
+			CMatrix mViewProj;				//!<ビュープロジェクション行列。
+			CMatrix mViewProjInvLastFrame;	//!<1フレーム前のビュープロジェクション行列の逆行列。
+			CVector4 cameraPos;				//!<カメラの視点。
+			float rayMarchStepRate;			//!<レイマーチのステップレート。
 		};
-		bool m_isEnable = false;		//!<有効。
-		CShader m_vsShader;				//!<頂点シェーダー。
-		CShader m_psShader;				//!<ピクセルシェーダー。
-		CConstantBuffer m_cb;			//!<定数バッファ。
+		bool m_isEnable = false;					//!<有効。
+		CShader m_vsShader;							//!<頂点シェーダー。
+		CShader m_psShader;							//!<ピクセルシェーダー。
+		CShader m_psFinalShader;					//!<最終合成シェーダー。
+		CConstantBuffer m_cb;						//!<定数バッファ。
+		std::random_device m_rd;					//!<他に影響を与えないように、こいつが内部で乱数を保持する。
+		std::mt19937 m_mt;							//!<メルセンヌツイスターを使用した乱数生成器。
+		int m_currentRTNo = 0;						//!<
+		static const int NUM_CALC_AVG_RT = 1;				//!<平均輝度計算用のレンダリングターゲットの枚数。
+		CRenderTarget m_reflectionRT[NUM_CALC_AVG_RT];		//!<リフレクションを書き込むレンダリングターゲット。
+		CBlur m_blur;
+		CMatrix m_viewProjInvLastFrame = CMatrix::Identity;
 	};
 }

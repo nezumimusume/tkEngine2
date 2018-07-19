@@ -33,11 +33,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//アンチ
 	initParam.graphicsConfing.aaConfig.isEnable = true;
 	//Bloom
-	initParam.graphicsConfing.bloomConfig.isEnable = false;
+	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = false;
 	//SSR
-	initParam.graphicsConfing.ssrConfig.isEnable = false;
+	initParam.graphicsConfing.ssrConfig.isEnable = true;
+	//ディザ
+	initParam.graphicsConfing.ditheringConfig.isEnable = true;
 	
 	GraphicsEngine().GetShadowMap().SetFar(1000.0f);
 	GraphicsEngine().GetShadowMap().SetNear(50.0f);

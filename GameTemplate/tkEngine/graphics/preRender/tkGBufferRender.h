@@ -62,6 +62,10 @@ namespace tkEngine{
 		{
 			return m_GBuffer[enGBuffer];
 		}
+		CShaderResourceView& GetDepthTextureLastFrameSRV()
+		{
+			return m_depthTextureLastFrameSRV;
+		}
 	private:
 		
 		//定数パラメータ。
@@ -70,6 +74,8 @@ namespace tkEngine{
 		};
 		std::vector<CSkinModel*>	m_skinModels;	//!<スキンモデルのリスト。
 		CRenderTarget m_GBuffer[enGBufferNum];		//!<G-Buffer
+		ID3D11Texture2D* m_depthTextureLastFrame;		//!<1フレーム前の深度テクスチャ。
+		CShaderResourceView m_depthTextureLastFrameSRV;	//!<1フレーム前の深度テクスチャのSRV。
 		CShadowBlur m_shadowBlur;					//!<影マップへのブラー処理。
 		SCBParam m_cbEntity;
 		CConstantBuffer m_cb;

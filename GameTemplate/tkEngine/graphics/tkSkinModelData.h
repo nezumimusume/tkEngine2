@@ -211,7 +211,6 @@ namespace tkEngine{
 			return m_skeleton;
 		}
 		typedef std::function<void(std::unique_ptr<DirectX::ModelMeshPart>&)>		OnFindMesh;
-		typedef std::function<void(CModelEffect*)>	OnFindMaterial;
 		/*!
 		 *@brief	メッシュの検索。
 		 *@param[in]	findMesh		メッシュを見つけた時に呼ばれるコールバック関数

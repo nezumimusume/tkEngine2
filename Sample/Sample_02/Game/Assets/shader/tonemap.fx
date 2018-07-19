@@ -145,7 +145,7 @@ float4 PSFinal( PSInput In) : SV_Target0
 	float4 vSample = sceneTexture.Sample(Sampler, In.uv);
 	float fAvgLum = lumAvgTexture.Sample(Sampler, float2( 0.5f, 0.5f));
 	
-	vSample.rgb *= middleGray/(fAvgLum + 0.001f);
+	vSample.rgb *= middleGray/max( 0.0001f, fAvgLum );
 //	vSample.rgb /= (1.0f+vSample);
 	return vSample;
 }

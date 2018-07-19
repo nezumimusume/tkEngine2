@@ -62,6 +62,7 @@ namespace tkEngine{
 		);
 		m_textureSRV = &tex;
 		m_cb.Create(nullptr, sizeof(SSpriteCB));
+		m_isInited = true;
 	}
 	/*!
 	*@brief	更新
@@ -71,6 +72,10 @@ namespace tkEngine{
 	*/
 	void CSprite::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, const CVector2& pivot)
 	{
+		if (m_isInited == false) {
+			//初期化されていない。
+			return;
+		}
 		//ピボットを考慮に入れた平行移動行列を作成。
 		//ピボットは真ん中が0.0, 0.0、左上が-1.0f, -1.0、右下が1.0、1.0になるようにする。
 		CVector2 localPivot = pivot;
@@ -98,6 +103,10 @@ namespace tkEngine{
 	}
 	void CSprite::Draw(CRenderContext& rc, const CMatrix& viewMatrix, const CMatrix& projMatrix)
 	{
+		if (m_isInited == false) {
+			//初期化されていない。
+			return;
+		}
 		if (m_textureSRV == nullptr) {
 			TK_WARNING("m_textureSRV is nullptr");
 			return;

@@ -20,6 +20,7 @@ namespace tkEngine{
 	 */
 	CGBufferRender::~CGBufferRender()
 	{
+		m_depthTextureLastFrame->Release();
 	}
 	/*!
 	*@brief	初期化。
@@ -98,6 +99,25 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
+		//1フレーム前の深度値を記録するためのテクスチャを作成する。
+		D3D11_TEXTURE2D_DESC texDesc;
+		ZeroMemory(&texDesc, sizeof(texDesc));
+		texDesc.Width = ge.GetFrameBufferWidth();
+		texDesc.Height = ge.GetFrameBufferHeight();
+		texDesc.MipLevels = 1;
+		texDesc.ArraySize = 1;
+		texDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		texDesc.SampleDesc = msaaDesc;
+		texDesc.Usage = D3D11_USAGE_DEFAULT;
+		texDesc.CPUAccessFlags = 0;
+		texDesc.MiscFlags = 0;
+		texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+		ID3D11Device* pD3DDevice = GraphicsEngine().GetD3DDevice();
+		HRESULT hr;
+		hr = pD3DDevice->CreateTexture2D(&texDesc, NULL, &m_depthTextureLastFrame);
+		TK_ASSERT(hr == S_OK, "ぷぎゃ");
+		m_depthTextureLastFrameSRV.Create(m_depthTextureLastFrame);
 
 		//マテリアルIDバッファの初期化。
 		m_GBuffer[enGBufferMateriaID].Create(
@@ -219,6 +239,7 @@ namespace tkEngine{
 		BeginGPUEvent(L"enRenderStep_RenderGBuffer");
 		EnSoftShadowQualityLevel ssLevel = GraphicsEngine().GetShadowMap().GetSoftShadowLevel();
 
+		rc.CopyResource(m_depthTextureLastFrame, m_GBuffer[enGBufferDepth].GetRenderTarget());
 		//影を落とすための情報を転送。
 		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
 

@@ -29,7 +29,6 @@ float4 PBR(
 
 	specPow = spec.x;
 	roughness = 1.0f - spec.y;
-	roughness *= 0.8f;	//@todo マテリアルパラメータにすべきだな。
 	
 	float toEyeLen = length(toEye);
 	float3 toEyeDir = float3(1.0f, 0.0f, 0.0f);

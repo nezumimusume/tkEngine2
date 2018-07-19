@@ -174,7 +174,7 @@ namespace prefab{
 		*@brief	モデルマテリアルの検索。
 		*@param[in]	findEffect		マテリアルを見つけた時に呼ばれるコールバック関数
 		*/
-		void FindMaterial(CSkinModelData::OnFindMaterial findMaterial) const
+		void FindMaterial(std::function<void(CModelEffect*)> findMaterial) const
 		{
 			m_skinModel.FindMaterial(findMaterial);
 		}
@@ -195,7 +195,7 @@ namespace prefab{
 		{
 			m_isForwardRender = flag;
 		}
-
+		void FindVertexPosition(std::function<void(CVector3* pos)>);
 
 	private:
 		void ForwardRender(CRenderContext& rc) override final;

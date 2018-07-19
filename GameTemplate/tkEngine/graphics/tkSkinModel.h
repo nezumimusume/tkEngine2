@@ -123,7 +123,7 @@ namespace tkEngine{
 		*@brief	モデルマテリアルの検索。
 		*@param[in]	findEffect		マテリアルを見つけた時に呼ばれるコールバック関数
 		*/
-		void FindMaterial(CSkinModelData::OnFindMaterial findMaterial) const
+		void FindMaterial(std::function<void(CModelEffect*)> findMaterial) const
 		{
 			FindMesh([&](auto& mesh) {
 				CModelEffect* effect = reinterpret_cast<CModelEffect*>(mesh->effect.get());

@@ -10,6 +10,8 @@ public:
 	bool Start();
 	void Update();
 	CVector3 pos = CVector3::Zero;
-	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	prefab::CSkinModelRender* m_bgSkinModelRender = nullptr;	//背景のスキンモデルレンダラー。
+	CShaderResourceView m_spec;
 };
 
