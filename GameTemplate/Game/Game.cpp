@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "Game.h"
-
+#include "tkEngine/light/tkDirectionLight.h"
 
 Game::Game()
 {
+	for (auto& lig : m_directionLight) {
+		DeleteGO(lig);
+	}
 }
 
 
@@ -21,6 +24,8 @@ bool Game::Start()
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
+	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowReceiverFlag(true);
 	m_bgSkinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_bgSkinModelRender->Init(L"modelData/background.cmo");
 	m_spec.CreateFromDDSTextureFromFile(L"sprite/test.dds");
@@ -29,6 +34,18 @@ bool Game::Start()
 			mat->SetSpecularMap(m_spec.GetBody());
 	//	}
 	});
+	m_bgSkinModelRender->SetShadowReceiverFlag(true);
+	//ディレクションライトを作成する。
+	auto lig = NewGO<prefab::CDirectionLight>(0);
+	auto ligDir = CVector3(1.0f, -1.0f, -1.0f);
+	ligDir.Normalize();
+	lig->SetDirection(ligDir);
+	lig->SetColor({ 2.0f, 2.0f, 2.0f, 1.0f });
+	GraphicsEngine().GetShadowMap().SetLightDirection(ligDir);
+	lig = NewGO<prefab::CDirectionLight>(0);
+	ligDir.Set(1.0f, 1.0f, -1.0f);
+	lig->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+	
 	return true;
 }
 
