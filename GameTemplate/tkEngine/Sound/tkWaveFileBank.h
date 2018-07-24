@@ -41,6 +41,12 @@ namespace tkEngine{
 		*/
 		CWaveFilePtr FindWaveFile(int groupID, const NameKey& nameKey);
 		/*!
+		*@brief	波形データをバンクから登録解除。
+		*@param[in]	groupID		グループＩＤ。指定できるＩＤの最大値はMAX_GROUP-1。
+		*@param[in]	waveFile	波形データ。
+		*/
+		void UnregistWaveFile(int groupID, CWaveFilePtr waveFile);
+		/*!
 		*@brief	グループ単位で解放。
 		*/
 		void Release(int groupID);

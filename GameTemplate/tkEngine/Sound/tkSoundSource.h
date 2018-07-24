@@ -26,20 +26,15 @@ namespace tkEngine{
 		 * このクラスのインスタンスをゲームオブジェクトマネージャーに登録した場合、ループ再生ではない場合は再生が完了すると</br>
 		 * 自動的に登録解除されます。ループ再生の場合はユーザーが明示的に登録を解除する必要があります。
 		 *@code
-			CSoundSource soundSource;
 			//初期化
 			void Init()
 			{
-				soundSource.Init("test.wave");				//こちらで初期化するとオンメモリ再生。
+				prefab::CSoundSource* ss = NewGO<prefab::CSoundSource>(0);
+				ss->Init("test.wave");				//こちらで初期化するとオンメモリ再生。
 				//soundSource.InitStreaming("test.wave");	//こちらで初期化するとストリーミング再生。
-				soundSource.Play(true);
+				ss->Play(true);						//これはループ再生。
 			}
-			//更新処理
-			void Update()
-			{
-				soundSource.Update();
-			}
-
+	
 		 *@endcode
 		 */
 		class CSoundSource : public IGameObject {
@@ -92,6 +87,11 @@ namespace tkEngine{
 			/*!
 			* @brief	再生。
 			*@param[in]	isLoop		ループ再生フラグ。
+			* このフラグがfalseの場合はワンショット再生となります。
+			* ワンショット再生の場合は、再生が完了すると自動的にインスタンスが破棄されます。
+			* ワンショット再生のCSoundSourceのインスタンスをメンバ変数などで保持していると、破棄された
+			* インスタンスにアクセスしてしまう可能性があるので、保持しないことをお勧めします。
+			* 再生の完了を検出したい場合などはイベントリスナーを使用してください。
 			*/
 			void Play(bool isLoop);
 			/*!
@@ -116,11 +116,7 @@ namespace tkEngine{
 			{
 				return m_isPlaying;
 			}
-			/*!
-			* @brief	更新。
-			*@param[in]	isLoop		ループ再生フラグ。
-			*/
-			void Update() override;
+			
 			/*!
 			* @brief	ボリュームを設定。
 			*@param[in]	vol		ボリューム。
@@ -219,6 +215,10 @@ namespace tkEngine{
 			*/
 			void StartStreamingBuffring();
 			void Remove3DSound();
+			/*!
+			* @brief	更新。
+			*/
+			void Update() override;
 		private:
 			enum EnStreamingStatus {
 				enStreamingBuffering,	//バッファリング中。
@@ -242,6 +242,7 @@ namespace tkEngine{
 			FLOAT32 m_matrixCoefficients[INPUTCHANNELS * OUTPUTCHANNELS];
 			X3DAUDIO_DSP_SETTINGS m_dspSettings;
 			bool m_isSetPositionFirst = true;	//!<一番最初のsetPosition?
+			bool m_isAvailable = false;			//!<インスタンスが利用可能？
 		};
 	}
 }

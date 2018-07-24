@@ -25,8 +25,7 @@ namespace tkEngine {
 									 L"原因として、下記の２点が考えられます。\n"
 									 L"① ファイルパスが間違えている。\n"
 									 L"② Assetsフォルダの中にファイルが存在しない。\n"
-									 L"この２点を確認して、問題が存在しない場合は、一度VisualStudioのビルド/リビルドを行ってみてください。\n"
-									 L"「無理！！！」という人は清原まで相談に来てください。\n", filePath);
+									 L"この２点を確認して、問題が存在しない場合は、一度VisualStudioのビルド/リビルドを行ってみてください。\n", filePath);
 			
 			return;
 		}
@@ -40,7 +39,7 @@ namespace tkEngine {
 		if (header.numAnimationEvent > 0) {
 			m_animationEvent = std::make_unique<CAnimationEvent[]>(header.numAnimationEvent);
 			//アニメーションイベントがあるなら、イベント情報をロードする。
-			for (auto i = 0; i < header.numAnimationEvent; i++) {
+			for (auto i = 0; i < (int)header.numAnimationEvent; i++) {
 				AnimationEvent animEvent;
 				fread(&animEvent, sizeof(animEvent), 1, fp);
 				//イベント名をロードする。
@@ -58,7 +57,7 @@ namespace tkEngine {
 		auto keyframes = std::make_unique<KeyframeRow[]>(header.numKey);
 		fread(keyframes.get(), sizeof(KeyframeRow), header.numKey, fp);
 		fclose(fp);
-		for (auto i = 0; i < header.numKey; i++) {
+		for (auto i = 0; i < (int)header.numKey; i++) {
 			auto keyframe = std::make_unique<Keyframe>();
 			keyframe->boneIndex = keyframes[i].boneIndex;
 			keyframe->transform = CMatrix::Identity;

@@ -22,6 +22,7 @@
 #include "PlatformHelpers.h"
 #include "BinaryReader.h"
 
+
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
@@ -32,8 +33,57 @@ using Microsoft::WRL::ComPtr;
 // http://code.msdn.microsoft.com/Visual-Studio-3D-Starter-455a15f1
 //--------------------------------------------------------------------------------------
 
+namespace {
+	struct IBData
+	{
+		size_t          nIndices;
+		const USHORT*   ptr;
+	};
+	struct VBData
+	{
+		size_t                                          nVerts;
+		const VertexPositionNormalTangentColorTexture*  ptr;
+		const VSD3DStarter::SkinningVertex*             skinPtr;
+	};
 
+	/*!
+	 *@details 異常が発生している接ベクトルを再計算する。
+	 * FBX->cmo変換の時にテクスチャのUV空間を使って、法線を計算しているっぽいのだけど
+	 * UV座標のuとvのどちらか、あるいは両方に変化がないときに、接ベクトルが0になっている。
+	 */
+	void ComputeTangent(std::vector<VBData>& vbData, const std::vector<IBData>& ibData)
+	{
+		//異常な接ベクトルに補正をかける。
+		for (auto& vb : vbData) {
+			for (int i = 0; i < vb.nVerts; i++) {
+				auto& vert = const_cast<VertexPositionNormalTangentColorTexture&>(vb.ptr[i]);
+				float len = sqrt(vert.tangent.x * vert.tangent.x + vert.tangent.y * vert.tangent.y + vert.tangent.z * vert.tangent.z);
+				if (len < FLT_EPSILON) {
+					XMFLOAT4 tangent;
+					//接ベクトルが計算されていない。
+					if (fabsf(vert.tangent.y) > 0.9998f) {
+						//ほぼY軸を向いている。
+						tangent.x = 1.0f;
+						tangent.y = 0.0f;
+						tangent.z = 0.0f;
+						tangent.w = 0.0f;
+					}
+					else {
+						//それ以外はY軸との外積、
+						tangent.x = -vert.normal.z;
+						tangent.y = 0.0f;
+						tangent.z = - vert.normal.x;
+						float len = std::max(0.001f, sqrt(tangent.x * tangent.x + tangent.y * tangent.y + vert.tangent.z * tangent.z));
+						tangent.x /= len;
+						tangent.z /= len;
+					}
+					vert.tangent = tangent;
+				}
+			}
+		}
+	}
 
+}
 static_assert( sizeof(VSD3DStarter::Material) == 132, "CMO Mesh structure size incorrect" );
 static_assert( sizeof(VSD3DStarter::SubMesh) == 20, "CMO Mesh structure size incorrect" );
 static_assert( sizeof(VSD3DStarter::SkinningVertex)== 32, "CMO Mesh structure size incorrect" );
@@ -104,7 +154,8 @@ static BOOL CALLBACK InitializeDecl( PINIT_ONCE initOnce, PVOID Parameter, PVOID
     return TRUE;
 }
 
-
+const char* DirectX::Model::NOT_BUILD_SKELETON_EXCEPTION_MESSAGE = "No Build Skeleton Data";
+const char* DirectX::Model::NOT_LOADED_CMO_EXCEPTION_ESSAGE = "CreateFromCMO";		
 //======================================================================================
 // Model Loader
 //======================================================================================
@@ -258,12 +309,6 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
         if ( !*nIBs )
             throw std::exception("No index buffers found\n");
 
-        struct IBData
-        {
-            size_t          nIndices;
-            const USHORT*   ptr;
-        };
-
         std::vector<IBData> ibData;
         ibData.reserve( *nIBs );
 
@@ -319,13 +364,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
         if ( !*nVBs )
             throw std::exception("No vertex buffers found\n");
 
-        struct VBData
-        {
-            size_t                                          nVerts;
-            const VertexPositionNormalTangentColorTexture*  ptr;
-            const VSD3DStarter::SkinningVertex*             skinPtr;
-        };
-
+        
         std::vector<VBData> vbData;
         vbData.reserve( *nVBs );
         for( UINT j = 0; j < *nVBs; ++j )
@@ -351,7 +390,8 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
             vb.skinPtr = nullptr;
             vbData.emplace_back( vb );
         }
-
+		// 接ベクトルを計算する。
+		ComputeTangent(vbData, ibData);
         assert( vbData.size() == *nVBs );
 
         // Skinning vertex buffers
@@ -556,7 +596,8 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 							|| localBoneIDtoGlobalBoneIDTbl.size() <= index.w 
 						) 
 						{
-							throw std::exception("スキンありのモデルをロードしていますが、スケルトンの情報が構築されていません。");
+
+							throw std::exception(NOT_BUILD_SKELETON_EXCEPTION_MESSAGE);
 						}
 						index.x = localBoneIDtoGlobalBoneIDTbl[index.x];
 						index.y = localBoneIDtoGlobalBoneIDTbl[index.y];
@@ -752,7 +793,7 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
     if ( FAILED(hr) )
     {
         DebugTrace( "CreateFromCMO failed (%08X) loading '%ls'\n", hr, szFileName );
-        throw std::exception( "CreateFromCMO" );
+        throw std::exception(NOT_LOADED_CMO_EXCEPTION_ESSAGE);
     }
 
     auto model = CreateFromCMO( 

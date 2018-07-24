@@ -76,7 +76,7 @@ namespace tkEngine{
 		CPrimitive				m_primitive;					//!<プリミティブ。
 		CShaderResourceView*	m_textureSRV = nullptr;			//!<テクスチャ。
 		CConstantBuffer			m_cb;
-		
+		bool					m_isInited = false;				//!<初期化フラグ。
 		CVector2				m_size = CVector2::Zero;		//!<サイズ。
 	};
 }

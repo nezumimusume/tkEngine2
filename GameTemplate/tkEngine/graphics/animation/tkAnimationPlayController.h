@@ -39,6 +39,11 @@ namespace tkEngine{
 			m_time = 0.0f;
 			m_isPlaying = true;
 			m_freezeBoneTranslate = CVector3::Zero;
+			//アニメーションイベントの発生フラグをすべてfalseにする。
+			auto& animEventArray = m_animationClip->GetAnimationEvent();
+			for (auto i = 0; i < m_animationClip->GetNumAnimationEvent(); i++) {
+				animEventArray[i].SetInvokedFlag(false);
+			}
 		}
 		void SetInterpolateTime(float interpolateTime)
 		{

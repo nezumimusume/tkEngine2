@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Level.h"
+
 
 class Player;
 class Background;
 class GameCamera;
+class Star;
 
 class Game : public IGameObject
 {
@@ -39,8 +40,8 @@ public:
 	prefab::CDirectionLight* m_lig;			//ライト。
 	CVector3 m_lightDir;					//ライトの方向。
 	Player* m_player = nullptr;				//プレイヤー。
-	Background* m_background = nullptr;		//背景。
 	GameCamera* m_gameCamera = nullptr;		//ゲームカメラ。
-	Level m_level;							//レベル。
+	std::vector<Star*> m_starList;			//星の可変長配列。
+	CLevel m_level;							//レベル。
 };
 

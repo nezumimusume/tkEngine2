@@ -41,6 +41,11 @@ namespace prefab{
 	 */
 	void CSkinModelRender::Update()
 	{
+		if (m_skinModelData.IsAvailable() == false) {
+			//m_skinModelDataが利用不可。
+			//多分初期化の時にエラーが出ているはずです。エラーを直してください。
+			return;
+		}
 		if (m_isFrustumCulling == true) {
 			m_skinModel.UpdateBoundingBox();
 			m_frustumCulling.Execute(m_skinModel.GetBoundingBox());
@@ -53,6 +58,11 @@ namespace prefab{
 	 */
 	void CSkinModelRender::ForwardRender(CRenderContext& rc)
 	{
+		if (m_skinModelData.IsAvailable() == false) {
+			//m_skinModelDataが利用不可。
+			//多分初期化の時にエラーが出ているはずです。エラーを直してください。
+			return;
+		}
 		if (m_isForwardRender == false
 			|| (m_isFrustumCulling == true
 				&& m_frustumCulling.IsCulling())
@@ -61,5 +71,33 @@ namespace prefab{
 		}
 		m_skinModel.Draw(rc); 
 	}
+	void CSkinModelRender::FindVertexPosition(std::function<void(CVector3* pos)> func)
+	{
+		m_skinModelData.FindMesh([&](const auto& mesh) {
+			ID3D11DeviceContext* deviceContext = GraphicsEngine().GetD3DDeviceContext();
+			//頂点バッファを作成。
+			{
+				D3D11_MAPPED_SUBRESOURCE subresource;
+				HRESULT hr = deviceContext->Map(mesh->vertexBuffer.Get(), 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &subresource);
+				if (FAILED(hr)) {
+					TK_WARNING("Failed map vertexBuffer");
+					return;
+				}
+				D3D11_BUFFER_DESC bufferDesc;
+				mesh->vertexBuffer->GetDesc(&bufferDesc);
+				int vertexCount = bufferDesc.ByteWidth / mesh->vertexStride;
+				char* pData = reinterpret_cast<char*>(subresource.pData);
+				CVector3* pos;
+				for (int i = 0; i < vertexCount; i++) {
+					pos = reinterpret_cast<CVector3*>(pData);
+					func(pos);
+					pData += mesh->vertexStride;
+				}
+				//頂点バッファをアンロック
+				deviceContext->Unmap(mesh->vertexBuffer.Get(), 0);
+			}
+		});
+	}
+
 }
 }

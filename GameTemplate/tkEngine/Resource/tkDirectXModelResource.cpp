@@ -86,12 +86,28 @@ namespace tkEngine {
 			return pRawModel;
 		}
 		catch (std::exception& exception) {
-			char cFilePath[256];
-			wcstombs(cFilePath, filePath, 255);
-			TK_WARNING_MESSAGE_BOX("%s\n"
-				"Assetsフォルダを確認して、%sと同じ場所に.tksファイルが存在するか確認してください。\n"
-				"もし存在している場合は、tksファイルの出力ミスが考えられます。\n", exception.what(), cFilePath);
-			std::abort();
+			if (strcmp(exception.what(), DirectX::Model::NOT_BUILD_SKELETON_EXCEPTION_MESSAGE) == 0) {
+				//スケルトンが構築されていないエラーが起きた。
+				char cFilePath[256];
+				wcstombs(cFilePath, filePath, 255);
+				TK_WARNING_MESSAGE_BOX("%s\n"
+					"Assetsフォルダを確認して、%sと同じ場所に.tksファイルが存在するか確認してください。\n"
+					"もし存在している場合は、tksファイルの出力ミスが考えられます。\n", exception.what(), cFilePath);
+			}
+			else if (strcmp(exception.what(), DirectX::Model::NOT_LOADED_CMO_EXCEPTION_ESSAGE) == 0) {
+				//CMOファイルの読み込みエラーが起きた。
+				char cFilePath[256];
+				wcstombs(cFilePath, filePath, 255);
+				TK_WARNING_MESSAGE_BOX("%s\n"
+					"cmoファイルのロードに失敗しました。\n"
+					"Assetsフォルダを確認して、ファイル名を間違ていないか確認をお願いします。\n"
+					"ロードしようとしたファイル ＝　%s\n"
+					, exception.what(), cFilePath);
+			}
+			else {
+				//それ以外
+				TK_WARNING_MESSAGE_BOX("%s\n", exception.what());
+			}
 		}
 		return nullptr;
 		

@@ -27,6 +27,14 @@ namespace tkEngine{
 		 */
 		void Init( CShaderResourceView& srcTexture, float blurIntensity = 25.0f );
 		/*!
+		* @brief	ブラーをかけるソーステクスチャを設定。。
+		*@param[in]	srcTexture		元テクスチャ。
+		*/
+		void SetSourceTexture(CShaderResourceView& srcTexture)
+		{
+			m_srcTexture = &srcTexture;
+		}
+		/*!
 		 * @brief	ブラーを実行。
 		 */
 		void Execute(CRenderContext& rc);
@@ -37,6 +45,7 @@ namespace tkEngine{
 		{
 			return m_yBlurRT.GetRenderTargetSRV();
 		}
+	
 	private:
 		/*!
 		* @brief	ガウスフィルタの重みを更新。

@@ -5,6 +5,7 @@
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/graphics/tkGraphicsEngine.h"
 #include "tkEngine/graphics/tkPresetRenderState.h"
+#include "tkEngine/graphics/tkPresetSamplerState.h"
 
 namespace tkEngine{
 	CGraphicsEngine::CGraphicsEngine()
@@ -257,7 +258,8 @@ namespace tkEngine{
 		AlphaBlendState::Init(*this);
 		DepthStencilState::Init(*this);
 		RasterizerState::Init(*this);
-		
+		//サンプラステートを初期化する。
+		CPresetSamplerState::Init();
 		//エフェクトエンジンの初期化。
 		m_effectEngine.Init();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
@@ -299,6 +301,6 @@ namespace tkEngine{
 		m_lightManager.EndRender(m_renderContext);
 		
 		//フラーッシュ
-		m_pSwapChain->Present(0, 0);
+		m_pSwapChain->Present(1, 0);
 	}
 }

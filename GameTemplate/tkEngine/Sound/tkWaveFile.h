@@ -21,8 +21,9 @@ namespace tkEngine{
 		/*!
 		 * @brief	waveファイルをオープン。
 		 *@param[in]	fileName		ファイル名。
+		 *@return	falseを返して来たらオープンに失敗。
 		 */
-		void Open( const char* fileName );
+		bool Open( const char* fileName );
 		/*!
 		* @brief	波形データを読み込み。
 		*@param[out]	pBuffer		波形データを書き込むバッファ。

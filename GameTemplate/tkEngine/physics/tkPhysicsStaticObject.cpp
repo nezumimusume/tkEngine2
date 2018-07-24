@@ -14,13 +14,15 @@ namespace tkEngine{
 	{
 		PhysicsWorld().RemoveRigidBody(m_rigidBody);
 	}
-	void CPhysicsStaticObject::CreateMeshObject(prefab::CSkinModelRender* skinModelRender, CVector3 pos, CQuaternion rot)
+	void CPhysicsStaticObject::CreateMeshObject(prefab::CSkinModelRender* skinModelRender, CVector3 pos, CQuaternion rot, CVector3 scale)
 	{
-		CreateMeshObject(skinModelRender->GetSkinModel(), pos, rot);
+		CreateMeshObject(skinModelRender->GetSkinModel(), pos, rot, scale);
 	}
-	void CPhysicsStaticObject::CreateMeshObject(CSkinModel& skinModel, CVector3 pos, CQuaternion rot)
+	void CPhysicsStaticObject::CreateMeshObject(CSkinModel& skinModel, CVector3 pos, CQuaternion rot, CVector3 scale)
 	{
-		m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
+		CMatrix mScale;
+		mScale.MakeScaling(scale);
+		m_meshCollider.CreateFromSkinModel(skinModel, &mScale);
 		RigidBodyInfo rbInfo;
 		rbInfo.collider = &m_meshCollider;
 		rbInfo.mass = 0.0f;

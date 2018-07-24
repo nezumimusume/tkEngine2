@@ -15,17 +15,9 @@ bool Player::Start()
 		m_position		//初期位置。
 	);
 	
-	//アニメーションクリップのロード。
-	m_animationClip[enAnimationClip_idle].Load(L"animData/idle.tka");
-	m_animationClip[enAnimationClip_run].Load(L"animData/run.tka");
-	m_animationClip[enAnimationClip_walk].Load(L"animData/walk.tka");
-	//ループフラグを設定する。
-	m_animationClip[enAnimationClip_idle].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_run].SetLoopFlag(true);
-	m_animationClip[enAnimationClip_walk].SetLoopFlag(true);
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/Thethief_H.cmo", m_animationClip, enAnimationClip_num);
+	m_skinModelRender->Init(L"modelData/UnityChan.cmo");
 	return true;
 }
 void Player::Move()
@@ -83,9 +75,6 @@ void Player::Update()
 	Turn();
 	//ワールド行列を更新。
 	//ワールド行列を更新。
-	CQuaternion qRot;
-	qRot.SetRotationDeg(CVector3::AxisX, 180.0f);	//3dsMaxで設定されているアニメーションでキャラが回転しているので、補正を入れる。
-	qRot.Multiply(m_rotation, qRot);
 	m_skinModelRender->SetPosition(m_position);
-	m_skinModelRender->SetRotation(qRot);
+	m_skinModelRender->SetRotation(m_rotation);
 }

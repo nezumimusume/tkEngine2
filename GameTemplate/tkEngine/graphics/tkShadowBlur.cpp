@@ -136,7 +136,6 @@ namespace tkEngine{
 		rc.PSSetSampler(0, m_samplerState);
 		rc.IASetInputLayout(m_vsBlurShader.GetInputLayout());
 		rc.VSSetShader(m_vsBlurShader);
-		//深度テクスチャを送る。
 		rc.PSSetShaderResource(1, GetGBufferSRV(enGBufferDepth));
 		//XBlur
 		{

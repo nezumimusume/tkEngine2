@@ -92,7 +92,7 @@ namespace prefab{
 		*@return
 		* 登録されたリスナー。
 		*/
-		void AddAnimationEventListener(AnimationEventListener eventListener)
+		void AddAnimationEventListener(std::function<void(const wchar_t* clipName, const wchar_t* eventName)> eventListener)
 		{
 			m_animation.AddAnimationEventListener(eventListener);
 		}
@@ -174,7 +174,7 @@ namespace prefab{
 		*@brief	モデルマテリアルの検索。
 		*@param[in]	findEffect		マテリアルを見つけた時に呼ばれるコールバック関数
 		*/
-		void FindMaterial(CSkinModelData::OnFindMaterial findMaterial) const
+		void FindMaterial(std::function<void(CModelEffect*)> findMaterial) const
 		{
 			m_skinModel.FindMaterial(findMaterial);
 		}
@@ -195,7 +195,7 @@ namespace prefab{
 		{
 			m_isForwardRender = flag;
 		}
-
+		void FindVertexPosition(std::function<void(CVector3* pos)>);
 
 	private:
 		void ForwardRender(CRenderContext& rc) override final;
@@ -208,7 +208,9 @@ namespace prefab{
 		*/
 		void PreUpdate() override final
 		{
-			m_skinModel.BeginUpdateInstancingData();
+			if (m_skinModelData.IsAvailable() == true) {
+				m_skinModel.BeginUpdateInstancingData();
+			}
 		}
 		/*!
 		* @brief	更新。
@@ -219,7 +221,9 @@ namespace prefab{
 		*/
 		void PostUpdate() override final
 		{
-			m_skinModel.EndUpdateInstancingData();
+			if (m_skinModelData.IsAvailable() == true) {
+				m_skinModel.EndUpdateInstancingData();
+			}
 		}
 		
 		/*!

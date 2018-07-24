@@ -34,10 +34,17 @@ namespace tkEngine{
 		}
 		void CSoundSource::Init(char* filePath, bool is3DSound)
 		{
+			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, filePath);
 			if (!m_waveFile) {
 				m_waveFile.reset(new CWaveFile);
-				m_waveFile->Open(filePath);
+				bool result = m_waveFile->Open(filePath);
+				if (result == false) {
+					//waveファイルの読み込みに失敗。
+					SoundEngine().GetWaveFileBank().UnregistWaveFile(0, m_waveFile);
+					m_waveFile.reset();
+					return;
+				}
 				m_waveFile->AllocReadBuffer(m_waveFile->GetSize());	//waveファイルのサイズ分の読み込みバッファを確保する。
 				SoundEngine().GetWaveFileBank().RegistWaveFile(0, m_waveFile);
 				unsigned int dummy;
@@ -53,11 +60,12 @@ namespace tkEngine{
 			}
 			InitCommon();
 
-
 			m_is3DSound = is3DSound;
+			m_isAvailable = true;
 		}
 		void CSoundSource::Init(const NameKey& nameKey, bool is3DSound)
 		{
+			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, nameKey);
 			if (!m_waveFile) {
 				m_waveFile.reset(new CWaveFile);
@@ -76,12 +84,13 @@ namespace tkEngine{
 			}
 			InitCommon();
 
-
 			m_is3DSound = is3DSound;
+			m_isAvailable = true;
 		}
 
 		void CSoundSource::InitStreaming(char* filePath, bool is3DSound, unsigned int ringBufferSize, unsigned int bufferSize)
 		{
+			m_isAvailable = false;
 			//ストリーミングはCWaveFileの使いまわしはできない。
 			m_waveFile.reset(new CWaveFile);
 			m_waveFile->Open(filePath);
@@ -100,6 +109,7 @@ namespace tkEngine{
 			InitCommon();
 
 			m_is3DSound = is3DSound;
+			m_isAvailable = true;
 		}
 		void CSoundSource::Release()
 		{
@@ -144,6 +154,10 @@ namespace tkEngine{
 		}
 		void CSoundSource::Play(bool isLoop)
 		{
+			if (m_isAvailable == false) {
+				
+				return;
+			}
 			if (m_isPlaying) {
 				//再生中のものを再開する。
 				m_sourceVoice->Start(0);
@@ -236,6 +250,10 @@ namespace tkEngine{
 		}
 		void CSoundSource::Update()
 		{
+			if (m_isAvailable == false) {
+				return;
+			}
+
 			if (m_isStreaming) {
 				//ストリーミング再生中の更新。
 				UpdateStreaming();

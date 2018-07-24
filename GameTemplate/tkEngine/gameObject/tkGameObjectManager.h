@@ -114,7 +114,7 @@ namespace tkEngine{
 				&& gameObject->m_isRegist
 			) {
 				gameObject->SetDeadMark();
-				gameObject->OnDestroy();
+				gameObject->OnDestroyWrapper();
 				gameObject->m_isRegist = false;
 				gameObject->m_isRegistDeadList = true;
 		

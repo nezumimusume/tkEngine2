@@ -87,6 +87,15 @@
     <Filter Include="Source Files\graphics\effect">
       <UniqueIdentifier>{0b3f229e-73d3-4518-87de-e76fe4388cfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\level">
+      <UniqueIdentifier>{9927bcc4-6996-4033-91b3-379331181b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUD">
+      <UniqueIdentifier>{498176f4-2b2f-4e5c-8bd7-51289296e07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUD\node">
+      <UniqueIdentifier>{21418ed8-9ed4-491a-9379-9a1dff4e7128}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject\tkGameObjectManager.h">
@@ -356,9 +365,6 @@
     <ClInclude Include="graphics\effect\tkEffect.h">
       <Filter>Source Files\graphics\effect</Filter>
     </ClInclude>
-    <ClInclude Include="util\tkLocData.h">
-      <Filter>Source Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="Resource\tkDirectXModelResource.h">
       <Filter>Source Files\resource</Filter>
     </ClInclude>
@@ -370,6 +376,30 @@
     </ClInclude>
     <ClInclude Include="math\tkBox.h">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\tkPresetSamplerState.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="level\tkLevel.h">
+      <Filter>Source Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="level\tkMapChip.h">
+      <Filter>Source Files\level</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.h">
+      <Filter>Source Files\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\Node\tkHUDNode_Font.h">
+      <Filter>Source Files\HUD\node</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\Node\tkHUDNode_Sprite.h">
+      <Filter>Source Files\HUD\node</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\tkIHUDNode.h">
+      <Filter>Source Files\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -594,6 +624,27 @@
     </ClCompile>
     <ClCompile Include="math\tkBox.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkPresetSamplerState.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="level\tkLevel.cpp">
+      <Filter>Source Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="level\tkMapChip.cpp">
+      <Filter>Source Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.cpp">
+      <Filter>Source Files\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\Node\tkHUDNode_Sprite.cpp">
+      <Filter>Source Files\HUD\node</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\Node\tkHUDNode_Font.cpp">
+      <Filter>Source Files\HUD\node</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,9 +9,10 @@ public:
 	~Game();
 	bool Start();
 	void Update();
-	void Render(CRenderContext& rc);
-	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
-	CShaderResourceView m_normalMap;	//法線マップ。
-	CShaderResourceView m_specMap;		//スペキュラマップ。	
+	CVector3 pos = CVector3::Zero;
+	prefab::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	prefab::CSkinModelRender* m_bgSkinModelRender = nullptr;	//背景のスキンモデルレンダラー。
+	std::vector<prefab::CDirectionLight*> m_directionLight;		//ディレクションライト。
+	CShaderResourceView m_spec;
 };
 

@@ -1,9 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_Low|Win32">
+      <Configuration>Debug_Low</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Low|x64">
+      <Configuration>Debug_Low</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Preview_Low|Win32">
+      <Configuration>Preview_Low</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Preview_Low|x64">
+      <Configuration>Preview_Low</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Preview|Win32">
       <Configuration>Preview</Configuration>
@@ -11,6 +27,14 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Preview|x64">
       <Configuration>Preview</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_Low|Win32">
+      <Configuration>Release_Low</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_Low|x64">
+      <Configuration>Release_Low</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -39,7 +63,20 @@
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -53,7 +90,20 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -66,7 +116,21 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -81,23 +145,46 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Preview|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+    <LibraryPath>$(LibraryPath);;$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
+    <IntDir>$(Configuration)Objects\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'">
     <IncludePath>$(ProjectDir)../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
     <LibraryPath>$(LibraryPath);;$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
     <IntDir>$(Configuration)Objects\</IntDir>
@@ -107,7 +194,17 @@
     <LibraryPath>$(LibraryPath);;$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
     <IntDir>$(Configuration)Objects\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'">
+    <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+    <LibraryPath>$(LibraryPath);;$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
+    <IntDir>$(Configuration)Objects\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">
+    <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir);$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
+    <IntDir>$(Configuration)Objects\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'">
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
     <LibraryPath>$(LibraryPath);$(ProjectDir);$(ProjectDir)/EffekseerRuntime130/src/lib/x86</LibraryPath>
     <IntDir>$(Configuration)Objects\</IntDir>
@@ -116,7 +213,15 @@
     <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">
     <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
@@ -124,7 +229,30 @@
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
     <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">
+    <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;%(AdditionalDependencies);Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -160,7 +288,50 @@
       <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;TK_MASTER;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -210,7 +381,56 @@
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;TK_MASTER;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -259,7 +479,32 @@
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.h" />
     <ClInclude Include="camera\tkCameraCollisionSolver.h" />
     <ClInclude Include="camera\tkSpringCamera.h" />
     <ClInclude Include="character\tkCharacterController.h" />
@@ -290,6 +535,7 @@
     <ClInclude Include="graphics\postEffect\tkDithering.h" />
     <ClInclude Include="graphics\postEffect\tkFxaa.h" />
     <ClInclude Include="graphics\postEffect\tkPostEffect.h" />
+    <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h" />
     <ClInclude Include="graphics\postEffect\tkTonemap.h" />
     <ClInclude Include="graphics\preRender\tkGBufferRender.h" />
     <ClInclude Include="graphics\preRender\tkLIghtCulling.h" />
@@ -304,6 +550,7 @@
     <ClInclude Include="graphics\tkLight.h" />
     <ClInclude Include="graphics\tkMapper.h" />
     <ClInclude Include="graphics\tkPresetRenderState.h" />
+    <ClInclude Include="graphics\tkPresetSamplerState.h" />
     <ClInclude Include="graphics\tkPrimitive.h" />
     <ClInclude Include="graphics\tkRenderContext.h" />
     <ClInclude Include="graphics\tkRenderTarget.h" />
@@ -315,7 +562,12 @@
     <ClInclude Include="graphics\tkSkinModelData.h" />
     <ClInclude Include="graphics\tkSkinModelRender.h" />
     <ClInclude Include="graphics\tkSkinModelShaderConst.h" />
+    <ClInclude Include="HUD\Node\tkHUDNode_Font.h" />
+    <ClInclude Include="HUD\Node\tkHUDNode_Sprite.h" />
+    <ClInclude Include="HUD\tkIHUDNode.h" />
     <ClInclude Include="Input\tkPad.h" />
+    <ClInclude Include="level\tkLevel.h" />
+    <ClInclude Include="level\tkMapChip.h" />
     <ClInclude Include="light\tkDirectionLight.h" />
     <ClInclude Include="light\tkLightBase.h" />
     <ClInclude Include="light\tkLightManager.h" />
@@ -351,11 +603,11 @@
     <ClInclude Include="tkEngineConst.h" />
     <ClInclude Include="tkEnginePreCompile.h" />
     <ClInclude Include="tkEngineStruct.h" />
-    <ClInclude Include="util\tkLocData.h" />
     <ClInclude Include="util\tkNameKey.h" />
     <ClInclude Include="util\tkUtil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.cpp" />
     <ClCompile Include="camera\tkCameraCollisionSolver.cpp" />
     <ClCompile Include="camera\tkSpringCamera.cpp" />
     <ClCompile Include="character\tkCharacterController.cpp" />
@@ -383,6 +635,7 @@
     <ClCompile Include="graphics\postEffect\tkDithering.cpp" />
     <ClCompile Include="graphics\postEffect\tkFxaa.cpp" />
     <ClCompile Include="graphics\postEffect\tkPostEffect.cpp" />
+    <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp" />
     <ClCompile Include="graphics\postEffect\tkTonemap.cpp" />
     <ClCompile Include="graphics\preRender\tkGBufferRender.cpp" />
     <ClCompile Include="graphics\preRender\tkLightCulling.cpp" />
@@ -394,6 +647,7 @@
     <ClCompile Include="graphics\tkGPUEventMarker.cpp" />
     <ClCompile Include="graphics\tkGraphicsEngine.cpp" />
     <ClCompile Include="graphics\tkPresetRenderState.cpp" />
+    <ClCompile Include="graphics\tkPresetSamplerState.cpp" />
     <ClCompile Include="graphics\tkPrimitive.cpp" />
     <ClCompile Include="graphics\tkRenderContext.cpp" />
     <ClCompile Include="graphics\tkRenderTarget.cpp" />
@@ -404,7 +658,11 @@
     <ClCompile Include="graphics\tkSkinModel.cpp" />
     <ClCompile Include="graphics\tkSkinModelData.cpp" />
     <ClCompile Include="graphics\tkSkinModelRender.cpp" />
+    <ClCompile Include="HUD\Node\tkHUDNode_Font.cpp" />
+    <ClCompile Include="HUD\Node\tkHUDNode_Sprite.cpp" />
     <ClCompile Include="Input\tkPad.cpp" />
+    <ClCompile Include="level\tkLevel.cpp" />
+    <ClCompile Include="level\tkMapChip.cpp" />
     <ClCompile Include="light\tkDirectionLight.cpp" />
     <ClCompile Include="light\tkLightBase.cpp" />
     <ClCompile Include="light\tkLightManager.cpp" />
@@ -431,11 +689,17 @@
     <ClCompile Include="tkEngine.cpp" />
     <ClCompile Include="tkEnginePreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

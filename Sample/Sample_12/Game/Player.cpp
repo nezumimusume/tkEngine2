@@ -73,7 +73,7 @@ void Player::Turn()
 	float angle = atan2(m_moveSpeed.x,  m_moveSpeed.z);
 	//atanが返してくる角度はラジアン単位なので
 	//SetRotationDegではなくSetRotationを使用する。
-	m_rotation.SetRotation(CVector3::AxisY, angle);
+	m_rotation.SetRotation(CVector3::AxisY, -angle);
 }
 void Player::Update()
 {

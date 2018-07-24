@@ -30,6 +30,7 @@ namespace tkEngine{
 		m_tonemap.Init(config);
 		m_bloom.Init(config);
 		m_dithering.Init(config);
+		m_ssr.Init(config);
 		InitFullScreenQuadPrimitive();
 		InitFinalRenderTarget();
 	}
@@ -37,6 +38,7 @@ namespace tkEngine{
 	{
 		//メインレンダリングターゲットの内容をリゾルブ。
 		GraphicsEngine().GetMainRenderTarget().ResovleMSAATexture(rc);
+		
 		m_tonemap.Render(rc, this);
 
 		//エフェクトを描画
@@ -50,7 +52,7 @@ namespace tkEngine{
 			0,
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
-
+		m_ssr.Render(rc, this);
 		m_bloom.Render(rc, this);
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);

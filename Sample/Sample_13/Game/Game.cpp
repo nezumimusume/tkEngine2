@@ -32,12 +32,19 @@ void Game::Update()
 		ss->Init("sound/PlayerAttack_00.wav");
 		ss->Play(false);	//ループフラグをfalseに設定して再生すると、
 							//再生が終了するとCSoundSourcenのインスタンスは自動的に削除されるので
-							//インスタンスをメンバ変数などで保持する必要はない。
+							//インスタンスをメンバ変数などで保持する必要はない
+		//ワンショット再生の終了を検出したい場合はイベントリスナーに登録を行えばよい。
+		ss->AddEventListener([](SEventParam& eventParam) {
+			if (eventParam.eEvent == IGameObject::enEvent_Destroy) {
+				MessageBox(NULL, "PlayerAttack_01.wavの再生完了", "通知", MB_OK);
+			}
+		});
 	}
 	else if (Pad(0).IsTrigger(enButtonB)) {
 		ss = NewGO<prefab::CSoundSource>(0);
 		ss->Init("sound/PlayerAttack_01.wav");
 		ss->Play(false);
+		
 	}else if (Pad(0).IsTrigger(enButtonX)) {
 		ss = NewGO<prefab::CSoundSource>(0);
 		ss->Init("sound/PlayerDead.wav");

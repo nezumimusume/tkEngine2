@@ -350,6 +350,7 @@ rollout tkExporter "tkExporter" width:194 height:248
 				cloneObj = copy selection[obj]
 				cloneObj.name = selection[obj].name
 				cloneObj.parent = parentObj
+				parentObj = merge( parentObj cloneObj )
 				deselect cloneObj
 			)
 			select parentObj
@@ -366,26 +367,51 @@ rollout tkExporter "tkExporter" width:194 height:248
 		)else(
 			filepath = getOpenFileName caption:"" types: "fbx (*fbx)|*.fbx|All Files (*.*)|*.*|"
 			if filepath != undefined then(
-				FBXImporterSetParam "ScaleConversion" false
-				FBXImporterSetParam "UpAxis" "Z"
-				ImportFile filepath #noPrompt
-			
 				editLevelObj = getNodeByName levelName.text
 				if editLevelObj == undefined then(
 					--ダミーを作る。
 					editLevelObj = Dummy()
 					editLevelObj.name = levelName.text
 				)
+				
+				FBXImporterSetParam "ScaleConversion" false
+				FBXImporterSetParam "UpAxis" "Z"
+				ImportFile filepath #noPrompt
+				importObj = $
 		
 				filename = getFilenameFile filepath
-				dummyObj = Dummy()
-				dummyObj.name = filename
-				for obj in 1 to selection.count do (
-					selection[obj].parent = dummyObj
+				
+				--全てを編集可能ポリゴンに変換する。
+				delObjArray = #()
+				for i=1 to $selection.count do
+				(
+					p = convertToMesh($selection[i]);
+					--編集可能ポリゴンに変換できなかった場合は、削除リストに積む。
+					if p == undefined then(
+						append delObjArray $selection[i]
+					)
+	
 				)
+				--編集可能ポリゴンに変換できなかったオブジェクトを削除。
+				for i=1 to delObjArray.count do
+				(
+					delete delObjArray[i]
+				)
+				parentBox = box length:1 width:1 height:1
+				p = convertToMesh(parentBox)
+				importObj.parent = parentBox
+				select p
+				selectMore $.children
+				--結合。
+				while  $selection.count>1 do
+				(
+					attach p $selection[$selection.count];
+				)
+
 				--ダミーをレベルの下にぽいっとな。
-				dummyObj.parent = editLevelObj
-				select dummyObj
+				$selection[1].pivot = Point3 0 0 0
+				selection[1].name = filename
+				$selection[1].parent = editLevelObj
 			)
 		)
 	)
