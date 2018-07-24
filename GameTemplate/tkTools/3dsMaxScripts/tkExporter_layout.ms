@@ -1,16 +1,20 @@
-rollout tkExporter "タイトルなし" width:172 height:399
+rollout tkExporter "タイトルなし" width:176 height:507
 (
-	editText animClipStartFrame "" pos:[91,270] width:58 height:21
-	label lbl1 "start frame" pos:[23,273] width:60 height:16
-	groupBox grp1 "Animation clip" pos:[13,249] width:145 height:134
-	groupBox grp2 "Skeleton" pos:[12,172] width:145 height:64
-	button btn_saveAnimationClip "Save" pos:[28,339] width:120 height:28
-	label lbl2 "end frame" pos:[23,304] width:60 height:16
-	editText animClipEndFrame "" pos:[91,302] width:58 height:21
-	button btn_saveSkeleton "Save" pos:[23,191] width:120 height:28
-	label lbl3 "Label" pos:[34,291] width:0 height:0
-	groupBox grp5 "FBX" pos:[13,13] width:145 height:64
-	button btn_save_fbx "Save" pos:[24,33] width:120 height:28
-	groupBox grp10 "FBX And Skeleton" pos:[13,92] width:145 height:64
-	button btn_save_fbx_and_skeleton "Save" pos:[24,112] width:120 height:28
+	editText 'animClipStartFrame' "" pos:[90,384] width:58 height:21 align:#left
+	label 'lbl1' "start frame" pos:[22,387] width:60 height:16 align:#left
+	groupBox 'grp1' "Animation clip" pos:[14,358] width:147 height:134 align:#left
+	button 'btn_saveAnimationClip' "Save" pos:[27,453] width:120 height:28 align:#left
+	label 'lbl2' "end frame" pos:[22,418] width:60 height:16 align:#left
+	editText 'animClipEndFrame' "" pos:[90,416] width:58 height:21 align:#left
+	button 'btn_saveSkeleton' "Save Skeleton" pos:[22,321] width:120 height:28 align:#left
+	label 'lbl3' "Label" pos:[33,440] width:0 height:0 align:#left
+	groupBox 'grp5' "FBX" pos:[13,13] width:145 height:64 align:#left
+	button 'btn_save_fbx' "Save" pos:[24,33] width:120 height:28 align:#left
+	groupBox 'grp10' "Level" pos:[13,92] width:145 height:189 align:#left
+	button 'btn_load_locObject' "Load Object" pos:[26,172] width:120 height:28 align:#left
+	editText 'levelName' "" pos:[23,138] width:120 height:24 align:#left
+	label 'lbl4' "edit level name" pos:[23,117] width:77 height:16 align:#left
+	button 'SaveLoc' "Save Level" pos:[26,242] width:120 height:28 align:#left
+	groupBox 'grp6' "Animation" pos:[3,295] width:164 height:200 align:#left
+	button 'btn_copy_locObject' "Copy Object" pos:[26,206] width:120 height:28 align:#left
 )
