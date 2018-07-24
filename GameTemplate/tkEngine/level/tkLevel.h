@@ -23,6 +23,19 @@ namespace tkEngine{
 		{
 			return wcscmp(objName, name) == 0;
 		}
+		/*!
+		* @brief	名前が前方一致するか調べる。
+		*/
+		bool ForwardMatchName(const wchar_t* n)
+		{
+			auto len = wcslen(n);
+			auto namelen = wcslen(name);
+			if (len > namelen) {
+				//名前が長い。不一致。
+				return false;
+			}
+			return wcsncmp(n, name, len) == 0;
+		}
 	};
 	/*!
 	 *@brief	レベル。

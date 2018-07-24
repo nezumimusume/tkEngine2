@@ -4,17 +4,19 @@
 
 namespace tkEngine {
 	
-	class NameKey {
-		std::string m_name;			//!<名前
+	template<class T>
+	class TNameKey {
+		using MyString = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+		MyString m_name;			//!<名前
 		unsigned int m_hashCode = 0;	//!<ハッシュ値。
 	public:
-		NameKey(){}
-		NameKey( const char* name )
+		TNameKey(){}
+		TNameKey( const T* name )
 		{
 			Init(name);
 		}
 		//初期化。
-		void Init(const char* name)
+		void Init(const T* name)
 		{
 			if (name != nullptr) {
 				m_name = name;
@@ -28,9 +30,12 @@ namespace tkEngine {
 			return m_hashCode;
 		}
 		//名前を取得。
-		const char* GetName() const
+		const T* GetName() const
 		{
 			return m_name.c_str();
 		}
 	};
+
+	using NameKey = TNameKey<char>;
+	using WNameKey = TNameKey<wchar_t>;
 }

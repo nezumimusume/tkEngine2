@@ -504,6 +504,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.h" />
     <ClInclude Include="camera\tkCameraCollisionSolver.h" />
     <ClInclude Include="camera\tkSpringCamera.h" />
     <ClInclude Include="character\tkCharacterController.h" />
@@ -561,6 +562,9 @@
     <ClInclude Include="graphics\tkSkinModelData.h" />
     <ClInclude Include="graphics\tkSkinModelRender.h" />
     <ClInclude Include="graphics\tkSkinModelShaderConst.h" />
+    <ClInclude Include="HUD\Node\tkHUDNode_Font.h" />
+    <ClInclude Include="HUD\Node\tkHUDNode_Sprite.h" />
+    <ClInclude Include="HUD\tkIHUDNode.h" />
     <ClInclude Include="Input\tkPad.h" />
     <ClInclude Include="level\tkLevel.h" />
     <ClInclude Include="level\tkMapChip.h" />
@@ -603,6 +607,7 @@
     <ClInclude Include="util\tkUtil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.cpp" />
     <ClCompile Include="camera\tkCameraCollisionSolver.cpp" />
     <ClCompile Include="camera\tkSpringCamera.cpp" />
     <ClCompile Include="character\tkCharacterController.cpp" />
@@ -653,6 +658,8 @@
     <ClCompile Include="graphics\tkSkinModel.cpp" />
     <ClCompile Include="graphics\tkSkinModelData.cpp" />
     <ClCompile Include="graphics\tkSkinModelRender.cpp" />
+    <ClCompile Include="HUD\Node\tkHUDNode_Font.cpp" />
+    <ClCompile Include="HUD\Node\tkHUDNode_Sprite.cpp" />
     <ClCompile Include="Input\tkPad.cpp" />
     <ClCompile Include="level\tkLevel.cpp" />
     <ClCompile Include="level\tkMapChip.cpp" />

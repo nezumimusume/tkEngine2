@@ -92,7 +92,7 @@ namespace prefab{
 		*@return
 		* 登録されたリスナー。
 		*/
-		void AddAnimationEventListener(AnimationEventListener eventListener)
+		void AddAnimationEventListener(std::function<void(const wchar_t* clipName, const wchar_t* eventName)> eventListener)
 		{
 			m_animation.AddAnimationEventListener(eventListener);
 		}

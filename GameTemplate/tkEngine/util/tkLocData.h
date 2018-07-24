@@ -16,6 +16,7 @@ namespace tkEngine{
 		struct SObjectData {
 			CVector3 position;
 			CQuaternion rotation;
+			CVector3 scale;
 			const wchar_t* name;
 		};
 		CLocData()
@@ -52,8 +53,10 @@ namespace tkEngine{
 
 				objData.name = bone->GetName();
 				//拡大は未対応かなぁ。
+				objData.scale = scale;
+				std::swap(objData.scale.y, objData.scale.z);
 
-				m_objectData.push_back(std::move(objData));
+				m_objectData.push_back(objData);
 			}
 			return true;
 		}
@@ -84,6 +87,10 @@ namespace tkEngine{
 		const wchar_t* GetObjectName(int objNo) const
 		{
 			return m_objectData.at(objNo).name;
+		}
+		const SObjectData& GetObjectData(int objNo) const
+		{
+			return m_objectData[objNo];
 		}
 	private:
 		CSkeleton	m_locData;	//!<スケルトンデータ。

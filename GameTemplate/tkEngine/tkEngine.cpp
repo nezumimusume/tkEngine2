@@ -62,9 +62,16 @@ namespace tkEngine {
 		};
 		RegisterClassEx(&wc);
 		// Create the application's window
+		RECT rc = { 0, 0, m_screenWidth,m_screenHeight };
+		AdjustWindowRect(
+			&rc,                                      // クライアント矩形
+			WS_OVERLAPPED,							  // ウィンドウスタイル
+			FALSE                                     // メニューフラグ
+		);
 		m_hWnd = CreateWindow(TEXT("GameDemo"), TEXT("GameDemo"),
-			WS_OVERLAPPEDWINDOW, 0, 0, m_screenWidth, m_screenHeight,
+			WS_OVERLAPPEDWINDOW, 0, 0, rc.right - rc.left, rc.bottom - rc.top,
 			nullptr, nullptr, wc.hInstance, nullptr);
+
 
 		ShowWindow(m_hWnd, initParam.nCmdShow);
 		return m_hWnd != nullptr;
@@ -116,7 +123,7 @@ namespace tkEngine {
 		//物理エンジンの更新。
 		m_physicsWorld.Update();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
-		static int count = 0;
+		/*static int count = 0;
 		m_timeTotal += (float)m_sw.GetElapsed();
 		count++;
 		if (count == 30) {
@@ -142,7 +149,7 @@ namespace tkEngine {
 			1.0f,
 			{0.0f, 1.0f}
 		);
-		m_font->End(GraphicsEngine().GetRenderContext());
+		m_font->End(GraphicsEngine().GetRenderContext());*/
 #endif
 		m_graphicsEngine.EndRender();
 		
