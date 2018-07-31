@@ -20,7 +20,7 @@ namespace tkEngine{
 	/*!
 	*@brief	描画エンジン。
 	*@details
-	* 2017/08/03 release notes
+	* 2018/08/03 release notes
 	* 	tkEngineの描画エンジンはTBDR(Tile Based Deferred Rendering)で実装されている。
 	* 	シーンの描画手順は下記となる。
 	*  	.1 プリレンダリング

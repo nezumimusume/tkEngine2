@@ -184,6 +184,7 @@ namespace tkEngine{
 		{
 			m_eventListeners.push_back(listener);
 		}
+#if 0 //ちょいオミット。
 		/*!
 		*@brief イベントリスナーを破棄
 		*@param[in]	listener	破棄するイベントリスナー。
@@ -193,10 +194,11 @@ namespace tkEngine{
 			auto it = std::remove_if(
 				m_eventListeners.begin(), 
 				m_eventListeners.end(), 
-				[&](auto& l) { return l = listener; }
+				[&](auto& l) { return l == listener; }
 			);
 			m_eventListeners.erase(it, m_eventListeners.end());
 		}
+#endif
 	public:
 		void PostRenderWrapper(CRenderContext& renderContext)
 		{
