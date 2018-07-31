@@ -90,9 +90,16 @@ namespace tkEngine {
 				//スケルトンが構築されていないエラーが起きた。
 				char cFilePath[256];
 				wcstombs(cFilePath, filePath, 255);
+				char cTksFilePath[256];
+				strcpy(cTksFilePath, cFilePath);
+				auto ext = strstr(cTksFilePath, ".cmo");
+				ext[1] = 't';
+				ext[2] = 'k';
+				ext[3] = 's';
 				TK_WARNING_MESSAGE_BOX("%s\n"
-					"Assetsフォルダを確認して、%sと同じ場所に.tksファイルが存在するか確認してください。\n"
-					"もし存在している場合は、tksファイルの出力ミスが考えられます。\n", exception.what(), cFilePath);
+					"スケルトンデータのロードに失敗しました。\n"
+					"Assetsフォルダを確認して、%sと同じ場所に%sが存在するか確認してください。\n"
+					"もし存在している場合は、tksファイルの出力ミスが考えられます。\n", exception.what(), cFilePath, cTksFilePath);
 			}
 			else if (strcmp(exception.what(), DirectX::Model::NOT_LOADED_CMO_EXCEPTION_ESSAGE) == 0) {
 				//CMOファイルの読み込みエラーが起きた。
@@ -100,7 +107,18 @@ namespace tkEngine {
 				wcstombs(cFilePath, filePath, 255);
 				TK_WARNING_MESSAGE_BOX("%s\n"
 					"cmoファイルのロードに失敗しました。\n"
-					"Assetsフォルダを確認して、ファイル名を間違ていないか確認をお願いします。\n"
+					"Assetsフォルダを確認して、ファイル名を間違っていないか確認をお願いします。\n"
+					"ロードしようとしたファイル ＝　%s\n"
+					, exception.what(), cFilePath);
+			}
+			else if (strcmp(exception.what(), DirectX::Model::NOT_ASSIGN_MATERIAL_TO_MESH) == 0) {
+				//CMOファイルの読み込みエラーが起きた。
+				char cFilePath[256];
+				wcstombs(cFilePath, filePath, 255);
+				TK_WARNING_MESSAGE_BOX("%s\n"
+					"cmoファイルのロードに失敗しました。\n"
+					"マテリアルが割り当てられていないポリゴンが存在します。\n"
+					"モデルデータの確認をお願いします。\n"
 					"ロードしようとしたファイル ＝　%s\n"
 					, exception.what(), cFilePath);
 			}

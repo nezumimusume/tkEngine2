@@ -156,6 +156,7 @@ static BOOL CALLBACK InitializeDecl( PINIT_ONCE initOnce, PVOID Parameter, PVOID
 
 const char* DirectX::Model::NOT_BUILD_SKELETON_EXCEPTION_MESSAGE = "No Build Skeleton Data";
 const char* DirectX::Model::NOT_LOADED_CMO_EXCEPTION_ESSAGE = "CreateFromCMO";		
+const char* DirectX::Model::NOT_ASSIGN_MATERIAL_TO_MESH = "Not assign material to mesh";
 //======================================================================================
 // Model Loader
 //======================================================================================
@@ -624,11 +625,13 @@ std::unique_ptr<Model> DirectX::Model::CreateFromCMO(
 
                         if ( sm.VertexBufferIndex != j )
                             continue;
-
-                        if ( (sm.IndexBufferIndex >= *nIBs)
-                             || (sm.MaterialIndex >= *nMats) )
-                             throw std::exception("Invalid submesh found\n");
-
+						if ((sm.MaterialIndex >= *nMats)) {
+							//マテリアルがポリゴンに割り当てられていない。
+							throw std::exception(NOT_ASSIGN_MATERIAL_TO_MESH);
+						}
+						if (sm.IndexBufferIndex >= *nIBs) {
+							throw std::exception("Invalid submesh found\n");
+						}
                         XMMATRIX uvTransform = XMLoadFloat4x4( &materials[ sm.MaterialIndex ].pMaterial->UVTransform );
 
                         auto ib = ibData[ sm.IndexBufferIndex ].ptr;
