@@ -31,7 +31,7 @@ private:
 	void UpdateFont(SParameterNode& font, AIAvator* avator);
 private:
 	prefab::CHud* m_hud = nullptr;	//HUD
-	
+	std::unique_ptr<DirectX::SpriteFont>	m_dqFont;		//ドラクエ風フォント。
 	SParameterNode m_senshiParameterNode;
 	SParameterNode m_ryusanParameterNode;
 	SParameterNode m_siroParameterNode;

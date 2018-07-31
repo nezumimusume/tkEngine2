@@ -14,6 +14,7 @@ namespace tkEngine {
 	static const size_t HUD_FONT_NODE_NAME_PREFIX_LENGTH = wcslen(HUD_FONT_NODE_NAME_PREFIX);		//HUDシステムのfontノードの名前のプレフィックスの長さ。
 	static const wchar_t* HUD_SPRITE_NODE_NAME_PREFIX = L"sprite_";									//HUDシステムのspriteノードの名前のプレフィックス。
 	static const size_t HUD_SPRITE_NODE_NAME_PREFIX_LENGTH = wcslen(HUD_SPRITE_NODE_NAME_PREFIX);	//HUDシステムのspriteノードの名前のプレフィックスの長さ。
+	class CHUDNode_Font;
 	namespace prefab {
 		/*!
 		*@brief	HUD
@@ -58,6 +59,11 @@ namespace tkEngine {
 			*@return	見つかったノードの弱参照。
 			*/
 			IHUDNode* FindNode(int nameKey);
+			/*!
+			*@brief	フォントノードに対してクエリを実行。
+			*@param[in]		queryFunc	フォントノードへの問い合わせ関数。
+			*/
+			void QueryFontNode(std::function< void(CHUDNode_Font& font) > queryFunc);
 		private:
 			
 			IHUDNodeSharedPtr m_rootNode;	//ルートノード。

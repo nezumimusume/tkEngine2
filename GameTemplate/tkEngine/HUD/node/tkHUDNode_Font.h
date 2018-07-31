@@ -19,6 +19,17 @@ namespace tkEngine{
 		{
 			m_text = text;
 		}
+		/*!
+		* @brief	フォントを設定。
+		* @details	使用するフォントを設定できます。
+		*  デフォルトのフォントを使用する場合は、この関数を使用する必要はありません。
+		*  フォントを変更したい場合に使用してください。
+		*@param[in]	font	フォント。
+		*/
+		void SetFont(DirectX::SpriteFont* font)
+		{
+			m_font->SetFont(font);
+		}
 	private:
 		std::unique_ptr<CFont>	m_font;
 		std::wstring m_text;
