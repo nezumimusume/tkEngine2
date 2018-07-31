@@ -88,5 +88,17 @@ namespace tkEngine {
 			return nullptr;
 
 		}
+		
+		void CHud::QueryFontNode(std::function< void(CHUDNode_Font& font) > queryFunc)
+		{
+			for (auto& node : m_nodes) {
+				auto fontNode = dynamic_cast<CHUDNode_Font*>(node.get());
+				if (fontNode != nullptr)
+				{
+					//–â‚¢‡‚í‚¹ŠÖ”‚ğŒÄ‚Ño‚·B
+					queryFunc(*fontNode);
+				}
+			}
+		}
 	}
 }

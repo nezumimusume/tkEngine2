@@ -74,7 +74,12 @@ namespace tkEngine {
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
 		rc.OMSetRenderTargets(1, renderTargets);
 		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
-		rc.RSSetViewport(0, 0, m_reflectionRT[m_currentRTNo].GetWidth(), m_reflectionRT[m_currentRTNo].GetHeight());
+		rc.RSSetViewport(
+			0.0f, 
+			0.0f, 
+			static_cast<float>(m_reflectionRT[m_currentRTNo].GetWidth()), 
+			static_cast<float>(m_reflectionRT[m_currentRTNo].GetHeight())
+		);
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, gBuffer.GetRenderTarget(enGBufferNormal).GetRenderTargetSRV());
 		rc.PSSetShaderResource(2, gBuffer.GetRenderTarget(enGBufferDepth).GetRenderTargetSRV());
@@ -94,7 +99,12 @@ namespace tkEngine {
 		{
 			renderTargets[0] = &postEffect->GetFinalRenderTarget();
 			rc.OMSetRenderTargets(1, renderTargets);
-			rc.RSSetViewport(0, 0, renderTargets[0]->GetWidth(), renderTargets[0]->GetHeight());
+			rc.RSSetViewport(
+				0.0f, 
+				0.0f, 
+				static_cast<float>(renderTargets[0]->GetWidth()), 
+				static_cast<float>(renderTargets[0]->GetHeight())
+			);
 			rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_blur.GetResultSRV());
 			/*for (int i = 0; i < NUM_CALC_AVG_RT; i++) {

@@ -94,7 +94,7 @@
       <UniqueIdentifier>{498176f4-2b2f-4e5c-8bd7-51289296e07f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\HUD\node">
-      <UniqueIdentifier>{21418ed8-9ed4-491a-9379-9a1dff4e7128}</UniqueIdentifier>
+      <UniqueIdentifier>{6b1640c0-50c4-4d5f-b0f8-ad76046c001e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -389,17 +389,20 @@
     <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h">
       <Filter>Source Files\graphics\postEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.h">
+    <ClInclude Include="HUD\tkHUD.h">
       <Filter>Source Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD\Node\tkHUDNode_Font.h">
-      <Filter>Source Files\HUD\node</Filter>
-    </ClInclude>
-    <ClInclude Include="HUD\Node\tkHUDNode_Sprite.h">
-      <Filter>Source Files\HUD\node</Filter>
     </ClInclude>
     <ClInclude Include="HUD\tkIHUDNode.h">
       <Filter>Source Files\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\node\tkHUDNode_Font.h">
+      <Filter>Source Files\HUD\node</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\node\tkHUDNode_Sprite.h">
+      <Filter>Source Files\HUD\node</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\node\tkHUDNode_Dummy.h">
+      <Filter>Source Files\HUD\node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -637,13 +640,13 @@
     <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp">
       <Filter>Source Files\graphics\postEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GameTemplate\tkEngine\HUD\tkHUD.cpp">
+    <ClCompile Include="HUD\tkHUD.cpp">
       <Filter>Source Files\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="HUD\Node\tkHUDNode_Sprite.cpp">
+    <ClCompile Include="HUD\node\tkHUDNode_Sprite.cpp">
       <Filter>Source Files\HUD\node</Filter>
     </ClCompile>
-    <ClCompile Include="HUD\Node\tkHUDNode_Font.cpp">
+    <ClCompile Include="HUD\node\tkHUDNode_Font.cpp">
       <Filter>Source Files\HUD\node</Filter>
     </ClCompile>
   </ItemGroup>

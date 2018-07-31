@@ -39,8 +39,9 @@ namespace tkEngine{
 				}
 				catch (std::exception& exception) {
 					if (strcmp(exception.what(), "CreateTexture") == 0) {
-						TK_WARNING_MESSAGE_BOX_W(L"3Dモデルに貼られているテクスチャの作成に失敗しました。%ls\n"
-												 L"fbxファイルに貼られているテクスチャが、fbxファイルと同じ場所にあるか確認をお願いします。\n", info.diffuseTexture);
+						TK_WARNING_MESSAGE_BOX_W(L"3Dモデルに貼られているテクスチャの作成に失敗しました。\n%ls\n\n"
+												 L"fbxファイルに貼られているテクスチャが、fbxファイルと同じ場所にあるか確認をお願いします。\n" 
+												 L"テクスチャがあるのに、エラーが消えない場合はビルド/リビルドを試してみてください。\n", info.diffuseTexture);
 
 					}
 				}

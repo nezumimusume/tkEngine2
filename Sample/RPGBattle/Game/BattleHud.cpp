@@ -44,6 +44,12 @@ BattleHud::BattleHud()
 			m_siroParameterNode.m_mpFontNode = (CHUDNode_Font*)node;
 		}
 	});
+	//ドラクエ風フォントをロード。
+	m_dqFont = std::make_unique<DirectX::SpriteFont>(GraphicsEngine().GetD3DDevice(), L"font/dq.spritefont");
+	//使用するフォントを差し替える。
+	m_hud->QueryFontNode([&](CHUDNode_Font& font) {
+		font.SetFont( m_dqFont.get() );
+	});
 	m_logFont_00 = (CHUDNode_Font*)m_hud->FindNode(L"font_log_00");
 	m_logFont_01 = (CHUDNode_Font*)m_hud->FindNode(L"font_log_01");
 	m_logFont_02 = (CHUDNode_Font*)m_hud->FindNode(L"font_log_02");
@@ -53,6 +59,7 @@ BattleHud::BattleHud()
 	m_senshiParameterNode.m_nameFontNode->SetText(L"せんし");
 	m_ryusanParameterNode.m_nameFontNode->SetText(L"りゅうきし");
 	m_siroParameterNode.m_nameFontNode->SetText(L"しろまどうし");
+
 	//戦士の名前ノードを取得する。
 }
 

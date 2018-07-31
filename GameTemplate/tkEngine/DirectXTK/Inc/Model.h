@@ -237,6 +237,8 @@ namespace DirectX
     public:
 		static const char* NOT_BUILD_SKELETON_EXCEPTION_MESSAGE;	//スケルトンが構築されていないときの例外メッセージ。
 		static const char* NOT_LOADED_CMO_EXCEPTION_ESSAGE;			//CMOファイルのロードに失敗した時の例外メッセージ。
+		static const char* NOT_ASSIGN_MATERIAL_TO_MESH;				//メッシュにマテリアルが割り当てられていないときの例外メッセージ。
+
 		typedef std::function<void(	const wchar_t* boneName, const VSD3DStarter::Bone* bone, std::vector<int>& localBoneIDtoGlobalBoneIDTbl)> OnFindBoneData;
         virtual ~Model();
 

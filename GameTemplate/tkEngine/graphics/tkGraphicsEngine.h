@@ -190,6 +190,8 @@ namespace tkEngine{
 			if (m_userAnnoation) {
 				m_userAnnoation->BeginEvent(eventName);
 			}
+#else
+			(void)eventName;
 #endif
 		}
 		/*!
