@@ -482,6 +482,11 @@ namespace tkEngine{
 		*/
 		void SetRotation(const CMatrix& m);
 		/*!
+		*@brief	fromベクトルからtoベクトルに回転させるクォータニオンを作成。
+		*/
+		void SetRotation( CVector3 from,  CVector3 to);
+	
+		/*!
 		 *@brief	球面線形補完。
 		 */
 		void Slerp(float t, CQuaternion q1, CQuaternion q2)
@@ -592,6 +597,24 @@ namespace tkEngine{
 		TVector result;
 		result.Subtract(v0, v1);
 		return result;
+	}
+	/*!
+	*@brief	ベクトル同士の外積。
+	*/
+	template< class TVector> 
+	static inline TVector Cross(const TVector& v0, const TVector& v1)
+	{
+		TVector result;
+		result.Cross(v0, v1);
+		return result;
+	}
+	/*!
+	*@brief	ベクトル同士の内積。
+	*/
+	template< class TVector>
+	static inline float Dot(const TVector& v0, const TVector& v1)
+	{
+		return v0.Dot(v1);
 	}
 }
 

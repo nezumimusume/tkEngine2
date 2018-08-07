@@ -130,3 +130,4 @@ namespace tkEngine {
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/level/tkLevel.h"
 #include "tkEngine/level/tkMapChip.h"
+#include "tkEngine/debug/math/tkVectorRenderInline.h"

@@ -46,6 +46,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	//エンジンを初期化。
 	if (Engine().Init(initParam) == true) {
+		//ベクトルのデバッグ描画機能を有効にする。
+		SetOutputDebugVectorEnable(true);
+		//SetOutputDebugVectorNameList({ "playerMoveSpeed" });
 		SoundEngine().GetMasteringVoice()->SetVolume(0.1f);
 		//NewGO<Game>(0, "Game");
 		NewGO<Fade>(1, "Fade");

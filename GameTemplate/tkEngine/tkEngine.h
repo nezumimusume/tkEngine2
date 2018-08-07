@@ -11,6 +11,7 @@
 #include "tkEngine/physics/tkPhysics.h"
 #include "tkEngine/random/tkRandom.h"
 #include "tkEngine/graphics/font/tkFont.h"
+#include "tkEngine/debug/math/tkVectorRender.h"
 
 namespace tkEngine{
 	/*!
@@ -31,7 +32,7 @@ namespace tkEngine{
 		 *@brief	初期化。
 		 *@param[in]	initParam		初期化パラメータ。
 		 */
-		bool Init( const SInitParam& initParam );
+		bool Init(const SInitParam& initParam);
 		/*!
 		 *@brief	終了処理。
 		 */
@@ -46,12 +47,12 @@ namespace tkEngine{
 		static CEngine& GetInstance()
 		{
 			static CEngine* instance = nullptr;
-			if(instance == nullptr){
+			if (instance == nullptr) {
 				instance = new CEngine;
 			}
 			return *instance;
 		}
-		
+
 		/*!
 		* @brief	ゲームパッドの取得。
 		*@param[in]	padNo	パッド番号
@@ -110,6 +111,12 @@ namespace tkEngine{
 		* シーンの切り替えなどで、リソースのアンロードが必要な場合に使用してください。
 		*/
 		void ResourceUnload();
+#if BUILD_LEVEL != BUILD_LEVEL_MASTER
+		prefab::CVectorRender* GetVectorRender()
+		{
+			return m_vectorRender;
+		}
+#endif
 	private:
 		/*!
 		 *@brief	ウィンドウ初期化。
@@ -138,6 +145,7 @@ namespace tkEngine{
 		std::unique_ptr<CFont>	m_font;
 		float					m_fps = 30.0f;
 		float					m_timeTotal = 0.0f;
+		prefab::CVectorRender*  m_vectorRender = nullptr;					//!<ベクトルレンダラー。
 #endif
 	public:
 		CStopwatch				m_sw;
@@ -228,3 +236,5 @@ namespace tkEngine{
 		return Engine().GetGraphicsEngine().GetGBufferRender().GetRenderTarget(gBuffer).GetRenderTargetSRV();
 	}
 }
+
+

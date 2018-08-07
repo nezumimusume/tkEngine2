@@ -753,6 +753,8 @@
     <ClInclude Include="character\tkCharacterController.h" />
     <ClInclude Include="culling\tkObjectCulling.h" />
     <ClInclude Include="culling\tkObjectFrustumCulling.h" />
+    <ClInclude Include="debug\math\tkVectorRender.h" />
+    <ClInclude Include="debug\math\tkVectorRenderInline.h" />
     <ClInclude Include="debug\tkAssert.h" />
     <ClInclude Include="debug\tkLog.h" />
     <ClInclude Include="gameObject\tkgameobject.h" />
@@ -856,6 +858,7 @@
     <ClCompile Include="camera\tkSpringCamera.cpp" />
     <ClCompile Include="character\tkCharacterController.cpp" />
     <ClCompile Include="culling\tkObjectFrustumCulling.cpp" />
+    <ClCompile Include="debug\math\tkVectorRender.cpp" />
     <ClCompile Include="gameObject\tkGameObject.cpp" />
     <ClCompile Include="gameObject\tkgameobjectmanager.cpp" />
     <ClCompile Include="gameObject\tkTransform.cpp" />

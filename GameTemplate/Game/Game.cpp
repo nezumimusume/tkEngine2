@@ -22,10 +22,14 @@ bool Game::Start()
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
-	
+
 	return true;
 }
 
 void Game::Update()
 {
+	if (Pad(0).IsPress(enButtonA) ){
+		pos.z += 10.0f;
+	}
+	m_skinModelRender->SetPosition(pos);
 }

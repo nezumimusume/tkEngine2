@@ -33,5 +33,21 @@ namespace tkEngine{
 	{
 		DirectX::XMStoreFloat4(&vec, DirectX::XMQuaternionRotationMatrix(m));
 	}
-
+	/*!
+	*@brief	fromベクトルからtoベクトルに回転させるクォータニオンを作成。
+	*/
+	void CQuaternion::SetRotation(CVector3 from, CVector3 to)
+	{
+		from.Normalize();
+		to.Normalize();
+		auto t = tkEngine::Dot(from, to);
+		if (t > 0.998f) {
+			//ほぼ同じ向きなので単位クォータニオンにする。
+			*this = CQuaternion::Identity;
+		}
+		auto rotAxis = Cross(from, to);
+		rotAxis.Normalize();
+		SetRotation(rotAxis, acos( t ));
+		
+	}
 }

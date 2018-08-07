@@ -207,6 +207,14 @@ void Player::Move()
 			m_moveSpeed.z = moveSpeedXZ.z;
 		}
 	}
+	//キャラの移動速度を可視化してみる。
+	auto pos = m_position;
+	pos.y += 50.0f;
+	OutputDebugVector(
+		m_moveSpeed,	//第一引数は表示したいベクトル。
+		pos				//第二引数はベクトルの基点。
+	);
+	
 }
 void Player::AnimationController()
 {
