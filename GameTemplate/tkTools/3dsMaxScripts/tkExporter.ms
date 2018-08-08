@@ -427,15 +427,37 @@ rollout tkExporter "tkExporter" width:194 height:248
 		FBXExporterSetParam "Triangulate" true
 		FBXExporterSetParam "ASCII" true
 	)
+	fn CheckMaterial nodes =
+	(
+		for p in nodes do
+		(
+			meshCount = GetTriMeshFaceCount(p)
+			if meshCount[1] > 0 do
+			(
+				--メッシュがある。
+				if p.material == undefined do
+				(
+					--マテリアルが張られていない。
+					errorMessage = "エラー\n " + p.name + "にマテリアルが割り当てられていないため出力できません。\n"+ "マテリアルを割り当ててください。\n"
+					messagebox errorMessage
+					return false				
+				)
+			)
+		)
+		return true
+	)
 	/*!
 	 * @brief	FBXのSaveのボタンが押されたときの処理。
 	 */
 	on btn_save_fbx pressed do
 	(
-		SetupFbxExportSettings()
-		filepath = getSaveFileName caption:"" types: " (*.fbx)|*.fbx|All Files (*.*)|*.*|"
-		if filepath != undefined then(
-			exportFile(filepath) #noPrompt
+		if CheckMaterial(objects) then (
+			SetupFbxExportSettings()
+			
+			filepath = getSaveFileName caption:"" types: " (*.fbx)|*.fbx|All Files (*.*)|*.*|"
+			if filepath != undefined then(
+				exportFile(filepath) #noPrompt
+			)
 		)
 	)
 	/*!
@@ -443,10 +465,13 @@ rollout tkExporter "tkExporter" width:194 height:248
 	 */
 	on btn_save_selected_fbx pressed do
 	(
-		SetupFbxExportSettings()
-		filepath = getSaveFileName caption:"" types: " (*.fbx)|*.fbx|All Files (*.*)|*.*|"
-		if filepath != undefined then(
-			exportFile(filepath) #noPrompt selectedOnly:true
+		
+		if CheckMaterial(selection) then (
+			SetupFbxExportSettings()
+			filepath = getSaveFileName caption:"" types: " (*.fbx)|*.fbx|All Files (*.*)|*.*|"
+			if filepath != undefined then(
+				exportFile(filepath) #noPrompt selectedOnly:true
+			)
 		)
 	)
 )
