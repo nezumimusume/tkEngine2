@@ -41,11 +41,10 @@ void Enemy::SearchPlayer()
 {
 	//敵からプレイヤーに向かうベクトルを計算。
 	CVector3 toPlayer = m_player->GetPosition() - m_position;
-	//続いてtoPlayerを可視化してみる。
+	//続いて、toPlayerを可視化してみる。
 	OutputDebugVector(
 		toPlayer,
-		m_position
-	);
+		m_position);
 	if (toPlayer.Length() < 400.0f) {
 		//視野角を判定。
 		toPlayer.Normalize();

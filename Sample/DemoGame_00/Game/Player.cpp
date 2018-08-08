@@ -211,10 +211,9 @@ void Player::Move()
 	auto pos = m_position;
 	pos.y += 50.0f;
 	OutputDebugVector(
-		m_moveSpeed,	//第一引数は表示したいベクトル。
+		m_moveSpeed,	//第一引数は可視化したいベクトル。
 		pos				//第二引数はベクトルの基点。
 	);
-	
 }
 void Player::AnimationController()
 {
