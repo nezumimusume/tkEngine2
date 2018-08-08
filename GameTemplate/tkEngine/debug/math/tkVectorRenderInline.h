@@ -13,7 +13,7 @@ namespace tkEngine {
 	static inline void OutputDebugVector(CVector3 vector, CVector3 origin, const char* name = "no name")
 	{
 		prefab::CVectorRender::SRenderData renderData = { name, vector, origin  };
-		Engine().GetVectorRender()->AddVector(std::move(renderData));
+		Engine().GetVectorRender()->AddVector(renderData);
 	}
 	/*!
 	* @brief	ベクトルのデバッグ出力の有効フラグを設定する。

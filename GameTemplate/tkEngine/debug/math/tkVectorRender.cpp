@@ -70,7 +70,7 @@ namespace tkEngine{
 					pos.x /= pos.w;
 					pos.y /= pos.w;
 					pos.z /= pos.w;
-
+					
 					//スクリーン空間に変換する。
 					float half_w = GraphicsEngine().Get2DSpaceScreenWidth() * 0.5f;
 					float half_h = GraphicsEngine().Get2DSpaceScreenHeight() * 0.5f;

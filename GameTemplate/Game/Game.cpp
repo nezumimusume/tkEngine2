@@ -23,6 +23,7 @@ bool Game::Start()
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 
+	SetOutputDebugVectorEnable(true);
 	return true;
 }
 
@@ -32,4 +33,5 @@ void Game::Update()
 		pos.z += 10.0f;
 	}
 	m_skinModelRender->SetPosition(pos);
+	OutputDebugVector({ 100.0f, 0.0f, 0.0f }, CVector3::Zero);
 }

@@ -99,6 +99,15 @@
     <Filter Include="Source Files\debug\math">
       <UniqueIdentifier>{07245e2c-488d-43f9-ab7c-850e4967867e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{0cc819b7-fe0a-4497-8ee3-4611416999c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData">
+      <UniqueIdentifier>{d966a1f0-cf34-4330-9f20-9d3339610be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\preset">
+      <UniqueIdentifier>{0f454397-ac31-43de-b306-2a569946b724}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject\tkGameObjectManager.h">
@@ -661,5 +670,10 @@
     <ClCompile Include="debug\math\tkVectorRender.cpp">
       <Filter>Source Files\debug\math</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="..\Game\Assets\modelData\preset\vector.FBX">
+      <Filter>Assets\modelData\preset</Filter>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

@@ -203,6 +203,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\MeshContentTask.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -360,6 +361,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;%(AdditionalDependencies);Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Middle|Win32'">
     <ClCompile>
@@ -379,6 +383,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;%(AdditionalDependencies);Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|Win32'">
     <ClCompile>
@@ -398,6 +405,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;%(AdditionalDependencies);Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -415,6 +425,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Middle|x64'">
     <ClCompile>
@@ -432,6 +445,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">
     <ClCompile>
@@ -449,6 +465,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -475,6 +494,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Middle|Win32'">
     <ClCompile>
@@ -501,6 +523,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|Win32'">
     <ClCompile>
@@ -527,6 +552,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">
     <ClCompile>
@@ -551,6 +579,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Middle|Win32'">
     <ClCompile>
@@ -575,6 +606,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|Win32'">
     <ClCompile>
@@ -599,6 +633,9 @@
     <Lib>
       <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -624,6 +661,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Middle|x64'">
     <ClCompile>
@@ -649,6 +689,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">
     <ClCompile>
@@ -674,6 +717,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">
     <ClCompile>
@@ -698,6 +744,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Middle|x64'">
     <ClCompile>
@@ -722,6 +771,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">
     <ClCompile>
@@ -746,6 +798,9 @@
     <Lib>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Lib>
+    <MeshContentTask>
+      <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
+    </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="camera\tkCameraCollisionSolver.h" />
@@ -956,7 +1011,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="..\Game\Assets\modelData\preset\vector.FBX" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\MeshContentTask.targets" />
   </ImportGroup>
 </Project>

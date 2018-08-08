@@ -792,7 +792,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">false</ExcludedFromBuild>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\vector.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\utc_nomal.tga">

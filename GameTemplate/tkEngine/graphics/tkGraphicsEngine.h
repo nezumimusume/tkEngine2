@@ -294,8 +294,8 @@ namespace tkEngine{
 		CShaderResources		m_shaderResources;							//!<シェーダーリソース。
 		std::unique_ptr<DirectX::SpriteBatch>	m_spriteBatch;				//!<スプライトバッチ。
 		std::unique_ptr<DirectX::SpriteFont>	m_spriteFont;				//!<スプライトフォント。
-		int						m_2dSpaceScreenWidth = 1280;				//!<2D空間のスクリーンの幅。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
-		int						m_2dSpaceScreenHeight = 720;				//!<2D空間のスクリーンの高さ。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
+		const int				m_2dSpaceScreenWidth = 1280;				//!<2D空間のスクリーンの幅。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
+		const int				m_2dSpaceScreenHeight = 720;				//!<2D空間のスクリーンの高さ。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 		CDirectXModelResource	m_directXModelResource;						//!<DirectXモデルリソースの管理者。
 		CConstantBuffer			m_cbDefferd;								//!<ディファードシェーディング用の定数バッファ。
 		CShader					m_vsDefferd;								//!<ディファードシェーディング用の頂点シェーダー。
