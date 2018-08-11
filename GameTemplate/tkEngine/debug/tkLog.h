@@ -27,7 +27,7 @@ namespace tkEngine{
 	static inline void Warning(const char* format, ...)
 	{
 		static char newFormat[1024 * 10];
-		strcpy(newFormat, "TK_WARNING : ");
+		strcpy_s(newFormat, "TK_WARNING : ");
 		strcat_s(newFormat, format);		
 
 		static char log[1024 * 10];
@@ -69,7 +69,7 @@ namespace tkEngine{
 		va_list va;
 		va_start(va, format);
 		vswprintf_s(log, format, va);
-		wcscat(log, fileLineInfo);
+		wcscat_s(log, fileLineInfo);
 		OutputDebugStringW(log);
 		OutputDebugStringW(L"\n");
 		va_end(va);

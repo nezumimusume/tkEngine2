@@ -15,8 +15,6 @@ namespace {
 		initParam.screenHeight = 720;
 		initParam.frameBufferWidth = 640;
 		initParam.frameBufferHeight = 360;
-		initParam.screenWidth2D = 1920;
-		initParam.screenHeight2D = 1080;
 		//âeÇÃê›íËÅB
 		initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 		initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 512;
@@ -48,8 +46,7 @@ namespace {
 		initParam.screenHeight = 720;
 		initParam.frameBufferWidth = 1280;
 		initParam.frameBufferHeight = 720;
-		initParam.screenWidth2D = 1920;
-		initParam.screenHeight2D = 1080;
+		
 		//âeÇÃê›íËÅB
 		initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 		initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 1024;
@@ -81,8 +78,6 @@ namespace {
 		initParam.screenHeight = 1080;
 		initParam.frameBufferWidth = 1920;
 		initParam.frameBufferHeight = 1080;
-		initParam.screenWidth2D = 1920;
-		initParam.screenHeight2D = 1080;
 		//âeÇÃê›íËÅB
 		initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 		initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;

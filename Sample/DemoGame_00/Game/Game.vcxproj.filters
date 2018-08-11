@@ -75,9 +75,6 @@
     <MeshContentTask Include="Assets\modelData\star.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\vector.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\shadowBlur.fx" />

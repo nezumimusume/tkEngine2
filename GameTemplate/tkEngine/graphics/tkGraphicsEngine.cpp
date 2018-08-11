@@ -80,8 +80,7 @@ namespace tkEngine{
 
 		m_frameBufferWidth = initParam.frameBufferWidth;
 		m_frameBufferHeight = initParam.frameBufferHeight;
-		m_2dSpaceScreenWidth = initParam.screenWidth2D;
-		m_2dSpaceScreenHeight = initParam.screenHeight2D;
+		
 		//スワップチェインを作成。
 		DXGI_SWAP_CHAIN_DESC sd;
 		ZeroMemory(&sd, sizeof(sd));
