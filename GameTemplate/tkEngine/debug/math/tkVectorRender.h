@@ -25,7 +25,7 @@ namespace tkEngine{
 			*/
 			void AddVector(SRenderData& renderData)
 			{
-				m_renderData.push_back(renderData);
+				m_renderData.push_back(std::move(renderData));
 			}
 			/*!
 			* @brief	•`‰æƒtƒ‰ƒO‚ğİ’èB

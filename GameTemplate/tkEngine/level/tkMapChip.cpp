@@ -12,7 +12,6 @@ namespace tkEngine{
 		wcstombs(objName, objData.name, 256);
 		//レンダラーを作成。
 		m_modelRender = NewGO<prefab::CSkinModelRender>(0, objName);
-
 		//ファイルパスを作成。
 		wchar_t filePath[256];
 		swprintf_s(filePath, L"modelData/%s.cmo", objData.name);

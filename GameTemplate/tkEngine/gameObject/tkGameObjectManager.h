@@ -1,5 +1,5 @@
-/*!
- *@brief	CGameObject‚Ìƒ}ƒl[ƒWƒƒ[B
+ï»¿/*!
+ *@brief	CGameObjectã®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã€‚
  */
 
 #ifndef _CGAMEOBJECTMANAGER_H_
@@ -13,7 +13,7 @@ namespace tkEngine{
 	struct SRenderContextMap;
 	class CPreRender;
 	/*!
-	 *@brief	CGameObject‚Ìƒ}ƒl[ƒWƒƒ
+	 *@brief	CGameObjectã®ãƒãƒãƒ¼ã‚¸ãƒ£
 	 */
 	class CGameObjectManager : Noncopyable{
 	private:
@@ -25,11 +25,11 @@ namespace tkEngine{
 		{
 		}
 		/*!
-		*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì–¼‘OƒL[‚ğì¬B
+		*@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã‚­ãƒ¼ã‚’ä½œæˆã€‚
 		*/
 		static unsigned int MakeGameObjectNameKey(const char* objectName)
 		{
-			static const unsigned int defaultNameKey = CUtil::MakeHash("Undefined");	//–¼‘OƒL[B
+			static const unsigned int defaultNameKey = CUtil::MakeHash("Undefined");	//åå‰ã‚­ãƒ¼ã€‚
 			unsigned int hash;
 			if (objectName == nullptr) {
 				hash = defaultNameKey;
@@ -41,7 +41,7 @@ namespace tkEngine{
 		}
 	public:
 		/*!
-		 *@brief	ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾B
+		 *@brief	ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—ã€‚
 		 */
 		static CGameObjectManager& Instance()
 		{
@@ -49,19 +49,19 @@ namespace tkEngine{
 			return instance;
 		}
 		/*!
-		*@brief	ÀsB
+		*@brief	å®Ÿè¡Œã€‚
 		*/
 		void Execute();
 		/*!
-		 *@brief	‰Šú‰»B
-		 *@param[in]	gameObjectPrioMax	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì—Dæ“x‚ÌÅ‘å’lB(255‚Ü‚Å)
+		 *@brief	åˆæœŸåŒ–ã€‚
+		 *@param[in]	gameObjectPrioMax	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å„ªå…ˆåº¦ã®æœ€å¤§å€¤ã€‚(255ã¾ã§)
 		 */
 		void Init( int gameObjectPrioMax );
 		/*!
-		*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì’Ç‰ÁB
-		*@param[in]	prio			Às—Dæ‡ˆÊB
-		*@param[in] go				ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
-		*@param[in] objectName		ƒIƒuƒWƒFƒNƒg–¼
+		*@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¿½åŠ ã€‚
+		*@param[in]	prio			å®Ÿè¡Œå„ªå…ˆé †ä½ã€‚
+		*@param[in] go				ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		*@param[in] objectName		ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
 		*/
 		void AddGameObject(GameObjectPrio prio, IGameObject* go, const char* objectName = nullptr)
 		{
@@ -75,27 +75,26 @@ namespace tkEngine{
 				go->m_isStart = false;
 				go->m_nameKey = hash;
 				if (go->m_isDead) {
-					//€–Sƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚éB
-					//íœƒŠƒXƒg‚É“ü‚Á‚Ä‚¢‚½‚ç‚»‚±‚©‚çœ‹‚·‚éB
+					//æ­»äº¡ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ã€‚
+					//å‰Šé™¤ãƒªã‚¹ãƒˆã«å…¥ã£ã¦ã„ãŸã‚‰ãã“ã‹ã‚‰é™¤å»ã™ã‚‹ã€‚
 					go->m_isDead = false;
 				}
 				
 			}
 		}
 		/*!
-		 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ìnew
+		 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®new
 		 *@details
-		 * ‚±‚ÌŠÖ”‚ğg—p‚µ‚Änew‚µ‚½ƒIƒuƒWƒFƒNƒg‚Í•K‚¸DeleteGameObject‚ğÀs‚·‚é‚±‚Æ‚Ådelete‚³‚ê‚Ü‚·B
-		 *@param[in]	prio		Às—Dæ‡ˆÊB
-		 *@param[in]	objectName	ƒIƒuƒWƒFƒNƒg–¼B
-		 *@param[in]	ctorArgs	ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚É“n‚·‰Â•Ï’·ˆø”B
+		 * ã“ã®é–¢æ•°ã‚’ä½¿ç”¨ã—ã¦newã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯å¿…ãšDeleteGameObjectã‚’å®Ÿè¡Œã™ã‚‹ã“ã¨ã§deleteã•ã‚Œã¾ã™ã€‚
+		 *@param[in]	prio		å®Ÿè¡Œå„ªå…ˆé †ä½ã€‚
+		 *@param[in]	objectName	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã€‚
 		 */
 		template<class T, class... TArgs>
-		T* NewGameObject(GameObjectPrio prio, const char* objectName, TArgs... ctorArgs)
+		T* NewGameObject(GameObjectPrio prio, const char* objectName)
 		{
 			(void*)objectName;
-			TK_ASSERT( prio <= m_gameObjectPriorityMax, "ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì—Dæ“x‚ÌÅ‘å”‚ª‘å‚«‚·‚¬‚Ü‚·B");
-			T* newObject = new T(ctorArgs...);
+			TK_ASSERT( prio <= m_gameObjectPriorityMax, "ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å„ªå…ˆåº¦ã®æœ€å¤§æ•°ãŒå¤§ãã™ãã¾ã™ã€‚");
+			T* newObject = new T();
 			newObject->Awake();
 			newObject->SetMarkNewFromGameObjectManager();
 			m_gameObjectListArray.at(prio).push_back(newObject);
@@ -106,7 +105,7 @@ namespace tkEngine{
 			return newObject;
 		}
 		/*!
-		 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌíœB
+		 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‰Šé™¤ã€‚
 		 */
 		void DeleteGameObject( IGameObject* gameObject )
 		{
@@ -123,10 +122,10 @@ namespace tkEngine{
 			}
 		}
 		/*!
-		*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌŒŸõB
+		*@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¤œç´¢ã€‚
 		*@details
-		* d‚¢‚æI
-		*@param[in]	objectName		ƒIƒuƒWƒFƒNƒg–¼B
+		* é‡ã„ã‚ˆï¼
+		*@param[in]	objectName		ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã€‚
 		*/
 		template<class T>
 		T* FindGameObject(const char* objectName)
@@ -135,13 +134,13 @@ namespace tkEngine{
 			for (auto goList : m_gameObjectListArray) {
 				for (auto go : goList) {
 					if (go->m_nameKey == nameKey) {
-						//Œ©‚Â‚¯‚½B
+						//è¦‹ã¤ã‘ãŸã€‚
 						T* p = dynamic_cast<T*>(go);
 						if (p == nullptr) {
-							//Œ^•ÏŠ·‚É¸”sB
+							//å‹å¤‰æ›ã«å¤±æ•—ã€‚
 							
 							TK_WARNING_MESSAGE_BOX(
-								"FingGameObject F Œ^•ÏŠ·‚É¸”s‚µ‚Ü‚µ‚½Bƒeƒ“ƒvƒŒ[ƒgˆø”‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢BtypeName = %s, objectName = %s", 
+								"FingGameObject ï¼š å‹å¤‰æ›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚typeName = %s, objectName = %s", 
 								typeid(T).name(),
 								objectName
 							);
@@ -150,7 +149,7 @@ namespace tkEngine{
 					}
 				}
 			}
-			//Œ©‚Â‚©‚ç‚È‚©‚Á‚½B
+			//è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã€‚
 			return nullptr;
 		}
 		template<class T>
@@ -160,10 +159,10 @@ namespace tkEngine{
 			for (auto goList : m_gameObjectListArray) {
 				for (auto go : goList) {
 					if (go->m_nameKey == nameKey) {
-						//Œ©‚Â‚¯‚½B
+						//è¦‹ã¤ã‘ãŸã€‚
 						T* p = dynamic_cast<T*>(go);
 						if (func(p) == false) {
-							//ƒNƒGƒŠ’†’fB
+							//ã‚¯ã‚¨ãƒªä¸­æ–­ã€‚
 							return;
 						}
 					}
@@ -171,7 +170,7 @@ namespace tkEngine{
 			}
 		}
 		/*!
-		*@brief	w’è‚µ‚½ƒ^ƒO‚Ì‚¢‚¸‚ê‚©‚ª‚ªŠÜ‚Ü‚ê‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ğŒŸõ‚µ‚ÄAŒ©‚Â‚©‚Á‚½ê‡w’è‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·B
+		*@brief	æŒ‡å®šã—ãŸã‚¿ã‚°ã®ã„ãšã‚Œã‹ãŒãŒå«ã¾ã‚Œã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¤œç´¢ã—ã¦ã€è¦‹ã¤ã‹ã£ãŸå ´åˆæŒ‡å®šã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚
 		*/
 		
 		void FindGameObjectsWithTag(unsigned int tags, std::function<void(IGameObject* go)>func)
@@ -188,11 +187,11 @@ namespace tkEngine{
 		}
 	private:
 		/*!
-		 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ìíœ‚ğÀsB
+		 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‰Šé™¤ã‚’å®Ÿè¡Œã€‚
 		 */
 		void ExecuteDeleteGameObjects();
 		/*!
-		*@brief	ƒV[ƒ“ƒOƒ‰ƒt‚ÌXVB
+		*@brief	ã‚·ãƒ¼ãƒ³ã‚°ãƒ©ãƒ•ã®æ›´æ–°ã€‚
 		*/
 		void UpdateSceneGraph();
 
@@ -205,14 +204,14 @@ namespace tkEngine{
 		void ForwardRender(CRenderContext& rc);
 		void PostRender(CRenderContext& rc);
 	private:
-		CTransform m_transform;												//!<TransformB
+		CTransform m_transform;												//!<Transformã€‚
 		typedef std::list<IGameObject*>	GameObjectList;
-		std::vector<GameObjectList>	m_gameObjectListArray;					//!<ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì—Dæ“x•t‚«ƒŠƒXƒgB
-		std::vector<GameObjectList>	m_deleteObjectArray[2];					//!<íœ‚·‚éƒIƒuƒWƒFƒNƒg‚ÌƒŠƒXƒgBíœˆ—‚ğs‚Á‚Ä‚¢‚éÅ’†‚ÉDeleteGameObject‚ªŒÄ‚Î‚ê‚é‰Â”\«‚ª‚‚¢‚Ì‚ÅAƒ_ƒuƒ‹ƒoƒbƒtƒ@‰»B
-		std::list<CTransform*>		m_childrenOfRootTransformList;			//!<ƒ‹[ƒg‚Ìq‹Ÿ‚ÌTransform‚ÌƒŠƒXƒgB
-		GameObjectPrio				m_gameObjectPriorityMax;				//!<ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì—Dæ“x‚ÌÅ‘å”B
-		int m_currentDeleteObjectBufferNo = 0;								//!<Œ»İ‚ÌíœƒIƒuƒWƒFƒNƒg‚Ìƒoƒbƒtƒ@”Ô†B
-		static const unsigned char 			GAME_OBJECT_PRIO_MAX = 255;		//!<ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì—Dæ“x‚ÌÅ‘å’lB
+		std::vector<GameObjectList>	m_gameObjectListArray;					//!<ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å„ªå…ˆåº¦ä»˜ããƒªã‚¹ãƒˆã€‚
+		std::vector<GameObjectList>	m_deleteObjectArray[2];					//!<å‰Šé™¤ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒªã‚¹ãƒˆã€‚å‰Šé™¤å‡¦ç†ã‚’è¡Œã£ã¦ã„ã‚‹æœ€ä¸­ã«DeleteGameObjectãŒå‘¼ã°ã‚Œã‚‹å¯èƒ½æ€§ãŒé«˜ã„ã®ã§ã€ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡åŒ–ã€‚
+		std::list<CTransform*>		m_childrenOfRootTransformList;			//!<ãƒ«ãƒ¼ãƒˆã®å­ä¾›ã®Transformã®ãƒªã‚¹ãƒˆã€‚
+		GameObjectPrio				m_gameObjectPriorityMax;				//!<ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å„ªå…ˆåº¦ã®æœ€å¤§æ•°ã€‚
+		int m_currentDeleteObjectBufferNo = 0;								//!<ç¾åœ¨ã®å‰Šé™¤ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒãƒƒãƒ•ã‚¡ç•ªå·ã€‚
+		static const unsigned char 			GAME_OBJECT_PRIO_MAX = 255;		//!<ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å„ªå…ˆåº¦ã®æœ€å¤§å€¤ã€‚
 	};
 
 	static inline CGameObjectManager& GameObjectManager()
@@ -220,58 +219,54 @@ namespace tkEngine{
 		return CGameObjectManager::Instance();
 	}
 	/*!
-	 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg¶¬‚Ìƒwƒ‹ƒp[ŠÖ”B
-	 *@param[in]	priority	ƒvƒ‰ƒCƒIƒŠƒeƒBB
-	 *@param[in]	objectName	ƒIƒuƒWƒFƒNƒg–¼B(NULL‚Ìw’è‰Âj
-	 *@param[in]	ctorArgs	ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚É“n‚·‰Â•Ï’·ˆø”B
+	 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã®ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°ã€‚
+	 *@param[in]	priority	ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã€‚
+	 *@param[in]	objectName	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã€‚(NULLã®æŒ‡å®šå¯ï¼‰
+	 *@details
+	 ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼
+	 ï¼±
+	 ï¼±
+	 ï¼±ã€€ã€€ã€€  ã€ï¼‘ã€‘ public IGameObjectã‚’å¿˜ã‚Œã¦ãªã„ï¼Ÿ
+	 ï¼±ã€€ã€€ã€€  ã€ï¼’ã€‘ #includeã—ã¦ã‚‹ï¼Ÿ
+     ï¼±
+	 ï¼±
+	 ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼ã€€ã‚ˆãã‚ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼
 	 */
-	template<class T, class... TArgs>
-	static inline T* NewGO( int priority, const char* objectName, TArgs... ctorArgs)
-	{
-		return GameObjectManager().NewGameObject<T>( (GameObjectPrio)priority, objectName, ctorArgs...);
-	}
-	/*!
-	*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg¶¬‚Ìƒwƒ‹ƒp[ŠÖ”B
-	*@details
-	* íœŒó•âB
-	*@param[in]	priority	ƒvƒ‰ƒCƒIƒŠƒeƒBB
-	*@param[in]	objectName	ƒIƒuƒWƒFƒNƒg–¼B(NULL‚Ìw’è‰Âj
-	*@param[in]	ctorArgs	ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚É“n‚·‰Â•Ï’·ˆø”B
-	*/
 	template<class T>
-	static inline T* NewGO(int priority)
+	static inline T* NewGO( int priority, const char* objectName = nullptr, typename T::IGameObjectIsBase* = nullptr)
 	{
-		return GameObjectManager().NewGameObject<T>((GameObjectPrio)priority, nullptr);
+		return GameObjectManager().NewGameObject<T>( (GameObjectPrio)priority, objectName);
 	}
+	
 	/*!
-	 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒgíœ‚Ìƒwƒ‹ƒp[ŠÖ”B
-	 * NewGO‚ğg—p‚µ‚Äì¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚Í•K‚¸DeleteGO‚ğÀs‚·‚é‚æ‚¤‚ÉB
-	 *@param[in]	go		íœ‚·‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒgB
+	 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‰Šé™¤ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°ã€‚
+	 * NewGOã‚’ä½¿ç”¨ã—ã¦ä½œæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯å¿…ãšDeleteGOã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ã€‚
+	 *@param[in]	go		å‰Šé™¤ã™ã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
 	 */
 	static inline void DeleteGO(IGameObject* go)
 	{
 		GameObjectManager().DeleteGameObject(go);
 	}
 	/*!
-	 *@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì’Ç‰Á‚Ìƒwƒ‹ƒp[ŠÖ”B
-	 *@param[in]	go			’Ç‰Á‚·‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒgB
-	 *@param[in]	priority	ƒvƒ‰ƒCƒIƒŠƒeƒBB
-	 *@param[in]	objectName	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì–¼‘OB
+	 *@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¿½åŠ ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°ã€‚
+	 *@param[in]	go			è¿½åŠ ã™ã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
+	 *@param[in]	priority	ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã€‚
+	 *@param[in]	objectName	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã€‚
 	 */
 	static inline void AddGO(int priority, IGameObject* go, const char* objectName = nullptr)
 	{
 		GameObjectManager().AddGameObject(static_cast<GameObjectPrio>(priority), go, objectName);
 	}
 	/*!
-	*@brief	w’è‚µ‚½ƒ^ƒO‚Ì‚¢‚¸‚ê‚©‚ª‚ªŠÜ‚Ü‚ê‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ğŒŸõ‚µ‚ÄAŒ©‚Â‚©‚Á‚½ê‡w’è‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·B
+	*@brief	æŒ‡å®šã—ãŸã‚¿ã‚°ã®ã„ãšã‚Œã‹ãŒãŒå«ã¾ã‚Œã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¤œç´¢ã—ã¦ã€è¦‹ã¤ã‹ã£ãŸå ´åˆæŒ‡å®šã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™ã€‚
 	*/
 	static inline 	void FindGameObjectsWithTag(unsigned int tags, std::function<void(IGameObject* go)>func)
 	{
 		GameObjectManager().FindGameObjectsWithTag(tags, func);
 	}
 	/*!
-	*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌŒŸõ‚Ìƒwƒ‹ƒp[ŠÖ”B
-	*@param[in]	objectName	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì–¼‘OB
+	*@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¤œç´¢ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°ã€‚
+	*@param[in]	objectName	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã€‚
 	*/
 	template<class T>
 	static inline T* FindGO(const char* objectName)
@@ -279,11 +274,11 @@ namespace tkEngine{
 		return GameObjectManager().FindGameObject<T>(objectName);
 	}
 	/*!
-	*@brief	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÌŒŸõ‚Ìƒwƒ‹ƒp[ŠÖ”B
+	*@brief	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¤œç´¢ã®ãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°ã€‚
 	*@details
-	* “¯–¼‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚É‘S‚Ä‚É‘Î‚µ‚ÄAƒNƒGƒŠ‚ğs‚¢‚½‚¢ê‡‚Ég—p‚µ‚Ä‚­‚¾‚³‚¢B
-	*@param[in]	objectName	ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ì–¼‘OB
-	*@param[in]	func		ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ªŒ©‚Â‚©‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”B
+	* åŒåã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å…¨ã¦ã«å¯¾ã—ã¦ã€ã‚¯ã‚¨ãƒªã‚’è¡Œã„ãŸã„å ´åˆã«ä½¿ç”¨ã—ã¦ãã ã•ã„ã€‚
+	*@param[in]	objectName	ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã€‚
+	*@param[in]	func		ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒè¦‹ã¤ã‹ã£ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã€‚
 	*/
 	template<class T>
 	static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> func)
