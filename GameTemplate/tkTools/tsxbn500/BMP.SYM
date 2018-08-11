@@ -1,0 +1,257 @@
+///////////////////////////////////////////////////////////////
+///////		このマクロはBMPファイル用です
+///////　原作:TSUCHY　E Mail:VYC05513@nifty.ne.jp
+///////　　　 Ver 1.01
+///////
+///////　改良:るう　E-mail:rew106@hotmail.com
+///////　　　 Ver 1.20
+///////　RLEではループ数が非常に多いのでかなり遅い
+
+#include "typedef.h"
+#maxloop -1
+
+void RLE(BYTE);
+
+const DWORD BI_RGB = 0;
+const DWORD BI_BITFIELDS = 3;
+const DWORD BI_RLE4 = 2;
+const DWORD BI_RLE8 = 1;
+
+typedef int FXPT2DOT30;
+
+struct RGBQUAD{
+	BYTE B_G_R_x[4];
+};
+
+struct RGBTRIPLE {
+	BYTE B_G_R[3];
+};
+
+struct CIEXYZ {
+	FXPT2DOT30 ciexyzX; 
+	FXPT2DOT30 ciexyzY; 
+	FXPT2DOT30 ciexyzZ; 
+};
+
+struct CIEXYZTRIPLE {
+	CIEXYZ ciexyzRed; 
+	CIEXYZ ciexyzGreen; 
+	CIEXYZ ciexyzBlue; 
+};
+
+struct BITMAPFILEHEADER {
+	WORD bfType;
+	DWORD bfSize;
+	WORD bfReserved1;
+	WORD bfReserved2;
+	DWORD bfOffBits;
+};
+
+struct BITMAPFILEHEADER2 {
+	WORD usType;
+	DWORD cbSize;
+	short xHotspot;
+	short yHotspot;
+	DWORD OffBits;
+};
+
+struct BITMAPINFOHEADER{
+	DWORD biSize;
+	int biWidth;
+	int biHeight;
+	WORD biPlanes;
+	WORD biBitCount;
+	DWORD biCompression;
+	DWORD biSizeImage;
+	int biXPelsPerMeter;
+	int biYPelsPerMeter;
+	DWORD biClrUsed;
+	DWORD biClrImportant;
+};
+
+struct BITMAPCOREHEADER {
+	DWORD cbSize;
+	WORD cbWidth;
+	WORD cbHeight;
+	WORD cbPlanes;
+	WORD cbBitCount;
+};
+
+struct BITMAPINFOHEADER2 {
+	DWORD cbFix;
+	DWORD cx;
+	DWORD cy;
+	WORD cPlanes;
+	WORD cBitCount;
+	DWORD ulCompression;
+	DWORD cbImage;
+	DWORD cxResolution;
+	DWORD cyResolution;
+	DWORD cclrUsed;
+	DWORD cclrImportant;
+	WORD usUnits;
+	WORD usReserved;
+	WORD usRecording;
+	WORD usRendering;
+	DWORD cSize1;
+	DWORD cSize2;
+	DWORD ulColorEncoding;
+	DWORD ulIdentifier;
+};
+
+struct BITMAPV4HEADER {
+	DWORD bV4Size;
+	int bV4Width;
+	int bV4Height;
+	WORD bV4Planes;
+	WORD bV4BitCount;
+	DWORD bV4V4Compression;
+	DWORD bV4SizeImage;
+	int bV4XPelsPerMeter;
+	int bV4YPelsPerMeter;
+	DWORD bV4ClrUsed;
+	DWORD bV4ClrImportant;
+	DWORD bV4RedMask;
+	DWORD bV4GreenMask;
+	DWORD bV4BlueMask;
+	DWORD bV4AlphaMask;
+	DWORD bV4CSType;
+	CIEXYZTRIPLE bV4Endpoints;
+	DWORD bV4GammaRed;
+	DWORD bV4GammaGreen;
+	DWORD bV4GammaBlue;
+};
+
+struct BITMAPV5HEADER { 
+	DWORD bV5Size; 
+	int bV5Width; 
+	int bV5Height; 
+	WORD bV5Planes; 
+	WORD bV5BitCount; 
+	DWORD bV5Compression; 
+	DWORD bV5SizeImage; 
+	int bV5XPelsPerMeter; 
+	int bV5YPelsPerMeter; 
+	DWORD bV5ClrUsed; 
+	DWORD bV5ClrImportant; 
+	DWORD bV5RedMask; 
+	DWORD bV5GreenMask; 
+	DWORD bV5BlueMask; 
+	DWORD bV5AlphaMask; 
+	DWORD bV5CSType; 
+	CIEXYZTRIPLE bV5Endpoints; 
+	DWORD bV5GammaRed; 
+	DWORD bV5GammaGreen; 
+	DWORD bV5GammaBlue; 
+	DWORD bV5Intent; 
+	DWORD bV5ProfileData; 
+	DWORD bV5ProfileSize; 
+	DWORD bV5Reserved; 
+};
+
+struct BITMAPINFO {
+	BITMAPINFOHEADER bmiHeader;
+};
+
+string s;
+DWORD size = GetDword(2);
+if (size == 14) {
+	$BITMAPFILEHEADER2 Header;
+	$BITMAPCOREHEADER Info;
+	int ColorTableSize=0;
+	switch(Info.cbBitCount)	{
+	case 1: ColorTableSize = 2; break;
+	case 4: ColorTableSize = 16; break;
+	case 8: ColorTableSize = 256; break;
+	case 16:
+	case 24:
+	case 32:
+	}
+	$RGBTRIPLE ColorTable[ColorTableSize];
+
+	int ByteWidth = ((Info.cbBitCount * Info.cbWidth + 31) / 32) * 4;
+
+	int AbsHeight = abs(Info.cbHeight);
+	for(int i = 0; i < AbsHeight; i++) {
+		s = "Line" + tostr(i);
+		$BYTE s[ByteWidth];
+	}
+
+} else {
+	$BITMAPFILEHEADER Header;
+	$BITMAPINFO Info;
+
+	int ColorTableSize = 0;
+
+	switch(Info.bmiHeader.biBitCount) {
+	case 1: ColorTableSize = 2; break;
+	case 4: ColorTableSize = 16; break;
+	case 8: ColorTableSize = 256; break;
+	case 16:
+		if(BI_BITFIELDS == Info.bmiHeader.biCompression) ColorTableSize = 3;
+		else if(BI_RGB == Info.bmiHeader.biCompression) ColorTableSize = 0;
+		break;
+	case 24: ColorTableSize = 0; break;
+	case 32:
+		if(BI_BITFIELDS == Info.bmiHeader.biCompression) ColorTableSize = 3;
+		else if(BI_RGB == Info.bmiHeader.biCompression) ColorTableSize = 0;
+		break;
+	}
+	if (0 != ColorTableSize && Info.bmiHeader.biClrUsed > 0) {
+		ColorTableSize = min(ColorTableSize, Info.bmiHeader.biClrUsed);
+	}
+
+	if (Info.bmiHeader.biBitCount > 8)	{
+		$DWORD RGBBits[ColorTableSize];
+	}
+	else	{
+		$RGBQUAD ColorTable[ColorTableSize];
+	}
+
+	switch(Info.bmiHeader.biCompression) {
+	case BI_RLE8: RLE(1); break;
+	case BI_RLE4: RLE(2); break;
+	default:
+		int ByteWidth = ((Info.bmiHeader.biBitCount * Info.bmiHeader.biWidth + 31) / 32) * 4;
+		int AbsHeight = abs(Info.bmiHeader.biHeight);
+		for (int i = 0; i < AbsHeight; i++)	{
+			s = "Line" + tostr(i);
+			$BYTE s[ByteWidth];
+		}
+	}
+}
+
+break;
+
+void RLE(BYTE e) {
+	int o, y = 0;
+	BYTE d;
+	string s;
+	while(e) {
+		if(0 == GetByte(o = GetCurrentOffset())) {
+			switch(d = GetByte(o + 1)) {
+			case 0:
+				s = "Line" + tostr(y) +".End"; y++;
+				$BYTE s[2];
+				break;
+			case 1:
+				e = 0;
+				$BYTE EOF[2];
+				break;
+			case 2:
+				s = "Line" + tostr(y) +".Delta";
+				$BYTE s[2];
+				$char x_y[2];
+				y += x_y[1];
+				break;
+			default:
+				s = "Line" + tostr(y) + ".Literal×" + tostr(d);
+				$BYTE s[2];
+				$BYTE Data[(d + (e | 1)) / 2 / e * 2];
+			}
+		} else {
+			s = "Line" + tostr(y) + ".Repeat×" + tostr(GetByte(o)) + ", Data";
+			$BYTE s[2];
+		}
+	}
+}

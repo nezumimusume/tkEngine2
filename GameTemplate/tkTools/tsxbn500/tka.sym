@@ -1,0 +1,51 @@
+/*!
+ *@brief	tkaファイルのシンボル
+ */
+
+#maxloop 100000
+#include "typedef.h"
+
+struct Vector3{
+	float m[3];
+};
+/*!
+*@brief	アニメーションクリップのヘッダー。
+*/
+struct AnimClipHeader {
+	UINT numKey;				//!<キーフレームの数。
+	UINT numAnimationEvent;	//!<アニメーションイベントの数。
+};
+/*!
+*@brief	アニメーションイベント
+*@アニメーションイベントは未対応。
+* やりたかったら自分で実装するように。
+*/
+struct AnimationEventData {
+	float invokeTime;					//!<アニメーションイベントが発生する時間(単位:秒)
+	UINT eventNameLength;		//!<イベント名の長さ。
+};
+
+/*!
+*@brief	キーフレーム。
+*/
+struct Keyframe {
+	UINT boneIndex;			//!<ボーンインデックス。
+	float time;				//!<時間。
+	Vector3 transform[4];	//!<トランスフォーム。
+};
+
+//アニメーションクリップのヘッダー。
+$AnimClipHeader animClipHeader;
+
+//アニメーションイベント。
+for(int i = 0; i < animClipHeader.numAnimationEvent; i++){
+	$AnimationEventData animEventData;
+	//イベント名を出力。
+	$BYTE eventName[animEventData.eventNameLength+1];
+}
+
+//キーフレーム。
+for( int i = 0; i < animClipHeader.numKey; i++){
+	$Keyframe keyFrame;
+}
+

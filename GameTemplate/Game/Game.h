@@ -11,6 +11,7 @@ public:
 	bool Start();
 	void Update();
 	prefab::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
+	CAnimationClip m_animClips[1];
 	CVector3 pos = CVector3::Zero;
 };
 

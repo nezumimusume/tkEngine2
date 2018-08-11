@@ -196,7 +196,25 @@ namespace prefab{
 			m_isForwardRender = flag;
 		}
 		void FindVertexPosition(std::function<void(CVector3* pos)>);
+		/*!
+		*@brief	ボーンを検索する。
+		*@param[in]	boneName	ボーンの名前。
+		*@return	見つかったボーンのアドレス。見つからなかった場合はnullptrを返します。
+		*@details
+		* この関数は検索を行うため、処理が重いです。
+		* Update関数などで毎フレーム呼び出すのではなく、
+		* 初期化関数などで、クラスのメンバ変数にキャッシュするのをオススメします。
+		*/
+		CBone* FindBone(const wchar_t* boneName) const
+		{
+			const auto& skeleton = m_skinModelData.GetSkeleton();
+			auto boneId = skeleton.FindBoneID(boneName);
+			if (boneId != -1) {
+				return skeleton.GetBone(boneId);
+			}
+			return nullptr;
 
+		}
 	private:
 		void ForwardRender(CRenderContext& rc) override final;
 		/*!

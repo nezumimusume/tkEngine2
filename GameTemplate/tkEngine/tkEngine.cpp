@@ -124,7 +124,7 @@ namespace tkEngine {
 		//物理エンジンの更新。
 		m_physicsWorld.Update();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
-		/*static int count = 0;
+		static int count = 0;
 		m_timeTotal += (float)m_sw.GetElapsed();
 		count++;
 		if (count == 30) {
@@ -150,7 +150,7 @@ namespace tkEngine {
 			1.0f,
 			{0.0f, 1.0f}
 		);
-		m_font->End(GraphicsEngine().GetRenderContext());*/
+		m_font->End(GraphicsEngine().GetRenderContext());
 #endif
 		m_graphicsEngine.EndRender();
 		

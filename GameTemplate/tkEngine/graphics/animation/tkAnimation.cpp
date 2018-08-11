@@ -64,9 +64,11 @@ namespace tkEngine{
 		int numBone = m_skeleton->GetNumBones();
 		CQuaternion* qGlobalPose = (CQuaternion*)alloca(sizeof(CQuaternion) * numBone);
 		CVector3* vGlobalPose = (CVector3*)alloca(sizeof(CVector3) * numBone);
+		CVector3* vGlobalScale = (CVector3*)alloca(sizeof(CVector3) * numBone);
 		for (int i = 0; i < numBone; i++) {
 			qGlobalPose[i] = CQuaternion::Identity;
 			vGlobalPose[i] = CVector3::Zero;
+			vGlobalScale[i] = CVector3::One;
 		}
 		//グローバルポーズを計算していく。
 		int startIndex = m_startAnimationPlayController;
@@ -76,6 +78,7 @@ namespace tkEngine{
 			const auto& localBoneMatrix = m_animationPlayController[index].GetBoneLocalMatrix();
 			for (int boneNo = 0; boneNo < numBone; boneNo++) {
 				//平行移動の補完
+
 				CMatrix m = localBoneMatrix[boneNo];
 				vGlobalPose[boneNo].Lerp(
 					intepolateRate, 
@@ -87,6 +90,30 @@ namespace tkEngine{
 				m.m[3][1] = 0.0f;
 				m.m[3][2] = 0.0f;
 				
+				//拡大成分の補間。
+				CVector3 vBoneScale;
+				vBoneScale.x = (*(CVector3*)m.m[0]).Length();
+				vBoneScale.y = (*(CVector3*)m.m[1]).Length();
+				vBoneScale.z = (*(CVector3*)m.m[2]).Length();
+
+				vGlobalScale[boneNo].Lerp(
+					intepolateRate,
+					vGlobalScale[boneNo],
+					vBoneScale
+				);
+				//拡大成分を除去。
+				m.m[0][0] /= vBoneScale.x;
+				m.m[0][1] /= vBoneScale.x;
+				m.m[0][2] /= vBoneScale.x;
+
+				m.m[1][0] /= vBoneScale.y;
+				m.m[1][1] /= vBoneScale.y;
+				m.m[1][2] /= vBoneScale.y;
+
+				m.m[2][0] /= vBoneScale.z;
+				m.m[2][1] /= vBoneScale.z;
+				m.m[2][2] /= vBoneScale.z;
+
 				//回転の補完
 				CQuaternion qBone;
 				qBone.SetRotation(m);
@@ -95,16 +122,27 @@ namespace tkEngine{
 		}
 		//グローバルポーズをスケルトンに反映させていく。
 		for (int boneNo = 0; boneNo < numBone; boneNo++) {
-			CMatrix boneMatrix;
-			boneMatrix.MakeRotationFromQuaternion(qGlobalPose[boneNo]);
+			
+			//拡大行列を作成。
+			CMatrix scaleMatrix;
+			scaleMatrix.MakeScaling(vGlobalScale[boneNo]);
+			//回転行列を作成。
+			CMatrix rotMatrix;
+			rotMatrix.MakeRotationFromQuaternion(qGlobalPose[boneNo]);
+			//平行移動行列を作成。
 			CMatrix transMat;
 			transMat.MakeTranslation(vGlobalPose[boneNo]);
-			boneMatrix.Mul(boneMatrix, transMat);
 
+			//全部を合成して、ボーン行列を作成。
+			CMatrix boneMatrix;
+			boneMatrix.Mul(scaleMatrix, rotMatrix);
+			boneMatrix.Mul(boneMatrix, transMat);
+			
 			m_skeleton->SetBoneLocalMatrix(
 				boneNo,
 				boneMatrix
-			);
+			);			
+			
 		}
 		
 		//最終アニメーション以外は補間完了していたら除去していく。

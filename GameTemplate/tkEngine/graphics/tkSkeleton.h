@@ -190,7 +190,7 @@ namespace tkEngine{
 		/*!
 		*@brief	ƒ{[ƒ“‚ğæ“¾B
 		*/
-		CBone* GetBone(int boneNo)
+		CBone* GetBone(int boneNo) const
 		{
 			return m_bones[boneNo].get();
 		}

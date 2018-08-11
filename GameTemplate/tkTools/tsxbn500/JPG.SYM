@@ -1,0 +1,755 @@
+///////////////////////////////////////////////////////////////
+///////		このマクロはJPGファイル用です
+///////　マクロ作者 TSUCHY　E Mail:VYC05513@nifty.ne.jp
+///////　Ver 1.01
+///////　
+///////　    Exif対応　Gon  E-Mail:gon@js2.so-net.ne.jp
+///////　      2005.08.09  
+///////　
+
+#include "typedef.h"			//#includeが使えます
+
+const BYTE JPEG_SOF0=0xc0;
+const BYTE JPEG_SOF1=0xc1;
+const BYTE JPEG_SOF2=0xc2;
+const BYTE JPEG_SOF3=0xc3;
+const BYTE JPEG_DHT=0xc4;
+const BYTE JPEG_SOF5=0xc5;
+const BYTE JPEG_SOF6=0xc6;
+const BYTE JPEG_SOF7=0xc7;
+const BYTE JPEG_JPG=0xc8;
+const BYTE JPEG_SOF9=0xc9;
+const BYTE JPEG_SOF10=0xca;
+const BYTE JPEG_SOF11=0xcb;
+const BYTE JPEG_DAC=0xcc;
+const BYTE JPEG_SOF13=0xcd;
+const BYTE JPEG_SOF14=0xce;
+const BYTE JPEG_SOF15=0xcf;
+const BYTE JPEG_RST0=0xd0;
+const BYTE JPEG_RST1=0xd1;
+const BYTE JPEG_RST2=0xd2;
+const BYTE JPEG_RST3=0xd3;
+const BYTE JPEG_RST4=0xd4;
+const BYTE JPEG_RST5=0xd5;
+const BYTE JPEG_RST6=0xd6;
+const BYTE JPEG_RST7=0xd7;
+const BYTE JPEG_SOI=0xd8;
+const BYTE JPEG_EOI=0xd9;
+const BYTE JPEG_SOS=0xda;
+const BYTE JPEG_DQT=0xdb;
+const BYTE JPEG_DNL=0xdc;
+const BYTE JPEG_DRI=0xdd;
+const BYTE JPEG_DHP=0xde;
+const BYTE JPEG_EXP=0xdf;
+const BYTE JPEG_APP=0xe0;
+const BYTE JPEG_APP1=0xe1;
+const BYTE JPEG_COM=0xfe;
+
+int bExit=0;
+ULONG FileSize=GetFileSize();
+string TmpStr;
+int RstCount=0;
+
+// ＊＊＊＊＊　グローバル変数 By Gon　＊＊＊＊＊
+BYTE bD0,bD1,bD2,bD3;            // バイトデータ読込バッファ
+BOOL fEndian;                    // エンディアン　Big=TRUE
+UINT iBuff,iAdr[100],iLen[100];  // ポインタ記憶配列
+UINT pAPP1 , p0IFD , p1IFD , p2IFD , pEIFD , pCIFD , pGIFD , pIMG , pTHUMB , iTHUMB ;
+string sName[100];               // ポインタ記憶配列
+p1IFD = 0;
+p2IFD = 0;
+pEIFD = 0;
+pCIFD = 0;
+pGIFD = 0;
+pIMG = 0;
+pTHUMB = 0;
+iTHUMB = 0;
+
+// ＊＊＊＊＊　プロトタイプ宣言 By Gon　＊＊＊＊＊
+// バイトバッファに４バイト読込み、ｆEndianに基づき指定バイトの値を返す
+UINT ReadData(UINT pPos,UINT iByte);
+// 引数のタグ値からタグ名を返す
+string TagName(UINT iTag);
+// 引数のタグ値からポインタ（Exifポインタ等）ならTRUEを返す
+BOOL TagType(UINT iTag);
+// 引数のフィールド値から１データのバイト数を返す
+UINT FieldLen(UINT iType);
+// 引数のフィールド値からデータの型名を返す
+string FieldName(UINT iType);
+// 引数のバイト数×個数から、４バイト以内ならTRUEを返す
+BOOL IsValue(UINT iType,UINT iCount);
+// ポインタ記録配列のアドレス昇順ソート
+void PSort(void);
+
+while (0==bExit && GetCurrentOffset()<FileSize)	{
+	if (0xff==GetCurrentByte())	{		//何らかのキーワード
+		BYTE AByte=GetByte(GetCurrentOffset()+1);	//0xFFの次の値を取得
+		if (JPEG_SOI==AByte || JPEG_EOI==AByte)	{
+			if (0xd8==AByte) $BYTE ★SOI[2];
+			else			 $BYTE ★EOI[2];
+		}
+/*
+		else if (0x00==AByte || (JPEG_RST0<=AByte && AByte<=JPEG_RST7))	{
+			if (0x00==AByte) $BYTE 圧縮データFF[2];
+			else {
+				TmpStr="RST"+tostr(RstCount);
+				$BYTE TmpStr[2];
+				RstCount++;
+				if (RstCount>=8) RstCount=0;
+			}
+		}
+*/
+// ここから
+		else if ( JPEG_RST0 <= AByte && AByte <= JPEG_RST7 )	{
+			TmpStr="RST"+tostr(RstCount);
+			$BYTE TmpStr[2];
+			RstCount++;
+			if (RstCount>=8) RstCount=0;
+		}
+// ここまで Gon 修正
+		else	{
+			WORD WOffset=GetByte(GetCurrentOffset()+2)*256+GetByte(GetCurrentOffset()+3);
+			WORD DataSize=WOffset-2;
+			WORD NextOffset=GetCurrentOffset()+WOffset+2;		//次のブロックオフセットを計算
+			switch (AByte)	{
+			case JPEG_APP:
+				$BYTE ★APP[2];				//漢字なら記号を名前に使える
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE JFIF[5];
+				$BYTE MajorRev;
+				$BYTE MinorRev;
+				$BYTE Units;
+				$BYTE XDensity[2];
+				$BYTE YDensity[2];
+				$BYTE ThumbnailWidth;
+				$BYTE ThumbnailHeight;
+				$BYTE Thumbnail[ThumbnailWidth*ThumbnailHeight*3];
+				break;
+			case JPEG_DQT:
+				$BYTE ★DQT[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				while (GetCurrentOffset()<NextOffset && 0==bExit)	{
+					BYTE PqTqData=GetCurrentByte();
+					$BYTE PqTq;
+					BYTE Pq=(PqTqData & 0xf0)>>4;			//上位４ビットが精度
+					BYTE Tq=(PqTqData & 0x0f);				//下位４ビットがテーブル番号
+					if (Pq==0 || Pq==1)	{					//精度8ビット
+						if (Tq<=3)	{
+							if (Pq==0)	{					//精度８ビット
+								$BYTE Quv[64];				///量子化テーブル	最大４まであるらしい
+							}
+							else	{						//精度１６ビット
+								$BYTE Quv[64][2];				///量子化テーブル	最大４まであるらしい
+							}
+						}
+						else	bExit=1;	//エラー
+					}
+					else	bExit=1;	//エラー
+				}
+				break;
+			case JPEG_SOF0:
+			case JPEG_SOF1:
+				$BYTE ★SOF[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE DataPrecision;
+				$BYTE PicHeight[2];
+				$BYTE PicWidth[2];
+				$BYTE Nf;				//コンポーネント数
+				if (Nf==3 || Nf==1)	{		//コンポーネントはＹ，Ｕ，Ｖの三つだけサポート またはモノクロでＹデータのみ
+					for (int i=0;i<Nf;i++)	{
+						TmpStr="Component"+tostr(i);
+						$BYTE TmpStr[3];		//コンポーネント
+					}
+				}
+				else	bExit=1;				//エラー{
+				break;
+			case JPEG_DHT:
+				$BYTE ★DHT[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				while (GetCurrentOffset()<NextOffset && 0==bExit)	{
+					$BYTE Th;				//ハフマン符号の種類
+					BYTE Size=0;			//ハフマン符号のサイズ
+					for (int i=0;i<16;i++)	{
+						Size+=GetByte(GetCurrentOffset()+i);
+					}
+					if (Th>=0 && Th<4)	$BYTE DCHaffman[16+Size];			//こっちはDCハフマン
+					else if (Th>=0x10 && Th<0x14) $BYTE ACHaffman[16+Size];	//こっちはACハフマン
+				}
+				break;
+			case JPEG_SOF2:
+				$BYTE ★SOF2[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF2Data[DataSize];
+				break;
+			case JPEG_SOF3:
+				$BYTE ★SOF3[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF3Data[DataSize];
+				break;
+			case JPEG_SOF5:
+				$BYTE ★SOF5[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF5Data[DataSize];
+				break;
+			case JPEG_SOF6:
+				$BYTE ★SOF6[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF6Data[DataSize];
+				break;
+			case JPEG_SOF7:
+				$BYTE ★SOF7[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF7Data[DataSize];
+				break;
+			case JPEG_JPG:
+				$BYTE ★JPG[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE JPGData[DataSize];
+				break;
+			case JPEG_SOF9:
+				$BYTE ★SOF9[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF9Data[DataSize];
+				break;
+			case JPEG_SOF10:
+				$BYTE ★SOF10[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF10Data[DataSize];
+				break;
+			case JPEG_SOF11:
+				$BYTE ★SOF11[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF11Data[DataSize];
+				break;
+			case JPEG_SOF13:
+				$BYTE ★SOF13[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF13Data[DataSize];
+				break;
+			case JPEG_SOF14:
+				$BYTE ★SOF14[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF14Data[DataSize];
+				break;
+			case JPEG_SOF15:
+				$BYTE ★SOF15[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE SOF15Data[DataSize];
+				break;
+			case JPEG_DAC:
+				$BYTE ★DAC[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE DACData[DataSize];
+				break;
+			case JPEG_SOS:
+				$BYTE ★SOS[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE CompCount;
+				for (BYTE i=0;i<CompCount;i++)	{
+					TmpStr="CompNumber"+tostr(i);
+					$BYTE TmpStr;
+					TmpStr="TdTa"+tostr(i);
+					$BYTE TmpStr;
+				}
+				$BYTE Maybe0x00;
+				$BYTE Maybe0x3F;
+				$BYTE Maybe0x00;
+				break;
+			case JPEG_DNL:
+				$BYTE ★DNLt[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE DNLData[DataSize];
+				break;
+			case JPEG_DRI:
+				$BYTE ★DRI[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE RestartInterval[2];
+				break;
+			case JPEG_DHP:
+				$BYTE ★DHP[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE DHPData[DataSize];
+				break;
+			case JPEG_EXP:
+				$BYTE ★EXP[2];
+				$BYTE SizeOfThis[2];			//ブロックサイズ
+				$BYTE EXPData[DataSize];
+				break;
+			case JPEG_COM:					// deBug 2005/08/17
+				$BYTE ★COMMENT[2];
+				WORD mSizeOfThis;			//ブロックサイズ
+				mSizeOfThis = GetCurrentWord();		// 漏れていました
+				WORD StringSize=((mSizeOfThis & 0xff00)>>8 | (mSizeOfThis & 0xff)<<8)-2;	//endian
+				$BYTE SizeOfThis[2];
+				$BYTE Comment[StringSize];
+				break;
+			case JPEG_APP1:  // ****************************************** ExifHeader
+				UINT iLoop , iTagNo , iTypeNo , iLenNo , iFieldNo ;
+				string sTag , sType ;
+				
+				$BYTE APP1[2];
+				$BYTE APP1_Size[2];			//ブロックサイズ
+				if( GetByte( GetCurrentOffset() ) == 'E' 
+							&& GetByte( GetCurrentOffset() + 1 ) == 'x' 
+							&& GetByte( GetCurrentOffset() + 2 ) == 'i' 
+							&& GetByte( GetCurrentOffset() + 3 ) == 'f' )
+				{
+					$BYTE ExifTag[6];
+					pAPP1 = GetCurrentOffset();
+					BYTE bEndi = GetByte(pAPP1);
+					if( bEndi == 'M' ){
+						TmpStr = "TiffHd_MM_BEndian";
+						$BYTE TmpStr[2];
+						fEndian = TRUE;
+					} else {
+						TmpStr = "TiffHd_II_LEndian";
+						$BYTE TmpStr[2];
+						fEndian = FALSE;
+					}
+					$BYTE Tiff識別コード[2];
+					p0IFD = ReadData(GetCurrentOffset(),4);
+					TmpStr = "0th IFD_Pointer_" + tohex(p0IFD + pAPP1);
+					$BYTE TmpStr[4];
+					// 0th IFD ------------------------------------------------------------------------
+					if( GetCurrentOffset() < p0IFD ){
+						$BYTE Blank[ p0IFD - GetCurrentOffset() ];
+					}
+					iBuff = 0;
+					iLoop = ReadData(GetCurrentOffset(),2);
+					TmpStr = "0th IFD Tag数_" + tostr(iLoop) ;
+					$BYTE TmpStr[2];
+					for( int i = 0 ; i < iLoop ; i++ )
+					{
+						iTagNo = ReadData(GetCurrentOffset(),2);
+						sTag = TagName(iTagNo);
+						TmpStr = "<" + sTag + ">";
+						$BYTE TmpStr[2];
+						iTypeNo = ReadData(GetCurrentOffset(),2);
+						sType = FieldName(iTypeNo);
+						TmpStr = "_" + sType + "(" + tostr(FieldLen(iTypeNo)) + "B)";
+						$BYTE TmpStr[2];
+						iLenNo = ReadData(GetCurrentOffset(),4);
+						TmpStr = "_Count(@" + tostr(iLenNo) + ")";
+						$BYTE TmpStr[4];
+						iFieldNo = ReadData(GetCurrentOffset(),4);
+						if( IsValue( iTypeNo , iLenNo )){
+							if( TagType( iTagNo ) ){
+								TmpStr = "->Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+							} else {
+								TmpStr = "●Value(" + tostr(iFieldNo) + ")";
+							}
+						} else {
+							TmpStr = "===>Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+							if(iBuff<100){
+								iAdr[iBuff] = iFieldNo + pAPP1;
+								iLen[iBuff] = FieldLen(iTypeNo) * iLenNo;
+								sName[iBuff] = sTag;
+								iBuff++;
+							}
+						}
+						$BYTE TmpStr[4];
+					}
+					p1IFD = ReadData(GetCurrentOffset(),4);
+					TmpStr = "1th IFD_Pointer_" + tohex(p1IFD + pAPP1);
+					$BYTE TmpStr[4];
+					// 0th IFD Data Area
+					if( iBuff > 1 ) PSort();
+					for( int i = 0 ; i < iBuff ; i++ ){
+						if( GetCurrentOffset() < iAdr[i] ){
+							$BYTE Blank[ iAdr[i] - GetCurrentOffset() ];
+						}
+						TmpStr = "●Data-" + sName[i] + "(" + tostr(iLen[i]) + "B)";
+						$BYTE TmpStr[iLen[i]];
+					}
+					if( pEIFD != 0 ){ // Exif IFD Block Found --------------------------------------------
+						if( GetCurrentOffset() < ( pEIFD + pAPP1 ) ){
+							$BYTE Blank[ pEIFD + pAPP1 - GetCurrentOffset() ];
+						}
+						iBuff = 0;
+						iLoop = ReadData(GetCurrentOffset(),2);
+						TmpStr = "Exif IFD Tag数_" + tostr(iLoop) ;
+						$BYTE TmpStr[2];
+						for( int i = 0 ; i < iLoop ; i++ )
+						{
+							iTagNo = ReadData(GetCurrentOffset(),2);
+							sTag = TagName(iTagNo);
+							TmpStr = "<" + sTag + ">";
+							$BYTE TmpStr[2];
+							iTypeNo = ReadData(GetCurrentOffset(),2);
+							sType = FieldName(iTypeNo);
+							TmpStr = "_" + sType + "(" + tostr(FieldLen(iTypeNo)) + "B)";
+							$BYTE TmpStr[2];
+							iLenNo = ReadData(GetCurrentOffset(),4);
+							TmpStr = "_Count(@" + tostr(iLenNo) + ")";
+							$BYTE TmpStr[4];
+							iFieldNo = ReadData(GetCurrentOffset(),4);
+							if( IsValue( iTypeNo , iLenNo ) ){
+								if( TagType( iTagNo ) ){
+									TmpStr = "->Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								} else {
+									TmpStr = "●Value(" + tostr(iFieldNo) + ")";
+								}
+							} else {
+								TmpStr = "===>Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								if(iBuff<100){
+									iAdr[iBuff] = iFieldNo + pAPP1;
+									iLen[iBuff] = FieldLen(iTypeNo) * iLenNo;
+									sName[iBuff] = sTag;
+									iBuff++;
+								}
+							}
+							$BYTE TmpStr[4];
+						}
+						p2IFD = ReadData(GetCurrentOffset(),4);
+						if( p2IFD == 0 ){
+							TmpStr = "Dummy IFD_Pointer_" + tohex(p2IFD);
+						} else {
+							TmpStr = "unknown IFD_Pointer_" + tohex(p2IFD+pAPP1);
+						}
+						$BYTE TmpStr[4];
+						// Exif IFD Data Area
+						if( iBuff > 1 ) PSort();
+						for( int i = 0 ; i < iBuff ; i++ ){
+							if( GetCurrentOffset() < iAdr[i] ){
+								$BYTE Blank[iAdr[i]-GetCurrentOffset()];
+							}
+							TmpStr = "●Data-" + sName[i] + "(" + tostr(iLen[i]) + "B)";
+							$BYTE TmpStr[iLen[i]];
+						}
+						
+					}
+					if( pCIFD != 0 ){ // 互換 IFD Block Found ----------------------------------------------
+						if( GetCurrentOffset() < ( pCIFD + pAPP1 ) ){
+							$BYTE Blank[pCIFD+pAPP1-GetCurrentOffset()];
+						}
+						iBuff = 0;
+						iLoop = ReadData(GetCurrentOffset(),2);
+						TmpStr = "互換 IFD Tag数_" + tostr(iLoop) ;
+						$BYTE TmpStr[2];
+						for( int i = 0 ; i < iLoop ; i++ )
+						{
+							iTagNo = ReadData(GetCurrentOffset(),2);
+							sTag = TagName(iTagNo);
+							TmpStr = "<" + sTag + ">";
+							$BYTE TmpStr[2];
+							iTypeNo = ReadData(GetCurrentOffset(),2);
+							sType = FieldName(iTypeNo);
+							TmpStr = "_" + sType + "(" + tostr(FieldLen(iTypeNo)) + "B)";
+							$BYTE TmpStr[2];
+							iLenNo = ReadData(GetCurrentOffset(),4);
+							TmpStr = "_Count(@" + tostr(iLenNo) + ")";
+							$BYTE TmpStr[4];
+							iFieldNo = ReadData(GetCurrentOffset(),4);
+							if( IsValue( iTypeNo , iLenNo ) ){
+								if( TagType( iTagNo ) ){
+									TmpStr = "->Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								} else {
+									TmpStr = "●Value(" + tostr(iFieldNo) + ")";
+								}
+							} else {
+								TmpStr = "===>Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								if(iBuff<100){
+									iAdr[iBuff] = iFieldNo + pAPP1;
+									iLen[iBuff] = FieldLen(iTypeNo) * iLenNo;
+									sName[iBuff] = sTag;
+									iBuff++;
+								}
+							}
+							$BYTE TmpStr[4];
+						}
+						p2IFD = ReadData(GetCurrentOffset(),4);
+						if( p2IFD == 0 ){
+							TmpStr = "Dummy IFD_Pointer_" + tohex(p2IFD);
+						} else {
+							TmpStr = "unknown IFD_Pointer_" + tohex(p2IFD+pAPP1);
+						}
+						$BYTE TmpStr[4];
+						// 互換性 IFD Data Area
+						if( iBuff > 1 ) PSort();
+						for( int i = 0 ; i < iBuff ; i++ ){
+							if( GetCurrentOffset() < iAdr[i] ){
+								$BYTE Blank[iAdr[i]-GetCurrentOffset()];
+							}
+							TmpStr = "●Data-" + sName[i] + "(" + tostr(iLen[i]) + "B)";
+							$BYTE TmpStr[iLen[i]];
+						}
+					}
+					if( p1IFD != 0 ){ // 1th IFD Block Found ------------------------------------------------
+						if( GetCurrentOffset() < ( p1IFD + pAPP1 ) ){
+							$BYTE Blank[ p1IFD + pAPP1 - GetCurrentOffset() ];
+						}
+						iBuff = 0;
+						iLoop = ReadData(GetCurrentOffset(),2);
+						TmpStr = "1th IFD Tag数_" + tostr(iLoop) ;
+						$BYTE TmpStr[2];
+						for( int i = 0 ; i < iLoop ; i++ )
+						{
+							iTagNo = ReadData(GetCurrentOffset(),2);
+							sTag = TagName(iTagNo);
+							TmpStr = "<" + sTag + ">";
+							$BYTE TmpStr[2];
+							iTypeNo = ReadData(GetCurrentOffset(),2);
+							sType = FieldName(iTypeNo);
+							TmpStr = "_" + sType + "(" + tostr(FieldLen(iTypeNo)) + "B)";
+							$BYTE TmpStr[2];
+							iLenNo = ReadData(GetCurrentOffset(),4);
+							TmpStr = "_Count(@" + tostr(iLenNo) + ")";
+							$BYTE TmpStr[4];
+							iFieldNo = ReadData(GetCurrentOffset(),4);
+							if( IsValue( iTypeNo , iLenNo ) ){
+								if(TagType(iTagNo)){
+									TmpStr = "->Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								} else {
+									TmpStr = "●Value(" + tostr(iFieldNo) + ")";
+								}
+							} else {
+								TmpStr = "===>Pointer(" + tohex(iFieldNo + pAPP1) + ")";
+								if( iBuff < 100 ){
+									iAdr[iBuff] = iFieldNo + pAPP1;
+									iLen[iBuff] = FieldLen(iTypeNo) * iLenNo;
+									sName[iBuff] = sTag;
+									iBuff++;
+								}
+							}
+							$BYTE TmpStr[4];
+						}
+						p2IFD = ReadData(GetCurrentOffset(),4);
+						if( p2IFD == 0 ){
+							TmpStr = "Dummy IFD_Pointer_" + tohex(p2IFD);
+						} else {
+							TmpStr = "unknown IFD_Pointer_" + tohex(p2IFD+pAPP1);
+						}
+						$BYTE TmpStr[4];
+						// 1th IFD Data Area
+						PSort();
+						for( int i = 0 ; i < iBuff ; i++ ){
+							if( GetCurrentOffset() < iAdr[i] ){
+								$BYTE Blank[iAdr[i]-GetCurrentOffset()];
+							}
+							TmpStr = "●Data-" + sName[i] + "(" + tostr(iLen[i]) + "B)";
+							$BYTE TmpStr[iLen[i]];
+						}
+					}
+					if( pTHUMB != 0 ){
+						if( GetCurrentOffset() < ( pTHUMB + pAPP1 ) ){
+							$BYTE Blank[ pTHUMB + pAPP1 - GetCurrentOffset() ];
+						}
+						$BYTE Thumbnail[iTHUMB];
+					}
+				}
+				break;  // Exif Block END-----------------------------------------------------
+			default :	//未知のヘッダ　知っている人は追加してね
+				$BYTE ★UnknownBlock[2];
+				$BYTE UnknownSize[2];			//ブロックサイズ
+				$BYTE Unknown[NextOffset-GetCurrentOffset()];
+				break;
+			}
+			$BYTE Dammy[NextOffset-GetCurrentOffset()];	//次ブロックへの足りない分を補う
+		}
+	}
+	else	{
+		// Gon修正 圧縮データ開始後は、EOIしか無いのではないか？
+		//$BYTE 圧縮データ[FindByte(0xff)];
+		TmpStr = "圧縮データ(" + tostr( FileSize - GetCurrentOffset() - 2 ) + "B)";
+		$BYTE TmpStr[ FileSize - GetCurrentOffset() - 2];
+	}
+}
+return;
+
+
+// バイトバッファに４バイト読込み、ｆEndianに基づき指定バイトの値を返す
+UINT ReadData(UINT pPos,UINT iByte)
+{
+	UINT iAns = 0 ;
+	bD0 = GetByte( pPos + 0 );
+	bD1 = GetByte( pPos + 1 );
+	bD2 = GetByte( pPos + 2 );
+	bD3 = GetByte( pPos + 3 );
+	if( iByte == 2 ){
+		if( fEndian == TRUE ){
+			iAns = bD0 * 0x100 + bD1 ;
+		} else {
+			iAns = bD1 * 0x100 + bD0 ;
+		}
+	} else if( iByte == 4 ){
+		if( fEndian == TRUE ){
+			iAns = bD0 * 0x1000000 + bD1 * 0x10000 + bD2 * 0x100 + bD3 ;
+		} else {
+			iAns = bD3 * 0x1000000 + bD2 * 0x10000 + bD1 * 0x100 + bD0 ;
+		}
+	} else {
+		iAns = 0;
+	}
+	return iAns;
+}
+
+// 引数のタグ値からタグ名を返す
+string TagName(UINT iTag)
+{
+	string aStr;
+	switch(iTag)
+	{
+		case 256:	aStr = "画像の幅";	break;
+		case 257:	aStr = "画像の高";	break;
+		case 258:	aStr = "画素ビット";	break;
+		case 259:	aStr = "圧縮の種類";	break;
+		case 262:	aStr = "画素構成の種類";	break;
+		case 270:	aStr = "画像タイトル";	break;
+		case 271:	aStr = "メーカ";	break;
+		case 272:	aStr = "モデル";	break;
+		case 273:	aStr = "イメージオフセット";	pIMG = ReadData(GetCurrentOffset()+8,4);	break;
+		case 274:	aStr = "画素の並び";	break;
+		case 277:	aStr = "コンポーネント数";	break;
+		case 278:	aStr = "１ストリップ行数";	break;
+		case 279:	aStr = "ストリップサイズ";	break;
+		case 282:	aStr = "画像幅解像度";	break;
+		case 283:	aStr = "画像高解像度";	break;
+		case 284:	aStr = "画素の並び";	break;
+		case 296:	aStr = "解像度の単位";	break;
+		case 301:	aStr = "諧調カーブ特性";	break;
+		case 305:	aStr = "ソフトウェア";	break;
+		case 306:	aStr = "変更日時";	break;
+		case 315:	aStr = "撮影者名";	break;
+		case 318:	aStr = "ホワイト色座標値";	break;
+		case 319:	aStr = "原色座標値";	break;
+		case 513:	aStr = "ThumbSOIオフセット";	pTHUMB = ReadData(GetCurrentOffset()+8,4);	break;
+		case 514:	aStr = "Thumbサイズ";	iTHUMB = ReadData(GetCurrentOffset()+8,4);	break;
+		case 529:	aStr = "色変換係数";	break;
+		case 530:	aStr = "画素の比率構成";	break;
+		case 531:	aStr = "画素の位置構成";	break;
+		case 532:	aStr = "黒色と白色の値";	break;
+		case 3432:	aStr = "著作権表示";	break;
+		case 34665:	aStr = "Exif IFDポインタ";	pEIFD = ReadData(GetCurrentOffset()+8,4);	break;
+		case 34853:	aStr = "GPS情報IFDポインタ";	pGIFD = ReadData(GetCurrentOffset()+8,4);	break;
+		case 33434:	aStr = "露出時間";	break;
+		case 33437:	aStr = "F値";	break;
+		case 34850:	aStr = "露出モード";	break;
+		case 34852:	aStr = "感度";	break;
+		case 34855:	aStr = "ISOスピード";	break;
+		case 34856:	aStr = "光電変換関数";	break;
+		case 36864:	aStr = "Exifバージョン";	break;
+		case 36867:	aStr = "画像生成日時";	break;
+		case 36868:	aStr = "データ生成日時";	break;
+		case 37121:	aStr = "コンポーネント意味";	break;
+		case 37122:	aStr = "画像圧縮モード";	break;
+		case 37377:	aStr = "シャッタースピード";	break;
+		case 37378:	aStr = "絞り";	break;
+		case 37379:	aStr = "輝度";	break;
+		case 37380:	aStr = "露出補正";	break;
+		case 37381:	aStr = "レンズの最小F値";	break;
+		case 37382:	aStr = "被写体距離";	break;
+		case 37383:	aStr = "測光方式";	break;
+		case 37384:	aStr = "光源";	break;
+		case 37385:	aStr = "フラッシュ";	break;
+		case 37386:	aStr = "レンズの焦点距離";	break;
+		case 37500:	aStr = "メーカ固有情報";	break;
+		case 37510:	aStr = "ユーザコメント";	break;
+		case 37520:	aStr = "ファイル日時の秒以下";	break;
+		case 37521:	aStr = "画像日時の秒以下";	break;
+		case 37522:	aStr = "データ日時の秒以下";	break;
+		case 40960:	aStr = "対応FlashPixVer";	break;
+		case 40961:	aStr = "色空間情報";	break;
+		case 40962:	aStr = "有効な画像の幅";	break;
+		case 40963:	aStr = "有効な画像の高";	break;
+		case 40964:	aStr = "関連音声ファイル名";	break;
+		case 40965:	aStr = "互換性IFDへのポインタ";	pCIFD = ReadData(GetCurrentOffset()+8,4);	break;
+		case 41483:	aStr = "フラッシュのエネルギ";	break;
+		case 41484:	aStr = "空間周波数応答";	break;
+		case 41486:	aStr = "焦点面幅解像度";	break;
+		case 41487:	aStr = "焦点面高解像度";	break;
+		case 41488:	aStr = "焦点面解像度単位";	break;
+		case 41492:	aStr = "被写体位置";	break;
+		case 41493:	aStr = "露出インデックス";	break;
+		case 41495:	aStr = "画像センサの方式";	break;
+		case 41728:	aStr = "画像入力機器の種類";	break;
+		case 41729:	aStr = "シーンタイプ";	break;
+		case 41730:	aStr = "CFAパターン";	break;
+		default:	aStr = "Unkown_" + tostr(iTag);	break;
+	}
+	return aStr;
+}
+// 引数のタグ値からポインタ（Exifポインタ等）ならTRUEを返す
+BOOL TagType(UINT iTag)
+{
+	if( iTag==273 || iTag==273  || iTag==513 || iTag==34665 || iTag==34853 || iTag==40965 ){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+// 引数のフィールド値から１データのバイト数を返す
+UINT FieldLen(UINT iType)
+{
+	UINT iBytes;
+	switch(iType){
+		case 1:	iBytes = 1;	break;
+		case 2:	iBytes = 1;	break;
+		case 3:	iBytes = 2;	break;
+		case 4:	iBytes = 4;	break;
+		case 5:	iBytes = 8;	break;
+		case 7:	iBytes = 1;	break;
+		case 9:	iBytes = 4;	break;
+		case 10:	iBytes = 8;	break;
+		default:	iBytes = 0;	break;
+	}
+	return iBytes;
+}
+// 引数のフィールド値からデータの型名を返す
+string FieldName(UINT iType)
+{
+	string sName;
+	switch(iType){
+		case 1:	sName = "BYTE";	break;
+		case 2:	sName = "ASCII";	break;
+		case 3:	sName = "SHORT";	break;
+		case 4:	sName = "LONG";	break;
+		case 5:	sName = "LONG/LONG";	break;
+		case 7:	sName = "UNDEFINED";	break;
+		case 9:	sName = "SLONG";	break;
+		case 10:	sName = "SLONG/SLONG";	break;
+		default:	sName = "Unknown" + tostr(iType);	break;
+	}
+	return sName;
+}
+// 引数のバイト数×個数から、４バイト以内ならTRUEを返す
+BOOL IsValue(UINT iType,UINT iCount)
+{
+	UINT iDataLength;
+	BOOL fAns;
+	iDataLength = FieldLen(iType) * iCount;
+	if(iDataLength<=4){
+		fAns = TRUE;
+	} else {
+		fAns = FALSE;
+	}
+	return fAns;
+}
+// ポインタ記録配列のアドレス昇順ソート
+void PSort(void)
+{
+	string ansStr;
+	if( iBuff < 1 ){
+		return;
+	}
+	UINT iTemp;
+	string sTemp;
+	for( int j = 0 ; j < ( iBuff - 1 ) ; j++ )
+	{
+		for( int i = ( iBuff - 1 ) ; i > j ; i-- )
+		{
+			if( iAdr[i-1] > iAdr[i] )
+			{
+				iTemp = iAdr[i-1];
+				iAdr[i-1] = iAdr[i];
+				iAdr[i] = iTemp;
+				iTemp = iLen[i-1];
+				iLen[i-1] = iLen[i];
+				iLen[i] = iTemp;
+				sTemp = sName[i-1];
+				sName[i-1] = sName[i];
+				sName[i] = sTemp;
+			}
+		}
+	}
+	return;
+}

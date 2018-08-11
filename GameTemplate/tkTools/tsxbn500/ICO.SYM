@@ -1,0 +1,112 @@
+///////////////////////////////////////////////////////////////
+///////	 このマクロはICOファイル用です
+///////　マクロ作者 TSUCHY　E Mail:VYC05513@nifty.ne.jp
+///////　Ver 1.01
+///////　16,256色でもオッケーよ
+
+#include "typedef.h"
+int GetByteWidth(int BPP,int Width);		//関数にはプロトタイプ宣言が必要
+
+typedef DWORD RGBQUAD;
+string TmpStr;
+struct ICONDIRENTRY	{
+	BYTE bWidth;
+	BYTE bHeight;
+	BYTE bColorCount;
+	BYTE bReserved;
+	WORD wPlanes;
+	WORD wBitCount;
+	DWORD dwBytesInRes;
+	DWORD dwImageOffset;
+};
+
+struct BITMAPINFOHEADER	{
+	DWORD biSize;
+	LONG biWidth;
+	LONG biHeight;
+	WORD biPlanes;
+	WORD biBitCount;
+	DWORD biCompression;
+	DWORD biSizeImage;
+	LONG biXPersPerMeter;
+	LONG biYPelsPerMeter;
+	LONG biClrUsed;
+	DWORD biClrImportant;
+};
+
+// 以下　ICONHEADER
+
+$WORD idReserved;
+$WORD idType;
+$WORD idCount;
+
+//　以下ICONDIRENTRY
+
+for (int i=0;i<idCount;i++)	{
+	TmpStr="IconDir"+tostr(i);
+	$ICONDIRENTRY TmpStr;
+}
+//以下 BITMAPINFOHEADER
+
+for (int i=0;i<idCount;i++)	{
+	$DWORD biSize;
+	$LONG biWidth;
+	$LONG biHeight;
+	$WORD biPlanes;
+	$WORD biBitCount;
+	$DWORD biCompression;
+	$DWORD biSizeImage;
+	$LONG biXPersPerMeter;
+	$LONG biYPelsPerMeter;
+	$LONG biClrUsed;
+	$DWORD biClrImportant;
+
+	int ColorTableSize=16;			//デフォルトのカラーテーブル数
+	switch(biBitCount)	{
+	case 1:		ColorTableSize=2;	break;
+	case 4:		ColorTableSize=16;	break;
+	case 8:		ColorTableSize=256;	break;
+	case 16:
+	case 24:
+	case 32:
+		ColorTableSize=0;	break;
+	}
+
+	$RGBQUAD Colors[ColorTableSize];				//カラーテーブルの定義
+
+	int ByteWidth=GetByteWidth(biBitCount,biWidth);	//必要な幅のバイト数
+	$BYTE icXOR[abs(biHeight/2)*ByteWidth];			//高さの1/2はXOR用
+	ByteWidth=GetByteWidth(1,biWidth);				//必要な幅のバイト数
+	$BYTE icAND[abs(biHeight/2)*ByteWidth];			//高さの1/2はAND用
+}
+return;						//メイン処理の終了　TSXBINに戻る　これがないと次に進む
+
+//////////////////////////////////////////////////
+///	ビットマップの幅のバイト数を計算
+int GetByteWidth(int BPP,int Width)	{
+	long rtn_val=0;						//一行のためのバイト数
+	switch	(BPP)	{
+	case 1:			//モノクロ
+		rtn_val=Width/8;			//1Pixel=1bits
+		if (Width%8) rtn_val++;
+		break;
+	case 4:			//１６色
+		rtn_val=Width/2;			//1Pixel=4bits
+		if (Width%2) rtn_val++;
+		break;
+	case 8:			//２５６色
+		rtn_val=Width;				//1Pixel=1Bytes
+		break;
+	case 16:
+		rtn_val=Width*2;			//1Pixel=2Bytes
+		break;
+	case 24:
+		rtn_val=Width*3;			//1Pixel=3Bytes
+		break;
+	case 32:
+		rtn_val=Width*4;			//1Pixel=4Bytes
+		break;
+	}
+	if (0!=(rtn_val%4)) rtn_val=(rtn_val/4+1)*4;	//4の整数倍にする
+	return(rtn_val);
+}

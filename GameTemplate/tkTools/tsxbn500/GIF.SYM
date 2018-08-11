@@ -1,0 +1,178 @@
+///////////////////////////////////////////////////////////////
+///////		このスクリプトはGIFファイル用です
+///////　マクロ作者 TSUCHY　E Mail:VYC05513@nifty.ne.jp
+///////　Ver 1.01
+///////　そこそこいけてると思います
+
+//	2004-05-19 foo
+//		・GlobalColorTable が無い時が考慮されていなかったのを修正
+//		・圧縮画像データは GIF_IMAGE_SEPARATOR 内でカラーテーブルに続いて存在に変更
+//		・GIF_TRAILER=00 の時も対応（尚、圧縮画像data位置が当初SYM通りで00検出すると正常動作せず）
+
+//MessageBox(tostr(MessageBox("aaa","BBB",0x42)));
+//return;
+#include "typedef.h"			//#includeが使えます
+
+//////////	GIFに固有な構造体の宣言
+struct GIF_HEADER	{
+	char Signature[3];
+	char Version[3];
+};
+
+struct GIF_SCREEN_DES	{
+	WORD LogicalScreenWidth;
+	WORD LogicalScreenHeight;
+	BYTE PackedField;
+	BYTE BackColorIndex;
+	BYTE PixelAspectRatio;
+};
+
+struct GIF_COLOR_TABLE	{
+	BYTE RGB[3];
+};
+
+struct GIF_IMAGE_DES	{
+	BYTE ImageSeparator;
+	WORD ImageLeft;
+	WORD ImageTop;
+	WORD ImageWidth;
+	WORD ImageHeight;
+	BYTE PackedField;
+};
+
+struct GIF_GRAPHIC_CONTROL	{
+	BYTE Introducer;
+	BYTE Label;
+	BYTE BlockSize;
+	BYTE PackedField;
+	WORD DelayTime;
+	BYTE TransparentColorIndex;
+	BYTE Terminator;
+};
+
+struct GIF_COMMENT_EXTENSION	{
+	BYTE Introducer;
+	BYTE Label;
+};
+
+struct GIF_TEXT_EXTENSION	{
+	BYTE Introducer;
+	BYTE Label;
+	BYTE BlockSize;
+	WORD TextLeft;
+	WORD TextTop;
+	WORD TextWidth;
+	WORD TextHeight;
+	BYTE CellWidth;
+	BYTE CellHeight;
+	BYTE ForegroundColorIndex;
+	BYTE BackgroundColorIndex;
+};
+
+struct GIF_APP_EXTENSION	{
+	BYTE Introducer;
+	BYTE Label;
+	BYTE BlockSize;
+	char Identifier[8];
+	char Code[3];
+};
+
+/////////////定数の宣言/////////////
+const BYTE GIF_EXTENTIONINTRODUCER=0x21;
+const BYTE GIF_GRAPHIC_CONTROL_LABEL=0xf9;
+const BYTE GIF_IMAGE_SEPARATOR=0x2c;
+const BYTE GIF_APP_LABLE=0xff;
+const BYTE GIF_COMMENT_LABLE=0xfe;
+const BYTE GIF_TEXT_LABLE=0x01;
+const BYTE GIF_TRAILER=0x3b;
+
+/////////////	ファイルの定義　$マークのついた宣言がファイルのデータを記述します
+
+$GIF_HEADER	Header;			//ヘッダの宣言
+$GIF_SCREEN_DES	Screen;		//スクリーンデスクリプタ
+
+GIF_HEADER	Header1;			//ヘッダの宣言
+
+//MessageBox("Header=="+tostr(sizeof(unsigned *)));
+//MessageBox("3=="+tostr(sizeof(BYTE)+sizeof(WORD)));
+
+UINT ColorSize=1<<((Screen.PackedField & 7)+1);		//これがカラーテーブル配列数
+
+if (Screen.PackedField & 0x80)					//テーブルの有無検査を追加
+   { $GIF_COLOR_TABLE ColorTable[ColorSize];}	//GlobalColorTable の宣言
+
+BOOL bExit=0;
+int ImageCount=0;
+int GraphicCount=0;
+int AppCount=0;
+string TmpStr;									//ファイル変数名用文字変数
+ULONG FileSize=GetFileSize();
+while (FALSE==bExit && GetCurrentOffset()<FileSize)	{		//ぐるぐるまわるゼ！
+	switch(GetCurrentByte())	{					//次の１バイトを見る
+	case GIF_EXTENTIONINTRODUCER:
+		switch(GetByte(GetCurrentOffset()+1))	{	//さらにその次の１バイトを見る
+		case GIF_GRAPHIC_CONTROL_LABEL:
+			TmpStr="Graphic"+tostr(GraphicCount);	//名前に番号をつける "Graphic1"とか
+			$GIF_GRAPHIC_CONTROL TmpStr;			//文字変数で名前をつける
+			GraphicCount++;
+			break;
+		case GIF_APP_LABLE:
+			TmpStr="App"+tostr(AppCount);			//名前に番号をつける "App1"とか
+			$GIF_APP_EXTENSION	TmpStr;				//文字変数で名前をつける
+			while (0!=GetCurrentByte())	{
+				$BYTE AppBlockSize;					//後ろにあるデータのバイト数
+				$BYTE AppData[AppBlockSize];		//
+			}
+			$BYTE AppTerminater;					//'\0'
+			AppCount++;
+			break;
+		case GIF_COMMENT_LABLE:
+			$GIF_COMMENT_EXTENSION CommentExtension;
+			while (0!=GetCurrentByte())	{
+				$BYTE CommentBlockSize;
+				$BYTE Comment[CommentBlockSize];
+			}
+			$BYTE CommentTerminater;				//'\0'
+			break;
+		case GIF_TEXT_LABLE:
+			$GIF_TEXT_EXTENSION	TextExtension;
+			while (0!=GetCurrentByte())	{
+				$BYTE TextBlockSize;
+				$BYTE Text[TextBlockSize];
+			}
+			$BYTE TextTerminater;					//'\0'
+			break;
+		default:
+			break;
+		}
+		break;
+	case GIF_IMAGE_SEPARATOR:
+		TmpStr="Image"+tostr(ImageCount);				//名前に番号をつける "Image1"とか
+		BYTE ImagePackedFiled=GetByte(GetCurrentOffset()+9);	//PackedFiledの値を先に取得する
+		$GIF_IMAGE_DES TmpStr;							//文字変数で名前をつける
+		if (ImagePackedFiled & 0x80)	{				//ローカルカラーテーブルあり
+			UINT LocalColorSize=1<<((ImagePackedFiled & 0x07)+1);		//これが配列数
+			$GIF_COLOR_TABLE LocalColorTable[LocalColorSize];			//ローカルカラーテーブル
+		}
+		$BYTE 圧縮BitSize;		//圧縮画像データ開始	←はGIF_IMAGE_SEPARATOR に続いて存在
+		while (0!=GetCurrentByte() && GetCurrentOffset()<FileSize)	{
+			$BYTE 圧縮BlockSize;
+			$BYTE 圧縮データ[圧縮BlockSize];
+		}
+		$BYTE 圧縮Terminater;
+		ImageCount++;
+		break;
+	case GIF_TRAILER:
+	case 0:
+		$BYTE Trailer;								//ここまでくれば正常終了
+		bExit=TRUE;
+		break;
+	default: 	//不要だけど・・・まあ念の為
+		while (0!=GetCurrentByte() && GetCurrentOffset()<FileSize)	{
+			$BYTE ？？BlockSize;
+			$BYTE ？？データ[？？BlockSize];
+		}
+		$BYTE ？？Terminater;
+		break;
+	}
+}

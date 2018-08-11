@@ -1,0 +1,174 @@
+///////////////////////////////////////////////////////////////
+///////		このマクロはLZHファイル用です
+///////		作者 TSUCHY  E-Mail:VYC05513@nifty.ne.jp
+///////		Version 1.01
+
+#include "typedef.h"			//#includeが使えます
+
+void Level2(void);			//関数にはプロトタイプ宣言が必要です
+void Level1(void);			//関数にはプロトタイプ宣言が必要です
+void Level0(void);			//関数にはプロトタイプ宣言が必要です
+void OSMark(void);			//OSマークのプロトタイプ
+void HeaderEx(BYTE ID,WORD HeaderSize);	//レベル１，２用拡張ヘッダ処理
+
+const int LevelOffset=0x14;		//レベルのあるオフセット
+long FileSize=GetFileSize();
+
+while (0!=GetCurrentByte() && GetCurrentOffset()<FileSize)	{
+	if (0==GetByte(GetCurrentOffset()+LevelOffset))	{
+		Level0();
+	}
+	else if (1==GetByte(GetCurrentOffset()+LevelOffset))	{
+		Level1();
+	}
+	else if (2==GetByte(GetCurrentOffset()+LevelOffset))	{
+		Level2();
+	}
+	else {
+		MessageBox("Unknown Type or Error in LZH.SYM");
+		break;
+	}
+}
+
+$BYTE ThisMustBe00; //最後の00
+return;				//このreturnがないと、次に進んでしまいます。
+
+/////////////////////////////////////////////////////
+////////	OS識別子
+void OSMark(void)	{
+	switch(GetCurrentByte())	{
+	case 'M':	$BYTE MS_DOS;	break;
+	case '2':	$BYTE OS_2;	break;
+	case '9':	$BYTE OS9;	break;
+	case 'K':	$BYTE OS_68K;	break;
+	case '3':	$BYTE OS_386;	break;
+	case 'H':	$BYTE HUMAN;	break;
+	case 'U':	$BYTE UNIX;	break;
+	case 'C':	$BYTE CP_M;	break;
+	case 'F':	$BYTE FLEX;	break;
+	case 'm':	$BYTE Mac_OS;	break;
+	case 'R':	$BYTE Runser;	break;
+	case 'w':	$BYTE Win95;	break;
+	case 'W':	$BYTE NT;	break;
+	default:	$BYTE UnknownOS;	break;
+	}
+}
+
+/////////////////////////////////////////////////////
+////		レベル１，２拡張ヘッダ
+void HeaderEx(BYTE ID,WORD HeaderSize)	{
+	switch (ID)	{
+	case 0:
+		$WORD ヘッダCRC;
+		$BYTE 付加情報[HeaderSize-5];
+		break;
+	case 1:
+		$BYTE ファイル名[HeaderSize-3];
+		break;
+	case 2:
+		$BYTE ディレクトリ名[HeaderSize-3];
+		break;
+	case 0x3f:
+		$BYTE コメント[HeaderSize-3];
+		break;
+	case 0x40:
+		$WORD ファイル属性;
+		break;
+	case 0x41:
+		$BYTE 作成日時[8];
+		$BYTE 更新日時[8];
+		$BYTE 参照日時[8];
+		break;
+	case 0xff:
+		$DWORD ファイル許可属性;
+		$DWORD GID;
+		$DWORD UID;
+		$DWORD CTIME;
+		$DWORD UTIME;
+		break;
+	default:
+		$BYTE unknown[HeaderSize-3];
+		break;
+	}
+}
+
+
+/////////////////////////////////////////////////////
+////// Level2用関数
+void Level2(void)	{
+
+	//基本ヘッダ
+	$WORD ヘッダサイズ;
+	$BYTE 圧縮方式[5];
+	$DWORD 圧縮後サイズ;
+	$DWORD 圧縮前サイズ;
+	$DWORD 時刻;
+	$BYTE ファイル属性;
+	$BYTE レベル;
+	$WORD ファイルCRC;
+	OSMark();
+
+	//拡張ヘッダ
+	while (0!=GetCurrentWord())	{	//ヘッダサイズが０になるまでぐるぐるまわるぜ
+		$WORD 拡張ヘッダサイズ;		//ヘッダサイズ
+		$BYTE 拡張ヘッダ識別子;
+		HeaderEx(拡張ヘッダ識別子,拡張ヘッダサイズ);
+	}
+
+	$WORD    ヘッダ終端;
+
+	$BYTE 圧縮データ[圧縮後サイズ];
+}
+
+//////////////////////////////////////////////
+//		レベル１用関数
+void Level1(void)	{
+	DWORD StartOffset=GetCurrentOffset();
+	$BYTE ヘッダサイズ;
+	$BYTE チェックサム;
+	$BYTE 圧縮方式[5];
+	$DWORD 圧縮後サイズ;
+	$DWORD 圧縮前サイズ;
+	$WORD 時刻;
+	$WORD 日付;
+	$BYTE ファイル属性;
+	$BYTE レベル;
+	$BYTE ファイル名長さ;
+	$BYTE ファイル名[ファイル名長さ];
+	$WORD ファイルCRC;
+	OSMark();
+	$BYTE 拡張[GetCurrentOffset()-StartOffset-ヘッダサイズ];	//ほとんどこのデータは存在しない
+
+	int ExHeaderSize=0;
+
+	//拡張ヘッダ
+	while (0!=GetCurrentWord())	{
+		$WORD 拡張ヘッダサイズ;		//ヘッダサイズ
+		$BYTE 拡張ヘッダ識別子;
+		ExHeaderSize+=拡張ヘッダサイズ;
+		HeaderEx(拡張ヘッダ識別子,拡張ヘッダサイズ);
+	}
+	$WORD    ヘッダ終端;
+
+	$BYTE 圧縮データ[圧縮後サイズ-ExHeaderSize];
+}
+//////////////////////////////////////////////
+//		レベル０用関数
+void Level0(void)	{
+	$BYTE hedsize;
+	$BYTE checksum;
+	$BYTE method[5];
+	$DWORD packed;
+	$DWORD original;
+	$WORD time;
+	$WORD date;
+	$BYTE attrib;
+	$BYTE level;
+	$BYTE namelen;
+	$BYTE filename[namelen];
+	$WORD filecrc;
+
+	$BYTE 圧縮データ[packed];
+}
+
+

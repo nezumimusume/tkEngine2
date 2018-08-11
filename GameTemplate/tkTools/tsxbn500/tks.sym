@@ -1,0 +1,30 @@
+/*!
+ *@brief	tksファイルのシンボル
+ */
+ 
+#include "typedef.h"
+ 
+;
+struct Vector3{
+	float m[3];
+};
+
+$int numBone;		//骨の数を出力。
+for(int i = 0; i < numBone; i++ ){
+	$BYTE numBoneName;	//骨の名前の文字数。。
+	//骨の名前を出力。
+	$BYTE boneName[numBoneName+1];
+	//親の骨の番号を出力。
+	$int parentBoneNo;
+	//バインドポーズの行列を出力。
+	$Vector3 bindPoseMatrix0;
+	$Vector3 bindPoseMatrix1;
+	$Vector3 bindPoseMatrix2;
+	$Vector3 bindPoseMatrix3;
+	
+	//バインドポーズの逆行列を出力。
+	$Vector3 invBindPoseMatrix0;
+	$Vector3 invBindPoseMatrix1;
+	$Vector3 invBindPoseMatrix2;
+	$Vector3 invBindPoseMatrix3;
+}

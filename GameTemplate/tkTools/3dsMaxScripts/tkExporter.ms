@@ -73,7 +73,6 @@ rollout tkExporter "tkExporter" width:194 height:248
 			objParam.parentId = -1
 			objParam.localPos = n.pos
 			objParam.localRot = n.rotation
-			
 		)else(
 			--親がいる
 			objParam.parentId = parentId
@@ -432,6 +431,11 @@ rollout tkExporter "tkExporter" width:194 height:248
 		for p in nodes do
 		(
 			meshCount = GetTriMeshFaceCount(p)
+			if classof( p ) == BoneGeometry do(
+				--こいつはボーン
+				meshCount[1] = 0
+				meshCount[2] = 0
+			)
 			if meshCount[1] > 0 do
 			(
 				--メッシュがある。
