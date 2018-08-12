@@ -412,7 +412,7 @@
     <GenerateManifest>true</GenerateManifest>
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x64;$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;$(ProjectDir)/../tkEngine/DirectXTK/Bin/Desktop_2015_Win10/x64/Release;$(ProjectDir)/x64/Release;$(ProjectDir)/../tkEngine/EffekseerRuntime130\src\lib\x64;$(ProjectDir)/x64/Release_Middle;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;$(ProjectDir)/../tkEngine/DirectXTK/Bin/Desktop_2015_Win10/x64/Release;$(ProjectDir)/x64/Release_Middle;$(ProjectDir)/x64/Release;$(ProjectDir)/../tkEngine/EffekseerRuntime130\src\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|X64'">
     <LinkIncremental>false</LinkIncremental>
@@ -493,7 +493,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -549,7 +549,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -605,7 +605,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -664,7 +664,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -723,7 +723,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -782,7 +782,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -841,7 +841,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -900,7 +900,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -959,7 +959,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1013,7 +1013,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>
@@ -1070,7 +1070,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>
@@ -1127,7 +1127,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>
@@ -1416,7 +1416,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1474,7 +1474,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1532,7 +1532,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1547,7 +1547,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Preview|X64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <Optimization>Full</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <OpenMPSupport>false</OpenMPSupport>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -1560,10 +1560,12 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>winmm.lib;comctl32.lib;DirectXTK.lib;tkEngine.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;DirectXTK.lib;tkEngine.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -1590,7 +1592,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1648,7 +1650,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -1679,7 +1681,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>winmm.lib;comctl32.lib;DirectXTK.lib;tkEngine.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;DirectXTK.lib;tkEngine.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -1706,7 +1708,7 @@
       <ContentOutput>%(RelativeDir)\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>

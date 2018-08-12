@@ -672,7 +672,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="..\Game\Assets\modelData\preset\vector.FBX">
+    <MeshContentTask Include="Assets\modelData\preset\vector.FBX">
       <Filter>Assets\modelData\preset</Filter>
     </MeshContentTask>
   </ItemGroup>
