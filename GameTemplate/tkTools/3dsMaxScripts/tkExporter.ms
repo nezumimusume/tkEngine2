@@ -7,8 +7,6 @@ pluginManager.loadClass FbxExporter
 
 --オブジェクトパラメータ。
 struct ObjectParam(
-	localPos,
-	localRot ,
 	objName,
 	bindPose,
 	invBindPose,
@@ -63,7 +61,7 @@ rollout tkExporter "tkExporter" width:194 height:248
 	 */
 	fn BuildOutputNodeInfo n parentId= 
 	(
-		objParam = ObjectParam Point3 Quat "" Matrix3 Matrix3 -1 Node
+		objParam = ObjectParam "" Matrix3 Matrix3 -1 Node
 		objParam.objName = n.name
 		objParam.bindPose = n.transform
 		objParam.invBindPose = inverse n.transform
@@ -71,13 +69,9 @@ rollout tkExporter "tkExporter" width:194 height:248
 		if n.parent == undefined then(
 			--親がいない
 			objParam.parentId = -1
-			objParam.localPos = n.pos
-			objParam.localRot = n.rotation
 		)else(
 			--親がいる
 			objParam.parentId = parentId
-			objParam.localPos = n.pos * inverse n.parent.transform
-			objParam.localRot = n.rotation * inverse n.parent.rotation
 		)
 
 		append g_objectParams objParam
@@ -89,6 +83,41 @@ rollout tkExporter "tkExporter" width:194 height:248
 	)
 	/*
 	 *  スケルトンの保存。
+	*@param[in]  filepath		保存するファイルパス。
+	 */
+	fn SaveSkeletonFilePath filepath = 
+	(
+		file = fopen filepath "wb"
+			
+		try(
+			--ヘッダーを出力
+			WriteLong file g_objectParams.count
+			
+			for o in g_objectParams do (
+				
+				WriteByte file o.objName.count
+				WriteString file o.objName
+				WriteLong file o.parentId
+				--バインドポーズを出力。
+				for i = 1 to 4 do(
+					WriteFloat file o.bindPose[i].x
+					WriteFloat file o.bindPose[i].y
+					WriteFloat file o.bindPose[i].z
+				)
+				--バインドポーズの逆数を出力。
+				for i = 1 to 4 do(
+					WriteFloat file o.invBindPose[i].x
+					WriteFloat file o.invBindPose[i].y
+					WriteFloat file o.invBindPose[i].z
+				)
+			)
+		)catch(
+			Messagebox "ファイルの保存に失敗しました"
+		)
+		FClose file
+	)
+	/*
+	 *  スケルトンの保存。
 	 */
 	fn SaveSkeleton = 
 	(
@@ -96,35 +125,7 @@ rollout tkExporter "tkExporter" width:194 height:248
 		
 		if filepath != undefined then
 		(
-			
-			file = fopen filepath "wb"
-			
-			try(
-				--ヘッダーを出力
-				WriteLong file g_objectParams.count
-				
-				for o in g_objectParams do (
-					
-					WriteByte file o.objName.count
-					WriteString file o.objName
-					WriteLong file o.parentId
-					--バインドポーズを出力。
-					for i = 1 to 4 do(
-						WriteFloat file o.bindPose[i].x
-						WriteFloat file o.bindPose[i].y
-						WriteFloat file o.bindPose[i].z
-					)
-					--バインドポーズの逆数を出力。
-					for i = 1 to 4 do(
-						WriteFloat file o.invBindPose[i].x
-						WriteFloat file o.invBindPose[i].y
-						WriteFloat file o.invBindPose[i].z
-					)
-				)
-			)catch(
-				Messagebox "ファイルの保存に失敗しました"
-			)
-			FClose file
+			SaveSkeletonFilePath filepath
 		)
 	)
 	/*
@@ -325,6 +326,7 @@ rollout tkExporter "tkExporter" width:194 height:248
 			)
 		)
 	)
+	
 	function selectHierarchy =
     (
 		for p in selection do
@@ -416,6 +418,9 @@ rollout tkExporter "tkExporter" width:194 height:248
 			)
 		)
 	)
+	/*
+	 *  FBX出力用の設定を行う。
+	 */
 	fn SetupFbxExportSettings = 
 	(
 		--他にもオプションが必要なら追加していってください。
@@ -426,6 +431,9 @@ rollout tkExporter "tkExporter" width:194 height:248
 		FBXExporterSetParam "Triangulate" true
 		FBXExporterSetParam "ASCII" true
 	)
+	/*
+	 *  マテリアルが貼られていないノードがないかチェックを行う。
+	 */
 	fn CheckMaterial nodes =
 	(
 		for p in nodes do
@@ -450,6 +458,52 @@ rollout tkExporter "tkExporter" width:194 height:248
 		)
 		return true
 	)
+	/*
+	 *  スキンモディファイアが設定されているノードがあったら、スケルトンを出力する。
+	 */
+	fn TrySaveSkeleton nodes filePath = 
+	(
+		for p in nodes do
+		(
+			--スキンモディファイアを取得。
+			skinMod = p.modifiers[skin]
+			if skinMod != undefined then(
+				--スキンを見つけた。
+				clearSelection()
+				max modify mode
+				select p
+				modPanel.setCurrentObject skinMod
+				numBone = skinOps.GetNumberBones( skinMod )
+				if numBone > 0 then(
+					--bone発見したぞいぞい
+					boneName = skinOps.GetBoneName skinMod 1 1 
+					--名前からノードを選択
+					boneNode = getNodebyName(boneName)
+					if boneNode != undefined  then (
+						--スケルトンのルートを検索するぞ
+						while boneNode.parent != undefined  do(
+							boneNode = boneNode.parent
+						)
+						--スケルトンを保存する。
+						g_objectParams = #()
+						--アニメーション時間を0にする。
+						animationRange = interval 0 animationRange.end
+						slidertime = 0
+						at time 0(
+							--アニメーション進行中の処理。
+							BuildOutputNodeInfo boneNode -1
+							--ファイルパスの拡張子をtksに変更する。
+							filepath = substituteString filepath ".fbx" ".tks"
+							
+							--保存だ―。
+							SaveSkeletonFilePath filepath
+						)
+						break
+					)
+				)
+			)
+		)
+	)
 	/*!
 	 * @brief	FBXのSaveのボタンが押されたときの処理。
 	 */
@@ -462,6 +516,8 @@ rollout tkExporter "tkExporter" width:194 height:248
 			if filepath != undefined then(
 				exportFile(filepath) #noPrompt
 			)
+			--スキンモディファイアがある場合にスケルトンデータを保存する。
+			TrySaveSkeleton objects filepath
 		)
 	)
 	/*!
@@ -476,6 +532,8 @@ rollout tkExporter "tkExporter" width:194 height:248
 			if filepath != undefined then(
 				exportFile(filepath) #noPrompt selectedOnly:true
 			)
+			--スキンモディファイアがある場合にスケルトンデータを保存する。
+			TrySaveSkeleton selection filepath
 		)
 	)
 )

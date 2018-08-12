@@ -7,8 +7,7 @@ Game::Game()
 	DeleteGO(m_skinModelRender);
 }
 
-class Hoge {
-};
+
 Game::~Game()
 {
 }
