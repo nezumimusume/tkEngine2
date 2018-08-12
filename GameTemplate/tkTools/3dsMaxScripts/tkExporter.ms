@@ -300,29 +300,70 @@ rollout tkExporter "tkExporter" width:194 height:248
 			)
 		)
 	)
+		/*
+	 *  スキンモディファイアが設定されているノードがあったら、そのノードに割り当てられているスケルトンのルートを取得。
+	 */
+	fn GetSkeletonRoot nodes =
+	(
+		for p in nodes do
+		(
+			--スキンモディファイアを取得。
+			skinMod = p.modifiers[skin]
+			
+			if skinMod != undefined then(
+				--スキンを見つけた。
+				clearSelection()
+				max modify mode
+				select p
+				modPanel.setCurrentObject skinMod
+				numBone = skinOps.GetNumberBones( skinMod )
+				if numBone > 0 then(
+					--bone発見したぞいぞい
+					boneName = skinOps.GetBoneName skinMod 1 1 
+					--名前からノードを選択
+					boneNode = getNodebyName(boneName)
+					if boneNode != undefined  then (
+						--スケルトンのルートを検索するぞ
+						while boneNode.parent != undefined  do(
+							boneNode = boneNode.parent
+						)
+						--ルートを返すん。
+						return boneNode
+					)
+				)
+			)
+		)
+		return undefined
+	)
 	/*
 	 *  アニメーションクリップの保存のボタンが押されたときの処理。
 	 */
 	on btn_saveAnimationClip pressed do
 	(
-		if selection[1] == undefined  then(
-			Messagebox "出力するアニメーションクリップを含むスケルトンのルートのオブジェクトを選択してください。"
-		)else(
-			--とりあえず全クリップ出力する。
-			g_objectParams = #()
-			--アニメーション時間を0にする。
-			startFrame = animClipStartFrame.text as integer
-			endFrame = animClipEndFrame.text as integer
-			animationRange = interval startFrame endFrame
-			slidertimer = 0
-			animate on(
-				--アニメーション進行中の処理。
-				BuildOutputNodeInfo selection[1] -1
-				try(
-					SaveAnimationClip()
-				)catch(
-					messageBox "ファイルの保存に失敗しました"
-				)
+		--とりあえず全クリップ出力する。
+		skeletonRoot = GetSkeletonRoot objects
+		
+		if skeletonRoot == undefined  then(
+			--シーンにスキンモディファイアが見つからなかった。
+			if selection[1] == undefined  then(
+				Messagebox "スケルトンのルートのオブジェクトの自動判別ができませんでした。\nスケルトンのルートのオブジェクトを選択してアニメーションクリップを保存してください。\n"
+				return 0
+			)
+			skeletonRoot = selection[1]
+		)
+		g_objectParams = #()
+		--アニメーション時間を0にする。
+		startFrame = animClipStartFrame.text as integer
+		endFrame = animClipEndFrame.text as integer
+		animationRange = interval startFrame endFrame
+		slidertimer = 0
+		animate on(
+			--アニメーション進行中の処理。
+			BuildOutputNodeInfo skeletonRoot -1
+			try(
+				SaveAnimationClip()
+			)catch(
+				messageBox "ファイルの保存に失敗しました"
 			)
 		)
 	)
@@ -458,49 +499,29 @@ rollout tkExporter "tkExporter" width:194 height:248
 		)
 		return true
 	)
+
 	/*
 	 *  スキンモディファイアが設定されているノードがあったら、スケルトンを出力する。
 	 */
 	fn TrySaveSkeleton nodes filePath = 
 	(
-		for p in nodes do
-		(
-			--スキンモディファイアを取得。
-			skinMod = p.modifiers[skin]
-			if skinMod != undefined then(
-				--スキンを見つけた。
-				clearSelection()
-				max modify mode
-				select p
-				modPanel.setCurrentObject skinMod
-				numBone = skinOps.GetNumberBones( skinMod )
-				if numBone > 0 then(
-					--bone発見したぞいぞい
-					boneName = skinOps.GetBoneName skinMod 1 1 
-					--名前からノードを選択
-					boneNode = getNodebyName(boneName)
-					if boneNode != undefined  then (
-						--スケルトンのルートを検索するぞ
-						while boneNode.parent != undefined  do(
-							boneNode = boneNode.parent
-						)
-						--スケルトンを保存する。
-						g_objectParams = #()
-						--アニメーション時間を0にする。
-						animationRange = interval 0 animationRange.end
-						slidertime = 0
-						at time 0(
-							--アニメーション進行中の処理。
-							BuildOutputNodeInfo boneNode -1
-							--ファイルパスの拡張子をtksに変更する。
-							filepath = substituteString filepath ".fbx" ".tks"
-							
-							--保存だ―。
-							SaveSkeletonFilePath filepath
-						)
-						break
-					)
-				)
+		--スケルトンを選択出来たら取得する。
+		skeletonRoot = GetSkeletonRoot nodes
+		if skeletonRoot != undefined  then(
+			
+			--スケルトンを保存する。
+			g_objectParams = #()
+			--アニメーション時間を0にする。
+			animationRange = interval 0 animationRange.end
+			slidertime = 0
+			at time 0(
+				--アニメーション進行中の処理。
+				BuildOutputNodeInfo skeletonRoot -1
+				--ファイルパスの拡張子をtksに変更する。
+				extPos = findString filepath "."
+				filepath = replace filepath extPos 4 ".tks"
+				--保存だ―。
+				SaveSkeletonFilePath filepath
 			)
 		)
 	)

@@ -132,7 +132,19 @@ namespace tkEngine{
 	{
 		m_isAvailable = false;
 		CSkinModelEffectFactory effectFactory(GraphicsEngine().GetD3DDevice());
-		effectFactory.SetDirectory(L"modelData");
+		wchar_t textureDir[256];
+		wcsncpy_s(textureDir, filePath, 256);
+		auto p = wcsrchr(textureDir, L'/');
+		if (p == nullptr) {
+			//\マークを試す。
+			p = wcsrchr(textureDir, L'\\');
+			if (p == nullptr) {
+				//ファイルパスおかしくね？
+				return false;
+			}
+		}
+		*p = '\0';
+		effectFactory.SetDirectory(textureDir);
 		//スケルトンのデータを読み込み。
 		std::wstring skeletonFilePath = filePath;
 		int pos = (int)skeletonFilePath.find(L".cmo");

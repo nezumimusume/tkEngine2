@@ -20,9 +20,10 @@ bool Game::Start()
 	MainCamera().SetPosition({ 0.0f, 70.0f, 200.0f });
 	MainCamera().Update();
 
+	m_animClips[0].Load(L"animData/thief_test.tka");
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
-	m_skinModelRender->Init(L"modelData/unityChan.cmo");
-
+	m_skinModelRender->Init(L"modelData/Theif/Thethief_H.cmo", m_animClips, 1);
+	
 	return true;
 }
 
