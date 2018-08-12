@@ -77,10 +77,6 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Assets\shader\shadowBlur.fx" />
-    <CustomBuild Include="Assets\shader\defferdShading.fx" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="Assets\modelData\utc_spec.tga">
       <Filter>Assets\modelData</Filter>
     </ImageContentTask>

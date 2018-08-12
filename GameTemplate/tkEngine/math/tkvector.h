@@ -294,10 +294,12 @@ namespace tkEngine{
 		union{
 			DirectX::XMFLOAT4 vec;
 			struct { float x, y, z, w; };
+			struct { float r, g, b, a; };
 			float v[4];
 		};
 		static const CVector4 White;
 		static const CVector4 Black;
+		static const CVector4 Gray;
 		static const CVector4 Yellow;
 	public:
 		operator DirectX::XMVECTOR() const

@@ -10,6 +10,7 @@ namespace tkEngine{
 	const CVector4 CVector4::White = {1.0f, 1.0f, 1.0f, 1.0f};
 	const CVector4 CVector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
 	const CVector4 CVector4::Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+	const CVector4 CVector4::Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
 
 	const CVector2 CVector2::Zero   = { 0.0f,  0.0f };
 	const CVector3 CVector3::Zero	= {  0.0f,  0.0f,  0.0f };

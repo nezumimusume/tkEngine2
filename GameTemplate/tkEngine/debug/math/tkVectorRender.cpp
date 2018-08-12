@@ -10,7 +10,7 @@ namespace tkEngine{
 		static const int MAX_RENDER = 1000;	//最大で1000個のベクトルを描画できる。
 		bool CVectorRender::Start()
 		{
-			m_modelData.Load(L"modelData/vector.cmo");
+			m_modelData.Load(L"modelData/preset/vector.cmo");
 			m_model.Init(m_modelData, MAX_RENDER);
 			return true;
 		}
