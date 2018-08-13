@@ -1,8 +1,23 @@
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/Physics/tkPhysics.h"
 #include "tkEngine/Physics/tkRigidBody.h"
+#include "tkEngine/character/tkCharacterController.h"
 
 namespace tkEngine{
+	namespace {
+		struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {
+			using ContantTestCallback = std::function<void(const btCollisionObject& contactCollisionObject)>;
+			ContantTestCallback  m_cb;
+			btCollisionObject* m_me = nullptr;
+			virtual	btScalar	addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
+			{
+				if (m_me == colObj0Wrap->getCollisionObject()) {
+					m_cb(*colObj1Wrap->getCollisionObject());
+				}
+				return 0.0f;
+			}
+		};
+	}
 	CPhysicsWorld::CPhysicsWorld()
 	{
 		collisionConfig = NULL;
@@ -67,5 +82,29 @@ namespace tkEngine{
 	void CPhysicsWorld::RemoveRigidBody(CRigidBody& rb)
 	{
 		dynamicWorld->removeRigidBody(rb.GetBody());
+	}
+	void CPhysicsWorld::ContactTest(
+		btCollisionObject* colObj,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	) {
+		MyContactResultCallback myContactResultCallback;
+		myContactResultCallback.m_cb = cb;
+		myContactResultCallback.m_me = colObj;
+		dynamicWorld->contactTest(colObj, myContactResultCallback);
+	}
+
+	void CPhysicsWorld::ContactTest(
+		CRigidBody& rb,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	)
+	{
+		ContactTest(rb.GetBody(), cb);
+	}
+	void CPhysicsWorld::ContactTest(
+		CCharacterController& charaCon,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	)
+	{
+		ContactTest(*charaCon.GetRigidBody(), cb);
 	}
 }

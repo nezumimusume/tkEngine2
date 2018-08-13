@@ -1,7 +1,8 @@
 #pragma once
 
 #include "tkEngine/graphics/effect/tkEffect.h"
-#include "tkEngine/debug/math/tkVectorRender.h"
+#include "tkEngine/physics/tkPhysicsGhostObject.h"
+#include "tkEngine/character/tkCharacterController.h"
 
 class Game : public IGameObject
 {
@@ -12,5 +13,7 @@ public:
 	void Update();
 	prefab::CSkinModelRender* m_skinModelRender = nullptr;		//スキンモデルレンダラー。
 	CVector3 pos = CVector3::Zero;
+	CCharacterController m_charaCon;
+	CPhysicsGhostObject m_ghost;
 };
 

@@ -22,10 +22,28 @@ bool Game::Start()
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
-	
+	//ゴーストを作成。
+	m_ghost.Create(CVector3::Zero, CQuaternion::Identity, { 20.0f, 20.0f, 20.0f });
+	m_charaCon.Init(10.0f, 20.0f, CVector3{0.0f, 0.0f, 0.0f});
 	return true;
 }
 
 void Game::Update()
 {
+	auto moveSpeed = CVector3::Zero;
+	moveSpeed.x = -Pad(0).GetLStickXF() * 200.0f;
+	moveSpeed.y = 0.0f;
+	moveSpeed.z = -Pad(0).GetLStickYF() * 200.0f;
+
+	auto pos = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), moveSpeed);
+	m_skinModelRender->SetPosition(pos);
+
+	PhysicsWorld().ContactTest(m_charaCon, [&](const auto& hitColliObject) {
+		if (m_ghost.IsSelf(hitColliObject) == true) 
+		{
+			m_ghost.Release();
+			MessageBox(nullptr, "hoge", "hoge", MB_OK);
+		}
+		return 0.0f;
+	});
 }
