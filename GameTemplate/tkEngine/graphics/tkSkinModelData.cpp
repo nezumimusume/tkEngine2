@@ -130,6 +130,7 @@ namespace tkEngine{
 	
 	bool CSkinModelData::Load(const wchar_t* filePath)
 	{
+		m_filePath = filePath;
 		m_isAvailable = false;
 		CSkinModelEffectFactory effectFactory(GraphicsEngine().GetD3DDevice());
 		wchar_t textureDir[256];

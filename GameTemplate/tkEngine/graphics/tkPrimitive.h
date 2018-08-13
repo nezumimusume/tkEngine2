@@ -50,6 +50,17 @@ namespace tkEngine{
 		*@brief	描画。
 		*/
 		void Draw(CRenderContext& rc);
+		/*!
+		*@brief	描画。
+		*/
+		void Draw(CRenderContext& rc, int numVertex);
+		/*!
+		*@brief	頂点バッファを取得。
+		*/
+		CVertexBuffer& GetVertexBuffer() 
+		{
+			return m_vertexBuffer;
+		}
 	private:
 		CVertexBuffer			m_vertexBuffer;		//!<頂点バッファ。
 		CIndexBuffer			m_indexBuffer;		//!<インデックスバッファ。

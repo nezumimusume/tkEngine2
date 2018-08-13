@@ -1,46 +1,73 @@
 #pragma once
 
 #include "tkEngine/Physics/tkCollisionAttr.h"
+#include "tkEngine/Physics/tkPhysicsDebugDraw.h"
+#include "tkEngine/Physics/tkRigidBody.h"
 
 namespace tkEngine{
-	class CRigidBody;
 	class CCharacterController;
 
 	class CPhysicsWorld
 	{
-		btDefaultCollisionConfiguration*		collisionConfig = nullptr;
-		btCollisionDispatcher*					collisionDispatcher = nullptr;	//!<衝突解決処理。
-		btBroadphaseInterface*					overlappingPairCache = nullptr;	//!<ブロードフェーズ。衝突判定の枝切り。
-		btSequentialImpulseConstraintSolver*	constraintSolver = nullptr;		//!<コンストレイントソルバー。拘束条件の解決処理。
-		btDiscreteDynamicsWorld*				dynamicWorld = nullptr;			//!<ワールド。
+		std::unique_ptr<btDefaultCollisionConfiguration> 	 m_collisionConfig;
+		std::unique_ptr<btCollisionDispatcher>				 m_collisionDispatcher;	//!<衝突解決処理。
+		std::unique_ptr<btBroadphaseInterface>				 m_overlappingPairCache;	//!<ブロードフェーズ。衝突判定の枝切り。
+		std::unique_ptr<btSequentialImpulseConstraintSolver> m_constraintSolver;		//!<コンストレイントソルバー。拘束条件の解決処理。
+		std::unique_ptr<btDiscreteDynamicsWorld>			 m_dynamicWorld;			//!<ワールド。
+#if BUILD_LEVEL!=BUILD_LEVEL_MASTER
+		CPhysicsDebugDraw									 m_debugDraw;
+#endif
 	public:
-		CPhysicsWorld();
 		~CPhysicsWorld();
 		void Init();
 		void Update();
+		void DebubDrawWorld(CRenderContext& rc);
 		void Release();
 		/*!
 		* @brief	ダイナミックワールドを取得。
 		*/
 		btDiscreteDynamicsWorld* GetDynamicWorld()
 		{
-			return dynamicWorld;
+			return m_dynamicWorld.get();
 		}
 		/*!
 		* @brief	剛体を登録。
 		*/
-		void AddRigidBody(CRigidBody& rb);
+		void AddRigidBody(CRigidBody& rb)
+		{
+			if (rb.IsAddPhysicsWorld() == false) {
+				m_dynamicWorld->addRigidBody(rb.GetBody());
+				rb.SetMarkAddPhysicsWorld();
+			}
+		}
+		/*!
+		* @brief	デバッグ表示のモードを設定する。
+		*@param[in]	debugMode		enum btIDebugDraw::DebugDrawModesを参照してください。
+		*/
+		void SetDebugDrawMode(int debugMode)
+		{
+#if BUILD_LEVEL!=BUILD_LEVEL_MASTER
+			//ワイヤーフレーム描画のみ。
+			m_debugDraw.setDebugMode(debugMode);
+#endif
+		}
 		/*!
 		* @brief	剛体を破棄。
 		*/
-		void RemoveRigidBody(CRigidBody& rb);
+		void RemoveRigidBody(CRigidBody& rb)
+		{
+			if (rb.IsAddPhysicsWorld() == true) {
+				m_dynamicWorld->removeRigidBody(rb.GetBody());
+				rb.SetUnmarkAddPhysicsWorld();
+			}
+		}
 		/*!
 		* @brief	コリジョンオブジェクトをワールドに登録。
 		*@param[in]	colliObj	コリジョンオブジェクト。
 		*/
 		void AddCollisionObject(btCollisionObject& colliObj)
 		{
-			dynamicWorld->addCollisionObject(&colliObj);
+			m_dynamicWorld->addCollisionObject(&colliObj);
 		}
 		/*!
 		* @brief	コリジョンオブジェクトをワールドから削除。
@@ -48,7 +75,7 @@ namespace tkEngine{
 		*/
 		void RemoveCollisionObject(btCollisionObject& colliObj)
 		{
-			dynamicWorld->removeCollisionObject(&colliObj);
+			m_dynamicWorld->removeCollisionObject(&colliObj);
 		}
 		void ConvexSweepTest(
 			const btConvexShape* castShape,
@@ -58,7 +85,7 @@ namespace tkEngine{
 			btScalar allowedCcdPenetration = 0.0f
 		)
 		{
-			dynamicWorld->convexSweepTest(castShape, convexFromWorld, convexToWorld, resultCallback, allowedCcdPenetration);
+			m_dynamicWorld->convexSweepTest(castShape, convexFromWorld, convexToWorld, resultCallback, allowedCcdPenetration);
 		}
 		void ContactTest(
 			btCollisionObject* colObj,

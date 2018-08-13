@@ -7,7 +7,7 @@
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
 
-//#define ENABLE_G_BUFFER_MSAA  //定義するとG-BufferにMSAAがかかる。
+//#define ENABLE_G_BUFFER_MSAA  //定義するとG-BufferにMSAAがかかる。多分もう動かないよ。
 namespace tkEngine{
 	/*!
 	 * @brief	コンストラクタ。

@@ -25,6 +25,7 @@ bool Game::Start()
 	//ゴーストを作成。
 	m_ghost.Create(CVector3::Zero, CQuaternion::Identity, { 20.0f, 20.0f, 20.0f });
 	m_charaCon.Init(10.0f, 20.0f, CVector3{0.0f, 0.0f, 0.0f});
+	PhysicsWorld().SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	return true;
 }
 
@@ -41,8 +42,7 @@ void Game::Update()
 	PhysicsWorld().ContactTest(m_charaCon, [&](const auto& hitColliObject) {
 		if (m_ghost.IsSelf(hitColliObject) == true) 
 		{
-			m_ghost.Release();
-			MessageBox(nullptr, "hoge", "hoge", MB_OK);
+			TK_LOG("Contact ghost");
 		}
 		return 0.0f;
 	});

@@ -893,6 +893,7 @@
     <ClInclude Include="physics\tkICollider.h" />
     <ClInclude Include="physics\tkMeshCollider.h" />
     <ClInclude Include="physics\tkPhysics.h" />
+    <ClInclude Include="physics\tkPhysicsDebugDraw.h" />
     <ClInclude Include="physics\tkPhysicsGhostObject.h" />
     <ClInclude Include="physics\tkPhysicsStaticObject.h" />
     <ClInclude Include="physics\tkRigidBody.h" />
@@ -988,6 +989,7 @@
     <ClCompile Include="physics\tkCapsuleCollider.cpp" />
     <ClCompile Include="physics\tkMeshCollider.cpp" />
     <ClCompile Include="physics\tkPhysics.cpp" />
+    <ClCompile Include="physics\tkPhysicsDebugDraw.cpp" />
     <ClCompile Include="physics\tkPhysicsGhostObject.cpp" />
     <ClCompile Include="physics\tkPhysicsStaticObject.cpp" />
     <ClCompile Include="physics\tkRigidBody.cpp" />

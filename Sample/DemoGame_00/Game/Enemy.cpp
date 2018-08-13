@@ -10,6 +10,7 @@ Enemy::Enemy() :
 
 Enemy::~Enemy()
 {
+	DeleteGO(m_modelRender);
 }
 bool Enemy::Start()
 {

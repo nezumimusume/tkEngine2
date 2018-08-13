@@ -22,16 +22,31 @@ namespace tkEngine{
 	//剛体クラス。
 	class CRigidBody
 	{
-		btRigidBody*			rigidBody;		//剛体。
-		btDefaultMotionState*	myMotionState;	//モーションステート。
+		std::unique_ptr<btRigidBody>			m_rigidBody;		//剛体。
+		std::unique_ptr<btDefaultMotionState>	m_myMotionState;	//モーションステート。
+		bool m_isAddPhysicsWorld = false;			//物理ワールドに追加されている？
 	public:
-		CRigidBody();
 		~CRigidBody();
 		void Release();
 		void Create(RigidBodyInfo& rbInfo);
 		btRigidBody* GetBody()
 		{
-			return rigidBody;
+			return m_rigidBody.get();
+		}
+		//物理ワールドに登録中の印をつける。
+		void SetMarkAddPhysicsWorld()
+		{
+			m_isAddPhysicsWorld = true;
+		}
+		//物理ワールドに登録中の印を外す。
+		void SetUnmarkAddPhysicsWorld()
+		{
+			m_isAddPhysicsWorld = false;
+		}
+		//物理ワールドに追加されている？
+		bool IsAddPhysicsWorld() const
+		{
+			return m_isAddPhysicsWorld;
 		}
 	};
 }

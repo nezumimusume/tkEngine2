@@ -425,6 +425,9 @@
     <ClInclude Include="physics\tkPhysicsGhostObject.h">
       <Filter>Source Files\physics</Filter>
     </ClInclude>
+    <ClInclude Include="physics\tkPhysicsDebugDraw.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -674,6 +677,9 @@
       <Filter>Source Files\debug\math</Filter>
     </ClCompile>
     <ClCompile Include="physics\tkPhysicsGhostObject.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkPhysicsDebugDraw.cpp">
       <Filter>Source Files\physics</Filter>
     </ClCompile>
   </ItemGroup>

@@ -217,6 +217,7 @@ namespace tkEngine{
 		 */
 		void FindMesh(OnFindMesh findMesh);
 	private:
+		std::wstring m_filePath;
 		DirectX::Model* m_modelDx = nullptr;
 		CSkeleton	m_skeleton;
 		bool m_isAvailable = false;	//インスタンスが利用可能かどうかのフラグ。

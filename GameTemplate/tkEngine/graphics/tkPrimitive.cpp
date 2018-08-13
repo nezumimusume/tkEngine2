@@ -28,15 +28,18 @@ namespace tkEngine{
 		void* pSrcIndexBuffer)
 	{
 		Release();
+		m_topology = topology;
 		bool result = m_vertexBuffer.Create(numVertex, vertexStride, pSrcVertexBuffer );
 		if (!result) {
 			TK_WARNING("プリミティブの作成に失敗しました。");
 			return false;
 		}
-		result = m_indexBuffer.Create(numIndex, indexType, pSrcIndexBuffer);
-		if (!result) {
-			TK_WARNING("プリミティブの作成に失敗しました。");
-			return false;
+		if (pSrcIndexBuffer) {
+			result = m_indexBuffer.Create(numIndex, indexType, pSrcIndexBuffer);
+			if (!result) {
+				TK_WARNING("プリミティブの作成に失敗しました。");
+				return false;
+			}
 		}
 
 		return true;
@@ -47,8 +50,17 @@ namespace tkEngine{
 		rc.IASetVertexBuffer(m_vertexBuffer);
 		rc.IASetIndexBuffer(m_indexBuffer);
 		//プリミティブのトポロジーを設定。
-		rc.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+		rc.IASetPrimitiveTopology(m_topology);
 		//描画。
 		rc.DrawIndexed(m_indexBuffer.GetNumIndex(), 0, 0);
+	}
+	
+	void CPrimitive::Draw(CRenderContext& rc, int numVertex)
+	{
+		rc.IASetVertexBuffer(m_vertexBuffer);
+		//プリミティブのトポロジーを設定。
+		rc.IASetPrimitiveTopology(m_topology);
+		//描画。
+		rc.Draw(numVertex, 0);
 	}
 }

@@ -62,7 +62,7 @@ void Game::InitSceneLight()
 	}
 
 	LightManager().SetAmbientLight({ 5.0f, 5.0f, 5.0f });
-
+	PhysicsWorld().SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 	if (m_directionLight != nullptr) {
 		GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
 	}

@@ -58,7 +58,15 @@ namespace tkEngine{
 		{
 			return m_numIndex;
 		}
+		/*!
+		*@brief	インデックスバッファが作成されているか判定。
+		*/
+		bool IsCreated() const
+		{
+			return m_isCreated;
+		}
 	private:
+		bool			m_isCreated = false;			//!<インデックスバッファが作成されている？
 		ID3D11Buffer*	m_indexBuffer = nullptr;		//!<インデックスバッファ。
 		EnIndexType		m_indexType = enIndexType_16;	//!<インデックスの型。
 		unsigned int	m_numIndex = 0;					//!<インデックスの数。

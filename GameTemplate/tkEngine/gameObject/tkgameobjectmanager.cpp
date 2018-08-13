@@ -78,6 +78,8 @@ namespace tkEngine{
 				obj->ForwardRenderWrapper(rc);
 			}
 		}
+		//物理ワールドのデバッグ描画。
+		PhysicsWorld().DebubDrawWorld(rc);
 		EndGPUEvent();
 	}
 	void CGameObjectManager::PostRender(CRenderContext& rc)

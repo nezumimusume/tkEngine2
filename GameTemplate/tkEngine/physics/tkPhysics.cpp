@@ -1,12 +1,12 @@
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/Physics/tkPhysics.h"
-#include "tkEngine/Physics/tkRigidBody.h"
 #include "tkEngine/character/tkCharacterController.h"
 
+using namespace std;
 namespace tkEngine{
 	namespace {
 		struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {
-			using ContantTestCallback = std::function<void(const btCollisionObject& contactCollisionObject)>;
+			using ContantTestCallback = function<void(const btCollisionObject& contactCollisionObject)>;
 			ContantTestCallback  m_cb;
 			btCollisionObject* m_me = nullptr;
 			virtual	btScalar	addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
@@ -18,70 +18,60 @@ namespace tkEngine{
 			}
 		};
 	}
-	CPhysicsWorld::CPhysicsWorld()
-	{
-		collisionConfig = NULL;
-		collisionDispatcher = NULL;
-		overlappingPairCache = NULL;
-		constraintSolver = NULL;
-		dynamicWorld = NULL;
-	}
-
-
+	
 	CPhysicsWorld::~CPhysicsWorld()
 	{
 		Release();
 	}
 	void CPhysicsWorld::Release()
 	{
-		delete dynamicWorld;
-		delete constraintSolver;
-		delete overlappingPairCache;
-		delete collisionDispatcher;
-		delete collisionConfig;
-
-		dynamicWorld = nullptr;
-		constraintSolver = nullptr;
-		overlappingPairCache = nullptr;
-		collisionDispatcher = nullptr;
-		collisionConfig = nullptr;
+		m_dynamicWorld.reset();
+		m_constraintSolver.reset();
+		m_constraintSolver.reset();
+		m_overlappingPairCache.reset();
+		m_collisionDispatcher.reset();
+		m_collisionConfig.reset();
 	}
 	void CPhysicsWorld::Init()
 	{
 		Release();
 		//ï®óùÉGÉìÉWÉìÇèâä˙âªÅB
 		///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
-		collisionConfig = new btDefaultCollisionConfiguration();
+		m_collisionConfig = make_unique<btDefaultCollisionConfiguration>();
 
 		///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-		collisionDispatcher = new	btCollisionDispatcher(collisionConfig);
+		m_collisionDispatcher = make_unique<btCollisionDispatcher>(m_collisionConfig.get());
 
 		///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-		overlappingPairCache = new btDbvtBroadphase();
+		m_overlappingPairCache = make_unique<btDbvtBroadphase>();
 
 		///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-		constraintSolver = new btSequentialImpulseConstraintSolver;
+		m_constraintSolver = make_unique<btSequentialImpulseConstraintSolver>();
 
-		dynamicWorld = new btDiscreteDynamicsWorld(
-			collisionDispatcher,
-			overlappingPairCache,
-			constraintSolver,
-			collisionConfig
-			);
+		m_dynamicWorld = make_unique<btDiscreteDynamicsWorld>(
+			m_collisionDispatcher.get(),
+			m_overlappingPairCache.get(),
+			m_constraintSolver.get(),
+			m_collisionConfig.get()
+		);
 
-		dynamicWorld->setGravity(btVector3(0, -10, 0));
+		m_dynamicWorld->setGravity(btVector3(0, -10, 0));
+#if BUILD_LEVEL!=BUILD_LEVEL_MASTER
+		m_debugDraw.Init();
+		m_dynamicWorld->setDebugDrawer(&m_debugDraw);
+#endif 
 	}
 	void CPhysicsWorld::Update()
 	{
-		dynamicWorld->stepSimulation(GameTime().GetFrameDeltaTime());
+		m_dynamicWorld->stepSimulation(GameTime().GetFrameDeltaTime());
 	}
-	void CPhysicsWorld::AddRigidBody(CRigidBody& rb)
+	void CPhysicsWorld::DebubDrawWorld(CRenderContext& rc)
 	{
-		dynamicWorld->addRigidBody(rb.GetBody());
-	}
-	void CPhysicsWorld::RemoveRigidBody(CRigidBody& rb)
-	{
-		dynamicWorld->removeRigidBody(rb.GetBody());
+#if BUILD_LEVEL!=BUILD_LEVEL_MASTER
+		m_debugDraw.BeginDraw(rc);
+		m_dynamicWorld->debugDrawWorld();
+		m_debugDraw.EndDraw();
+#endif
 	}
 	void CPhysicsWorld::ContactTest(
 		btCollisionObject* colObj,
@@ -90,7 +80,7 @@ namespace tkEngine{
 		MyContactResultCallback myContactResultCallback;
 		myContactResultCallback.m_cb = cb;
 		myContactResultCallback.m_me = colObj;
-		dynamicWorld->contactTest(colObj, myContactResultCallback);
+		m_dynamicWorld->contactTest(colObj, myContactResultCallback);
 	}
 
 	void CPhysicsWorld::ContactTest(

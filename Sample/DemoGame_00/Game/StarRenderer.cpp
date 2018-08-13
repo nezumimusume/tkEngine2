@@ -9,6 +9,7 @@ StarRenderer::StarRenderer()
 
 StarRenderer::~StarRenderer()
 {
+	DeleteGO(m_modelRender);
 }
 /*!
 *@brief	ŠJn‚ÉŒÄ‚Î‚ê‚éˆ—B

@@ -116,7 +116,7 @@ namespace tkEngine {
 		m_rigidBody.Create(rbInfo);
 		btTransform& trans = m_rigidBody.GetBody()->getWorldTransform();
 		//剛体の位置を更新。
-		trans.setOrigin(btVector3(position.x, position.y, position.z));
+		trans.setOrigin(btVector3(position.x, position.y + m_height * 0.5f + m_radius, position.z));
 		//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 		m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
@@ -279,7 +279,7 @@ namespace tkEngine {
 		btBody->setActivationState(DISABLE_DEACTIVATION);
 		btTransform& trans = btBody->getWorldTransform();
 		//剛体の位置を更新。
-		trans.setOrigin(btVector3(m_position.x, m_position.y, m_position.z));
+		trans.setOrigin(btVector3(m_position.x, m_position.y + m_height * 0.5f + m_radius, m_position.z));
 		//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 		return m_position;
 	}

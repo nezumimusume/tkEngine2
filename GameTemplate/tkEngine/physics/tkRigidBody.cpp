@@ -2,12 +2,9 @@
 #include "tkEngine/Physics/tkRigidBody.h"
 #include "tkEngine/Physics/tkICollider.h"
 
+using namespace std;
+
 namespace tkEngine{
-	CRigidBody::CRigidBody() :
-		rigidBody(NULL),
-		myMotionState(NULL)
-	{
-	}
 
 
 	CRigidBody::~CRigidBody()
@@ -16,10 +13,6 @@ namespace tkEngine{
 	}
 	void CRigidBody::Release()
 	{
-		delete rigidBody;
-		delete myMotionState;
-		rigidBody = NULL;
-		myMotionState = NULL;
 	}
 	void CRigidBody::Create(RigidBodyInfo& rbInfo)
 	{
@@ -28,10 +21,10 @@ namespace tkEngine{
 		transform.setIdentity();
 		transform.setOrigin(btVector3(rbInfo.pos.x, rbInfo.pos.y, rbInfo.pos.z));
 		transform.setRotation(btQuaternion(rbInfo.rot.x, rbInfo.rot.y, rbInfo.rot.z, rbInfo.rot.w));
-		myMotionState = new btDefaultMotionState;
-		myMotionState->setWorldTransform(transform);
-		btRigidBody::btRigidBodyConstructionInfo btRbInfo(rbInfo.mass, myMotionState, rbInfo.collider->GetBody(), btVector3(0, 0, 0));
+		m_myMotionState = make_unique<btDefaultMotionState>();
+		m_myMotionState->setWorldTransform(transform);
+		btRigidBody::btRigidBodyConstructionInfo btRbInfo(rbInfo.mass, m_myMotionState.get(), rbInfo.collider->GetBody(), btVector3(0, 0, 0));
 		//„‘Ì‚ğì¬B
-		rigidBody = new btRigidBody(btRbInfo);
+		m_rigidBody = make_unique<btRigidBody>(btRbInfo);
 	}
 }
