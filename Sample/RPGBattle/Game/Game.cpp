@@ -39,7 +39,8 @@ bool Game::Start()
 	//レベルを構築。
 	level.Init(L"level/level00.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"enemy_00") == true) {
-			auto enemy = NewGO<Enemy>(0, "enemy_00", objData);
+			auto enemy = NewGO<Enemy>(0, "enemy_00");
+			enemy->Init(objData);
 			wchar_t name[256];
 			wchar_t* hoge[] = { L"A", L"B", L"C" };
 			swprintf_s(name, L"モンスター%s", hoge[m_aiAvatorList.size()]);
@@ -133,7 +134,7 @@ bool Game::Start()
 	LightManager().SetAmbientLight({ 0.1f, 0.1f, 0.1f });
 
 	m_bgm = NewGO<prefab::CSoundSource>(0);
-	m_bgm->Init("sound/bgm.wav");
+	m_bgm->Init(L"sound/bgm.wav");
 	m_bgm->Play(true);
 	m_hud.SetBattleLog00(L"モンスターがあらわれた");
 	return true;
@@ -172,13 +173,13 @@ void Game::Update()
 					//ゲームクリア。
 					m_step = enStepGameClear;
 					auto ss = NewGO<prefab::CSoundSource>(0);
-					ss->Init("sound/gameclear.wav");
+					ss->Init(L"sound/gameclear.wav");
 					ss->Play(false);
 				}if (ryu->GetHP() == 0 && senshi->GetHP() == 0 && shiro->GetHP() == 0) {
 					//ゲームオーバー。
 					m_step = enStepGameOver;
 					auto ss = NewGO<prefab::CSoundSource>(0);
-					ss->Init("sound/gameover.wav");
+					ss->Init(L"sound/gameover.wav");
 					ss->Play(false);
 				}
 			}

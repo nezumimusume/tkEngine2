@@ -13,9 +13,9 @@ class CSoundEmitter : public IGameObject {
 private:
 	float m_timer = 0.0f;
 	float m_emitTime = 0.0f;
-	std::string m_filePath;
+	std::wstring m_filePath;
 public:
-	void Init(float emitTime, const char* filePath)
+	void Init(float emitTime, const wchar_t* filePath)
 	{
 		m_emitTime = emitTime;
 		m_filePath = filePath;
@@ -141,7 +141,7 @@ void Player::UpdateFSM()
 		if (m_timer > 0.5f) {
 			
 			auto emitter = NewGO<CSoundEmitter>(0);
-			emitter->Init(0.3f, "sound/uni1518.wav");
+			emitter->Init(0.3f, L"sound/uni1518.wav");
 			m_state = enState_GameClear;
 			m_timer = 0.0f;
 		}
@@ -274,7 +274,7 @@ void Player::Update()
 void Player::NotifyGameOver()
 {
 	auto emitter = NewGO<CSoundEmitter>(0);
-	emitter->Init(0.6f, "sound/uni1482.wav");
+	emitter->Init(0.6f, L"sound/uni1482.wav");
 	m_state = enState_GameOver;
 }
 

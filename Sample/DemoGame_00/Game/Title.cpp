@@ -18,7 +18,7 @@ void Title::OnDestroy()
 bool Title::Start()
 {
 	m_bgm = NewGO<prefab::CSoundSource>(0);
-	m_bgm->Init("sound/title.wav");
+	m_bgm->Init(L"sound/title.wav");
 	m_bgm->Play(true);
 	m_intiBgmVolume = m_bgm->GetVolume();
 	m_texture.CreateFromDDSTextureFromFile(L"sprite/title.dds");
@@ -41,7 +41,7 @@ void Title::Update()
 	else {
 		if (Pad(0).IsPressAnyKey()) {
 			prefab::CSoundSource* s = NewGO<prefab::CSoundSource>(0);
-			s->Init("sound/press_key.wav");
+			s->Init(L"sound/press_key.wav");
 			s->SetVolume(2.0f);
 			s->Play(false);
 			m_isWaitFadeout = true;

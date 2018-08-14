@@ -4,8 +4,9 @@
 class Enemy : public AIAvator
 {
 public:
-	Enemy(LevelObjectData& objData);
+	Enemy();
 	~Enemy();
+	void Init(LevelObjectData& objData);
 	void PlayAnimation(int animNo, float interpolateTime) override
 	{
 		m_currentAnimNo = animNo;

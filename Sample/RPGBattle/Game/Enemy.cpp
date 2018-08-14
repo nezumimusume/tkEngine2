@@ -3,7 +3,16 @@
 #include "Game.h"
 #include "IAICommand.h"
 
-Enemy::Enemy(LevelObjectData& objData)
+Enemy::Enemy()
+{
+}
+
+
+Enemy::~Enemy()
+{
+	DeleteGO(m_skinModelRender);
+}
+void Enemy::Init(LevelObjectData& objData)
 {
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	wchar_t filePath[256];
@@ -33,20 +42,12 @@ Enemy::Enemy(LevelObjectData& objData)
 		OnAnimationEvent(clipName, eventName);
 	});
 }
-
-
-Enemy::~Enemy()
-{
-	DeleteGO(m_skinModelRender);
-}
 void Enemy::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 {
 	(void)clipName;
 	auto ss = NewGO<prefab::CSoundSource>(0);
-	char soundFileName[256];
-	size_t size;
-	wcstombs_s(&size, soundFileName, eventName, 256);
-	ss->Init(soundFileName);
+	
+	ss->Init(eventName);
 	
 	ss->SetVolume(4.0f);
 	ss->Play(false);

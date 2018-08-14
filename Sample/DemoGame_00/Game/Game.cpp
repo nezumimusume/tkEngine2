@@ -127,7 +127,7 @@ bool Game::Start()
 	m_fade = FindGO<Fade>("Fade");
 	GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
 	m_bgmSource = NewGO<prefab::CSoundSource>(0, nullptr);
-	m_bgmSource->Init("sound/normalBGM.wav");
+	m_bgmSource->Init(L"sound/normalBGM.wav");
 	
 	
 	//タイマー用のフォントを初期化。

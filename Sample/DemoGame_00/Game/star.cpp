@@ -32,7 +32,7 @@ void Star::Update()
 			FindGO<Game>("Game")->AddGetStarCount();
 			//コインゲット。
 			prefab::CSoundSource* s = NewGO<prefab::CSoundSource>(0);
-			s->Init("sound/coinGet.wav");
+			s->Init(L"sound/coinGet.wav");
 			s->Play(false);
 			m_jumpSpeed = 500.0f;
 			m_isGet = true;

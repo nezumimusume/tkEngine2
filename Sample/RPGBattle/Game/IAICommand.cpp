@@ -108,7 +108,7 @@ bool AICommandAttack::Execute()
 			g_game->GetBattleHUD().SetBattleLog01(L"");
 			g_game->GetBattleHUD().SetBattleLog00(text);
 			auto ss = NewGO<prefab::CSoundSource>(0);
-			ss->Init("sound/kaifuku.wav");
+			ss->Init(L"sound/kaifuku.wav");
 			ss->Play(false);
 			auto effect = NewGO<prefab::CEffect>(0);
 			effect->Play(L"effect/sukuruto/TenshiNoInoriHatudou.efk");
@@ -186,7 +186,7 @@ bool AICommandHoimi::Execute()
 		effect->SetPosition(pos);
 		effect->SetScale({ 15.0f, 15.0f, 15.0f });
 		auto ss = NewGO<prefab::CSoundSource>(0);
-		ss->Init("sound/kaifuku.wav");
+		ss->Init(L"sound/kaifuku.wav");
 		ss->Play(false);
 	}break;
 	case enStep_01:
@@ -240,7 +240,7 @@ bool AICommandZaoriku::Execute()
 		effect->SetPosition(pos);
 		effect->SetScale({ 40.0f, 40.0f, 40.0f });
 		auto ss = NewGO<prefab::CSoundSource>(0);
-		ss->Init("sound/kaifuku.wav");
+		ss->Init(L"sound/kaifuku.wav");
 		ss->Play(false);
 	}break;
 	case enStep_01:
@@ -297,7 +297,7 @@ bool AICommandSukuruto::Execute()
 		rot.SetRotationDeg(CVector3::AxisY, 90.0f);
 		effect->SetRotation(rot);
 		auto ss = NewGO<prefab::CSoundSource>(0);
-		ss->Init("sound/kaifuku.wav");
+		ss->Init(L"sound/kaifuku.wav");
 		ss->Play(false);
 	}break;
 	case enStep_01:
@@ -346,7 +346,7 @@ bool AICommandBaikiruto::Execute()
 		effect->SetPosition(pos);
 		effect->SetScale({ 40.0f, 40.0f, 40.0f });
 		auto ss = NewGO<prefab::CSoundSource>(0);
-		ss->Init("sound/kaifuku.wav");
+		ss->Init(L"sound/kaifuku.wav");
 		ss->Play(false);
 	}break;
 	case enStep_01:
@@ -400,7 +400,7 @@ bool AICommandTenshiNoInori::Execute()
 		effect->SetPosition(pos);
 		effect->SetScale({ 40.0f, 40.0f, 40.0f });
 		auto ss = NewGO<prefab::CSoundSource>(0);
-		ss->Init("sound/kaifuku.wav");
+		ss->Init(L"sound/kaifuku.wav");
 		ss->Play(false);
 	}break;
 	case enStep_01:
