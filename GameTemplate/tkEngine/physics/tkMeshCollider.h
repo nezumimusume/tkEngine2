@@ -22,6 +22,11 @@ namespace tkEngine{
 		 *@param[in]	model		スキンモデル。
 		 */
 		void CreateFromSkinModel( const CSkinModel& model, const CMatrix* offsetMatrix );
+		/*!
+		* @brief	CSkinModelからメッシュコライダーを生成。
+		*@param[in]	modelData		スキンモデルデータ。
+		*/
+		void CreateFromSkinModel(const CSkinModelData& modelData, const CMatrix* offsetMatrix);
 		btCollisionShape* GetBody() const override
 		{
 			return m_meshShape.get();

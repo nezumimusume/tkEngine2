@@ -160,7 +160,7 @@ namespace tkEngine{
 		}
 		return true;
 	}
-	void CSkinModelData::FindMesh(OnFindMesh findMesh)
+	void CSkinModelData::FindMesh(OnFindMesh findMesh) const
 	{
 		if (m_modelDx != nullptr) {
 			for (auto& modelMeshs : m_modelDx->meshes) {

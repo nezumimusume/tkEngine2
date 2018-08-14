@@ -215,7 +215,7 @@ namespace tkEngine{
 		 *@brief	メッシュの検索。
 		 *@param[in]	findMesh		メッシュを見つけた時に呼ばれるコールバック関数
 		 */
-		void FindMesh(OnFindMesh findMesh);
+		void FindMesh(OnFindMesh findMesh) const;
 	private:
 		std::wstring m_filePath;
 		DirectX::Model* m_modelDx = nullptr;
