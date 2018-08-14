@@ -126,11 +126,20 @@ namespace tkEngine{
 		//ディレクションライトのストラクチャーバッファを更新。
 		int ligNo = 0;
 		for (auto lig : m_directionLights) {
+			if (lig->IsActive() == false) {
+				//アクティブじゃない奴はスキップ。
+				continue;
+			}
 			m_rawDirectionLights[ligNo] = lig->GetRawData();
 			ligNo++;
 		}
+		int numDirLig = ligNo;
 		ligNo = 0;
 		for (auto lig : m_pointLights) {
+			if (lig->IsActive() == false) {
+				//アクティブじゃない奴はスキップ。
+				continue;
+			}
 			m_rawPointLights[ligNo] = lig->GetRawData();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 			//ポイントライトのデータのエラーチェック。
@@ -140,9 +149,10 @@ namespace tkEngine{
 #endif
 			ligNo++;
 		}
-		
-		m_lightParam.numDirectionLight = static_cast<int>(m_directionLights.size());
-		m_lightParam.numPointLight = static_cast<int>(m_pointLights.size());
+		int numPointLig = ligNo;
+
+		m_lightParam.numDirectionLight = static_cast<int>(numDirLig);
+		m_lightParam.numPointLight = static_cast<int>(numPointLig);
 		m_lightParam.screenParam.x = 0.0f;
 		m_lightParam.screenParam.y = 0.0f;
 		m_lightParam.screenParam.z = static_cast<float>(GraphicsEngine().GetFrameBufferWidth());

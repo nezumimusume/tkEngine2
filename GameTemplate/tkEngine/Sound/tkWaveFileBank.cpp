@@ -31,7 +31,7 @@ namespace tkEngine{
 		TK_ASSERT(groupID < MAX_GROUP, "groupID is invalid");
 		m_waveFileMap[groupID].insert({ waveFile->GetFilePathHash(), waveFile });
 	}
-	CWaveFilePtr CWaveFileBank::FindWaveFile(int groupID, const char* filePath)
+	CWaveFilePtr CWaveFileBank::FindWaveFile(int groupID, const wchar_t* filePath)
 	{
 		TK_ASSERT(groupID < MAX_GROUP, "groupID is invalid");
 		auto value = m_waveFileMap[groupID].find(CUtil::MakeHash(filePath));
@@ -40,7 +40,7 @@ namespace tkEngine{
 		}
 		return CWaveFilePtr();
 	}
-	CWaveFilePtr CWaveFileBank::FindWaveFile(int groupID, const NameKey& nameKey)
+	CWaveFilePtr CWaveFileBank::FindWaveFile(int groupID, const WNameKey& nameKey)
 	{
 		TK_ASSERT(groupID < MAX_GROUP, "groupID is invalid");
 		auto value = m_waveFileMap[groupID].find(nameKey.GetHashCode());

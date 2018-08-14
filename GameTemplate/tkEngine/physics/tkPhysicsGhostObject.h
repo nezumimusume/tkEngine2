@@ -22,7 +22,7 @@ namespace tkEngine{
 		/*!
 		 * @brief	デストラクタ。
 		 */
-		~CPhysicsGhostObject	();
+		~CPhysicsGhostObject();
 		/*!
 		 * @brief	ボックス形状のゴーストオブジェクトを作成。
 		 *@param[in]	pos			座標。

@@ -23,7 +23,7 @@ namespace tkEngine{
 		 *@param[in]	fileName		ファイル名。
 		 *@return	falseを返して来たらオープンに失敗。
 		 */
-		bool Open( const char* fileName );
+		bool Open( const wchar_t* fileName );
 		/*!
 		* @brief	波形データを読み込み。
 		*@param[out]	pBuffer		波形データを書き込むバッファ。
@@ -99,7 +99,7 @@ namespace tkEngine{
 		volatile bool	m_isReadEnd = true;	//読み込み終了フラグ。
 		std::thread		m_readAsyncThread;	//非同期読み込みスレッド。
 		bool			m_isInvokeReadAsyncThread = false;
-		std::string		m_filePath;			//ファイルパス。
+		std::wstring	m_filePath;			//ファイルパス。
 		unsigned int	m_filePathHash = 0;		//ファイルパスのハッシュコード。
 	};
 }

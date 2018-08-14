@@ -32,7 +32,7 @@ namespace tkEngine{
 			m_dspSettings.EmitterVelocityComponent = 0.0f;
 			m_dspSettings.ListenerVelocityComponent = 0.0f;
 		}
-		void CSoundSource::Init(char* filePath, bool is3DSound)
+		void CSoundSource::Init(wchar_t* filePath, bool is3DSound)
 		{
 			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, filePath);
@@ -63,7 +63,7 @@ namespace tkEngine{
 			m_is3DSound = is3DSound;
 			m_isAvailable = true;
 		}
-		void CSoundSource::Init(const NameKey& nameKey, bool is3DSound)
+		void CSoundSource::Init(const WNameKey& nameKey, bool is3DSound)
 		{
 			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, nameKey);
@@ -88,7 +88,7 @@ namespace tkEngine{
 			m_isAvailable = true;
 		}
 
-		void CSoundSource::InitStreaming(char* filePath, bool is3DSound, unsigned int ringBufferSize, unsigned int bufferSize)
+		void CSoundSource::InitStreaming(wchar_t* filePath, bool is3DSound, unsigned int ringBufferSize, unsigned int bufferSize)
 		{
 			m_isAvailable = false;
 			//ストリーミングはCWaveFileの使いまわしはできない。
