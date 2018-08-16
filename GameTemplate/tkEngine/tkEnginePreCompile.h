@@ -131,4 +131,5 @@ namespace tkEngine {
 #include "tkEngine/level/tkLevel.h"
 #include "tkEngine/level/tkMapChip.h"
 #include "tkEngine/debug/math/tkVectorRenderInline.h"
+#include "tkEngine/Character/tkCharacterController.h"
 

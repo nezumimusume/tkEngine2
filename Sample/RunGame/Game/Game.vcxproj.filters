@@ -14,8 +14,11 @@
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{a6ce300a-b532-440d-b914-b4661d3015ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\modelData\Theif">
-      <UniqueIdentifier>{f0683f9c-ae60-4f8e-84ea-15d8f7bd5ca5}</UniqueIdentifier>
+    <Filter Include="Assets\modelData\background">
+      <UniqueIdentifier>{9220f649-f463-4431-a0b8-96a14f0ee5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\star">
+      <UniqueIdentifier>{4b889b0c-596a-4d37-ad08-6f187a48e380}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +26,10 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -31,6 +38,10 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -41,18 +52,17 @@
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Theif\Thethief_H.FBX">
-      <Filter>Assets\modelData\Theif</Filter>
+    <MeshContentTask Include="Assets\modelData\background\stage_00.fbx">
+      <Filter>Assets\modelData\background</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\star\star.FBX">
+      <Filter>Assets\modelData\star</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\title.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
+    <ImageContentTask Include="Assets\sprite\title.png" />
   </ItemGroup>
 </Project>

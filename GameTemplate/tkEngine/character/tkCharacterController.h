@@ -30,11 +30,16 @@ namespace tkEngine{
 		void Init(float radius, float height, const CVector3& position);
 		/*!
 		 * @brief	実行。
-		 *@param[in]	deltaTime		経過時間。単位は秒。
 		 *@param[in, out]	moveSpeed		移動速度。内部で重力加速が計算され、その結果がmoveSpeedに反映されます。
+		 *@param[in]	deltaTime		経過時間。単位は秒。デフォルトでは、１フレームの経過時間が渡されています。
 		 *@return 移動後のキャラクターの座標。
 		 */
-		const CVector3& Execute(float deltaTime, CVector3& moveSpeed);
+		const CVector3& Execute(CVector3& moveSpeed, float deltaTime = GameTime().GetFrameDeltaTime());
+		[[deprecated("This function will be delete. please don't use.")]]
+		const CVector3& Execute(float deltaTime, CVector3& moveSpeed )
+		{
+			Execute(moveSpeed, deltaTime);
+		}
 		/*!
 		 * @brief	座標を取得。
 		 */
@@ -83,6 +88,7 @@ namespace tkEngine{
 		*/
 		void RemoveRigidBoby();
 	private:
+		bool				m_isInited = false;				//初期化済み？
 		CVector3 			m_position = CVector3::Zero;	//座標。
 		bool 				m_isJump = false;				//ジャンプ中？
 		bool				m_isOnGround = true;			//地面の上にいる？

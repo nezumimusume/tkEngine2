@@ -128,7 +128,7 @@ namespace tkEngine{
 		*@param[in]	objectName		オブジェクト名。
 		*/
 		template<class T>
-		T* FindGameObject(const char* objectName)
+		T* FindGameObject(const char* objectName, bool enableErrorMessage)
 		{
 			unsigned int nameKey = CUtil::MakeHash(objectName);
 			for (auto goList : m_gameObjectListArray) {
@@ -136,7 +136,7 @@ namespace tkEngine{
 					if (go->m_nameKey == nameKey) {
 						//見つけた。
 						T* p = dynamic_cast<T*>(go);
-						if (p == nullptr) {
+						if (p == nullptr && enableErrorMessage == true) {
 							//型変換に失敗。
 							
 							TK_WARNING_MESSAGE_BOX(
@@ -148,6 +148,11 @@ namespace tkEngine{
 						return p;
 					}
 				}
+			}
+			if (enableErrorMessage == true) {
+				TK_WARNING_MESSAGE_BOX("FindGO関数に指定された名前のインスタンスを見つけることができませんでした。\n"
+					"名前が間違っていないか確認をして下さい。\n"
+					"\n\n検索された名前 【%s】\n", objectName);
 			}
 			//見つからなかった。
 			return nullptr;
@@ -267,11 +272,15 @@ namespace tkEngine{
 	/*!
 	*@brief	ゲームオブジェクトの検索のヘルパー関数。
 	*@param[in]	objectName	ゲームオブジェクトの名前。
+	*@param[in] enableErrorMessage	エラーメッセージが有効？
+	*　呼び出し側でnullptrの判定を行いたい場合は、第二引数にfalseを指定して、エラーメッセージの処理を無効にしてください。
+	*
+	*@return 見つかったインスタンスのアドレス。見つからなかった場合はnullptrを返す。
 	*/
 	template<class T>
-	static inline T* FindGO(const char* objectName)
+	static inline T* FindGO(const char* objectName, bool enableErrorMessage = true)
 	{
-		return GameObjectManager().FindGameObject<T>(objectName);
+		return GameObjectManager().FindGameObject<T>(objectName, enableErrorMessage);
 	}
 	/*!
 	*@brief	ゲームオブジェクトの検索のヘルパー関数。

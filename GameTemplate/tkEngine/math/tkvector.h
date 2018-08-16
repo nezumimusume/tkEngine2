@@ -525,6 +525,10 @@ namespace tkEngine{
 		}
 		/*!
 		*@brief	クォータニオン同士の積。
+		* こっちは乗算の順番が数学基準。
+		* 右から左に向かって乗算されていく。
+		* 多分、こっちは直観的に分かりにくいので非推奨。
+		* operator*を使う方が分かりやすいです。
 		*/
 		void Multiply(const CQuaternion& rot)
 		{
@@ -540,8 +544,13 @@ namespace tkEngine{
 			z = pw * qz + px * qy - py * qx + pz * qw;
 
 		}
+		
 		/*!
 		 *@brief	クォータニオン同士の乗算。
+		 * こっちは乗算の順番が数学基準。
+		 * 右から左に向かって乗算されていく。
+		 * 多分、こっちは直観的に分かりにくいので非推奨。
+		 * operator*を使う方が分かりやすいです。
 		 *@details
 		 * this = rot0 * rot1;
 		 */
@@ -559,20 +568,43 @@ namespace tkEngine{
 			z = pw * qz + px * qy - py * qx + pz * qw;
 		}
 		/*!
+		*@brief	クォータニオン代入演算子
+		* こちらの乗算順番は行列と同じになる。
+		* こっちを使う方が直観的に分かりやすいはず。
+		*@details
+		* this = rot0 * rot1;
+		*/
+		const CQuaternion& operator*=(const CQuaternion& rot0)
+		{
+			Multiply(rot0, *this);
+			return *this;
+		}
+		/*!
 		*@brief	ベクトルにクォータニオンを適用する。
 		*@param[in,out] v	ベクトル。
 		*/
-		void Multiply(CVector4& _v)
+		void Apply(CVector4& _v)
 		{
 			DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate(_v, *this);
 			DirectX::XMStoreFloat4(&_v.vec, xmv);
 		}
-		void Multiply(CVector3& _v)
+		void Apply(CVector3& _v)
 		{
 			DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate(_v, *this);
 			DirectX::XMStoreFloat3(&_v.vec, xmv);
 		}
+		[[deprecated("This function will be delete. please use Apply() function.")]]
+		void Multiply(CVector4& _v)
+		{
+			Apply(_v);
+		}
+		[[deprecated("This function will be delete. please use Apply() function.")]]
+		void Multiply(CVector3& _v)
+		{
+			Apply(_v);
+		}
 	};
+	
 	//整数型のベクトルクラス。
 	__declspec(align(16)) class CVector4i {
 	public:
@@ -640,6 +672,17 @@ namespace tkEngine{
 	static inline float Dot(const TVector& v0, const TVector& v1)
 	{
 		return v0.Dot(v1);
+	}
+	/*!
+	*@brief	クォータニオン同士の乗算。
+	*@details
+	* 乗算は左から右に向かってかかっていく。
+	*/
+	static inline CQuaternion operator*(const CQuaternion& q1, const CQuaternion q2)
+	{
+		CQuaternion qRet;
+		qRet.Multiply(q2, q1);
+		return qRet;
 	}
 }
 

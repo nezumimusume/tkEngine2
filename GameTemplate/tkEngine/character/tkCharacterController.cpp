@@ -121,10 +121,17 @@ namespace tkEngine {
 		m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
 		m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 		PhysicsWorld().AddRigidBody(m_rigidBody);
-
+		m_isInited = true;
 	}
-	const CVector3& CCharacterController::Execute(float deltaTime, CVector3& moveSpeed)
+	const CVector3& CCharacterController::Execute( CVector3& moveSpeed, float deltaTime )
 	{
+		if (m_isInited == false) {
+			TK_WARNING_MESSAGE_BOX("初期化されていないキャラクターコントローラーのExecute関数が呼ばれています。\n"
+				"CharacterController::Init関数を呼び出してください。\n"
+				"CharacterControllerの使い方はSample/Sample07を参考にしてください。\n");
+			return CVector3::Zero;
+
+		}
 		if (moveSpeed.y > 0.0f) {
 			//吹っ飛び中にする。
 			m_isJump = true;
