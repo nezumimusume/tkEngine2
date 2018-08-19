@@ -2,6 +2,7 @@
 
 #pragma warning (disable  : 4201)
 #pragma warning (disable  : 4127)
+
 #define BUILD_LEVEL_DEBUG		0		//デバッグビルド
 #define BUILD_LEVEL_PREVIEW		1		//プレビュービルド
 #define BUILD_LEVEL_MASTER		2		//マスタービルド。

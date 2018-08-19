@@ -308,40 +308,40 @@
     <IntDir>$(Configuration)Objects\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Middle|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Middle|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Release</LibraryPath>
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Debug</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Middle|x64'">
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Debug</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">
     <IncludePath>$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(ProjectDir)/EffekseerRuntime130/src/include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(ProjectDir)/EffekseerRuntime130/src/lib/x64</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)/exlib/x64;$(ProjectDir)/DirectXTK/Bin/Desktop_2015_Win10/x64/Debug</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -423,7 +423,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <Lib>
-      <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;DirectXTK.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -443,7 +443,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <Lib>
-      <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;DirectXTK.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -463,7 +463,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <Lib>
-      <AdditionalDependencies>XInput.lib;XAudio2.lib;;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>XInput.lib;XAudio2.lib;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib;DirectXTK.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -660,7 +660,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -688,7 +688,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -717,7 +717,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -730,8 +730,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
       <PrecompiledHeaderFile>tkEngine/tkEnginePrecompile.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -747,7 +748,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>Effekseer.Release.lib;d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
     </Lib>
@@ -776,7 +777,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -804,7 +805,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib;DirectXTK.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib</AdditionalDependencies>
     </Lib>
     <MeshContentTask>
       <ContentOutput>$(SolutionDir)\Assets\modelData\%(Filename).cmo</ContentOutput>

@@ -30,7 +30,7 @@ bool GameOverCamera::Start()
 	CVector3 toPos = m_player->GetPosition() - m_enemy->GetPosition();
 	toPos.y = 0.0f;
 	toPos.Normalize();
-	qRot.Multiply(toPos);
+	qRot.Apply(toPos);
 
 	toPos *= 400.0f;
 	CVector3 pos = target + toPos;

@@ -257,7 +257,7 @@ void Player::Update()
 
 	UpdateFSM();
 	//キャラクタを移動させる。
-	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
+	m_position = m_charaCon.Execute(m_moveSpeed);
 	
 	//キャラライトはカメラの方向にする。
 	m_charaLight->SetDirection(MainCamera().GetForward());

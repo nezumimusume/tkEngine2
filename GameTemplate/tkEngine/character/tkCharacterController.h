@@ -38,7 +38,7 @@ namespace tkEngine{
 		[[deprecated("This function will be delete. please don't use.")]]
 		const CVector3& Execute(float deltaTime, CVector3& moveSpeed )
 		{
-			Execute(moveSpeed, deltaTime);
+			return Execute(moveSpeed, deltaTime);
 		}
 		/*!
 		 * @brief	À•W‚ğæ“¾B

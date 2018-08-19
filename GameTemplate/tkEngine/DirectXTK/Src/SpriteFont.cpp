@@ -321,7 +321,7 @@ void XM_CALLCONV SpriteFont::DrawString(_In_ SpriteBatch* spriteBatch, _In_z_ wc
 	//•¶Žš—ñ‚Ì•‚Æ‚‚³‚ð‹‚ß‚éB
 	float strWidth = 0.0f;
 	float strHeight = 0.0f;
-	pImpl->ForEachGlyph(text, [&](Glyph const* glyph, float x, float y, float advance)
+	pImpl->ForEachGlyph(text, [&](Glyph const* glyph, float x, float, float advance)
 	{
 		strWidth = x + advance;
 		strHeight = std::max<float>(strHeight, glyph->Subrect.bottom - glyph->Subrect.top);

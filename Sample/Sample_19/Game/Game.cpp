@@ -67,7 +67,7 @@ void Game::Update()
 	moveSpeed.y = 0.0f;
 	moveSpeed.z = Pad(0).GetLStickYF() * -300.0f;
 	//moveSpeedに設定された速度で、キャラクターを動かす。
-	m_charaCon.Execute(GameTime().GetFrameDeltaTime(), moveSpeed);
+	m_charaCon.Execute(moveSpeed);
 	//キャラコンで動かした結果をCSkinModelRenderに反映させる。
 	m_playerRender->SetPosition(m_charaCon.GetPosition());
 

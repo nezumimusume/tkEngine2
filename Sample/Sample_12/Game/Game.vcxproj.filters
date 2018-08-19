@@ -43,8 +43,4 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Assets\shader\modelPSFunction.h" />
-    <CustomBuild Include="Assets\shader\defferdShading.fx" />
-  </ItemGroup>
 </Project>

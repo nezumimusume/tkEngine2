@@ -13,7 +13,7 @@ namespace tkEngine {
 		//ラインストリップのテスト。
 		m_primitive.Create(
 			D3D_PRIMITIVE_TOPOLOGY_LINELIST,
-			m_vertexBuffer.size(),
+			static_cast<int>(m_vertexBuffer.size()),
 			sizeof(CVector4),
 			&m_vertexBuffer[0],
 			0,

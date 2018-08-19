@@ -73,7 +73,7 @@ namespace {
 						tangent.x = -vert.normal.z;
 						tangent.y = 0.0f;
 						tangent.z = - vert.normal.x;
-						float len = std::max(0.001f, sqrt(tangent.x * tangent.x + tangent.y * tangent.y + vert.tangent.z * tangent.z));
+						len = std::max(0.001f, sqrt(tangent.x * tangent.x + tangent.y * tangent.y + vert.tangent.z * tangent.z));
 						tangent.x /= len;
 						tangent.z /= len;
 					}

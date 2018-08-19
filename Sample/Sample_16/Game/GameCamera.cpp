@@ -45,13 +45,13 @@ void GameCamera::Update()
 	//Y軸周りの回転
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY, 2.0f * x);
-	qRot.Multiply(m_toCameraPos);
+	qRot.Apply(m_toCameraPos);
 	//X軸周りの回転。
 	CVector3 axisX;
 	axisX.Cross(CVector3::AxisY, m_toCameraPos);
 	axisX.Normalize();
 	qRot.SetRotationDeg(axisX, 2.0f * y);
-	qRot.Multiply(m_toCameraPos);
+	qRot.Apply(m_toCameraPos);
 	//カメラの回転の上限をチェックする。
 	//注視点から視点までのベクトルを正規化する。
 	//正規化すると、ベクトルの大きさが１になる。

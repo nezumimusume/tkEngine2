@@ -16,5 +16,9 @@ public:
 	Player* m_player = nullptr;
 	Background* m_background = nullptr;
 	Star* m_star[5] = { nullptr };
+	int m_numGetStarCount = 0;
+	bool m_isClear = false;
+	prefab::CSpriteRender* m_clearSpriteRender = nullptr;
+	int m_timer = 0;
 };
 

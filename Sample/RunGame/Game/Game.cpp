@@ -54,16 +54,36 @@ Game::~Game()
 	for (int i = 0; i < 5; i++) {
 		DeleteGO( m_star[i] );
 	}
+	DeleteGO(m_clearSpriteRender);
 }
 void Game::Update()
 {
-	if (Pad(0).IsPress(enButtonSelect) == true) {
-		//セレクトボタンが押された。
-		//Titleクラスのインスタンスを生成。
-		//これでTitleクラスのコンストラクタが呼ばれる。
-		NewGO<Title>(0);
-		//Gameクラスのインスタンスを破棄。
-		//これでGameクラスのデストラクタが呼ばれる。
-		DeleteGO(this);
+	if (m_isClear == false) {
+		//クリアしていないときの処理
+		if (Pad(0).IsPress(enButtonSelect) == true) {
+			//セレクトボタンが押された。
+			//Titleクラスのインスタンスを生成。
+			//これでTitleクラスのコンストラクタが呼ばれる。
+			NewGO<Title>(0);
+			//Gameクラスのインスタンスを破棄。
+			//これでGameクラスのデストラクタが呼ばれる。
+			DeleteGO(this);
+		}
+		if (m_numGetStarCount == 5) {
+			//☆を5つそろえたので、クリアフラグを立てて、
+			//ゲームクリア２Ｄを表示するスプライトレンダラーを作成する。
+			m_isClear = true;
+			m_clearSpriteRender = NewGO<prefab::CSpriteRender>(0);
+			m_clearSpriteRender->Init(L"sprite/GAMECLEAR.dds", 712, 65);
+		}
+	}
+	else {
+		//クリアしている。
+		m_timer++;
+		if (m_timer == 60) {
+			//60フレーム経過したらタイトル画面に戻る。
+			NewGO<Title>(0);
+			DeleteGO(this);
+		}
 	}
 }

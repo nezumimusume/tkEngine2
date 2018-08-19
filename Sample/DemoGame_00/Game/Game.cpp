@@ -230,11 +230,11 @@ void Game::Update()
 	qRot.SetRotation(CVector3::AxisY, Pad(0).GetRStickXF() * 0.05f);
 	
 	CVector3 lightDir = m_directionLight->GetDirection();
-	qRot.Multiply(lightDir);
+	qRot.Apply(lightDir);
 	CVector3 rotAxis;
 	rotAxis.Cross(lightDir, CVector3::Up);
 	qRot.SetRotation(rotAxis, Pad(0).GetRStickYF() * 0.05f);
-	qRot.Multiply(lightDir);
+	qRot.Apply(lightDir);
 
 	m_directionLight->SetDirection(lightDir);
 	GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());

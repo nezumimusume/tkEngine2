@@ -59,7 +59,8 @@ public:
 	}
 	void Move(float deltaTime, CVector3 move)
 	{
-		m_position = m_charaCon.Execute(deltaTime, move);
+		(void)deltaTime;
+		m_position = m_charaCon.Execute(move);
 	}
 	/*!
 	 *@brief	“G‚Ì‘O•ûŒü‚ğæ“¾B

@@ -11,6 +11,7 @@ Star::Star()
 
 Star::~Star()
 {
+	DeleteGO(m_skinModelRender);
 }
 void Star::Update()
 {
