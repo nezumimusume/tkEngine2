@@ -66,7 +66,7 @@ namespace tkEngine{
 					CVector4 pos;
 					pos.Set(renderData.origin);
 					const auto& vpMatrix = MainCamera().GetViewProjectionMatrix();
-					vpMatrix.Mul(pos);
+					vpMatrix.Apply(pos);
 					pos.x /= pos.w;
 					pos.y /= pos.w;
 					pos.z /= pos.w;

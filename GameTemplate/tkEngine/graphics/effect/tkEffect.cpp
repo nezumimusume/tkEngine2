@@ -45,8 +45,8 @@ namespace tkEngine {
 			mTrans.MakeTranslation(m_position);
 			mRot.MakeRotationFromQuaternion(m_rotation);
 			mScale.MakeScaling(m_scale);
-			mBase.Mul(mScale, mRot);
-			mBase.Mul(mBase, mTrans);
+			mBase = mScale * mRot;
+			mBase = mBase * mTrans;
 			GraphicsEngine().GetEffectEngine().GetEffekseerManager().SetBaseMatrix(m_handle, mBase);
 			if (IsPlay() == false) {
 				//Ä¶Š®—¹‚µ‚½‚çI‚í‚éB

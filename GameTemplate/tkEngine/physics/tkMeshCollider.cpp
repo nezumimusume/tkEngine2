@@ -21,7 +21,7 @@ namespace tkEngine{
 		CMatrix mBias;
 		mBias.MakeRotationX(CMath::PI * -0.5f);
 		if (offsetMatrix != nullptr) {
-			mBias.Mul(mBias, *offsetMatrix);
+			mBias = mBias * (*offsetMatrix);
 		}
 		m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
 		int numMesh = 0;
@@ -46,7 +46,7 @@ namespace tkEngine{
 				for (int i = 0; i < vertexCount; i++) {
 					pos = *reinterpret_cast<CVector3*>(pData);
 					//バイアスをかける。
-					mBias.Mul(pos);
+					mBias.Apply(pos);
 					vertexBuffer->push_back(pos);
 					//次の頂点へ。
 					pData += mesh->vertexStride;

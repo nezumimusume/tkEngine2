@@ -42,7 +42,7 @@ namespace tkEngine {
 	{
 		CMatrix mBoneWorld;
 		CMatrix localMatrix = bone.GetLocalMatrix();
-		mBoneWorld.Mul(localMatrix, parentMatrix);
+		mBoneWorld = localMatrix * parentMatrix;
 	
 		bone.SetWorldMatrix(mBoneWorld);
 		for (auto childBone : bone.GetChildren()) {
@@ -138,7 +138,7 @@ namespace tkEngine {
 				//ローカルマトリクスを計算。
 				const CMatrix& parentMatrix = m_bones.at(bone->GetParentId())->GetInvBindPoseMatrix();
 				CMatrix localMatrix;
-				localMatrix.Mul(bone->GetBindPoseMatrix(), parentMatrix);
+				localMatrix = bone->GetBindPoseMatrix() * parentMatrix;
 				bone->SetLocalMatrix(localMatrix);
 			}
 			else {
@@ -181,7 +181,7 @@ namespace tkEngine {
 		int boneNo = 0;
 		for (auto& bonePtr : m_bones) {
 			CMatrix mBone;
-			mBone.Mul(bonePtr->GetInvBindPoseMatrix(), bonePtr->GetWorldMatrix());
+			mBone = bonePtr->GetInvBindPoseMatrix() * bonePtr->GetWorldMatrix();
 			m_boneMatrixs[boneNo] = mBone;
 			boneNo++;
 		}

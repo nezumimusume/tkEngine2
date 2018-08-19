@@ -189,7 +189,7 @@ namespace tkEngine{
 				CVector3 vMax = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 				CVector3 vMin = { FLT_MAX, FLT_MAX, FLT_MAX };
 				for (auto& vInLight : v) {
-					mLightView.Mul(vInLight);
+					mLightView.Apply(vInLight);
 					vMax.Max(vInLight);
 					vMin.Min(vInLight);
 					
@@ -204,7 +204,7 @@ namespace tkEngine{
 				m_near,
 				m_far
 			);
-			m_LVPMatrix[i].Mul(mLightView, proj);
+			m_LVPMatrix[i] = mLightView * proj;
 			m_shadowCbEntity.mLVP[i] = m_LVPMatrix[i];
 			
 			nearPlaneZ = farPlaneZ;

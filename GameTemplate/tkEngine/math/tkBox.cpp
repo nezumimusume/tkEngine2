@@ -69,7 +69,7 @@ namespace tkEngine{
 		m_vertexPosition[7].z += m_halfSize.z;
 		
 		for( auto& pos : m_vertexPosition ){
-			worldMatrix.Mul(pos);
+			worldMatrix.Apply(pos);
 		}
 	}
 }

@@ -147,7 +147,7 @@ namespace tkEngine{
 				m.m[3][1] = 0.0f;
 				m.m[3][2] = 0.0f;
 				//’Ç‰Á‚Ì‰ñ“]‚ð‰Á‚¦‚éB
-				m.Mul(m, mAddRot);
+				m = m * mAddRot;
 				m.m[3][0] = currentBonePos.x;
 				m.m[3][1] = currentBonePos.y;
 				m.m[3][2] = currentBonePos.z;
@@ -158,7 +158,7 @@ namespace tkEngine{
 				if (parentId != -1) {
 					CMatrix toParentSpaceMatrix = m_skeleton->GetBone(parentId)->GetWorldMatrix();
 					toParentSpaceMatrix.Inverse();
-					localMat.Mul(m, toParentSpaceMatrix);
+					localMat = m * toParentSpaceMatrix;
 					parentId = currentBone->GetParentId();
 					currentBone->SetLocalMatrix(localMat);
 				}

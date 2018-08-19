@@ -135,8 +135,8 @@ namespace tkEngine{
 
 			//全部を合成して、ボーン行列を作成。
 			CMatrix boneMatrix;
-			boneMatrix.Mul(scaleMatrix, rotMatrix);
-			boneMatrix.Mul(boneMatrix, transMat);
+			boneMatrix = scaleMatrix * rotMatrix;
+			boneMatrix = boneMatrix * transMat;
 			
 			m_skeleton->SetBoneLocalMatrix(
 				boneNo,

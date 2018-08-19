@@ -36,7 +36,7 @@ namespace tkEngine{
 			//ビュー行列の算出
 			m_viewMatrix.MakeLookAt(m_debugCameraPosition, m_debugCameraTarget, m_up);
 			//ビュープロジェクション行列の作成。
-			m_viewProjectionMatrix.Mul(m_viewMatrix, m_projectionMatrix);
+			m_viewProjectionMatrix = m_viewMatrix * m_projectionMatrix;
 			//ビュー行列の逆行列を計算。
 			m_viewMatrixInv.Inverse(m_viewMatrix);
 			return;
@@ -61,7 +61,7 @@ namespace tkEngine{
 		//ビュー行列の算出
 		m_viewMatrix.MakeLookAt( m_position, m_target, m_up );
 		//ビュープロジェクション行列の作成。
-		m_viewProjectionMatrix.Mul(m_viewMatrix, m_projectionMatrix);
+		m_viewProjectionMatrix = m_viewMatrix * m_projectionMatrix;
 		//ビュー行列の逆行列を計算。
 		m_viewMatrixInv.Inverse( m_viewMatrix );
 
@@ -84,7 +84,7 @@ namespace tkEngine{
 		float half_h = (float)GraphicsEngine().GetFrameBufferHeight() * 0.5f;
 		CVector4 _screenPos;
 		_screenPos.Set(worldPos.x, worldPos.y, worldPos.z, 1.0f);
-		m_viewProjectionMatrix.Mul(_screenPos);
+		m_viewProjectionMatrix.Apply(_screenPos);
 		screenPos.x = (_screenPos.x / _screenPos.w)*half_w;
 		screenPos.y = (_screenPos.y / _screenPos.w)*half_h;
 	}

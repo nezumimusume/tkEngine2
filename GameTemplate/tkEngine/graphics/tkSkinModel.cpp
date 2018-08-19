@@ -91,9 +91,9 @@ namespace tkEngine{
 		mTrans.MakeTranslation(trans);
 
 
-		m_worldMatrix.Mul(mBias, mScale);
-		m_worldMatrix.Mul(m_worldMatrix, mRot);
-		m_worldMatrix.Mul(m_worldMatrix, mTrans);
+		m_worldMatrix = mBias * mScale;
+		m_worldMatrix = m_worldMatrix * mRot;
+		m_worldMatrix = m_worldMatrix * mTrans;
 	}
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis, bool isForwardRender)
 	{

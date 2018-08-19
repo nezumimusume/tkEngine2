@@ -132,7 +132,7 @@ namespace tkEngine{
 		const CAnimationClip::SFreezeBoneInfo& freezeBoneInfo = m_animationClip->GetFreezeBoneInfo();
 		CMatrix mBoneWorld;
 		CMatrix localMatrix = m_boneMatrix[bone.GetNo()];
-		mBoneWorld.Mul(localMatrix, parentMatrix);
+		mBoneWorld = localMatrix * parentMatrix;
 		if (bone.GetNo() == freezeBoneInfo.boneNo) {
 			//å©Ç¬Ç©Ç¡ÇΩÅB
 			freezeBoneMatrix = mBoneWorld;

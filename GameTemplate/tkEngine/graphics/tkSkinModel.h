@@ -180,10 +180,11 @@ namespace tkEngine{
 			CMatrix mScale, mTrans, mRot;
 			mScale.MakeScaling(scale);
 			mRot.MakeRotationFromQuaternion(rot);
-			mRot.Mul(mBias, mRot);
+			mRot = mBias * mRot;
 			mTrans.MakeTranslation(trans);
-			mWorld.Mul(mScale, mRot);
-			mWorld.Mul(mWorld, mTrans);
+			mWorld = mScale * mRot;
+			mWorld = mWorld * mTrans;
+
 			m_boundingBox.Update(mWorld);
 		}
 		/*!

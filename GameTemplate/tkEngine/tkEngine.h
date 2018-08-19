@@ -152,8 +152,6 @@ namespace tkEngine{
 	};
 
 	/*!
-
-
 	* @brief	Engineのインスタンスを取得。
 	*/
 	static inline CEngine& Engine()

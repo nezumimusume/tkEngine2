@@ -43,7 +43,7 @@ namespace tkEngine{
 			//カメラ空間での位置を計算する。
 			const CMatrix& mView = MainCamera().GetViewMatrix();
 			light.positionInView = light.position;
-			mView.Mul(light.positionInView);
+			mView.Apply(light.positionInView);
 			light.lightingMaterialIDGroup = GetLightingMaterialIDGroup();
 		}
 	}

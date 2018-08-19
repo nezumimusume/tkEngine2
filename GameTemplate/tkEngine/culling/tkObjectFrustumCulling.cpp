@@ -33,7 +33,7 @@ namespace tkEngine{
 			auto vMin = CVector3(FLT_MAX, FLT_MAX, FLT_MAX);
 			for (int i = 0; i < 8; i++) {
 				CVector4 vertPos(box.GetVertexPosition(i));
-				viewProjMatrix.Mul(vertPos);
+				viewProjMatrix.Apply(vertPos);
 				vertPos.x /= vertPos.w;
 				vertPos.y /= vertPos.w;
 				vertPos.z /= vertPos.w;

@@ -85,31 +85,40 @@ namespace tkEngine{
 		*@brief	ベクトルと3x3行列の乗算
 		*@param[in,out]		v	乗算されるベクトル。
 		*/
-		void Mul3x3(CVector3& vOut) const
+		void Apply3x3(CVector3& vOut) const
 		{
 			CVector3 vTmp = vOut;
 			vOut.x = vTmp.x * m[0][0] + vTmp.y * m[1][0] + vTmp.z * m[2][0];
 			vOut.y = vTmp.x * m[0][1] + vTmp.y * m[1][1] + vTmp.z * m[2][1];
 			vOut.z = vTmp.x * m[0][2] + vTmp.y * m[1][2] + vTmp.z * m[2][2];
 		}
-	
 		/*!
-		*@brief	ベクトルと行列の乗算
+		*@brief	ベクトルに行列を乗算
 		*@param[in,out]		v	乗算されるベクトル。
 		*/
-		void Mul(CVector3& vOut) const
+		void Apply(CVector3& vOut) const
 		{
 			DirectX::XMStoreFloat3(
 				&vOut.vec,
 				DirectX::XMVector3Transform(vOut, *this)
 			);
 		}
-		void Mul(CVector4& vOut) const
+		void Apply(CVector4& vOut) const
 		{
 			DirectX::XMStoreFloat4(
 				&vOut.vec,
 				DirectX::XMVector4Transform(vOut, *this)
 			);
+		}
+		[[deprecated("This function will be delete. please use Apply() function.")]]
+		void Mul(CVector3& vOut) const
+		{
+			Apply(vOut);
+		}
+		[[deprecated("This function will be delete. please use Apply() function.")]]
+		void Mul(CVector4& vOut) const
+		{
+			Apply(vOut);
 		}
 		/*!
 		 *@brief	平行移動行列を作成。
@@ -239,7 +248,7 @@ namespace tkEngine{
 		 *@details
 		 * *this = m0 * m1
 		 */
-		void Mul(const CMatrix& m0, const CMatrix& m1)
+		void Multiply(const CMatrix& m0, const CMatrix& m1)
 		{
 			DirectX::XMFLOAT4X4 lm;
 			DirectX::XMStoreFloat4x4(
@@ -247,6 +256,21 @@ namespace tkEngine{
 				DirectX::XMMatrixMultiply(m0, m1)
 			);
 			mat = lm;
+		}
+		[[deprecated("This function will be delete. please use Multiply() function.")]]
+		void Mul(const CMatrix& m0, const CMatrix& m1)
+		{
+			Multiply(m0, m1);
+		}
+		/*!
+		*@brief	行列の代入演算子
+		*@details
+		* this = this * _m;
+		*/
+		const CMatrix& operator*=(const CMatrix& _m)
+		{
+			Multiply(*this, _m);
+			return *this;
 		}
 		/*!
 		 *@brief	逆行列を計算。
@@ -272,5 +296,17 @@ namespace tkEngine{
 		}
 		
 	};
+	/*!
+	*@brief	行列同士の乗算。
+	*@details
+	* 乗算は左から右に向かってかかっていく。
+	*/
+	static inline CMatrix operator*(const CMatrix& m1, const CMatrix m2)
+	{
+		CMatrix mRet;
+		mRet.Multiply(m1, m2);
+		return mRet;
+	}
+
 };
 #endif // _TKMATRIX_H_

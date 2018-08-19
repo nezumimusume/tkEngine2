@@ -96,9 +96,9 @@ namespace tkEngine{
 		mTrans.MakeTranslation(trans);
 		mRot.MakeRotationFromQuaternion(rot);
 		mScale.MakeScaling(scale);
-		m_world.Mul(mPivotTrans, mScale);
-		m_world.Mul(m_world, mRot);
-		m_world.Mul(m_world, mTrans);
+		m_world = mPivotTrans * mScale;
+		m_world = m_world * mRot;
+		m_world = m_world * mTrans;
 
 	}
 	void CSprite::Draw(CRenderContext& rc, const CMatrix& viewMatrix, const CMatrix& projMatrix)
@@ -113,8 +113,8 @@ namespace tkEngine{
 		}
 		SSpriteCB cb;
 		cb.WVP = m_world;
-		cb.WVP.Mul(cb.WVP, viewMatrix);
-		cb.WVP.Mul(cb.WVP, projMatrix);
+		cb.WVP = cb.WVP * viewMatrix;
+		cb.WVP = cb.WVP * projMatrix;
 		cb.mulColor = m_mulColor;
 
 		rc.UpdateSubresource(m_cb, &cb);
