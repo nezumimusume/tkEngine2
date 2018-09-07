@@ -44,6 +44,7 @@ void Player::Update()
 	}
 	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 	//キャラクターコントローラーを使用して、座標を更新。
+
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
 	if (m_charaCon.IsOnGround()) {
 		//地面についた。

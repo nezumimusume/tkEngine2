@@ -12,6 +12,7 @@ namespace tkEngine{
 		{
 			m_modelData.Load(L"modelData/preset/vector.cmo");
 			m_model.Init(m_modelData, MAX_RENDER);
+			m_model.SetShadowCasterFlag(true);
 			return true;
 		}
 		bool CVectorRender::IsRenderVector(const SRenderData& renderData) const
