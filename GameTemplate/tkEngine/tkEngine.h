@@ -235,6 +235,72 @@ namespace tkEngine{
 	{
 		return Engine().GetGraphicsEngine().GetGBufferRender().GetRenderTarget(gBuffer).GetRenderTargetSRV();
 	}
+
+	//デバッグ機能を簡易的にアクセスするための名前空間
+	namespace dbg {
+		
+#if BUILD_LEVEL != BUILD_LEVEL_MASTER
+		/*!
+		* @brief	コリジョンのデバッグ表示を有効にする。
+		*@param[in]	colliObj	コリジョンオブジェクト。
+		*/
+		static inline void SetDrawPhysicsCollisionEnable()
+		{
+			PhysicsWorld().SetDebugDrawMode(1);
+		}
+		/*!
+		* @brief	コリジョンのデバッグ表示を有効にする。
+		*@param[in]	colliObj	コリジョンオブジェクト。
+		*/
+		static inline void SetDrawPhysicsCollisionDisable()
+		{
+			PhysicsWorld().SetDebugDrawMode(0);
+		}
+		/*!
+		* @brief	ベクトルのデバッグ出力。
+		*/
+		static inline void DrawVector(CVector3 vector, CVector3 origin, const char* name = "no name")
+		{
+			prefab::CVectorRender::SRenderData renderData = { name, vector, origin };
+			Engine().GetVectorRender()->AddVector(renderData);
+		}
+		/*!
+		* @brief	ベクトルのデバッグ描画を有効にする。
+		*/
+		static inline void SetDrawVectorEnable()
+		{
+			Engine().GetVectorRender()->SetRenderFlag(true);
+		}
+		/*!
+		* @brief	ベクトルのデバッグ描画を無効にする。
+		*/
+		static inline void SetDrawVectorDisable()
+		{
+			Engine().GetVectorRender()->SetRenderFlag(false);
+		}
+		static inline void SetDrawVectorNameList(const std::vector<std::string>& list)
+		{
+			Engine().GetVectorRender()->SetRenderVectorNameList(list);
+		}
+#else
+		static inline void OutputDebugVector(CVector3 vector, CVector3 origin)
+		{
+		}
+		static inline void SetEnableOutputDebugVector(bool flag)
+		{
+		}
+		static inline void SetRenderVectorNameList(const std::vector<std::string>& list)
+		{
+		}
+		static inline void SetPhysicsCollisionDrawEnable()
+		{
+		}
+		static inline void SetPhysicsCollisionDrawDisable()
+		{
+		}
+#endif
+
+	}
 }
 
 

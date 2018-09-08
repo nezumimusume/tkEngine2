@@ -210,7 +210,7 @@ void Player::Move()
 	//キャラの移動速度を可視化してみる。
 	auto pos = m_position;
 	pos.y += 50.0f;
-	OutputDebugVector(
+	dbg::DrawVector(
 		m_moveSpeed,	//第一引数は可視化したいベクトル。
 		pos				//第二引数はベクトルの基点。
 	);

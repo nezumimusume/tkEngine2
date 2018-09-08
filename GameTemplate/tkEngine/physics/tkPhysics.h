@@ -101,6 +101,6 @@ namespace tkEngine{
 			std::function<void(const btCollisionObject& contactCollisionObject)> cb
 		);
 		
-
 	};
+	
 }

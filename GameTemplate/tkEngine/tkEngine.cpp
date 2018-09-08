@@ -46,7 +46,7 @@ namespace tkEngine {
 		m_font = std::make_unique<CFont>();
 		m_vectorRender = NewGO<prefab::CVectorRender>(initParam.gameObjectPrioMax-1);
 		//ベクトルデバッグを有効にする。
-		SetOutputDebugVectorEnable(true);
+		dbg::SetDrawVectorEnable();
 #endif
 		return true;
 	}

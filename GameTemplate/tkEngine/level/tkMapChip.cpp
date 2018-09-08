@@ -22,11 +22,11 @@ namespace tkEngine{
 		//MapChip用のモディファイアを作らなあかんなぁ・・・
 		m_modelRender->SetShadowReceiverFlag(true);
 		
-		m_physicsStaticObject.CreateMeshObject(
-			m_modelRender, 
+		m_physicsStaticObject.CreateMesh( 
 			objData.position, 
 			objData.rotation,
-			objData.scale
+			objData.scale,
+			m_modelRender
 		);
 	}
 }
