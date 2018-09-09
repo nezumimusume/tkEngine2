@@ -1,0 +1,97 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game.vcxproj", "{06EDC280-1187-4614-A248-E640C095FA6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8} = {9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {E0B52AE7-E160-4D32-BF3F-910B785E5A8E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tkEngine", "..\tkEngine\tkEngine.vcxproj", "{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {E0B52AE7-E160-4D32-BF3F-910B785E5A8E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK_Desktop_2015_Win10", "..\tkEngine\DirectXTK\DirectXTK_Desktop_2015_Win10.vcxproj", "{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exlib", "exlib", "{D716790C-2705-4A58-9730-194B07A08649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Low|x64 = Debug_Low|x64
+		Debug_Middle|x64 = Debug_Middle|x64
+		Debug|x64 = Debug|x64
+		Preview_Low|x64 = Preview_Low|x64
+		Preview_Middle|x64 = Preview_Middle|x64
+		Preview|x64 = Preview|x64
+		Release_Low|x64 = Release_Low|x64
+		Release_Middle|x64 = Release_Middle|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug_Low|x64.ActiveCfg = Debug_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug_Low|x64.Build.0 = Debug_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug_Middle|x64.ActiveCfg = Debug_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug_Middle|x64.Build.0 = Debug_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug|x64.ActiveCfg = Debug|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Debug|x64.Build.0 = Debug|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview_Low|x64.ActiveCfg = Preview_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview_Low|x64.Build.0 = Preview_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview_Middle|x64.ActiveCfg = Preview_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview_Middle|x64.Build.0 = Preview_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview|x64.ActiveCfg = Preview|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Preview|x64.Build.0 = Preview|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release_Low|x64.ActiveCfg = Release_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release_Low|x64.Build.0 = Release_Low|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release_Middle|x64.ActiveCfg = Release_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release_Middle|x64.Build.0 = Release_Middle|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release|x64.ActiveCfg = Release|x64
+		{06EDC280-1187-4614-A248-E640C095FA6B}.Release|x64.Build.0 = Release|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug_Low|x64.ActiveCfg = Debug_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug_Low|x64.Build.0 = Debug_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug_Middle|x64.ActiveCfg = Debug_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug_Middle|x64.Build.0 = Debug_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug|x64.ActiveCfg = Debug|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Debug|x64.Build.0 = Debug|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview_Low|x64.ActiveCfg = Preview_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview_Low|x64.Build.0 = Preview_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview_Middle|x64.ActiveCfg = Preview_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview_Middle|x64.Build.0 = Preview_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview|x64.ActiveCfg = Preview|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Preview|x64.Build.0 = Preview|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release_Low|x64.ActiveCfg = Release_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release_Low|x64.Build.0 = Release_Low|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release_Middle|x64.ActiveCfg = Release_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release_Middle|x64.Build.0 = Release_Middle|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release|x64.ActiveCfg = Release|x64
+		{9E48DCB9-B936-4C81-BB4C-F3EAA794A8E8}.Release|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug_Low|x64.ActiveCfg = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug_Low|x64.Build.0 = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug_Middle|x64.ActiveCfg = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug_Middle|x64.Build.0 = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug|x64.ActiveCfg = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Debug|x64.Build.0 = Debug|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview_Low|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview_Low|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview_Middle|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview_Middle|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Preview|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release_Low|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release_Low|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release_Middle|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release_Middle|x64.Build.0 = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release|x64.ActiveCfg = Release|x64
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {D716790C-2705-4A58-9730-194B07A08649}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09844AF9-EE2D-4562-B863-045A6E0F3E41}
+	EndGlobalSection
+EndGlobal

@@ -895,6 +895,7 @@
     <ClInclude Include="physics\tkMeshCollider.h" />
     <ClInclude Include="physics\tkPhysics.h" />
     <ClInclude Include="physics\tkPhysicsDebugDraw.h" />
+    <ClInclude Include="physics\tkPhysicsDynamicObject.h" />
     <ClInclude Include="physics\tkPhysicsGhostObject.h" />
     <ClInclude Include="physics\tkPhysicsObjectBase.h" />
     <ClInclude Include="physics\tkPhysicsStaticObject.h" />
@@ -992,6 +993,7 @@
     <ClCompile Include="physics\tkMeshCollider.cpp" />
     <ClCompile Include="physics\tkPhysics.cpp" />
     <ClCompile Include="physics\tkPhysicsDebugDraw.cpp" />
+    <ClCompile Include="physics\tkPhysicsDynamicObject.cpp" />
     <ClCompile Include="physics\tkPhysicsGhostObject.cpp" />
     <ClCompile Include="physics\tkPhysicsObjectBase.cpp" />
     <ClCompile Include="physics\tkPhysicsStaticObject.cpp" />

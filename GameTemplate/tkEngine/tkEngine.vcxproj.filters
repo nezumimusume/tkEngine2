@@ -431,6 +431,9 @@
     <ClInclude Include="physics\tkPhysicsObjectBase.h">
       <Filter>Source Files\physics</Filter>
     </ClInclude>
+    <ClInclude Include="physics\tkPhysicsDynamicObject.h">
+      <Filter>Source Files\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -686,6 +689,9 @@
       <Filter>Source Files\physics</Filter>
     </ClCompile>
     <ClCompile Include="physics\tkPhysicsObjectBase.cpp">
+      <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\tkPhysicsDynamicObject.cpp">
       <Filter>Source Files\physics</Filter>
     </ClCompile>
   </ItemGroup>

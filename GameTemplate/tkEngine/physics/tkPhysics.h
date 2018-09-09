@@ -24,6 +24,13 @@ namespace tkEngine{
 		void DebubDrawWorld(CRenderContext& rc);
 		void Release();
 		/*!
+		* @brief	重力を設定。。
+		*/
+		void SetGravity(CVector3 g)
+		{
+			m_dynamicWorld->setGravity(btVector3(g.x, g.y, g.z));
+		}
+		/*!
 		* @brief	ダイナミックワールドを取得。
 		*/
 		btDiscreteDynamicsWorld* GetDynamicWorld()

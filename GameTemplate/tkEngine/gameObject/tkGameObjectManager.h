@@ -252,6 +252,7 @@ namespace tkEngine{
 	{
 		GameObjectManager().DeleteGameObject(go);
 	}
+	
 	/*!
 	 *@brief	ゲームオブジェクトの追加のヘルパー関数。
 	 *@param[in]	go			追加するゲームオブジェクト。
@@ -293,6 +294,16 @@ namespace tkEngine{
 	static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> func)
 	{
 		return GameObjectManager().FindGameObjects<T>(objectName, func);
+	}
+	/*!
+	*@brief	ゲームオブジェクトを名前指定で削除。
+	*/
+	static inline void DeleteGOs(const char* objectName)
+	{
+		QueryGOs<IGameObject>(objectName, [](auto go) {
+			DeleteGO(go);
+			return true;
+		});
 	}
 }
 #endif // _CGAMEOBJECTMANAGER_H_

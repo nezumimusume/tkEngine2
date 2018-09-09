@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns:atg="http://atg.xbox.com" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{ed0b04a6-fecd-4a2c-a462-59a8f4639f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Assets\modelData">
+      <UniqueIdentifier>{06086914-6aa4-4cad-9b07-6f9d357f04df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{a6ce300a-b532-440d-b914-b4661d3015ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\bg">
+      <UniqueIdentifier>{0fc1c7c5-557c-4677-af20-fa85ffbcd792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\ball">
+      <UniqueIdentifier>{62b795d7-19e2-4dbf-a8ac-b7a356398320}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Ball.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CLInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </CLInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Ball.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\dummy.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\bg\bg.fbx">
+      <Filter>Assets\modelData\bg</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\ball\ball.fbx">
+      <Filter>Assets\modelData\ball</Filter>
+    </MeshContentTask>
+  </ItemGroup>
+</Project>

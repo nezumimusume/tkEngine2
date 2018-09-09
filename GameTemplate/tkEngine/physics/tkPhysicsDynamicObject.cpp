@@ -1,34 +1,27 @@
 /*!
- * @brief	静的オブジェクト。
+ * @brief	動的物理オブジェクト。
  */
 
 
 #include "tkEngine/tkEnginePreCompile.h"
-#include "tkEngine/physics/tkPhysicsStaticObject.h"
+#include "tkEngine/physics/tkPhysicsDynamicObject.h"
 
 namespace tkEngine{
-	CPhysicsStaticObject::CPhysicsStaticObject()
-	{
-	}
-	CPhysicsStaticObject::~CPhysicsStaticObject()
+
+	void CPhysicsDynamicObject::Release()
 	{
 		PhysicsWorld().RemoveRigidBody(m_rigidBody);
 	}
-	void CPhysicsStaticObject::CreateMeshObject(prefab::CSkinModelRender* skinModelRender, CVector3 pos, CQuaternion rot, CVector3 scale)
+	void CPhysicsDynamicObject::CreateCommon(CVector3 pos, CQuaternion rot)
 	{
-		CreateMeshObject(skinModelRender->GetSkinModel(), pos, rot, scale);
-	}
-	void CPhysicsStaticObject::CreateMeshObject(CSkinModel& skinModel, CVector3 pos, CQuaternion rot, CVector3 scale)
-	{
-		CMatrix mScale;
-		mScale.MakeScaling(scale);
-		m_meshCollider.CreateFromSkinModel(skinModel, &mScale);
 		RigidBodyInfo rbInfo;
-		rbInfo.collider = &m_meshCollider;
-		rbInfo.mass = 0.0f;
+		rbInfo.collider = m_collider.get();
+		rbInfo.mass = m_mass;
 		rbInfo.pos = pos;
 		rbInfo.rot = rot;
+		rbInfo.localInteria = m_localInterial;
 		m_rigidBody.Create(rbInfo);
 		PhysicsWorld().AddRigidBody(m_rigidBody);
 	}
+
 }

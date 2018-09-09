@@ -23,6 +23,17 @@ namespace tkEngine{
 		* @brief	‰ğ•úB
 		*/
 		void Release() override final;
+		/*!
+		* @brief	À•W‚Æ‰ñ“]‚ğİ’èB
+		*/
+		void SetPositionAndRotation(const CVector3& pos, const CQuaternion& rot)
+		{
+			m_rigidBody.SetPositionAndRotation(pos, rot);
+		}
+		CRigidBody& GetRigidBody()
+		{
+			return m_rigidBody;
+		}
 	private:
 		
 		/*!

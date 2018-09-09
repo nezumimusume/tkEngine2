@@ -283,19 +283,27 @@ namespace tkEngine{
 			Engine().GetVectorRender()->SetRenderVectorNameList(list);
 		}
 #else
-		static inline void OutputDebugVector(CVector3 vector, CVector3 origin)
+
+		static inline void SetDrawPhysicsCollisionEnable()
 		{
 		}
-		static inline void SetEnableOutputDebugVector(bool flag)
+
+		static inline void SetDrawPhysicsCollisionDisable()
 		{
 		}
-		static inline void SetRenderVectorNameList(const std::vector<std::string>& list)
+
+		static inline void DrawVector(CVector3 vector, CVector3 origin, const char* name = "no name")
 		{
 		}
-		static inline void SetPhysicsCollisionDrawEnable()
+		
+		static inline void SetDrawVectorEnable()
 		{
 		}
-		static inline void SetPhysicsCollisionDrawDisable()
+	
+		static inline void SetDrawVectorDisable()
+		{
+		}
+		static inline void SetDrawVectorNameList(const std::vector<std::string>& list)
 		{
 		}
 #endif
