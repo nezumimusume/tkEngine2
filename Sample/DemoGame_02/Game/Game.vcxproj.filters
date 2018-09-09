@@ -27,6 +27,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -36,6 +37,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -46,6 +48,7 @@
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\bg\bgSpec.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\bg\bg.fbx">

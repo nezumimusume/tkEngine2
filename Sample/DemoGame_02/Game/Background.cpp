@@ -8,6 +8,13 @@ Background::Background()
 	m_modelRender->Init(L"modelData/bg/bg.cmo");
 	m_modelRender->SetShadowCasterFlag(true);
 	m_modelRender->SetShadowReceiverFlag(true);
+	//スペキュラマップを設定。
+	m_specTex.CreateFromDDSTextureFromFile(L"modelData/bg/bgSpec.dds");
+	m_modelRender->FindMaterial([&](CModelEffect* mat) {
+		if (mat->EqualMaterialName(L"floor")) {
+			mat->SetSpecularMap(m_specTex.GetBody());
+		}
+	});
 	m_phyStaticObj.CreateMesh(
 		CVector3::Zero,
 		CQuaternion::Identity,

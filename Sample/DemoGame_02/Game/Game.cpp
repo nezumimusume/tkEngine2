@@ -3,11 +3,13 @@
 #include "tkEngine/light/tkDirectionLight.h"
 #include "Background.h"
 #include "Ball.h"
+#include "Timer.h"
 
 namespace {
 	const char* cDIR_LIGHT_NAME = "dirLight";
 	const char* cBG_NAME = "背景";
 	const char* cBALL_NAME = "ボール";
+	
 }
 Game::Game()
 {
@@ -19,6 +21,7 @@ Game::~Game()
 	//ゲームオブジェクトを名前指定で削除。
 	DeleteGOs(cDIR_LIGHT_NAME);
 	DeleteGOs(cBG_NAME);
+	DeleteGO(m_timer);
 }
 void Game::InitLight()
 {
@@ -46,7 +49,7 @@ bool Game::Start()
 	//カメラを設定。
 	MainCamera().SetTarget({ 0.0f, 0.0f, 0.0f });
 	MainCamera().SetNear(10.0f);
-	MainCamera().SetFar(10000.0f);
+	MainCamera().SetFar(2000.0f);
 	MainCamera().SetPosition({ 0.0f, 300.0f, 300.0f });
 	MainCamera().Update();
 	
@@ -58,6 +61,7 @@ bool Game::Start()
 	//背景を作成。
 	NewGO<Background>(0, cBG_NAME);
 	NewGO<Ball>(0, cBALL_NAME);
+	m_timer = NewGO<Timer>(0);
 	return true;
 }
 

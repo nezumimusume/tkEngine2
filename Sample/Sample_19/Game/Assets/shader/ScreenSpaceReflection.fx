@@ -73,7 +73,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float maxThickness = 0.01f / maxRayNum;
 	for( int step = 1; step < maxRayNum; step++){ //自分自身とぶつかるので、stepは1から進める。
 		float3 rayPos = worldPos + step * raystep * lerp( 0.8f, 1.0f, GetRandomNumber(In.uv, rayMarchStepRate));
-		float4 posInProj = float4(rayPos, 1.0f);
+		float4 posInProj = float4	(rayPos, 1.0f);
 		//ビュープロジェクション空間に変換する。
 		posInProj = mul(mViewProj, posInProj);
 		posInProj.xyz /= posInProj.w;
