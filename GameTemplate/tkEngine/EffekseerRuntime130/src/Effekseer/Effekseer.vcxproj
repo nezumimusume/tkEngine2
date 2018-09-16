@@ -247,15 +247,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Middle|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Low|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\lib\x86\</OutDir>
@@ -284,23 +284,23 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Middle|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Middle|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Low|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview_Low|x64'">
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
-    <OutDir>..\lib\x64\</OutDir>
+    <OutDir>$(SolutionDir)\..\tkEngine\exlib\x64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

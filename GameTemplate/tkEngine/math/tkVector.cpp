@@ -39,16 +39,28 @@ namespace tkEngine{
 	*/
 	void CQuaternion::SetRotation(CVector3 from, CVector3 to)
 	{
-		from.Normalize();
+	from.Normalize();
 		to.Normalize();
 		auto t = tkEngine::Dot(from, to);
+		CVector3 rotAxis;
 		if (t > 0.998f) {
 			//ほぼ同じ向きなので単位クォータニオンにする。
 			*this = CQuaternion::Identity;
 		}
-		auto rotAxis = Cross(from, to);
+		else if (t < -0.998f) {
+			//ほぼ逆向きなので、
+			if (fabsf(to.x) < 1.0f) {
+				//
+				rotAxis = Cross(CVector3::AxisX, to);
+			}
+			else {
+				rotAxis = Cross(CVector3::AxisY, to);
+			}
+		}
+		else {
+			rotAxis = Cross(from, to);
+		}
 		rotAxis.Normalize();
-		SetRotation(rotAxis, acos( t ));
-		
+		SetRotation(rotAxis, acos(t));
 	}
 }

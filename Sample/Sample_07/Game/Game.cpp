@@ -22,6 +22,7 @@ bool Game::Start()
 	//ライトの色を設定。
 	m_lig->SetColor({ 300.5f, 300.5f, 300.5f, 1.0f });
 
+	dbg::SetDrawPhysicsCollisionEnable();
 
 	//カメラを設定。
 	MainCamera().SetTarget({ 0.0f, 15.0f, 0.0f });
