@@ -202,16 +202,28 @@ namespace tkEngine{
 			return m_boundingBox;
 		}
 		/*!
-		* @brief	描画の直前にフックしたい関数を設定する。
-		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		* @brief	描画コール実行の直前にフックしたい関数を設定する。
+		*param[in]	func	フック関数。
+		*@code
+			//サンプルコード
+			skinModelRender->SetPreDrawFookFunction([&]( CRenderContext& rc, CSkinModel& model){
+				printf("描画コールの直前に呼ばれるよ");
+			});
+		*@endcode
 		*/
-		void SetPreDrawFookFunction(OnDrawFookFunction func)
+		void SetPreDrawFookFunction(std::function<void(CRenderContext&, CSkinModel&)> func)
 		{
 			m_preDrawFookFunction = func;
 		}
 		/*!
-		* @brief	描画が終わった後にフックしたい関数を設定する。
-		*param[in]	func	フック関数。例 void Fook(CRenderContext& rc, CSkinModel& model);
+		* @brief	描画コール実行の直後にフックしたい関数を設定する。
+		*param[in]	func	フック関数。
+		*@code
+			//サンプルコード
+			skinModelRender->SetPreDrawFookFunction([&]( CRenderContext& rc, CSkinModel& model){
+				printf("描画コールの直後に呼ばれるよ");
+			});
+		*@endcode
 		*/
 		void SetPostDrawFookFunction(OnDrawFookFunction func)
 		{
@@ -227,25 +239,28 @@ namespace tkEngine{
 		 */
 		void UpdateWorldMatrix(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis);
 	private:
+		/*!
+		 *@brief	頂点シェーダーで使用する定数バッファ用の構造体。
+		 */
 		struct SVSConstantBuffer {
-			CMatrix mWorld;
-			CMatrix mView;
-			CMatrix mProj;
-			int isShadowReceiver;
+			CMatrix mWorld;			//!<ワールド行列。
+			CMatrix mView;			//!<ビュー行列。
+			CMatrix mProj;			//!<プロジェクション行列。
+			int isShadowReceiver;	//!<シャドウレシーバーフラグ。
 		};
-		CAnimation* m_animation = nullptr;
-		CSkinModelData*	m_skinModelData = nullptr;
-		CMatrix m_worldMatrix = CMatrix::Identity;
-		CConstantBuffer m_cb;			//定数バッファ。
-		CShadowCaster_SkinModel m_shadowCaster;	//!<シャドウキャスター。
-		bool m_isShadowCaster = false;		//!<シャドウキャスター？
-		bool m_isShadowReceiver = false;	//!<シャドウレシーバー？
-		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい。
-		std::unique_ptr<CMatrix[]>	m_instancingData;		//!<インスタンシング描画用のデータ。
-		CStructuredBuffer	m_instancingDataSB;				//!<インスタンシング描画用のストラクチャーバッファ。
-		int m_maxInstance = 1;								//!<インスタンスの最大数
-		int m_numInstance = 0;								//!<インスタンスの数。
-		CBox m_boundingBox;									//!<バウンディングボックス。
+		CAnimation* m_animation = nullptr;						//!<アニメーション再生処理。
+		CSkinModelData*	m_skinModelData = nullptr;				//!<スキンモデルデータ。
+		CMatrix m_worldMatrix = CMatrix::Identity;				//!<ワールド行列。
+		CConstantBuffer m_cb;									//!<定数バッファ。
+		CShadowCaster_SkinModel m_shadowCaster;					//!<シャドウキャスター。
+		bool m_isShadowCaster = false;							//!<シャドウキャスター？
+		bool m_isShadowReceiver = false;						//!<シャドウレシーバー？
+		CSamplerState m_samplerState;							//!<サンプラステート。@todo ひとまとめにした方がいい。
+		std::unique_ptr<CMatrix[]>	m_instancingData;			//!<インスタンシング描画用のデータ。
+		CStructuredBuffer	m_instancingDataSB;					//!<インスタンシング描画用のストラクチャーバッファ。
+		int m_maxInstance = 1;									//!<インスタンスの最大数
+		int m_numInstance = 0;									//!<インスタンスの数。
+		CBox m_boundingBox;										//!<バウンディングボックス。
 		OnDrawFookFunction m_preDrawFookFunction = nullptr;		//描画の直前に呼ばれるフック関数。
 		OnDrawFookFunction m_postDrawFookFunction = nullptr;	//描画が終わった後で呼ばれるフック関数。
 	};

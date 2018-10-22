@@ -72,7 +72,9 @@ bool Player::Start()
 	m_charaLight->SetDirection({ 1.0f, 0.0f, 0.0f });
 	m_charaLight->SetLightingMaterialIDGroup(1 << enMaterialID_Chara);
 	m_charaLight->SetColor({ 10.0f, 10.0f, 10.0f, 1.0f });
-	m_charaCon.Init(20.0f, 68.0f, m_position);
+
+	m_charaCon.Init(20.0f, 200.0f, m_position);
+	
 	m_game = FindGO<Game>("Game");
 	return true;
 }

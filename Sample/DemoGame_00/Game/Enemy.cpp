@@ -28,7 +28,7 @@ bool Enemy::Start()
 	m_modelRender->SetShadowReceiverFlag(true);
 	m_modelRender->PlayAnimation(enAnimationClip_idle);
 
-	m_charaCon.Init(20.0f, 100.0f, m_position);
+	m_charaCon.Init(20.0f, 00.0f, m_position);
 	m_player = FindGO<Player>("Player");
 	m_game = FindGO<Game>("Game");
 	return true;

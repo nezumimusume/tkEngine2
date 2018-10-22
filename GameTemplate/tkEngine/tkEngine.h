@@ -1,5 +1,5 @@
 /*!
- *@brief	エンジン。
+ *@file	tkEngine.h
  */
 #pragma once
 
@@ -13,9 +13,12 @@
 #include "tkEngine/graphics/font/tkFont.h"
 #include "tkEngine/debug/math/tkVectorRender.h"
 
+ /*!
+  *@namespace	tkEngine全体の名前空間。
+  */
 namespace tkEngine{
 	/*!
-	 *@brief	エンジン。
+	 *@brief	河原学園内製ゲームエンジン version 2.2
 	 */
 	class CEngine : Noncopyable {
 	private:
@@ -55,7 +58,7 @@ namespace tkEngine{
 
 		/*!
 		* @brief	ゲームパッドの取得。
-		*@param[in]	padNo	パッド番号
+		*@param[in]	padNo	パッド番号。CPad::CONNECT_PAD_MAX-1まで指定可能。
 		*/
 		CPad& GetPad(int padNo)
 		{
@@ -125,6 +128,10 @@ namespace tkEngine{
 
 		/*!
 		* @brief	ウィンドウプロシージャ。
+		*@param[in]	hWnd	ウィンドウハンドル
+		*@param[in] msg		メッセージ
+		*@param[in] wParam	WPARAM
+		*@param[in] lParam	LPARAM
 		*/
 		static LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		/*!

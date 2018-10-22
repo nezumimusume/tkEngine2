@@ -112,15 +112,9 @@ namespace tkEngine {
 			return newPos;
 		}
 	}
-	/*!
-	* @brief	コンストラクタ。
-	*/
 	CSpringCamera::CSpringCamera()
 	{
 	}
-	/*!
-	* @brief	デストラクタ
-	*/
 	CSpringCamera::~CSpringCamera()
 	{
 	}
