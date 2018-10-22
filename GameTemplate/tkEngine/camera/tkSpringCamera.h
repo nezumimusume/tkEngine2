@@ -11,10 +11,13 @@ namespace tkEngine{
 	/*!
 	 * @brief	バネカメラ。
 	 * @details
-	 *  バネに引っ張られるようなカメラの挙動を実現するクラスです。</br>
-	 *  SetTarget関数とSetPosition関数を使用して、</br>
-	 *  カメラの目標となる注視点と視点を設定してください。</br>
-	 *  Update関数を実行することで、カメラが設定された目標座標に追従していきます。</br>
+	 *  バネに引っ張られるようなカメラの挙動を実現するクラスです。\n
+	 *  SetTarget関数とSetPosition関数を使用して、\n
+	 *  カメラの目標となる注視点と視点を設定してください。\n
+	 *  Update関数を実行することで、カメラが設定された目標座標に追従していきます。
+	 *@code
+		
+	 *@endcode
 	 */
 	class CSpringCamera{
 	public:

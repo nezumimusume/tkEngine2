@@ -34,9 +34,16 @@ namespace tkEngine{
 	{
 		m_radius = radius;
 		m_collider.Create(radius);
+		m_isInited = true;	//初期化済みのフラグを立てる。
 	}
 	bool CCameraCollisionSolver::Execute(CVector3& result, const CVector3& position, const CVector3& target )
 	{
+		if (m_isInited == false) {
+			TK_WARNING_MESSAGE_BOX("初期化されていないカメラコリジョンソルバーのExecute関数が呼ばれています。\n"
+				"CCameraCollisionSolver::Init関数を呼び出してください。\n");
+			return false;
+
+		}
 		result = position;
 		CVector3 vWk;
 		vWk.Subtract(target, position);
