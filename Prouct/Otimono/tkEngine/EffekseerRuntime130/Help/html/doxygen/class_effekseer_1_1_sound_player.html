@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Effekseer: Effekseer::SoundPlayer クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Effekseer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Effekseer</b></li><li class="navelem"><a class="el" href="class_effekseer_1_1_sound_player.html">SoundPlayer</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="class_effekseer_1_1_sound_player-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">Effekseer::SoundPlayer クラス<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_effekseer_1_1_sound_player_1_1_instance_parameter.html">InstanceParameter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aaea571e89a22b2b0a8971bfb52176622"><td class="memItemLeft" align="right" valign="top"><a id="aaea571e89a22b2b0a8971bfb52176622"></a>
+virtual SoundHandle&#160;</td><td class="memItemRight" valign="bottom"><b>Play</b> (SoundTag tag, const <a class="el" href="struct_effekseer_1_1_sound_player_1_1_instance_parameter.html">InstanceParameter</a> &amp;parameter)=0</td></tr>
+<tr class="separator:aaea571e89a22b2b0a8971bfb52176622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af300227673261666ce202159054db9bb"><td class="memItemLeft" align="right" valign="top"><a id="af300227673261666ce202159054db9bb"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Stop</b> (SoundHandle handle, SoundTag tag)=0</td></tr>
+<tr class="separator:af300227673261666ce202159054db9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7dc7d8e0dca428ac9bde68cebb7fedf"><td class="memItemLeft" align="right" valign="top"><a id="ae7dc7d8e0dca428ac9bde68cebb7fedf"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Pause</b> (SoundHandle handle, SoundTag tag, bool pause)=0</td></tr>
+<tr class="separator:ae7dc7d8e0dca428ac9bde68cebb7fedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a046be0da01c515b38b92d792108441b6"><td class="memItemLeft" align="right" valign="top"><a id="a046be0da01c515b38b92d792108441b6"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>CheckPlaying</b> (SoundHandle handle, SoundTag tag)=0</td></tr>
+<tr class="separator:a046be0da01c515b38b92d792108441b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4726bc7f3f4049508a268f16a4beeb56"><td class="memItemLeft" align="right" valign="top"><a id="a4726bc7f3f4049508a268f16a4beeb56"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>StopTag</b> (SoundTag tag)=0</td></tr>
+<tr class="separator:a4726bc7f3f4049508a268f16a4beeb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a331ad801eed06611fffc50354837b70e"><td class="memItemLeft" align="right" valign="top"><a id="a331ad801eed06611fffc50354837b70e"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>PauseTag</b> (SoundTag tag, bool pause)=0</td></tr>
+<tr class="separator:a331ad801eed06611fffc50354837b70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a4c022f15f7a8a9d3e3235a351606c"><td class="memItemLeft" align="right" valign="top"><a id="a12a4c022f15f7a8a9d3e3235a351606c"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>CheckPlayingTag</b> (SoundTag tag)=0</td></tr>
+<tr class="separator:a12a4c022f15f7a8a9d3e3235a351606c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058465ab0f8c94607651a743767f64d2"><td class="memItemLeft" align="right" valign="top"><a id="a058465ab0f8c94607651a743767f64d2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>StopAll</b> ()=0</td></tr>
+<tr class="separator:a058465ab0f8c94607651a743767f64d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>Dev/Cpp/Effekseer/<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2017年10月31日(火) 22時33分35秒作成 - Effekseer / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

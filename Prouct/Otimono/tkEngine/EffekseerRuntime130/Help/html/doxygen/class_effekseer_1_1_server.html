@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Effekseer: Effekseer::Server クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Effekseer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Effekseer</b></li><li class="navelem"><a class="el" href="class_effekseer_1_1_server.html">Server</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pub-static-methods">静的公開メンバ関数</a> &#124;
+<a href="class_effekseer_1_1_server-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">Effekseer::Server クラス<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:afd333e58d1330710673caf909452a4c1"><td class="memItemLeft" align="right" valign="top"><a id="afd333e58d1330710673caf909452a4c1"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_server.html#afd333e58d1330710673caf909452a4c1">Start</a> (uint16_t port)=0</td></tr>
+<tr class="memdesc:afd333e58d1330710673caf909452a4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">サーバーを開始する。 <br /></td></tr>
+<tr class="separator:afd333e58d1330710673caf909452a4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac41b09333e7d792489cbeef127df89f6"><td class="memItemLeft" align="right" valign="top"><a id="ac41b09333e7d792489cbeef127df89f6"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Stop</b> ()=0</td></tr>
+<tr class="separator:ac41b09333e7d792489cbeef127df89f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadfbaeb38b0d1fb33ad6646430de45b0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_server.html#aadfbaeb38b0d1fb33ad6646430de45b0">Regist</a> (const EFK_CHAR *key, <a class="el" href="class_effekseer_1_1_effect.html">Effect</a> *effect)=0</td></tr>
+<tr class="memdesc:aadfbaeb38b0d1fb33ad6646430de45b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">エフェクトをリロードの対象として登録する。  <a href="#aadfbaeb38b0d1fb33ad6646430de45b0">[詳解]</a><br /></td></tr>
+<tr class="separator:aadfbaeb38b0d1fb33ad6646430de45b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81f7cfeac861a665a6d2905400735740"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_server.html#a81f7cfeac861a665a6d2905400735740">Unregist</a> (<a class="el" href="class_effekseer_1_1_effect.html">Effect</a> *effect)=0</td></tr>
+<tr class="memdesc:a81f7cfeac861a665a6d2905400735740"><td class="mdescLeft">&#160;</td><td class="mdescRight">エフェクトをリロードの対象から外す。  <a href="#a81f7cfeac861a665a6d2905400735740">[詳解]</a><br /></td></tr>
+<tr class="separator:a81f7cfeac861a665a6d2905400735740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af841f04fb41ed36b888cb2f89c4c0771"><td class="memItemLeft" align="right" valign="top"><a id="af841f04fb41ed36b888cb2f89c4c0771"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_server.html#af841f04fb41ed36b888cb2f89c4c0771">Update</a> ()=0</td></tr>
+<tr class="memdesc:af841f04fb41ed36b888cb2f89c4c0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">サーバーを更新し、エフェクトのリロードを行う。 <br /></td></tr>
+<tr class="separator:af841f04fb41ed36b888cb2f89c4c0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c0d31a5fd39184615179157a6929296"><td class="memItemLeft" align="right" valign="top"><a id="a4c0d31a5fd39184615179157a6929296"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_server.html#a4c0d31a5fd39184615179157a6929296">SetMaterialPath</a> (const EFK_CHAR *materialPath)=0</td></tr>
+<tr class="memdesc:a4c0d31a5fd39184615179157a6929296"><td class="mdescLeft">&#160;</td><td class="mdescRight">素材パスを設定する。 <br /></td></tr>
+<tr class="separator:a4c0d31a5fd39184615179157a6929296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+静的公開メンバ関数</h2></td></tr>
+<tr class="memitem:a010be3e29a3551b3f2bf058b593c3eb0"><td class="memItemLeft" align="right" valign="top"><a id="a010be3e29a3551b3f2bf058b593c3eb0"></a>
+static <a class="el" href="class_effekseer_1_1_server.html">Server</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>Create</b> ()</td></tr>
+<tr class="separator:a010be3e29a3551b3f2bf058b593c3eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">関数詳解</h2>
+<a id="aadfbaeb38b0d1fb33ad6646430de45b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadfbaeb38b0d1fb33ad6646430de45b0">&#9670;&nbsp;</a></span>Regist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Effekseer::Server::Regist </td>
+          <td>(</td>
+          <td class="paramtype">const EFK_CHAR *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_effekseer_1_1_effect.html">Effect</a> *&#160;</td>
+          <td class="paramname"><em>effect</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エフェクトをリロードの対象として登録する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>[in] 検索用キー </td></tr>
+    <tr><td class="paramname">effect</td><td>[in] リロードする対象のエフェクト </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a81f7cfeac861a665a6d2905400735740"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81f7cfeac861a665a6d2905400735740">&#9670;&nbsp;</a></span>Unregist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Effekseer::Server::Unregist </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_effekseer_1_1_effect.html">Effect</a> *&#160;</td>
+          <td class="paramname"><em>effect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エフェクトをリロードの対象から外す。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">effect</td><td>[in] リロードから外すエフェクト </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>Dev/Cpp/Effekseer/<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2017年10月31日(火) 22時33分35秒作成 - Effekseer / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
