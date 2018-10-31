@@ -7,6 +7,9 @@ Player::Player()
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetShadowCasterFlag(true);
+	CQuaternion qRot;
+	qRot.SetRotationDeg(CVector3::AxisY, 180.0f);
+	m_skinModelRender->SetRotation(qRot);
 	m_charaCon.Init(30.0f, 60.0f, m_position);
 }
 

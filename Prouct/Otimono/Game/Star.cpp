@@ -28,11 +28,11 @@ Star::Star()
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetScale({ 40.0f, 40.0f, 40.0f });
 	m_skinModelRender->SetShadowCasterFlag(true);
-	m_skinModelRender->SetEmissionColor({ 0.9f, 0.9f, 0.0f });
+	m_skinModelRender->SetEmissionColor({ 2.9f, 2.9f, 0.0f });
 	m_player = FindGO<Player>(PLAYER_NAME);
 	m_game = FindGO<Game>(GAME_NAME);
 	m_pointLight = NewGO<prefab::CPointLight>(0);
-	m_pointLight->SetColor({ 5.3f, 5.3f, 0.0f, 1.0f });
+	m_pointLight->SetColor({ 20.3f, 20.3f, 20.0f, 1.0f });
 	m_pointLight->SetAttn({ 200.0f, 2.0f, 0.0f });
 }
 

@@ -9,6 +9,7 @@
 #include "ScoreHUD.h"
 #include "TimerHUD.h"
 #include "Title.h"
+#include "Sky.h"
 
 namespace {	
 	const char* GROUND_NAME = "地面";
@@ -17,6 +18,7 @@ namespace {
 	const char* STAR_GENERATOR_NAME = "星生成器";
 	const char* SCORE_HUD = "スコアのHUD";
 	const char* TIMER_HUD_NAME = "タイマーのHUD";
+	const char* SKY_NAME = "空";
 }
 Game::Game()
 {
@@ -34,20 +36,37 @@ Game::~Game()
 	DeleteGO(SCORE_HUD);
 	DeleteGO(m_bgm);
 	DeleteGO(TIMER_HUD_NAME);
+	DeleteGO(SKY_NAME);
 }
 bool Game::Start()
 {
-	auto dirLig = NewGO<prefab::CDirectionLight>(0, "ディレクションライト");
+	auto& ge = GraphicsEngine();
+	auto dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
 	dirLig->SetDirection({ 0.0f, -1.0f, 0.0f });
-	dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
-	GraphicsEngine().GetShadowMap().SetLightDirection(dirLig->GetDirection());
+	dirLig->SetColor({ 2.7f, 2.7f, 2.7f, 1.0f });
+	ge.GetShadowMap().SetLightDirection(dirLig->GetDirection());
 	LightManager().SetAmbientLight({ 0.1f, 0.1f, 0.1f });
+
+	dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
+	dirLig->SetDirection({ 0.0f, 1.0f, 0.0f });
+	dirLig->SetColor({ 1.7f, 1.7f, 1.7f, 1.0f });
+
+	dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
+	dirLig->SetDirection({ 0.0f, 0.707f, -0.707f });
+	dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
+	//
+	//dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
+	//dirLig->SetDirection({ 0.707f, 0.0f, 0.707f });
+	//dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
+
+	ge.GetPostEffect().GetTonemap().SetLuminance(0.38f);
 
 	NewGO< Player>(0, PLAYER_NAME);
 	NewGO< GameCamera>(0, GAME_CAMERA_NAME);
 	NewGO<StarGenerator>(0, STAR_GENERATOR_NAME);
 	NewGO< ScoreHUD>(0, SCORE_HUD);
 	NewGO<TimerHUD>(0, TIMER_HUD_NAME);
+	NewGO<Sky>(0, SKY_NAME);
 	m_bgm = NewGO<prefab::CSoundSource>(0);
 	m_bgm->Init(L"sound/bgm.wav");
 	m_bgm->Play(false);

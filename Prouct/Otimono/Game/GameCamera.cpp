@@ -23,11 +23,11 @@ GameCamera::~GameCamera()
 void GameCamera::Update()
 {
 	auto target = m_player->GetPosition();
-	target.y += 200.0f;
+	target.y += 50.0f;
 	m_springCamera.SetTarget(target);
 	auto position = target;
-	position.z -= 800.0f;
-	position.y += 200.0f;
+	position.z -= 200.0f;
+	position.y += 0.0f;
 	m_springCamera.SetPosition(position);
 	m_springCamera.Update();
 }
