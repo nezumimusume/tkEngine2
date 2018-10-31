@@ -45,7 +45,7 @@ bool Game::Start()
 	dirLig->SetDirection({ 0.0f, -1.0f, 0.0f });
 	dirLig->SetColor({ 2.7f, 2.7f, 2.7f, 1.0f });
 	ge.GetShadowMap().SetLightDirection(dirLig->GetDirection());
-	LightManager().SetAmbientLight({ 0.1f, 0.1f, 0.1f });
+	LightManager().SetAmbientLight({ 0.4f, 0.4f, 0.4f });
 
 	dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
 	dirLig->SetDirection({ 0.0f, 1.0f, 0.0f });
@@ -55,11 +55,11 @@ bool Game::Start()
 	dirLig->SetDirection({ 0.0f, 0.707f, -0.707f });
 	dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
 	//
-	//dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
-	//dirLig->SetDirection({ 0.707f, 0.0f, 0.707f });
-	//dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
+	dirLig = NewGO<prefab::CDirectionLight>(0, DIRECTION_LIG_NAME);
+	dirLig->SetDirection({ 0.0f, 0.0f, 1.0f });
+	dirLig->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
 
-	ge.GetPostEffect().GetTonemap().SetLuminance(0.38f);
+	ge.GetPostEffect().GetTonemap().SetLuminance(0.42f);
 
 	NewGO< Player>(0, PLAYER_NAME);
 	NewGO< GameCamera>(0, GAME_CAMERA_NAME);
