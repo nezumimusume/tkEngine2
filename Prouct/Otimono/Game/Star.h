@@ -15,5 +15,6 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity;
 	Player* m_player = nullptr;
 	Game* m_game = nullptr;
+	prefab::CPointLight* m_pointLight = nullptr;
 };
 

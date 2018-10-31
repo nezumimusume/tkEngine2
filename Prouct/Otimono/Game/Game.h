@@ -54,7 +54,7 @@ private:
 	CLevel m_level;
 	int m_getStarCount = 0;										//取得した星の数。
 	prefab::CSoundSource* m_bgm = nullptr;						//BGM
-	float m_restTimer = 5.0f;									//ゲームの残り時間。単位：秒。
+	float m_restTimer = 90.0f;									//ゲームの残り時間。単位：秒。
 	EnState m_state = enState_Playing;							//ゲームのステート。
 	float m_clearEffectTimer = 0.0f;							//Clear演出タイム。
 };

@@ -99,6 +99,16 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
+		//自己発光色バッファの初期化。
+		m_GBuffer[enGBufferEmission].Create(
+			ge.GetFrameBufferWidth(),
+			ge.GetFrameBufferHeight(),
+			1,
+			1,
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			DXGI_FORMAT_UNKNOWN,
+			msaaDesc
+		);
 		//1フレーム前の深度値を記録するためのテクスチャを作成する。
 		D3D11_TEXTURE2D_DESC texDesc;
 		ZeroMemory(&texDesc, sizeof(texDesc));
@@ -207,6 +217,8 @@ namespace tkEngine{
 		rc.PSSetShaderResource(enSkinModelSRVReg_DepthMap, m_GBuffer[enGBufferDepth].GetRenderTargetSRV());
 		rc.PSSetShaderResource(enSkinModelSRVReg_Tangent, m_GBuffer[enGBufferTangent].GetRenderTargetSRV());
 		rc.PSSetShaderResource(enSkinModelSRVReg_MaterialID, m_GBuffer[enGBufferMateriaID].GetRenderTargetSRV());
+		rc.PSSetShaderResource(enSkinModelSRVReg_EmissionColor, m_GBuffer[enGBufferEmission].GetRenderTargetSRV());
+
 		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
 			rc.PSSetShaderResource(enSkinModelSRVReg_SoftShadowMap, m_GBuffer[enGBufferShadow].GetRenderTargetSRV());
@@ -224,6 +236,7 @@ namespace tkEngine{
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_DepthMap);
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_Tangent);
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_MaterialID);
+		rc.PSUnsetShaderResource(enSkinModelSRVReg_EmissionColor);
 
 		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
@@ -268,6 +281,8 @@ namespace tkEngine{
 			{ 0.0f, 0.0f, 0.0f, 1.0f }, //enGBufferShadow
 			{ 1.0f, 1.0f, 1.0f, 1.0f },	//enGBufferDepth
 			{ 1.0f, 0.0f, 0.0f, 1.0f },	//enGBufferTangent
+			{ 0.0f, 0.0f, 0.0f, 0.0f },	//enGBufferMateriaID
+			{ 0.0f, 0.0f, 0.0f, 1.0f },	//enGBufferEmission
 		};
 		
 		for (int i = 0; i < enGBufferNum; i++) {

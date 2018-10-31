@@ -2,6 +2,7 @@
 #include "Star.h"
 #include "Player.h"
 #include "Game.h"
+#include "tkEngine/light/tkPointLight.h"
 
 Star::Star()
 {
@@ -27,14 +28,19 @@ Star::Star()
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetScale({ 40.0f, 40.0f, 40.0f });
 	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetEmissionColor({ 0.9f, 0.9f, 0.0f });
 	m_player = FindGO<Player>(PLAYER_NAME);
 	m_game = FindGO<Game>(GAME_NAME);
+	m_pointLight = NewGO<prefab::CPointLight>(0);
+	m_pointLight->SetColor({ 5.3f, 5.3f, 0.0f, 1.0f });
+	m_pointLight->SetAttn({ 200.0f, 2.0f, 0.0f });
 }
 
 
 Star::~Star()
 {
 	DeleteGO(m_skinModelRender);
+	DeleteGO(m_pointLight);
 }
 
 void Star::Update()
@@ -47,7 +53,7 @@ void Star::Update()
 	qAddRot.SetRotation(CVector3::AxisY, CMath::PI * GameTime().GetFrameDeltaTime());
 	m_rotation *= qAddRot;
 	m_skinModelRender->SetRotation(m_rotation);
-
+	m_pointLight->SetPosition(m_position);
 	//‹——£”»’è
 	auto diff = m_player->GetPosition() - m_position;
 	if (diff.Length() < 100.0f) {
@@ -56,6 +62,10 @@ void Star::Update()
 		auto ss = NewGO<prefab::CSoundSource>(0);
 		ss->Init(L"sound/coinGet.wav");
 		ss->Play(false);
+		DeleteGO(this);
+	}
+	if (m_position.y < -10.0f) {
+		//YÀ•W‚ªˆê’è’lˆÈ‰º‚É‚È‚Á‚½B
 		DeleteGO(this);
 	}
 }
