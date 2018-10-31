@@ -8,6 +8,7 @@ Game::Game()
 }
 Game::~Game()
 {
+	DeleteGO(m_fontRender);
 }
 bool Game::Start()
 {
@@ -18,6 +19,8 @@ bool Game::Start()
 	MainCamera().SetPosition({ 0.0f, 70.0f, 200.0f });
 	MainCamera().Update();
 
+	m_fontRender = NewGO<prefab::CFontRender>(0);
+	m_fontRender->SetText(L"こんにちは世界");
 	
 	return true;
 }
@@ -43,18 +46,7 @@ void Game::Update()
 		//十字キーの右が押されていたら、R成分を減らす。
 		m_color.b += 0.02f;
 	}
+	m_fontRender->SetPosition(m_position);
+	m_fontRender->SetColor(m_color);
 }
 
-//フォントの描画命令はIGameObjectの仮想関数のPostRenderをオーバーライドして、
-//そこで描画する。
-void Game::PostRender(CRenderContext& rc)
-{
-	m_font.Begin(rc);	//フォントの描画開始。
-	m_font.Draw(
-		L"こんにちは世界",		//表示する文字列。
-		m_position,				//表示する座標。0.0f, 0.0が画面の中心。
-		m_color
-	);
-
-	m_font.End(rc);		//フォントの描画終了。
-}

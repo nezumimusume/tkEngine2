@@ -2,7 +2,7 @@
 @rem クリーンアップ
 @setlocal
 @set CURRENT_DIR=%~dp0
-pushd %CURRENT_DIR%
+pushd ..\
 
 call .\Sample\cleanup.bat
 
