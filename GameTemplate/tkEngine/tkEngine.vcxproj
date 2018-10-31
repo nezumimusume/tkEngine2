@@ -881,6 +881,7 @@
     <ClInclude Include="level\tkLevel.h" />
     <ClInclude Include="level\tkMapChip.h" />
     <ClInclude Include="light\tkDirectionLight.h" />
+    <ClInclude Include="light\tkEmissionLight.h" />
     <ClInclude Include="light\tkLightBase.h" />
     <ClInclude Include="light\tkLightManager.h" />
     <ClInclude Include="light\tkPointLight.h" />
@@ -982,6 +983,7 @@
     <ClCompile Include="level\tkLevel.cpp" />
     <ClCompile Include="level\tkMapChip.cpp" />
     <ClCompile Include="light\tkDirectionLight.cpp" />
+    <ClCompile Include="light\tkEmissionLight.cpp" />
     <ClCompile Include="light\tkLightBase.cpp" />
     <ClCompile Include="light\tkLightManager.cpp" />
     <ClCompile Include="light\tkPointLight.cpp" />

@@ -437,6 +437,9 @@
     <ClInclude Include="graphics\font\tkFontRender.h">
       <Filter>Source Files\graphics\font</Filter>
     </ClInclude>
+    <ClInclude Include="light\tkEmissionLight.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -699,6 +702,9 @@
     </ClCompile>
     <ClCompile Include="graphics\font\tkFontRender.cpp">
       <Filter>Source Files\graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkEmissionLight.cpp">
+      <Filter>Source Files\light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
