@@ -8,7 +8,7 @@ namespace tkEngine{
 	/*!
 	 * @brief	フォント。
 	 */
-	class CFont{
+	class CFont final{
 	public:
 		CFont();
 		~CFont();

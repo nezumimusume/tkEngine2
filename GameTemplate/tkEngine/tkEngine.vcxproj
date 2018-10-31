@@ -833,6 +833,7 @@
     <ClInclude Include="graphics\effect\tkEffect.h" />
     <ClInclude Include="graphics\effect\tkEffectEngine.h" />
     <ClInclude Include="graphics\font\tkFont.h" />
+    <ClInclude Include="graphics\font\tkFontRender.h" />
     <ClInclude Include="graphics\GPUBuffer\tkConstantBuffer.h" />
     <ClInclude Include="graphics\GPUBuffer\tkGPUBuffer.h" />
     <ClInclude Include="graphics\GPUBuffer\tkIndexBuffer.h" />
@@ -939,6 +940,7 @@
     <ClCompile Include="graphics\effect\tkEffect.cpp" />
     <ClCompile Include="graphics\effect\tkEffectEngine.cpp" />
     <ClCompile Include="graphics\font\tkFont.cpp" />
+    <ClCompile Include="graphics\font\tkFontRender.cpp" />
     <ClCompile Include="graphics\GPUBuffer\tkConstantBuffer.cpp" />
     <ClCompile Include="graphics\GPUBuffer\tkGPUBuffer.cpp" />
     <ClCompile Include="graphics\GPUBuffer\tkIndexBuffer.cpp" />

@@ -434,6 +434,9 @@
     <ClInclude Include="physics\tkPhysicsDynamicObject.h">
       <Filter>Source Files\physics</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\font\tkFontRender.h">
+      <Filter>Source Files\graphics\font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -693,6 +696,9 @@
     </ClCompile>
     <ClCompile Include="physics\tkPhysicsDynamicObject.cpp">
       <Filter>Source Files\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\font\tkFontRender.cpp">
+      <Filter>Source Files\graphics\font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

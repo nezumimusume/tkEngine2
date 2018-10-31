@@ -135,3 +135,4 @@ namespace tkEngine {
 #include "tkEngine/debug/math/tkVectorRenderInline.h"
 #include "tkEngine/Character/tkCharacterController.h"
 #include "tkEngine/physics/tkPhysicsDynamicObject.h"
+#include "tkEngine/graphics/font/tkFontRender.h"
