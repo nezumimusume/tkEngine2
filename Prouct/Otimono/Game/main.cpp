@@ -3,6 +3,8 @@
  */
 #include "stdafx.h"
 #include "Game.h"
+#include "GameObjectName.h"
+#include "Title.h"
 
 namespace {
 	/*!
@@ -126,7 +128,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	//エンジンを初期化。
 	if (Engine().Init(initParam) == true) {
-		NewGO<Game>(0, nullptr);
+		//NewGO<Game>(0, GAME_NAME);
+		NewGO<Title>(0);
 		//ゲームループを実行。
 		Engine().RunGameLoop();
 	}

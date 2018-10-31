@@ -17,7 +17,7 @@
     <Filter Include="Assets\modelData\bg">
       <UniqueIdentifier>{c60fb078-b66d-4806-80ff-f2cff9569304}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\star">
+    <Filter Include="Assets\modelData\star">
       <UniqueIdentifier>{3063a24d-9f32-419b-a8ea-23d3f5978b94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -28,8 +28,11 @@
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="Star.cpp" />
     <ClCompile Include="StarGenerator.cpp" />
+    <ClCompile Include="Star.cpp" />
+    <ClCompile Include="ScoreHUD.cpp" />
+    <ClCompile Include="TimerHUD.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -43,6 +46,9 @@
     <ClInclude Include="GameObjectName.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="StarGenerator.h" />
+    <ClInclude Include="ScoreHUD.h" />
+    <ClInclude Include="TimerHUD.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -57,17 +63,18 @@
       <Filter>Assets\modelData\bg</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\star\star.FBX">
-      <Filter>Assets\star</Filter>
+      <Filter>Assets\modelData\star</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\bg\bgSpec.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\modelData\bg\bgSpec.png">
-      <Filter>Assets\modelData\bg</Filter>
+    <Image Include="Assets\sprite\title.png">
+      <Filter>Assets\sprite</Filter>
     </Image>
   </ItemGroup>
 </Project>

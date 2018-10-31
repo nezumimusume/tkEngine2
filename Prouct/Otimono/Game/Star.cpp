@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Star.h"
-
+#include "Player.h"
+#include "Game.h"
 
 Star::Star()
 {
@@ -26,6 +27,8 @@ Star::Star()
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetScale({ 40.0f, 40.0f, 40.0f });
 	m_skinModelRender->SetShadowCasterFlag(true);
+	m_player = FindGO<Player>(PLAYER_NAME);
+	m_game = FindGO<Game>(GAME_NAME);
 }
 
 
@@ -44,4 +47,15 @@ void Star::Update()
 	qAddRot.SetRotation(CVector3::AxisY, CMath::PI * GameTime().GetFrameDeltaTime());
 	m_rotation *= qAddRot;
 	m_skinModelRender->SetRotation(m_rotation);
+
+	//‹——£”»’è
+	auto diff = m_player->GetPosition() - m_position;
+	if (diff.Length() < 100.0f) {
+		m_game->NotifyGetStar();
+		//¯‚ğæ“¾‚µ‚½‰¹‚ğ–Â‚ç‚·B
+		auto ss = NewGO<prefab::CSoundSource>(0);
+		ss->Init(L"sound/coinGet.wav");
+		ss->Play(false);
+		DeleteGO(this);
+	}
 }

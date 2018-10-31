@@ -9,3 +9,5 @@
 
 #include "tkEngine/tkEnginePreCompile.h"
 using namespace tkEngine;
+
+#include "GameObjectName.h"

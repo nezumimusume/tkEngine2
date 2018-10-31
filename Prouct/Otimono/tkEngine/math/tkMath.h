@@ -30,7 +30,16 @@ namespace tkEngine{
 		 *  ret = t0 + (t1-t0) + rate;
 		 *@param[in]	t		•âŠÔ—¦	0.0`1.0
 		 */
-		constexpr static inline float Lerp(float rate, float t0, float t1)
+		
+		template<class T>
+		static inline T Lerp(float rate, T t0, T t1)
+		{
+			T ret;
+			ret.Lerp(rate, t0, t1);
+			return ret;
+		}
+		template<>
+		static inline float Lerp(float rate, float t0, float t1)
 		{
 			return t0 + (t1 - t0)*rate;
 		}
