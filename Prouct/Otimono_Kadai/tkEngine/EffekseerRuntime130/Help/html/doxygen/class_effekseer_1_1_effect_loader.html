@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Effekseer: Effekseer::EffectLoader クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Effekseer
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Effekseer</b></li><li class="navelem"><a class="el" href="class_effekseer_1_1_effect_loader.html">EffectLoader</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="class_effekseer_1_1_effect_loader-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">Effekseer::EffectLoader クラス<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>エフェクトファイル読み込み破棄関数指定クラス  
+ <a href="class_effekseer_1_1_effect_loader.html#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a38e316829c64864d3a0cac68cd7724a0"><td class="memItemLeft" align="right" valign="top"><a id="a38e316829c64864d3a0cac68cd7724a0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_effect_loader.html#a38e316829c64864d3a0cac68cd7724a0">EffectLoader</a> ()</td></tr>
+<tr class="memdesc:a38e316829c64864d3a0cac68cd7724a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ <br /></td></tr>
+<tr class="separator:a38e316829c64864d3a0cac68cd7724a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d296c85473ebb6cae68be5305759628"><td class="memItemLeft" align="right" valign="top"><a id="a2d296c85473ebb6cae68be5305759628"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_effect_loader.html#a2d296c85473ebb6cae68be5305759628">~EffectLoader</a> ()</td></tr>
+<tr class="memdesc:a2d296c85473ebb6cae68be5305759628"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ <br /></td></tr>
+<tr class="separator:a2d296c85473ebb6cae68be5305759628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da2924e84118ae31330f5d3c2937f29"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_effect_loader.html#a2da2924e84118ae31330f5d3c2937f29">Load</a> (const EFK_CHAR *path, void *&amp;data, int32_t &amp;size)=0</td></tr>
+<tr class="memdesc:a2da2924e84118ae31330f5d3c2937f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">エフェクトファイルを読み込む。  <a href="#a2da2924e84118ae31330f5d3c2937f29">[詳解]</a><br /></td></tr>
+<tr class="separator:a2da2924e84118ae31330f5d3c2937f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c033478a92355db775a2bfa9e3b6115"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_effekseer_1_1_effect_loader.html#a6c033478a92355db775a2bfa9e3b6115">Unload</a> (void *data, int32_t size)=0</td></tr>
+<tr class="memdesc:a6c033478a92355db775a2bfa9e3b6115"><td class="mdescLeft">&#160;</td><td class="mdescRight">エフェクトファイルを破棄する。  <a href="#a6c033478a92355db775a2bfa9e3b6115">[詳解]</a><br /></td></tr>
+<tr class="separator:a6c033478a92355db775a2bfa9e3b6115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>エフェクトファイル読み込み破棄関数指定クラス </p>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a2da2924e84118ae31330f5d3c2937f29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da2924e84118ae31330f5d3c2937f29">&#9670;&nbsp;</a></span>Load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Effekseer::EffectLoader::Load </td>
+          <td>(</td>
+          <td class="paramtype">const EFK_CHAR *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t &amp;&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エフェクトファイルを読み込む。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>[in] 読み込み元パス </td></tr>
+    <tr><td class="paramname">data</td><td>[out] データ配列の先頭のポインタを出力する先 </td></tr>
+    <tr><td class="paramname">size</td><td>[out] データ配列の長さを出力する先 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成否 </dd></dl>
+<dl class="section note"><dt>覚え書き</dt><dd>エフェクトファイルを読み込む。 ::Effekseer::Effect::Create実行時に使用される。 </dd></dl>
+
+</div>
+</div>
+<a id="a6c033478a92355db775a2bfa9e3b6115"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c033478a92355db775a2bfa9e3b6115">&#9670;&nbsp;</a></span>Unload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Effekseer::EffectLoader::Unload </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>エフェクトファイルを破棄する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>[in] データ配列の先頭のポインタ </td></tr>
+    <tr><td class="paramname">size</td><td>[int] データ配列の長さ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>覚え書き</dt><dd>エフェクトファイルを破棄する。 ::Effekseer::Effect::Create実行終了時に使用される。 </dd></dl>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>Dev/Cpp/Effekseer/<a class="el" href="_effekseer_8h_source.html">Effekseer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2017年10月31日(火) 22時33分34秒作成 - Effekseer / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
