@@ -1768,7 +1768,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScoreHUD.cpp" />
-    <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="StarGenerator.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -1802,7 +1801,6 @@
     <ClInclude Include="Player.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="ScoreHUD.h" />
-    <ClInclude Include="Sky.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="StarGenerator.h" />
     <ClInclude Include="stdafx.h" />

@@ -37,6 +37,15 @@ namespace tkEngine{
 		 * 明示的に開放する必要があるときに使用してください。
 		 */
 		void Release();
+		/// <summary>
+		/// 参照カウンタを上げる。
+		/// </summary>
+		void AddRef()
+		{
+			if (m_srv != nullptr) {
+				m_srv->AddRef();
+			}
+		}
 		/*!
 		*@brief	ID3D11ShaderResourceViewを取得。
 		*/

@@ -9,7 +9,7 @@
 #include "ScoreHUD.h"
 #include "TimerHUD.h"
 #include "Title.h"
-#include "Sky.h"
+#include "tkEngine/nature/tkSky.h"
 
 namespace {	
 	const char* GROUND_NAME = "’n–Ê";
@@ -67,7 +67,9 @@ bool Game::Start()
 	NewGO<StarGenerator>(0, STAR_GENERATOR_NAME);
 	NewGO< ScoreHUD>(0, SCORE_HUD);
 	NewGO<TimerHUD>(0, TIMER_HUD_NAME);
-	NewGO<Sky>(0, SKY_NAME);
+	auto sky = NewGO<prefab::CSky>(0, SKY_NAME);
+	sky->SetScale(8000.0f);
+	sky->SetEmissionColor({ 0.2f, 0.2f, 0.2f });
 	m_bgm = NewGO<prefab::CSoundSource>(0);
 	m_bgm->Init(L"sound/bgm.wav");
 	m_bgm->Play(false);

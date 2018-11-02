@@ -108,6 +108,9 @@
     <Filter Include="Assets\modelData\preset">
       <UniqueIdentifier>{0f454397-ac31-43de-b306-2a569946b724}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\nature">
+      <UniqueIdentifier>{0633ba0e-bad6-47ef-863a-6c15ce68dabc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject\tkGameObjectManager.h">
@@ -437,6 +440,9 @@
     <ClInclude Include="graphics\font\tkFontRender.h">
       <Filter>Source Files\graphics\font</Filter>
     </ClInclude>
+    <ClInclude Include="nature\tkSky.h">
+      <Filter>Source Files\nature</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -699,6 +705,9 @@
     </ClCompile>
     <ClCompile Include="graphics\font\tkFontRender.cpp">
       <Filter>Source Files\graphics\font</Filter>
+    </ClCompile>
+    <ClCompile Include="nature\tkSky.cpp">
+      <Filter>Source Files\nature</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -889,6 +889,7 @@
     <ClInclude Include="math\tkMath.h" />
     <ClInclude Include="math\tkMatrix.h" />
     <ClInclude Include="math\tkvector.h" />
+    <ClInclude Include="nature\tkSky.h" />
     <ClInclude Include="physics\tkBoxCollider.h" />
     <ClInclude Include="physics\tkCapsuleCollider.h" />
     <ClInclude Include="physics\tkCollisionAttr.h" />
@@ -990,6 +991,7 @@
     <ClCompile Include="math\tkMath.cpp" />
     <ClCompile Include="math\tkMatrix.cpp" />
     <ClCompile Include="math\tkVector.cpp" />
+    <ClCompile Include="nature\tkSky.cpp" />
     <ClCompile Include="physics\tkBoxCollider.cpp" />
     <ClCompile Include="physics\tkCapsuleCollider.cpp" />
     <ClCompile Include="physics\tkMeshCollider.cpp" />
