@@ -14,9 +14,6 @@
     <Filter Include="Assets\sprite">
       <UniqueIdentifier>{a6ce300a-b532-440d-b914-b4661d3015ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\modelData\Theif">
-      <UniqueIdentifier>{f0683f9c-ae60-4f8e-84ea-15d8f7bd5ca5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -38,9 +35,6 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Theif\Thethief_H.FBX">
-      <Filter>Assets\modelData\Theif</Filter>
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>

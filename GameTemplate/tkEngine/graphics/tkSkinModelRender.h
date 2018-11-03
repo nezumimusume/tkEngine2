@@ -126,6 +126,14 @@ namespace prefab{
 			m_skinModel.SetShadowReceiverFlag(flag);
 		}
 		/*!
+		* @brief	自己発光色を設定。
+		*@param[in]	color	自己発光色。
+		*/
+		void SetEmissionColor(CVector3 color)
+		{
+			m_skinModel.SetEmissionColor(color);
+		}
+		/*!
 		*@brief	フリーズさせているボーンの平行移動量を取得。
 		*/
 		CVector3 GetFreezeBoneTranslate() const

@@ -97,7 +97,7 @@ namespace prefab {
 		* 
 		*@param[in]	color	êFÅB
 		*/
-		void SetColor(const CVector4& color)
+		void SetColor(const CVector3& color)
 		{
 			m_color = color;
 		}

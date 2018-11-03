@@ -229,6 +229,14 @@ namespace tkEngine{
 		{
 			m_postDrawFookFunction = func;
 		}
+		/// <summary>
+		/// 自己発光色を設定。
+		/// </summary>
+		/// <param name="color">自己発光色</param>
+		void SetEmissionColor(CVector3 color)
+		{
+			m_emissionColor = color;
+		}
 	private:
 		/*!
 		*@brief バウンディングボックスの初期化。
@@ -246,6 +254,7 @@ namespace tkEngine{
 			CMatrix mWorld;			//!<ワールド行列。
 			CMatrix mView;			//!<ビュー行列。
 			CMatrix mProj;			//!<プロジェクション行列。
+			CVector3 emissionColor;	//!<自己発光色。
 			int isShadowReceiver;	//!<シャドウレシーバーフラグ。
 		};
 		CAnimation* m_animation = nullptr;						//!<アニメーション再生処理。
@@ -263,5 +272,6 @@ namespace tkEngine{
 		CBox m_boundingBox;										//!<バウンディングボックス。
 		OnDrawFookFunction m_preDrawFookFunction = nullptr;		//描画の直前に呼ばれるフック関数。
 		OnDrawFookFunction m_postDrawFookFunction = nullptr;	//描画が終わった後で呼ばれるフック関数。
+		CVector3 m_emissionColor = CVector3::Zero;				//自己発光カラー。
 	};
 }

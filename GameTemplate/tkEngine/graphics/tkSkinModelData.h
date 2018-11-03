@@ -24,9 +24,11 @@ namespace tkEngine{
 		CShader m_vsRenderToDepthShaderInstancing;	//!<Z値書き込み用の頂点シェーダー。インスタンシング用。
 		CShader m_psRenderToDepthShader;	//!<Z値書き込み用のピクセルシェーダー。
 		CShader m_psRenderToGBufferShader;	//!<G-Buffer書き込み用のピクセルシェーダー。
+		
 		ID3D11ShaderResourceView* m_diffuseTex = nullptr;
 		ID3D11ShaderResourceView* m_normalMap = nullptr;
 		ID3D11ShaderResourceView* m_specularMap = nullptr;
+		ID3D11ShaderResourceView* m_skyCubeMap = nullptr;
 		bool isSkining;
 		/*!
 		* @brief	マテリアルパラメータ。
@@ -65,6 +67,9 @@ namespace tkEngine{
 			if (m_specularMap) {
 				m_specularMap->Release();
 			}
+			if (m_skyCubeMap) {
+				m_skyCubeMap->Release();
+			}
 		}
 		void __cdecl Apply(ID3D11DeviceContext* deviceContext) override;
 		
@@ -77,15 +82,28 @@ namespace tkEngine{
 		{
 			m_diffuseTex = tex;
 		}
+		void SetNormalMap(CShaderResourceView& srv)
+		{
+			SetNormalMap(srv.GetBody());
+		}
 		void SetNormalMap(ID3D11ShaderResourceView* tex)
 		{
 			m_normalMap = tex;
 			m_normalMap->AddRef();
 		}
+		void SetSpecularMap(CShaderResourceView& srv)
+		{
+			SetSpecularMap(srv.GetBody());
+		}
 		void SetSpecularMap(ID3D11ShaderResourceView* tex)
 		{
 			m_specularMap = tex;
 			m_specularMap->AddRef();
+		}
+		void SetSkyCubeMap(ID3D11ShaderResourceView* tex)
+		{
+			m_skyCubeMap = tex;
+			m_skyCubeMap->AddRef();
 		}
 		void SetMatrialName(const wchar_t* matName)
 		{

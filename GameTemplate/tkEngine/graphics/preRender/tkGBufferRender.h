@@ -16,6 +16,7 @@ namespace tkEngine{
 		enGBufferDepth,		//!<深度。
 		enGBufferTangent,	//!<接法線。
 		enGBufferMateriaID,	//!<マテリアルID。
+		enGBufferEmission,	//!<自己発光色。
 		enGBufferNum,		//!<G-Bufferの数。
 	};
 	/*!

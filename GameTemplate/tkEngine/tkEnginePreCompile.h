@@ -136,3 +136,4 @@ namespace tkEngine {
 #include "tkEngine/Character/tkCharacterController.h"
 #include "tkEngine/physics/tkPhysicsDynamicObject.h"
 #include "tkEngine/graphics/font/tkFontRender.h"
+#include "tkEngine/nature/tkSky.h"

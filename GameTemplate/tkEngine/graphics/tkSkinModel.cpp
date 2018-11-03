@@ -183,6 +183,7 @@ namespace tkEngine{
 		vsCb.mWorld = m_worldMatrix;
 		vsCb.mProj = projMatrix;
 		vsCb.mView = viewMatrix;
+		vsCb.emissionColor = m_emissionColor;
 		vsCb.isShadowReceiver = m_isShadowReceiver ? 1 : 0;
 		
 		renderContext.UpdateSubresource(m_cb, &vsCb);
