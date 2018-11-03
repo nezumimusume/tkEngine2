@@ -41,17 +41,9 @@ void Game::InitSceneLight()
 		pos.z = -mat.m[3][1];
 		ptLig->SetPosition(pos);
 		ptLig->SetColor({
-#if 1 //@todo 物理ベースの時のライト。
 			400.0f,
 			400.0f,
-			100.0f,
-#else
-			100.0f,
-			100.0f,
-			10.0f,
-#endif
-			
-			1.0f
+			100.0f
 		});
 		ptLig->SetAttn({
 			550.0f,
@@ -62,7 +54,7 @@ void Game::InitSceneLight()
 	}
 
 	LightManager().SetAmbientLight({ 5.0f, 5.0f, 5.0f });
-	PhysicsWorld().SetDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
+	
 	if (m_directionLight != nullptr) {
 		GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
 	}

@@ -161,7 +161,7 @@ namespace tkEngine {
 		m_physicsWorld.Update();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		static int count = 0;
-		
+		m_timeTotal += (float)m_sw.GetElapsed();
 		count++;
 		if (count == 30) {
 			m_fps = 1.0f / (m_timeTotal / count);
@@ -192,14 +192,11 @@ namespace tkEngine {
 	}
 	void CEngine::Update()
 	{
-		
 		m_sw.Start();
 
+		//メインスレッドから呼び出すゲームオブジェクトマネージャの処理を実行。
 		GameObjectManager().ExecuteFromMainThread();
-
-		//レンダリング開始。
-		m_graphicsEngine.BeginRender();
-
+				//ゲームの処理を動かす。
 		if (m_graphicsEngine.IsMultithreadRendering()) {
 			//並列に動いている。GameThreadを動かす。
 			m_isRunGameThread = true;
@@ -209,8 +206,10 @@ namespace tkEngine {
 			//直列。
 			GameUpdate();
 		}
-		
+		//レンダリング開始。
+		m_graphicsEngine.BeginRender();
 
+		//ゲームの処理の終了待ち
 		if (m_graphicsEngine.IsMultithreadRendering()) {
 			//ゲームスレッドの終わりを待つ。
 			std::unique_lock<std::mutex> lk(m_isRunGameThreadMtx);
@@ -223,7 +222,7 @@ namespace tkEngine {
 		
 		m_sw.Stop();
 		
-		m_timeTotal += (float)m_sw.GetElapsed();
+		
 		GameTime().PushFrameDeltaTime((float)m_sw.GetElapsed());
 	}
 	LRESULT CALLBACK CEngine::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

@@ -178,44 +178,7 @@ namespace tkEngine{
 		}
 		return true;
 	}
-	/*!
-	*@brief	ディファードシェーディング。
-	*/
-	void CGraphicsEngine::DefferdShading(CRenderContext& rc)
-	{
-		BeginGPUEvent(L"enRenderStep_DefferdShading");
-		rc.SetRenderStep(enRenderStep_ForwardRender);
-		//ライトの情報を転送転送。
-		LightManager().Render(rc);
-		//影を落とすための情報を転送。
-		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
-		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
-		//定数バッファを更新。
-		PSDefferdCb cb;
-		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
-		rc.UpdateSubresource(m_cbDefferd, &cb);
-		//定数バッファをb0のレジスタに設定。
-		rc.PSSetConstantBuffer(0, m_cbDefferd);
-		//シェーダーを設定。
-		rc.VSSetShader(m_vsDefferd);
-		rc.PSSetShader(m_psDefferd);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
-		
-		//ディファードレンダリング用のデプスステンシルステート。
-		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
-		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
-		//ポストエフェクトのフルスクリーン描画の機能を使う。
-		m_postEffect.DrawFullScreenQuad(rc);
-		
-		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
-
-		rc.OMSetDepthStencilState(depthStencil, 0);
-
-		EndGPUEvent();
-		
-	}
+	
 	bool CGraphicsEngine::Init(HWND hwnd, const SInitParam& initParam)
 	{
 		//D3Dデバイスとスワップチェインの作成。
@@ -289,11 +252,41 @@ namespace tkEngine{
 			commandList = nullptr;
 		}
 	}
-	/*!
-	*@brief	ポストエフェクトの処理が完了したときに呼ばれる処理。
-	*@details
-	* ゲーム層では使用しないように。
-	*/
+	void CGraphicsEngine::DefferdShading(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_DefferdShading");
+		rc.SetRenderStep(enRenderStep_ForwardRender);
+		//ライトの情報を転送転送。
+		LightManager().Render(rc);
+		//影を落とすための情報を転送。
+		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
+		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
+		//定数バッファを更新。
+		PSDefferdCb cb;
+		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
+		rc.UpdateSubresource(m_cbDefferd, &cb);
+		//定数バッファをb0のレジスタに設定。
+		rc.PSSetConstantBuffer(0, m_cbDefferd);
+		//シェーダーを設定。
+		rc.VSSetShader(m_vsDefferd);
+		rc.PSSetShader(m_psDefferd);
+		//入力レイアウトを設定。
+		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
+
+		//ディファードレンダリング用のデプスステンシルステート。
+		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
+		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		//ポストエフェクトのフルスクリーン描画の機能を使う。
+		m_postEffect.DrawFullScreenQuad(rc);
+
+		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
+
+		rc.OMSetDepthStencilState(depthStencil, 0);
+
+		EndGPUEvent();
+
+	}
 	void CGraphicsEngine::EndPostEffect(CRenderContext& rc)
 	{
 		//バックバッファにメインレンダリングターゲットの内容をコピー。
@@ -314,9 +307,6 @@ namespace tkEngine{
 		pBackBuffer->Release();
 		rc.PSUnsetShaderResource(0);
 	}
-	/// <summary>
-	/// ゲームスレッドから呼び出す描画終了処理。
-	/// </summary>
 	void CGraphicsEngine::EndRenderFromGameThread()
 	{
 		m_lightManager.EndRender(m_renderContext);
@@ -326,6 +316,7 @@ namespace tkEngine{
 			m_pDeferredDeviceContext->FinishCommandList(FALSE, &m_commandList[commandListNo]);
 		}
 	}
+
 	void CGraphicsEngine::EndRender()
 	{
 		m_pSwapChain->Present(1, 0);

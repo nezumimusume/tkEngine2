@@ -156,13 +156,17 @@ namespace tkEngine{
 		{
 			return m_mainRenderTarget;
 		}
-		/*!
-		* @brief	描画開始。
-		*/
+		/// <summary>
+		/// メインスレッドから呼び出す描画開始の処理。
+		/// </summary>
 		void BeginRender();
 		/*!
 		* @brief	描画終了。
 		*/
+		/// <summary>
+		/// メインスレッドから呼び出す描画終了処理。
+		/// これが1フレームの最後の描画処理になる。
+		/// </summary>
 		void EndRender();
 		/// <summary>
 		/// ゲームスレッドから呼び出す終了処理。

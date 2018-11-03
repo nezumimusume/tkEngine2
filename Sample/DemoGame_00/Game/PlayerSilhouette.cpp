@@ -39,7 +39,7 @@ bool PlayerSilhouette::Start()
 
 	pd3d->CreateDepthStencilState(&desc, &m_depthStencilState);
 	m_psShader.Load("shader/model.fx", "PSMain_Silhouette", CShader::EnType::PS);
-	m_texture.CreateFromDDSTextureFromFile(L"modelData/UnityChanLogo.dds");
+	//m_texture.CreateFromDDSTextureFromFile(L"modelData/UnityChanLogo.dds");
 	return true;
 }
 void PlayerSilhouette::Update()

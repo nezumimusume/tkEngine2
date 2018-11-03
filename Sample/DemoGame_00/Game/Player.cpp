@@ -55,16 +55,6 @@ bool Player::Start()
 	m_modelRender->Init(L"modelData/unityChan.cmo", m_animClip, enAnimationClip_num, enFbxUpAxisY);
 	//m_modelRender->SetForwardRenderFlag(true);
 
-	m_normalMap.CreateFromDDSTextureFromFile(L"sprite/utc_nomal.dds");
-	m_specMap.CreateFromDDSTextureFromFile(L"sprite/utc_spec.dds");
-	m_modelRender->FindMaterial([&](CModelEffect* material) {
-		//マテリアルＩＤを設定する。
-		material->SetMaterialID(enMaterialID_Chara);
-		//法線マップとスペキュラマップを設定。
-		material->SetNormalMap(m_normalMap.GetBody());
-		material->SetSpecularMap(m_specMap.GetBody());
-	});
-
 	m_modelRender->SetShadowCasterFlag(true);
 	m_modelRender->SetShadowReceiverFlag(true);
 	m_modelRender->PlayAnimation(enAnimationClip_idle);
