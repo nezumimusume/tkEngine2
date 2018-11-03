@@ -66,7 +66,9 @@ float4 PSMain( PSDefferdInput In ) : SV_Target0
 	float shadow = softShadowMap.Sample(Sampler, In.uv).r;
 	
 	uint uMatID = floor(materialIDMap.Sample(Sampler, In.uv).r + 0.001f);
-	return PBR(
+	
+	//物理ベースライティング。
+	float4 finalColor = PBR(
 		albedo, 
 		tangent, 
 		normal, 
@@ -77,4 +79,8 @@ float4 PSMain( PSDefferdInput In ) : SV_Target0
 		In.uv,
 		uMatID
 	);
+	
+	//自己発光を加算。
+	finalColor.xyz +=emissionColorTexture.Sample( Sampler, In.uv).xyz;
+	return finalColor;
 }

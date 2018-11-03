@@ -59,6 +59,7 @@ struct PSOutput_RenderGBuffer{
 	float depth			: SV_Target4;		//深度値。
 	float3 tangent		: SV_Target5;		//接ベクトル。
 	float materialID	: SV_Target6;		//マテリアルID。
+	float3 emissionColor : SV_Target7;		//自己発光色。
 };
 
 /*!

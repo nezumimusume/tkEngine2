@@ -7,10 +7,11 @@
  * これを変更したらtkSkinModel.hのSVSConstantBufferも変更するように。
  */
 cbuffer VSPSCb : register(b0){
-	float4x4 mWorld;
-	float4x4 mView;
-	float4x4 mProj;
-	int isShadowReceiver;	//シャドウレシーバー？
+	float4x4 mWorld			: packoffset(c0);
+	float4x4 mView			: packoffset(c4);
+	float4x4 mProj			: packoffset(c8);
+	float3 emissionColor	: packoffset(c12);	//自己発光色。
+	int isShadowReceiver	: packoffset(c12.w);	//シャドウレシーバー？
 };
 
 /*!
@@ -25,6 +26,7 @@ cbuffer lightCb : register(b1)
 	float3 ambientLight		: packoffset(c1);		//アンビエントライト。
 	int numPointLight		: packoffset(c1.w);		//ポイントライトの数。
 	float4 screenParam		: packoffset(c2);		// スクリーンパラメータ(near, far, screenWidth, screenHeight)
+	int numEmissionLight	: packoffset(c3);		//自己発光ライトの数。
 };
 
 cbuffer MaterialParamCb : register(b2){

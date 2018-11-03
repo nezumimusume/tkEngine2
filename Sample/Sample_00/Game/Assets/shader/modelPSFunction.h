@@ -42,21 +42,20 @@ float4 PBR(
 	//ディレクションライト
 	float3 finalColor = 0.0f;
 
-	if (shadow < 0.99f) {
-		//影が落ちる可能性が低い場合のみ計算する。
-		finalColor = CalcDirectionLight(
-			albedo,
-			worldPos,
-			normal,
-			tangent,
-			biNormal,
-			toEyeDir,
-			toEyeReflection,
-			roughness,
-			specPow,
-			uMatID
-		) * (1.0f - shadow);
-	}
+	//影が落ちる可能性が低い場合のみ計算する。
+	finalColor = CalcDirectionLight(
+		albedo,
+		worldPos,
+		normal,
+		tangent,
+		biNormal,
+		toEyeDir,
+		toEyeReflection,
+		roughness,
+		specPow,
+		uMatID,
+		shadow
+	) ;
 
 	//ポイントライトを計算。
 	finalColor += CalcPointLightInner(

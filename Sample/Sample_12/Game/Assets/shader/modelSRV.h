@@ -24,6 +24,7 @@ Texture2D<float4> softShadowMap : register(t7);		//ソフトシャドウマップ。
 Texture2D<float4> depthMap : register(t8);			//深度マップ。
 Texture2D<float4> tangentMap : register(t9);			//タンジェントマップ。
 Texture2D<float4> materialIDMap : register(t10);		//マテリアルID。
+Texture2D<float4> emissionColorTexture : register(t11);	//エミッションカラー。
 
 sampler Sampler : register(s0);
 
