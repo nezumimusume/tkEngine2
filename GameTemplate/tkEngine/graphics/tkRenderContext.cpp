@@ -11,7 +11,13 @@ namespace tkEngine{
 	{
 		TK_ASSERT(pD3DDeviceContext != nullptr, "pD3DDeviceContextがNULLです。作成してから呼んでね。");
 		m_pD3DImmidiateDeviceContext = pD3DDeviceContext;
-		m_pD3DDeferredDeviceContext = pD3DDeferredDeviceContext;
+		if (pD3DDeferredDeviceContext != nullptr) {
+			//ディファードコンテキストが指定されている場合はこちらを使う。
+			m_pD3DDeviceContext = pD3DDeferredDeviceContext;
+		}
+		else {
+			m_pD3DDeviceContext = m_pD3DImmidiateDeviceContext;
+		}
 	}
 	void CRenderContext::OMSetRenderTargets(unsigned int NumViews, CRenderTarget* renderTarget[])
 	{
@@ -29,7 +35,7 @@ namespace tkEngine{
 				renderTargetViews[i] = m_renderTargetViews[i]->GetRenderTargetView();
 			}
 		}
-		m_pD3DDeferredDeviceContext->OMSetRenderTargets(NumViews, renderTargetViews, depthStencilView);
+		m_pD3DDeviceContext->OMSetRenderTargets(NumViews, renderTargetViews, depthStencilView);
 		m_numRenderTargetView = NumViews;
 	}
 }

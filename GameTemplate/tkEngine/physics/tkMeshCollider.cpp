@@ -28,7 +28,7 @@ namespace tkEngine{
 		modelData.FindMesh(
 			[&](const auto& mesh) {
 			numMesh++;
-			ID3D11DeviceContext* deviceContext = GraphicsEngine().GetD3DDeviceContext();
+			ID3D11DeviceContext* deviceContext = GraphicsEngine().GetD3DImmediateDeviceContext();
 			//頂点バッファを作成。
 			{
 				D3D11_MAPPED_SUBRESOURCE subresource;

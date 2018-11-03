@@ -7,7 +7,6 @@
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
 
-//#define ENABLE_G_BUFFER_MSAA  //定義するとG-BufferにMSAAがかかる。多分もう動かないよ。
 namespace tkEngine{
 	/*!
 	 * @brief	コンストラクタ。
@@ -27,7 +26,6 @@ namespace tkEngine{
 	*/
 	void CGBufferRender::Init(const SGraphicsConfig& config)
 	{
-#ifndef ENABLE_G_BUFFER_MSAA
 		CGraphicsEngine& ge = GraphicsEngine();
 
 		DXGI_SAMPLE_DESC msaaDesc;
@@ -139,71 +137,7 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
-#else
-		//こっちが有効だとG-BufferにMSAAがかかる。
-		CGraphicsEngine& ge = GraphicsEngine();
-		//アルベドバッファの初期化。
-		m_GBuffer[enGBufferAlbedo].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R8G8B8A8_UNORM,
-			DXGI_FORMAT_D32_FLOAT,
-			ge.GetMainRenderTargetMSAADesc()
-		);
-		//法線バッファの初期化。
-		m_GBuffer[enGBufferNormal].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R16G16B16A16_FLOAT,
-			DXGI_FORMAT_UNKNOWN,
-			ge.GetMainRenderTargetMSAADesc()
-		);
-		//接ベクトルバッファの初期化。
-		m_GBuffer[enGBufferTangent].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R16G16B16A16_FLOAT,
-			DXGI_FORMAT_UNKNOWN,
-			ge.GetMainRenderTargetMSAADesc()
-		);
-		//スペキュラバッファの初期化。
-		m_GBuffer[enGBufferSpecular].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R16G16_FLOAT,
-			DXGI_FORMAT_UNKNOWN,
-			ge.GetMainRenderTargetMSAADesc()
-		);
-		//影マップの初期化。
-		m_GBuffer[enGBufferShadow].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R32_FLOAT,
-			DXGI_FORMAT_UNKNOWN,
-			ge.GetMainRenderTargetMSAADesc()
-		);
 
-		//深度バッファの初期化。
-		m_GBuffer[enGBufferDepth].Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R32_FLOAT,
-			DXGI_FORMAT_UNKNOWN,
-			ge.GetMainRenderTargetMSAADesc()
-		);
-#endif
 		m_shadowBlur.Init(m_GBuffer[enGBufferShadow].GetRenderTargetSRV(), 5.0f, config.shadowRenderConfig);
 		
 		m_cb.Create(NULL, sizeof(m_cbEntity));
@@ -292,12 +226,7 @@ namespace tkEngine{
 		for (auto& skinModel : m_skinModels) {
 			skinModel->Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 		}
-#ifdef ENABLE_G_BUFFER_MSAA
-		//MSAAリゾルブ。
-		for (auto& rt : renderTargets) {
-			rt->ResovleMSAATexture(rc);
-		}
-#endif
+
 		//レンダリングターゲットを戻す。
 		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
 

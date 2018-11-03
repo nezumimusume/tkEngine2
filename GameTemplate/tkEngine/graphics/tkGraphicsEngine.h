@@ -100,17 +100,26 @@ namespace tkEngine{
 		/*!
 		*@brief	ID3D11DeviceContextの取得。
 		*/
-		ID3D11DeviceContext* GetD3DDeviceContext() const
+		ID3D11DeviceContext* GetD3DImmediateDeviceContext() const
 		{
 			return m_pImmediateContext;
 		}
 		/*!
-		*@brief	遅延デバイスコンテキストの取得。
+		*@brief	描画コマンドを積むのに使用しているID3D11DeviceContextの取得。
 		*/
-		ID3D11DeviceContext* GetD3DDeferredDeviceContext() const
+		ID3D11DeviceContext* GetD3DDeviceContext() const
 		{
-			return m_pDeferredDeviceContext;
+			return m_renderContext.GetD3DDeviceContext();
 		}
+		/// <summary>
+		/// マルチスレッドレンダリングを行っている？
+		/// </summary>
+		/// <returns>trueならマルチスレッドレンダリングを行っている。</returns>
+		bool IsMultithreadRendering() const
+		{
+			return m_pDeferredDeviceContext != nullptr;
+		}
+		
 		/*!
 		*@brief		フレームバッファの幅を取得。
 		*/
@@ -313,6 +322,7 @@ namespace tkEngine{
 		CShader					m_vsDefferd;								//!<ディファードシェーディング用の頂点シェーダー。
 		CShader					m_psDefferd;								//!<ディファードシェーディング用のピクセルシェーダー。
 		ID3D11CommandList*		m_commandList[2] = { nullptr };				//!<コマンドリスト。
+		D3D11_FEATURE_DATA_THREADING m_featureDataThreading;				//!<グラフィックドライバでサポートされているマルチスレッド機能についての情報。
 		int m_commandListNoMainThread = 0;									//!<メインスレッドでアクセスしているコマンドリストの番号。
 
 	};

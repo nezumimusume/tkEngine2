@@ -20,7 +20,7 @@ namespace tkEngine{
 		m_skinModelData->FindMesh([&](auto& mesh) {
 			auto vMax = CVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 			auto vMin = CVector3(FLT_MAX, FLT_MAX, FLT_MAX);
-			auto deviceContext = GraphicsEngine().GetD3DDeviceContext();
+			auto deviceContext = GraphicsEngine().GetD3DImmediateDeviceContext();
 			{
 				D3D11_MAPPED_SUBRESOURCE subresource;
 				auto hr = deviceContext->Map(mesh->vertexBuffer.Get(), 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &subresource);
@@ -215,7 +215,7 @@ namespace tkEngine{
 
 		if (m_numInstance > 0) {
 			m_skinModelData->GetBody().Draw(
-				GraphicsEngine().GetD3DDeferredDeviceContext(),
+				GraphicsEngine().GetD3DDeviceContext(),
 				state,
 				m_worldMatrix,
 				viewMatrix,

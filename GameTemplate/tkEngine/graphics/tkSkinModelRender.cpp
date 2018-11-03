@@ -74,7 +74,7 @@ namespace prefab{
 	void CSkinModelRender::FindVertexPosition(std::function<void(CVector3* pos)> func)
 	{
 		m_skinModelData.FindMesh([&](const auto& mesh) {
-			ID3D11DeviceContext* deviceContext = GraphicsEngine().GetD3DDeviceContext();
+			ID3D11DeviceContext* deviceContext = GraphicsEngine().GetD3DImmediateDeviceContext();
 			//頂点バッファを作成。
 			{
 				D3D11_MAPPED_SUBRESOURCE subresource;

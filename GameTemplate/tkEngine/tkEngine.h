@@ -145,6 +145,10 @@ namespace tkEngine{
 		* @brief	更新。
 		*/
 		void Update();
+		/// <summary>
+		/// ゲーム部分の更新処理。
+		/// </summary>
+		void GameUpdate();
 	private:
 		HINSTANCE				m_hInst = nullptr;	//!<アプリケーションのインスタンス。
 		HWND					m_hWnd = nullptr;	//!<ウィンドウハンドル。

@@ -86,6 +86,7 @@ namespace tkEngine{
 			D3D_FEATURE_LEVEL_10_1,
 			D3D_FEATURE_LEVEL_10_0,
 		};
+
 		UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
 		m_frameBufferWidth = initParam.frameBufferWidth;
@@ -121,8 +122,19 @@ namespace tkEngine{
 			//スワップチェインを作成できなかった。
 			return false;
 		}
-		//ディファードコンテキストを作成。
-		m_pd3dDevice->CreateDeferredContext(0, &m_pDeferredDeviceContext);
+		//デバイスのマルチスレッドサポートの機能を調べる。
+		m_pd3dDevice->CheckFeatureSupport(
+			D3D11_FEATURE_THREADING,
+			&m_featureDataThreading,
+			sizeof(m_featureDataThreading)
+			);
+		
+		
+		if (m_featureDataThreading.DriverCommandLists == TRUE) {
+			//デバイズがディファードコンテキストに対応しているので
+			//ディファードコンテキストを作成。
+			m_pd3dDevice->CreateDeferredContext(0, &m_pDeferredDeviceContext);
+		}
 		return true;
 	}
 	
@@ -220,6 +232,8 @@ namespace tkEngine{
 		}
 		//レンダリングコンテキストの初期化。
 		m_renderContext.Init(m_pImmediateContext, m_pDeferredDeviceContext);
+		auto deviceContext = m_renderContext.GetD3DDeviceContext();
+
 		CRenderTarget* renderTargets[] = {
 			&m_mainRenderTarget
 		};
@@ -241,7 +255,7 @@ namespace tkEngine{
 		InitDefferdShading();
 
 		//フォント用のデータの初期化。
-		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeferredDeviceContext);
+		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(deviceContext);
 		m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"font/myfile.spritefont");
 
 		//2Dカメラの初期化。
@@ -260,7 +274,7 @@ namespace tkEngine{
 		//エフェクトエンジンの初期化。
 		m_effectEngine.Init();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
-		m_pDeferredDeviceContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
+		deviceContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
 #endif
 		return true;
 
@@ -288,7 +302,7 @@ namespace tkEngine{
 		ID3D11RenderTargetView* rts[] = {
 			m_backBufferRT
 		};
-		m_pDeferredDeviceContext->OMSetRenderTargets(1, rts, nullptr);
+		rc.OMSetRenderTargets(1, rts, nullptr);
 		rc.VSSetShader(m_copyVS);
 		rc.PSSetShader(m_copyPS);
 		//入力レイアウトを設定。
@@ -306,15 +320,18 @@ namespace tkEngine{
 	void CGraphicsEngine::EndRenderFromGameThread()
 	{
 		m_lightManager.EndRender(m_renderContext);
-		//コマンドリストを作成。
-		int commandListNo = 1 ^ m_commandListNoMainThread;
-		m_pDeferredDeviceContext->FinishCommandList(FALSE, &m_commandList[commandListNo]);
+		if (IsMultithreadRendering()) {
+			//コマンドリストを作成。
+			int commandListNo = 1 ^ m_commandListNoMainThread;
+			m_pDeferredDeviceContext->FinishCommandList(FALSE, &m_commandList[commandListNo]);
+		}
 	}
 	void CGraphicsEngine::EndRender()
 	{
-		//フラーッシュ
 		m_pSwapChain->Present(1, 0);
-		//コマンドリストを入れ替える。
-		m_commandListNoMainThread = 1 ^ m_commandListNoMainThread;
+		if (IsMultithreadRendering()) {
+			//コマンドリストを入れ替える。
+			m_commandListNoMainThread = 1 ^ m_commandListNoMainThread;
+		}
 	}
 }

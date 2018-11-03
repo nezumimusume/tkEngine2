@@ -55,7 +55,7 @@ namespace tkEngine {
 		void OMSetBlendState(ID3D11BlendState *pBlendState, const FLOAT BlendFactor[4], UINT SampleMask)
 		{
 			m_currentBlendState = pBlendState;
-			m_pD3DDeferredDeviceContext->OMSetBlendState(pBlendState, BlendFactor, SampleMask);
+			m_pD3DDeviceContext->OMSetBlendState(pBlendState, BlendFactor, SampleMask);
 		}
 		/*!
 		*@brief	現在のBlendステートを取得する。
@@ -71,7 +71,7 @@ namespace tkEngine {
 		*/
 		void OMSetDepthStencilState(ID3D11DepthStencilState *pDepthStencilState, UINT StencilRef)
 		{
-			m_pD3DDeferredDeviceContext->OMSetDepthStencilState(pDepthStencilState, StencilRef);
+			m_pD3DDeviceContext->OMSetDepthStencilState(pDepthStencilState, StencilRef);
 			m_currentDepthStencilState = pDepthStencilState;
 		}
 		/*!
@@ -89,6 +89,11 @@ namespace tkEngine {
 		*@param[in]	renderTarget	バインドするレンダリングターゲットの配列へのポインタ。
 		*/
 		void OMSetRenderTargets(unsigned int NumViews, CRenderTarget* renderTarget[]);
+		void OMSetRenderTargets(unsigned int NumViews, ID3D11RenderTargetView *const *ppRenderTargetViews, ID3D11DepthStencilView *pDepthStencilView)
+		{
+			m_pD3DDeviceContext->OMSetRenderTargets(NumViews, ppRenderTargetViews, pDepthStencilView);
+			m_numRenderTargetView = NumViews;
+		}
 		/*!
 		* @brief	現在バインドされているレンダリングターゲットビューを取得。
 		*@param[out]	numViews		バインドされているレンダリングターゲットの数。
@@ -114,7 +119,7 @@ namespace tkEngine {
 			m_viewport.TopLeftY = topLeftY;
 			m_viewport.MinDepth = 0.0f;
 			m_viewport.MaxDepth = 1.0f;
-			m_pD3DDeferredDeviceContext->RSSetViewports(1, &m_viewport);
+			m_pD3DDeviceContext->RSSetViewports(1, &m_viewport);
 		}
 		/*!
 		* @brief	ラスタライザのステートを設定。
@@ -122,7 +127,7 @@ namespace tkEngine {
 		void RSSetState(ID3D11RasterizerState *pRasterizerState)
 		{
 			m_currentRasterrizerState = pRasterizerState;
-			m_pD3DDeferredDeviceContext->RSSetState(pRasterizerState);
+			m_pD3DDeviceContext->RSSetState(pRasterizerState);
 		}
 		/*!
 		*@brief	現在のラスタライザステートを取得。
@@ -141,9 +146,9 @@ namespace tkEngine {
 		{
 			if (rtNo < m_numRenderTargetView
 				&& m_renderTargetViews != nullptr) {
-				m_pD3DDeferredDeviceContext->ClearRenderTargetView(m_renderTargetViews[rtNo]->GetRenderTargetView(), clearColor);
+				m_pD3DDeviceContext->ClearRenderTargetView(m_renderTargetViews[rtNo]->GetRenderTargetView(), clearColor);
 				if (m_renderTargetViews[0]->GetDepthStencilView() != nullptr && isClearDepthStencil) {
-					m_pD3DDeferredDeviceContext->ClearDepthStencilView(m_renderTargetViews[0]->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+					m_pD3DDeviceContext->ClearDepthStencilView(m_renderTargetViews[0]->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 				}
 			}
 		}
@@ -154,7 +159,7 @@ namespace tkEngine {
 		{
 			UINT offset = 0;
 			UINT stride = vertexBuffer.GetStride();
-			m_pD3DDeferredDeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer.GetBody(), &stride, &offset);
+			m_pD3DDeviceContext->IASetVertexBuffers(0, 1, &vertexBuffer.GetBody(), &stride, &offset);
 		}
 		/*!
 		* @brief	インデックスバッファを設定
@@ -162,7 +167,7 @@ namespace tkEngine {
 		void IASetIndexBuffer(CIndexBuffer& indexBuffer)
 		{
 			CIndexBuffer::EnIndexType type = indexBuffer.GetIndexType();
-			m_pD3DDeferredDeviceContext->IASetIndexBuffer(
+			m_pD3DDeviceContext->IASetIndexBuffer(
 				indexBuffer.GetBody(),
 				type == CIndexBuffer::enIndexType_16 ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT,
 				0
@@ -174,7 +179,7 @@ namespace tkEngine {
 		*/
 		void IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
 		{
-			m_pD3DDeferredDeviceContext->IASetPrimitiveTopology(topology);
+			m_pD3DDeviceContext->IASetPrimitiveTopology(topology);
 		}
 		/*!
 		* @brief	VSステージに定数バッファを設定。
@@ -186,7 +191,7 @@ namespace tkEngine {
 			CConstantBuffer& cb
 		)
 		{
-			m_pD3DDeferredDeviceContext->VSSetConstantBuffers(slotNo, 1, &cb.GetBody());
+			m_pD3DDeviceContext->VSSetConstantBuffers(slotNo, 1, &cb.GetBody());
 		}
 		/*!
 		* @brief	VSステージにSRVを設定。
@@ -195,7 +200,7 @@ namespace tkEngine {
 		*/
 		void VSSetShaderResource(int slotNo, CShaderResourceView& srv)
 		{
-			m_pD3DDeferredDeviceContext->VSSetShaderResources(slotNo, 1, &srv.GetBody());
+			m_pD3DDeviceContext->VSSetShaderResources(slotNo, 1, &srv.GetBody());
 		}
 		/*!
 		* @brief	VSステージにSRVを外す。
@@ -207,7 +212,7 @@ namespace tkEngine {
 			ID3D11ShaderResourceView* view[] = {
 				NULL
 			};
-			m_pD3DDeferredDeviceContext->VSSetShaderResources(slotNo, 1, view);
+			m_pD3DDeviceContext->VSSetShaderResources(slotNo, 1, view);
 		}
 		/*!
 		* @brief	PSステージに定数バッファを設定。
@@ -219,7 +224,7 @@ namespace tkEngine {
 			CConstantBuffer& cb
 		)
 		{
-			m_pD3DDeferredDeviceContext->PSSetConstantBuffers(slotNo, 1, &cb.GetBody());
+			m_pD3DDeviceContext->PSSetConstantBuffers(slotNo, 1, &cb.GetBody());
 		}
 		/*!
 		* @brief	PSステージにSRVを設定。
@@ -228,7 +233,7 @@ namespace tkEngine {
 		*/
 		void PSSetShaderResource(int slotNo, CShaderResourceView& srv)
 		{
-			m_pD3DDeferredDeviceContext->PSSetShaderResources(slotNo, 1, &srv.GetBody());
+			m_pD3DDeviceContext->PSSetShaderResources(slotNo, 1, &srv.GetBody());
 		}
 		/*!
 		* @brief	PSステージにSRVを外す。
@@ -240,7 +245,7 @@ namespace tkEngine {
 			ID3D11ShaderResourceView* view[] = {
 				NULL
 			};
-			m_pD3DDeferredDeviceContext->PSSetShaderResources(slotNo, 1, view);
+			m_pD3DDeviceContext->PSSetShaderResources(slotNo, 1, view);
 		}
 		/*!
 		* @brief	PSステージにサンプラステートを設定。
@@ -249,7 +254,7 @@ namespace tkEngine {
 		*/
 		void PSSetSampler(int slotNo, CSamplerState& samplerState)
 		{
-			m_pD3DDeferredDeviceContext->PSSetSamplers(slotNo, 1, &samplerState.GetBody());
+			m_pD3DDeviceContext->PSSetSamplers(slotNo, 1, &samplerState.GetBody());
 		}
 		/*!
 		* @brief	頂点シェーダーを設定。
@@ -257,7 +262,7 @@ namespace tkEngine {
 		*/
 		void VSSetShader(CShader& shader)
 		{
-			m_pD3DDeferredDeviceContext->VSSetShader((ID3D11VertexShader*)shader.GetBody(), NULL, 0);
+			m_pD3DDeviceContext->VSSetShader((ID3D11VertexShader*)shader.GetBody(), NULL, 0);
 		}
 		/*!
 		* @brief	ピクセルシェーダーを設定。
@@ -265,7 +270,7 @@ namespace tkEngine {
 		*/
 		void PSSetShader(CShader& shader)
 		{
-			m_pD3DDeferredDeviceContext->PSSetShader((ID3D11PixelShader*)shader.GetBody(), NULL, 0);
+			m_pD3DDeviceContext->PSSetShader((ID3D11PixelShader*)shader.GetBody(), NULL, 0);
 		}
 		/*!
 		* @brief	コンピュートシェーダーを設定。
@@ -273,7 +278,7 @@ namespace tkEngine {
 		*/
 		void CSSetShader(CShader& shader)
 		{
-			m_pD3DDeferredDeviceContext->CSSetShader((ID3D11ComputeShader*)shader.GetBody(), NULL, 0);
+			m_pD3DDeviceContext->CSSetShader((ID3D11ComputeShader*)shader.GetBody(), NULL, 0);
 		}
 		/*!
 		* @brief	CSステージに定数バッファを設定。
@@ -285,7 +290,7 @@ namespace tkEngine {
 			CConstantBuffer& cb
 		)
 		{
-			m_pD3DDeferredDeviceContext->CSSetConstantBuffers(slotNo, 1, &cb.GetBody());
+			m_pD3DDeviceContext->CSSetConstantBuffers(slotNo, 1, &cb.GetBody());
 		}
 		/*!
 		* @brief	コンピュートシェーダーにSRVを設定。。
@@ -294,14 +299,14 @@ namespace tkEngine {
 		*/
 		void CSSetShaderResource(int slotNo, CShaderResourceView& srv)
 		{
-			m_pD3DDeferredDeviceContext->CSSetShaderResources(slotNo, 1, &srv.GetBody());
+			m_pD3DDeviceContext->CSSetShaderResources(slotNo, 1, &srv.GetBody());
 		}
 		void CSUnsetShaderResource(int slotNo)
 		{
 			ID3D11ShaderResourceView* view[] = {
 				NULL
 			};
-			m_pD3DDeferredDeviceContext->CSSetShaderResources(slotNo, 1, view);
+			m_pD3DDeviceContext->CSSetShaderResources(slotNo, 1, view);
 		}
 		/*!
 		* @brief	コンピュートシェーダーにUAVを設定。
@@ -310,7 +315,7 @@ namespace tkEngine {
 		*/
 		void CSSetUnorderedAccessView(int slotNo, CUnorderedAccessView& uav)
 		{
-			m_pD3DDeferredDeviceContext->CSSetUnorderedAccessViews(slotNo, 1, &uav.GetBody(), NULL);
+			m_pD3DDeviceContext->CSSetUnorderedAccessViews(slotNo, 1, &uav.GetBody(), NULL);
 		}
 		/*!
 		* @brief	コンピュートシェーダーにUAVを設定。
@@ -322,7 +327,7 @@ namespace tkEngine {
 			ID3D11UnorderedAccessView* view[] = {
 				NULL
 			};
-			m_pD3DDeferredDeviceContext->CSSetUnorderedAccessViews(slotNo, 1, view, NULL);
+			m_pD3DDeviceContext->CSSetUnorderedAccessViews(slotNo, 1, view, NULL);
 		}
 		/*!
 		* @brief	描画。
@@ -334,7 +339,7 @@ namespace tkEngine {
 			unsigned int startVertexLocation
 		)
 		{
-			m_pD3DDeferredDeviceContext->Draw(vertexCount, startVertexLocation);
+			m_pD3DDeviceContext->Draw(vertexCount, startVertexLocation);
 		}
 		/*!
 		* @brief	インデックス付き描画。
@@ -347,7 +352,7 @@ namespace tkEngine {
 			_In_  UINT StartIndexLocation,
 			_In_  INT BaseVertexLocation)
 		{
-			m_pD3DDeferredDeviceContext->DrawIndexed(IndexCount, StartIndexLocation, BaseVertexLocation);
+			m_pD3DDeviceContext->DrawIndexed(IndexCount, StartIndexLocation, BaseVertexLocation);
 
 		}
 		/*!
@@ -360,14 +365,14 @@ namespace tkEngine {
 		*/
 		void Dispatch(UINT threadGroupCountX, UINT threadGroupCountY, UINT thredGroupCountZ)
 		{
-			m_pD3DDeferredDeviceContext->Dispatch(threadGroupCountX, threadGroupCountY, thredGroupCountZ);
+			m_pD3DDeviceContext->Dispatch(threadGroupCountX, threadGroupCountY, thredGroupCountZ);
 		}
 		/*!
 		* @brief	入力レイアウトを設定。
 		*/
 		void IASetInputLayout(ID3D11InputLayout* inputLayout)
 		{
-			m_pD3DDeferredDeviceContext->IASetInputLayout(inputLayout);
+			m_pD3DDeviceContext->IASetInputLayout(inputLayout);
 		}
 		/*!
 		* @brief	リソースをコピー。
@@ -380,7 +385,7 @@ namespace tkEngine {
 			if (destRes.GetBody() != nullptr
 				&& srcRes.GetBody() != nullptr
 				) {
-				m_pD3DDeferredDeviceContext->CopyResource(destRes.GetBody(), srcRes.GetBody());
+				m_pD3DDeviceContext->CopyResource(destRes.GetBody(), srcRes.GetBody());
 			}
 		}
 
@@ -389,7 +394,7 @@ namespace tkEngine {
 			if (destRes != nullptr
 				&& srcRes != nullptr
 				) {
-				m_pD3DDeferredDeviceContext->CopyResource(destRes, srcRes);
+				m_pD3DDeviceContext->CopyResource(destRes, srcRes);
 			}
 		}
 		/*!
@@ -401,14 +406,14 @@ namespace tkEngine {
 		void Map(TBuffer& buffer, UINT subresource, D3D11_MAP mapType, UINT mapFlags, D3D11_MAPPED_SUBRESOURCE& mappedResource)
 		{
 			if (buffer.GetBody() != nullptr) {
-				m_pD3DDeviceContext->Map(buffer.GetBody(), subresource, mapType, mapFlags, &mappedResource);
+				m_pD3DImmidiateDeviceContext->Map(buffer.GetBody(), subresource, mapType, mapFlags, &mappedResource);
 			}
 		}
 		template<class TBuffer>
 		void Unmap(TBuffer& buffer, UINT subresource)
 		{
 			if (buffer.GetBody() != nullptr) {
-				m_pD3DDeviceContext->Unmap(buffer.GetBody(), subresource);
+				m_pD3DImmidiateDeviceContext->Unmap(buffer.GetBody(), subresource);
 			}
 		}
 		/*!
@@ -420,7 +425,7 @@ namespace tkEngine {
 		void UpdateSubresource(TBuffer& gpuBuffer, const SrcBuffer* buffer)
 		{
 			if (gpuBuffer.GetBody() != nullptr) {
-				m_pD3DDeferredDeviceContext->UpdateSubresource(gpuBuffer.GetBody(), 0, NULL, buffer, 0, 0);
+				m_pD3DDeviceContext->UpdateSubresource(gpuBuffer.GetBody(), 0, NULL, buffer, 0, 0);
 			}
 		}
 		/*!
@@ -450,7 +455,7 @@ namespace tkEngine {
 			UINT SrcSubresource,
 			DXGI_FORMAT Format)
 		{
-			m_pD3DDeferredDeviceContext->ResolveSubresource(
+			m_pD3DDeviceContext->ResolveSubresource(
 				dstResource,
 				DstSubresource,
 				pSrcResource,
@@ -458,12 +463,20 @@ namespace tkEngine {
 				Format
 			);
 		}
+		/// <summary>
+		/// 描画コマンドの生成で使用しているデバイスコンテキストを取得する。
+		/// </summary>
+		/// <returns></returns>
+		ID3D11DeviceContext* GetD3DDeviceContext() const
+		{
+			return m_pD3DDeviceContext;
+		}
 	private:
 		ID3D11DepthStencilState*		m_currentDepthStencilState = nullptr;	//!<現在のデプスステンシルステート。
 		ID3D11RasterizerState*			m_currentRasterrizerState = nullptr;	//!<現在のラスタライザステート。
 		ID3D11BlendState*				m_currentBlendState = nullptr;			//!<現在のブレンドステート。
-		ID3D11DeviceContext*			m_pD3DImmidiateDeviceContext = nullptr;	//!<D3Dイミディエイトデバイスコンテキスト。
-		ID3D11DeviceContext*			m_pD3DDeferredDeviceContext = nullptr;	//!<D3Dディファードデバイスコンテキスト。
+		ID3D11DeviceContext*			m_pD3DImmidiateDeviceContext = nullptr;	//!<D3D即時デバイスコンテキスト。MapとUnmapでは即時デバイスコンテキストが必要なので、持たす。
+		ID3D11DeviceContext*			m_pD3DDeviceContext = nullptr;			//!<描画コマンドを積んでいくコンテキスト。
 		D3D11_VIEWPORT 					m_viewport;								//!<ビューポート。
 		CRenderTarget*					m_renderTargetViews[MRT_MAX] = { nullptr };
 		unsigned int 					m_numRenderTargetView = 0;		//!<レンダリングターゲットビューの数。

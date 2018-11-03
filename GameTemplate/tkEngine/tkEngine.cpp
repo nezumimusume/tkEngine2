@@ -43,9 +43,12 @@ namespace tkEngine {
 			pad.Init(padNo);
 			padNo++;
 		}
-		m_gameThread = std::make_unique<std::thread>([&]() {
-			GameThread();
-		});
+		if (m_graphicsEngine.IsMultithreadRendering()) {
+			//ディファードコンテキストが作成されていたら並列レンダリングを行う。
+			m_gameThread = std::make_unique<std::thread>([&]() {
+				GameThread();
+			});
+		}
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		m_font = std::make_unique<CFont>();
 		m_vectorRender = NewGO<prefab::CVectorRender>(initParam.gameObjectPrioMax-1);
@@ -92,76 +95,19 @@ namespace tkEngine {
 	}
 	void CEngine::Final()
 	{
-		//ゲームスレッドを殺す。
-		m_isReqDeadGameThread = true;
-		m_isRunGameThreadCv.notify_all();
-		m_gameThread->join();
+		if (m_gameThread) {
+			//ゲームスレッドを殺す。
+			m_isReqDeadGameThread = true;
+			m_isRunGameThreadCv.notify_all();
+			m_gameThread->join();
+		}
 
 		m_physicsWorld.Release();
 		m_soundEngine.Release();
 		m_graphicsEngine.Release();
 		
 	}
-	void CEngine::GameThread()
-	{
-		while (true) {
-			//ロック中の奴を起こす。
-			m_isRunGameThreadCv.notify_all();
-			std::unique_lock<std::mutex> lk(m_isRunGameThreadMtx);
-			m_isRunGameThreadCv.wait(lk, [&] {
-				return m_isRunGameThread == true || m_isReqDeadGameThread == true;
-			});
-
-			if (m_isReqDeadGameThread == true) {
-				//ゲームスレッド終了。
-				break;
-			}
-			//ゲームループ
-			//パッドの更新。
-			for (auto& pad : m_pad) {
-				pad.Update();
-			}
-			//サウンドエンジンの更新。
-			m_soundEngine.Update();
-			//GameObjectManager更新
-			GameObjectManager().ExecuteFromGameThread();
-
-			//物理エンジンの更新。
-			m_physicsWorld.Update();
-#if BUILD_LEVEL != BUILD_LEVEL_MASTER
-			static int count = 0;
-			m_timeTotal += (float)m_sw.GetElapsed();
-			count++;
-			if (count == 30) {
-				m_fps = 1.0f / (m_timeTotal / count);
-				m_timeTotal = 0.0f;
-				count = 0;
-
-			}
-
-			m_font->Begin(GraphicsEngine().GetRenderContext());
-			wchar_t fps[256];
-			swprintf_s(fps, L"FPS = %f", m_fps);
-			float w = (float)GraphicsEngine().Get2DSpaceScreenWidth();
-			float h = (float)GraphicsEngine().Get2DSpaceScreenHeight();
-			m_font->Draw(
-				fps,
-				{
-					w * -0.5f,
-					h * 0.5f
-				},
-				CVector4::White,
-				0.0f,
-				1.0f,
-				{ 0.0f, 1.0f }
-			);
-			m_font->End(GraphicsEngine().GetRenderContext());
-#endif
-			m_graphicsEngine.EndRenderFromGameThread();
-
-			m_isRunGameThread = false;
-		}
-	}
+	
 	void CEngine::RunGameLoop()
 	{
 		MSG msg = {0};
@@ -179,30 +125,105 @@ namespace tkEngine {
 	        }
 	    }
 	}
+	void CEngine::GameThread()
+	{
+		while (true) {
+			//ロック中の奴を起こす。
+			m_isRunGameThreadCv.notify_all();
+			std::unique_lock<std::mutex> lk(m_isRunGameThreadMtx);
+			m_isRunGameThreadCv.wait(lk, [&] {
+				return m_isRunGameThread == true || m_isReqDeadGameThread == true;
+			});
+
+			if (m_isReqDeadGameThread == true) {
+				//ゲームスレッド終了。
+				break;
+			}
+			//ゲームの更新処理。
+			GameUpdate();
+
+			m_isRunGameThread = false;
+		}
+	}
+	void CEngine::GameUpdate()
+	{
+		//ゲームループ
+			//パッドの更新。
+		for (auto& pad : m_pad) {
+			pad.Update();
+		}
+		//サウンドエンジンの更新。
+		m_soundEngine.Update();
+		//GameObjectManager更新
+		GameObjectManager().ExecuteFromGameThread();
+
+		//物理エンジンの更新。
+		m_physicsWorld.Update();
+#if BUILD_LEVEL != BUILD_LEVEL_MASTER
+		static int count = 0;
+		
+		count++;
+		if (count == 30) {
+			m_fps = 1.0f / (m_timeTotal / count);
+			m_timeTotal = 0.0f;
+			count = 0;
+
+		}
+
+		m_font->Begin(GraphicsEngine().GetRenderContext());
+		wchar_t fps[256];
+		swprintf_s(fps, L"FPS = %f", m_fps);
+		float w = (float)GraphicsEngine().Get2DSpaceScreenWidth();
+		float h = (float)GraphicsEngine().Get2DSpaceScreenHeight();
+		m_font->Draw(
+			fps,
+			{
+				w * -0.5f,
+				h * 0.5f
+			},
+			CVector4::White,
+			0.0f,
+			1.0f,
+			{ 0.0f, 1.0f }
+		);
+		m_font->End(GraphicsEngine().GetRenderContext());
+#endif
+		m_graphicsEngine.EndRenderFromGameThread();
+	}
 	void CEngine::Update()
 	{
 		
 		m_sw.Start();
-		
-		GameObjectManager().ExecuteFromMainThread();
 
-		//ゲームスレッドを動かす。
-		m_isRunGameThread = true;
-		m_isRunGameThreadCv.notify_all();
+		GameObjectManager().ExecuteFromMainThread();
 
 		//レンダリング開始。
 		m_graphicsEngine.BeginRender();
 
-		//ゲームスレッドの終わりを待つ。
-		std::unique_lock<std::mutex> lk(m_isRunGameThreadMtx);
-		m_isRunGameThreadCv.wait(lk, [&] {
-			return m_isRunGameThread == false;
-		});
+		if (m_graphicsEngine.IsMultithreadRendering()) {
+			//並列に動いている。GameThreadを動かす。
+			m_isRunGameThread = true;
+			m_isRunGameThreadCv.notify_all();
+		}
+		else {
+			//直列。
+			GameUpdate();
+		}
+		
+
+		if (m_graphicsEngine.IsMultithreadRendering()) {
+			//ゲームスレッドの終わりを待つ。
+			std::unique_lock<std::mutex> lk(m_isRunGameThreadMtx);
+			m_isRunGameThreadCv.wait(lk, [&] {
+				return m_isRunGameThread == false;
+			});
+		}
 
 		m_graphicsEngine.EndRender();
 		
 		m_sw.Stop();
 		
+		m_timeTotal += (float)m_sw.GetElapsed();
 		GameTime().PushFrameDeltaTime((float)m_sw.GetElapsed());
 	}
 	LRESULT CALLBACK CEngine::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
