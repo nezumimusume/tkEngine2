@@ -17,6 +17,9 @@
     <Filter Include="Assets\modelData\bg">
       <UniqueIdentifier>{463bee2e-ce8a-4ce2-bfbc-5c92869ff363}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\star">
+      <UniqueIdentifier>{423d4de8-dc85-49da-aca5-a6b3ad575931}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -42,18 +45,18 @@
     <MeshContentTask Include="Assets\modelData\bg\bg.fbx">
       <Filter>Assets\modelData\bg</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\star\star.FBX">
+      <Filter>Assets\modelData\star</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\utc_nomal.tga">
-      <Filter>Assets\modelData</Filter>
-    </Image>
-    <Image Include="Assets\modelData\utc_spec.tga">
-      <Filter>Assets\modelData</Filter>
-    </Image>
+    <ImageContentTask Include="Assets\modelData\utc_normal.tga" />
+    <ImageContentTask Include="Assets\modelData\utc_spec.tga" />
+    <ImageContentTask Include="Assets\modelData\bg\bgSpec.png">
+      <Filter>Assets\modelData\bg</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

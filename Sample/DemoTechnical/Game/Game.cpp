@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "tkEngine/light/tkDirectionLight.h"
+#include "tkEngine/light/tkPointLight.h"
 
 Game::Game()
 {
@@ -12,6 +13,7 @@ Game::~Game()
 	DeleteGO(m_charaModelRender);
 	DeleteGO(m_groundModelRender);
 	DeleteGO(m_sky);
+	DeleteGO(m_starModelRender);
 	for (auto lig : m_dirLights) {
 		DeleteGO(lig);
 	}
@@ -26,6 +28,19 @@ bool Game::Start()
 	MainCamera().Update();
 	LightManager().SetAmbientLight({ 0.5f, 0.5f, 0.5f });
 	GraphicsEngine().GetTonemap().SetLuminance(0.38f);
+	//星のレンダラーのインスタンスを作成。
+	m_starModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_starModelRender->Init(L"modelData/star/star.cmo");
+	m_starModelRender->SetScale({ 20.0f, 20.0f, 20.0f });
+	m_starModelRender->SetPosition({ -150.0f, 50.0f, -50.0f });
+	m_starModelRender->SetShadowCasterFlag(true);
+	m_starModelRender->SetShadowReceiverFlag(true);
+	//自己発光カラーを設定。
+	m_starModelRender->SetEmissionColor({ 0.8f, 0.8f, 0.0f });
+	m_starLight = NewGO<prefab::CPointLight>(0);
+	m_starLight->SetPosition({ -150.0f, 50.0f, -50.0f });
+	m_starLight->SetAttn({ 200.0f, 2.0f, 0.0f });
+	m_starLight->SetColor({ 10.0f, 10.0f, 0.0f });
 	//キャラのレンダラーのインスタンスを作成。。
 	m_charaModelRender = NewGO<prefab::CSkinModelRender>(0);
 	//モデルデータをロード。
@@ -66,13 +81,26 @@ bool Game::Start()
 		mat->SetNormalMap(m_charaNormalMap);
 		mat->SetSpecularMap(m_charaSpecMap);
 	});
+	m_groundSpecMap.CreateFromDDSTextureFromFile(L"modelData/bg/bgSpec.dds");
+	m_groundModelRender->FindMaterial([&](CModelEffect* mat) {
+		mat->SetSpecularMap(m_groundSpecMap);
+	});
 	return true;
 }
 
 void Game::Update()
 {
+	auto dt = GameTime().GetFrameDeltaTime();
 	CQuaternion qAddRot;
-	qAddRot.SetRotation(CVector3::AxisY, Pad(0).GetLStickXF() * 0.1f);
+	qAddRot.SetRotation(CVector3::AxisY, Pad(0).GetRStickXF() * 4.0f * dt);
 	m_charaRot *= qAddRot;
 	m_charaModelRender->SetRotation(m_charaRot);
+
+	m_charaPos.x += Pad(0).GetLStickXF() * -400.0f * dt;
+	m_charaPos.z += Pad(0).GetLStickYF() * -400.0f * dt;
+	m_charaModelRender->SetPosition(m_charaPos);
+
+	qAddRot.SetRotation(CVector3::AxisY, 4.0f * dt);
+	m_starRot *= qAddRot;
+	m_starModelRender->SetRotation(m_starRot);
 }

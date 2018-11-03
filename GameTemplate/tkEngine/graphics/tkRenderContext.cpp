@@ -7,10 +7,11 @@
 #include "tkEngine/graphics/tkRenderTarget.h"
 
 namespace tkEngine{
-	void CRenderContext::Init(ID3D11DeviceContext* pD3DDeviceContext)
+	void CRenderContext::Init(ID3D11DeviceContext* pD3DDeviceContext, ID3D11DeviceContext* pD3DDeferredDeviceContext)
 	{
 		TK_ASSERT(pD3DDeviceContext != nullptr, "pD3DDeviceContext‚ªNULL‚Å‚·Bì¬‚µ‚Ä‚©‚çŒÄ‚ñ‚Å‚ËB");
-		m_pD3DDeviceContext = pD3DDeviceContext;
+		m_pD3DImmidiateDeviceContext = pD3DDeviceContext;
+		m_pD3DDeferredDeviceContext = pD3DDeferredDeviceContext;
 	}
 	void CRenderContext::OMSetRenderTargets(unsigned int NumViews, CRenderTarget* renderTarget[])
 	{
@@ -28,7 +29,7 @@ namespace tkEngine{
 				renderTargetViews[i] = m_renderTargetViews[i]->GetRenderTargetView();
 			}
 		}
-		m_pD3DDeviceContext->OMSetRenderTargets(NumViews, renderTargetViews, depthStencilView);
+		m_pD3DDeferredDeviceContext->OMSetRenderTargets(NumViews, renderTargetViews, depthStencilView);
 		m_numRenderTargetView = NumViews;
 	}
 }

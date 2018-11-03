@@ -48,10 +48,14 @@ namespace tkEngine{
 			static CGameObjectManager instance;
 			return instance;
 		}
+		/// <summary>
+		/// メインスレッドから呼ばれる実行処理。
+		/// </summary>
+		void ExecuteFromMainThread();
 		/*!
-		*@brief	実行。
+		*@brief	ゲームスレッドから呼ばれる実行処理。
 		*/
-		void Execute();
+		void ExecuteFromGameThread();
 		/*!
 		 *@brief	初期化。
 		 *@param[in]	gameObjectPrioMax	ゲームオブジェクトの優先度の最大値。(255まで)

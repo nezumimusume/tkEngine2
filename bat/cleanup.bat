@@ -10,4 +10,3 @@ popd
 
 @echo クリーンアップ終了
 
-pause

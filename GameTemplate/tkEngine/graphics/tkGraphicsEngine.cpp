@@ -37,9 +37,19 @@ namespace tkEngine{
 			m_pSwapChain->Release();
 			m_pSwapChain = nullptr;
 		}
+		for (auto& commandList : m_commandList) {
+			if (commandList != nullptr) {
+				commandList->Release();
+				commandList = nullptr;
+			}
+		}
 		if (m_pImmediateContext) {
 			m_pImmediateContext->Release();
 			m_pImmediateContext = nullptr;
+		}
+		if (m_pDeferredDeviceContext) {
+			m_pDeferredDeviceContext->Release();
+			m_pDeferredDeviceContext = nullptr;
 		}
 		if (m_pd3dDevice) {
 			m_pd3dDevice->Release();
@@ -111,6 +121,8 @@ namespace tkEngine{
 			//スワップチェインを作成できなかった。
 			return false;
 		}
+		//ディファードコンテキストを作成。
+		m_pd3dDevice->CreateDeferredContext(0, &m_pDeferredDeviceContext);
 		return true;
 	}
 	
@@ -134,21 +146,7 @@ namespace tkEngine{
 		ZeroMemory(&m_mainRenderTargetMSAADesc, sizeof(m_mainRenderTargetMSAADesc));
 		m_mainRenderTargetMSAADesc.Count = 1;
 		m_mainRenderTargetMSAADesc.Quality = 0;
-#if 0
-		//最高でMSAAx4
-		for (int i = 1; i <= 4; i <<= 1)
-		{
-			UINT Quality;
-			if (SUCCEEDED(m_pd3dDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_D32_FLOAT, i, &Quality)))
-			{
-				if (0 < Quality)
-				{
-					m_mainRenderTargetMSAADesc.Count = i;
-					m_mainRenderTargetMSAADesc.Quality = Quality - 1;
-				}
-			}
-		}
-#endif
+
 		bool ret = m_mainRenderTarget.Create(
 			m_frameBufferWidth,
 			m_frameBufferHeight,
@@ -221,7 +219,7 @@ namespace tkEngine{
 			return false;
 		}
 		//レンダリングコンテキストの初期化。
-		m_renderContext.Init(m_pImmediateContext);
+		m_renderContext.Init(m_pImmediateContext, m_pDeferredDeviceContext);
 		CRenderTarget* renderTargets[] = {
 			&m_mainRenderTarget
 		};
@@ -243,7 +241,7 @@ namespace tkEngine{
 		InitDefferdShading();
 
 		//フォント用のデータの初期化。
-		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pImmediateContext);
+		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pDeferredDeviceContext);
 		m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"font/myfile.spritefont");
 
 		//2Dカメラの初期化。
@@ -262,13 +260,20 @@ namespace tkEngine{
 		//エフェクトエンジンの初期化。
 		m_effectEngine.Init();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
-		m_pImmediateContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
+		m_pDeferredDeviceContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
 #endif
 		return true;
 
 	}
 	void CGraphicsEngine::BeginRender()
 	{
+		auto& commandList = m_commandList[m_commandListNoMainThread];
+		//作成したコマンドを実行。
+		if (commandList != nullptr) {
+			m_pImmediateContext->ExecuteCommandList(commandList, FALSE);
+			commandList->Release();
+			commandList = nullptr;
+		}
 	}
 	/*!
 	*@brief	ポストエフェクトの処理が完了したときに呼ばれる処理。
@@ -283,7 +288,7 @@ namespace tkEngine{
 		ID3D11RenderTargetView* rts[] = {
 			m_backBufferRT
 		};
-		m_pImmediateContext->OMSetRenderTargets(1, rts, nullptr);
+		m_pDeferredDeviceContext->OMSetRenderTargets(1, rts, nullptr);
 		rc.VSSetShader(m_copyVS);
 		rc.PSSetShader(m_copyPS);
 		//入力レイアウトを設定。
@@ -295,11 +300,21 @@ namespace tkEngine{
 		pBackBuffer->Release();
 		rc.PSUnsetShaderResource(0);
 	}
-	void CGraphicsEngine::EndRender()
+	/// <summary>
+	/// ゲームスレッドから呼び出す描画終了処理。
+	/// </summary>
+	void CGraphicsEngine::EndRenderFromGameThread()
 	{
 		m_lightManager.EndRender(m_renderContext);
-		
+		//コマンドリストを作成。
+		int commandListNo = 1 ^ m_commandListNoMainThread;
+		m_pDeferredDeviceContext->FinishCommandList(FALSE, &m_commandList[commandListNo]);
+	}
+	void CGraphicsEngine::EndRender()
+	{
 		//フラーッシュ
 		m_pSwapChain->Present(1, 0);
+		//コマンドリストを入れ替える。
+		m_commandListNoMainThread = 1 ^ m_commandListNoMainThread;
 	}
 }

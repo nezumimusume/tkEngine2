@@ -22,7 +22,7 @@ namespace tkEngine{
 		{
 			light.position = pos;
 		}
-		void CPointLight::SetColor(const CVector4& color)
+		void CPointLight::SetColor(const CVector3& color)
 		{
 			light.color = color;
 		}

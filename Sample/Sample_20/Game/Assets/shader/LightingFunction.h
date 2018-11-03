@@ -16,6 +16,7 @@ float3 CalcSpecular(float3 lightDir, float4 lightColor, float3 toEyeReflection, 
  *@param[in]	normal			法線。
  *@param[in]	toEye			視点までのベクトル。
  *@param[in]	specPow			スペキュラ強度。
+ *@param[in]	shadow			影の落ちる率(1.0で完全に影が落ちている。)
  */
 float3 CalcDirectionLight(
 	float4 albedo,
@@ -27,16 +28,23 @@ float3 CalcDirectionLight(
 	float3 toEyeReflection, 
 	float roughness,
 	float specPow,
-	uint uMatID
+	uint uMatID,
+	float shadow
 )
 {
 	float3 lig = 0.0f;
 	for( int i = 0; i < numDirectionLight; i++){
-		if( 1 << uMatID & directionLight[i].lightingMaterialIDGroup ){
-			float3 lightDir = directionLight[i].direction;
-			float t = saturate( dot( normal, -lightDir ) );
-			lig += BRDF(-lightDir, toEyeDir, normal, tangent, biNormal, albedo, roughness, specPow ) * directionLight[i].color * t;
+		if( shadow < 1.0f){
+			//影の落ちる確率が1.0以下の時だけ計算する。		
+			if( 1 << uMatID & directionLight[i].lightingMaterialIDGroup ){
+				float3 lightDir = directionLight[i].direction;
+				float t = saturate( dot( normal, -lightDir ) ) * ( 1.0f - shadow );
+				lig += BRDF(-lightDir, toEyeDir, normal, tangent, biNormal, albedo, roughness, specPow ) * directionLight[i].color * t ;
+				
+			}
 		}
+		//遮蔽するディレクションライトは最初の一本だけ。
+		shadow = 0.0f;
 	}
 	
 	return lig;

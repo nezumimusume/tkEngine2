@@ -97,13 +97,17 @@ namespace tkEngine{
 		}
 		EndGPUEvent();
 	}
-	void CGameObjectManager::Execute()
+	void CGameObjectManager::ExecuteFromMainThread()
 	{
-		ExecuteDeleteGameObjects();
+		//Start
+		Start();
+	}
+	void CGameObjectManager::ExecuteFromGameThread()
+	{
+		
 		//更新系の処理。
 		{
-			//Start
-			Start();
+			
 			//事前アップデート。
 			PreUpdate();
 			//プリレンダリングの更新処理。
@@ -137,6 +141,7 @@ namespace tkEngine{
 			//2D的なものの描画。
 			PostRender(renderContext);
 		}
+		ExecuteDeleteGameObjects();
 	}
 	void CGameObjectManager::UpdateSceneGraph()
 	{

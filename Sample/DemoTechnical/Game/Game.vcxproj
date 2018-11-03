@@ -1793,6 +1793,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\bg\bg.fbx" />
+    <MeshContentTask Include="Assets\modelData\star\star.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
   </ItemGroup>
   <ItemGroup>
@@ -1801,6 +1802,9 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\modelData\utc_normal.tga" />
     <ImageContentTask Include="Assets\modelData\utc_spec.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\bg\bgSpec.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

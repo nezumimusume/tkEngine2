@@ -12,6 +12,9 @@
 #include "tkEngine/random/tkRandom.h"
 #include "tkEngine/graphics/font/tkFont.h"
 #include "tkEngine/debug/math/tkVectorRender.h"
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
  /*!
   *@namespace	tkEngine全体の名前空間。
@@ -125,7 +128,11 @@ namespace tkEngine{
 		 *@brief	ウィンドウ初期化。
 		 */
 		bool InitWindow( const SInitParam& initParam );
-
+		
+		/// <summary>
+		/// ゲームスレッド。
+		/// </summary>
+		void GameThread();
 		/*!
 		* @brief	ウィンドウプロシージャ。
 		*@param[in]	hWnd	ウィンドウハンドル
@@ -148,6 +155,11 @@ namespace tkEngine{
 		int						m_screenHeight = 0;							//!<スクリーンの高さ。
 		CPad					m_pad[CPad::CONNECT_PAD_MAX];				//!<ゲームパッド。
 		CRandom					m_random;									//!<乱数。
+		std::unique_ptr<std::thread> m_gameThread;							//ゲームスレッド。
+		bool			m_isRunGameThread = false;
+		bool			m_isReqDeadGameThread = false;
+		std::mutex		m_isRunGameThreadMtx;
+		std::condition_variable m_isRunGameThreadCv;
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		std::unique_ptr<CFont>	m_font;
 		float					m_fps = 30.0f;

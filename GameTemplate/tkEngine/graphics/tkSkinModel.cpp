@@ -215,7 +215,7 @@ namespace tkEngine{
 
 		if (m_numInstance > 0) {
 			m_skinModelData->GetBody().Draw(
-				GraphicsEngine().GetD3DDeviceContext(),
+				GraphicsEngine().GetD3DDeferredDeviceContext(),
 				state,
 				m_worldMatrix,
 				viewMatrix,
