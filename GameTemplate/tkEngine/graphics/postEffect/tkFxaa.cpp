@@ -46,9 +46,9 @@ namespace tkEngine{
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		//レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
-		
+		auto& finalRt = postEffect->GetFinalRenderTarget();
 		CRenderTarget* renderTargets[] = {
-			&postEffect->GetFinalRenderTarget()
+			&finalRt
 		};
 		rc.PSSetSampler(0, m_samplerState);
 		rc.OMSetRenderTargets(1, renderTargets);
@@ -57,8 +57,10 @@ namespace tkEngine{
 		rc.VSSetShader(m_vsShader);
 		//入力レイアウトを設定。
 		rc.IASetInputLayout(m_vsShader.GetInputLayout());
+		rc.RSSetViewport(0.0f, 0.0f, finalRt.GetWidth(), finalRt.GetHeight());
+		
+		postEffect->DrawFullScreenQuad(rc);
 
-		GraphicsEngine().GetPostEffect().DrawFullScreenQuad(rc);
 		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 		rc.PSUnsetShaderResource(0);
 		EndGPUEvent();

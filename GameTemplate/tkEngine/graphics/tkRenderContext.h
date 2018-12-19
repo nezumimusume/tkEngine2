@@ -35,6 +35,7 @@ namespace tkEngine {
 		enRenderStep_Bloom,						//!<ブルーム。
 		enRenderStep_Toonmap,					//!<トーンマップ。
 		enRenderStep_AntiAlias,					//!<アンチエイリアス。
+		enRenderStep_Dof,						//!<DOF。
 		enRenderStep_Render2DToScene,			//!<2Dをシーンに描画。
 	};
 	class CRenderContext : Noncopyable {

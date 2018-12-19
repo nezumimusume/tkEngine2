@@ -302,6 +302,7 @@ namespace tkEngine{
 		rc.IASetInputLayout(m_copyVS.GetInputLayout());
 		rc.PSSetShaderResource(0, m_postEffect.GetFinalRenderTarget().GetRenderTargetSRV());
 		rc.RSSetState(RasterizerState::spriteRender);
+		rc.RSSetViewport(0, 0, m_frameBufferWidth, m_frameBufferHeight);
 		//ポストエフェクトのフルスクリーン描画の機能を使う。
 		m_postEffect.DrawFullScreenQuad(rc);
 		pBackBuffer->Release();

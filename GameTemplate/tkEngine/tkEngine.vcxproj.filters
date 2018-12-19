@@ -443,6 +443,9 @@
     <ClInclude Include="nature\tkSky.h">
       <Filter>Source Files\nature</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkDof.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -708,6 +711,9 @@
     </ClCompile>
     <ClCompile Include="nature\tkSky.cpp">
       <Filter>Source Files\nature</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkDof.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

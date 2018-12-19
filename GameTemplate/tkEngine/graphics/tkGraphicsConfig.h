@@ -65,17 +65,18 @@ namespace tkEngine{
 	struct SScreenSpaceReflectionConfig {
 		bool isEnable = false;
 	};
+
 	/*!
 	 * @brief	グラフィックスコンフィグ。
 	 */
 	struct SGraphicsConfig{
-		SShadowRenderConfig				shadowRenderConfig;		//!<影の処理のコンフィグ。
-		SBloomConfig					bloomConfig;			//!<Bloomのコンフィグ。
-		SDofConfig						dofConfig;				//!<被写界深度のコンフィグ。
-		SAAConfig						aaConfig;				//!<アンチエイリアスのコンフィグ。
-		SMotionBlurConfig				motionBlurConfig;		//<!モーションブラーのコンフィグ。
-		STonemapConfig					tonemapConfig;			//!<トーンマップのコンフィグ。
-		SDitheringConfig				ditheringConfig;		//!<ディザリング。
-		SScreenSpaceReflectionConfig	ssrConfig;				//!<ssrコンフィグ
+		SShadowRenderConfig				shadowRenderConfig;		//影の処理のコンフィグ。
+		SBloomConfig					bloomConfig;			//Bloomのコンフィグ。
+		SDofConfig						dofConfig;				//被写界深度のコンフィグ。
+		SAAConfig						aaConfig;				//アンチエイリアスのコンフィグ。
+		SMotionBlurConfig				motionBlurConfig;		//モーションブラーのコンフィグ。
+		STonemapConfig					tonemapConfig;			//トーンマップのコンフィグ。
+		SDitheringConfig				ditheringConfig;		//ディザリング。
+		SScreenSpaceReflectionConfig	ssrConfig;				//ssrコンフィグ
 	};
 }
