@@ -32,7 +32,7 @@ namespace tkEngine{
 		enSkinModelSRVReg_Tangent,					//!<接ベクトル。
 		enSkinModelSRVReg_MaterialID,				//!<マテリアルID。
 		enSkinModelSRVReg_EmissionColor,			//!<エミッションカラー。
-
+		
 		enSkinModelSRVReg_DirectionLight = 100,		//!<ディレクションライト。
 		enSkinModelSRVReg_PointLight,				//!<ポイントライトのリスト。
 		enSkinModelSRVReg_PointLightListInTile,		//!<タイルに含まれるポイントライトのリスト。

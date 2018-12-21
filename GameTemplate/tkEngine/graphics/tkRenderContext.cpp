@@ -24,12 +24,13 @@ namespace tkEngine{
 		TK_ASSERT(NumViews <= MRT_MAX, "NumViews is invalid");
 		
 		ZeroMemory(m_renderTargetViews, sizeof(m_renderTargetViews));
-		memcpy(m_renderTargetViews, renderTarget, sizeof(CRenderTarget*) * NumViews);
+		
 
 		ID3D11RenderTargetView* renderTargetViews[MRT_MAX] = { nullptr };
 		ID3D11DepthStencilView*	depthStencilView = nullptr;
 
 		if (renderTarget != nullptr) {
+			memcpy(m_renderTargetViews, renderTarget, sizeof(CRenderTarget*) * NumViews);
 			depthStencilView = m_renderTargetViews[0]->GetDepthStencilView();
 			for (unsigned int i = 0; i < NumViews; i++) {
 				renderTargetViews[i] = m_renderTargetViews[i]->GetRenderTargetView();

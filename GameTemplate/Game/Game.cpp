@@ -10,6 +10,8 @@ Game::Game()
 Game::~Game()
 {
 	DeleteGO(m_skinModelRender);
+	DeleteGO(m_bgSkinModelRender);
+	DeleteGO(m_sky);
 }
 bool Game::Start()
 {
@@ -21,7 +23,10 @@ bool Game::Start()
 	MainCamera().Update();
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
-	
+	m_bgSkinModelRender = NewGO<prefab::CSkinModelRender>(0);
+	m_bgSkinModelRender->Init(L"modelData/bg/bg.cmo");
+	m_sky = NewGO<prefab::CSky>(0);
+	LightManager().SetAmbientLight({ 2.5f, 2.5f, 2.5f });
 	return true;
 }
 

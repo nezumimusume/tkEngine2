@@ -101,7 +101,7 @@ namespace {
 		//SSR
 		initParam.graphicsConfing.ssrConfig.isEnable = true;
 		//ÉfÉBÉU
-		initParam.graphicsConfing.ditheringConfig.isEnable = true;
+		initParam.graphicsConfing.ditheringConfig.isEnable = false;
 		//dof
 		initParam.graphicsConfing.dofConfig.isEnable = true;
 	}

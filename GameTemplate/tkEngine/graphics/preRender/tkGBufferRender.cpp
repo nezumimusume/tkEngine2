@@ -93,7 +93,7 @@ namespace tkEngine{
 			ge.GetFrameBufferHeight(),
 			1,
 			1,
-			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_R32G32_FLOAT,
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
@@ -107,6 +107,7 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,
 			msaaDesc
 		);
+	
 		//1フレーム前の深度値を記録するためのテクスチャを作成する。
 		D3D11_TEXTURE2D_DESC texDesc;
 		ZeroMemory(&texDesc, sizeof(texDesc));
@@ -213,7 +214,7 @@ namespace tkEngine{
 			{ 0.0f, 1.0f, 0.0f, 1.0f }, //enGBufferNormal
 			{ 0.0f, 0.0f, 0.0f, 1.0f }, //enGBufferSpecular
 			{ 0.0f, 0.0f, 0.0f, 1.0f }, //enGBufferShadow
-			{ 1.0f, 1.0f, 1.0f, 1.0f },	//enGBufferDepth
+			{ 1.0f, MainCamera().GetFar() - MainCamera().GetNear(), 1.0f, 1.0f },	//enGBufferDepth
 			{ 1.0f, 0.0f, 0.0f, 1.0f },	//enGBufferTangent
 			{ 0.0f, 0.0f, 0.0f, 0.0f },	//enGBufferMateriaID
 			{ 0.0f, 0.0f, 0.0f, 1.0f },	//enGBufferEmission
