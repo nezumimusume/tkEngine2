@@ -255,14 +255,14 @@ namespace tkEngine {
 		rc.OMSetRenderTargets(1, rts);
 		rc.VSSetShader(m_finalParam.vs);
 		rc.PSSetShader(m_finalParam.ps);
-		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
+		rc.PSSetShaderResource(0, m_downSampligCocAndColorParam.downSamplingRt[2].GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, m_createDofMaskAndCalcCocParam.dofMaskRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(2, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.downSamplingRt[0].GetRenderTargetSRV());
 		rc.PSSetShaderResource(4, m_downSampligCocAndColorParam.downSamplingRt[1].GetRenderTargetSRV());
 		rc.PSSetShaderResource(5, m_downSampligCocAndColorParam.downSamplingRt[2].GetRenderTargetSRV());
 		rc.PSSetSampler(0, *m_finalParam.pointSamplerState);
-
+		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
 		rc.PSSetSampler(1, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
 		rc.RSSetViewport(
 			0,
@@ -272,6 +272,8 @@ namespace tkEngine {
 		);
 		rc.IASetInputLayout(m_finalParam.vs.GetInputLayout());
 		postEffect->DrawFullScreenQuad(rc);
+
+		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		ge.EndGPUEvent();
 	}
 	void CDof::Render(CRenderContext& rc, CPostEffect* postEffect)

@@ -64,5 +64,5 @@ float4 PSMain( PSIn psIn ) : SV_Target0
 
 	float4 blendColor = lerp(colorTbl[iTexIndex], colorTbl[iTexIndex+1], blendRate);
 	//適当にボケボケ
-	return blendColor;
+	return float4(blendColor.xyz, 0.5f);
 }

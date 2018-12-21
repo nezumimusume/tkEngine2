@@ -72,7 +72,7 @@ PSOutput PSMain( PSIn psIn )
 	float nearCoc = max(0.0f, dofRange.y - depth ) / ( dofRange.y - dofRange.x );
 	//大きいほうのcocを採用する。どちらか一方は必ず0になるね。
 	float coc = max( farCoc, nearCoc );
-	
+	coc = min(1.0f, coc);
 	//αにCoCを格納する！
 	psOutput.colorAndCoc.a = coc;
 	
