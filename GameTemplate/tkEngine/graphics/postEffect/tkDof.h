@@ -148,6 +148,7 @@ namespace tkEngine {
 		/// </summary>
 		struct SDownSamplingCocAndColor {
 			CRenderTarget downSamplingRt[NUM_DOWN_SAMPLING];
+			CBlur blur[NUM_DOWN_SAMPLING];
 			CShader vs;
 			CShader ps;
 			CConstantBuffer cb;
@@ -166,8 +167,8 @@ namespace tkEngine {
 		SFinal m_finalParam;
 
 		float m_nearStartDistance = 0.0f;		//手前ボケの減衰が開始するカメラからの距離。
-		float m_nearEndDistance = 100.0f;		//手前ボケの減衰が終了するカメラからの距離。
-		float m_farStartDistance = 400.0f;		//奥ボケの増幅が開始するカメラからの距離。
-		float m_farEndDistance = 1000.0f;		//奥ボケの増幅が終了するカメラからの距離。
+		float m_nearEndDistance = 150.0f;		//手前ボケの減衰が終了するカメラからの距離。
+		float m_farStartDistance = 200.0f;		//奥ボケの増幅が開始するカメラからの距離。
+		float m_farEndDistance = 500.0f;		//奥ボケの増幅が終了するカメラからの距離。
 	};
 }
