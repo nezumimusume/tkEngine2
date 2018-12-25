@@ -132,7 +132,6 @@ namespace tkEngine {
 				DXGI_FORMAT_UNKNOWN,
 				multiSampleDesc
 			);
-			m_downSampligCocAndColorParam.blur[i].Init(m_downSampligCocAndColorParam.downSamplingRt[i].GetRenderTargetSRV());
 		}
 	}
 	void CDof::InitBlendStates()
@@ -213,7 +212,9 @@ namespace tkEngine {
 			&m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
 			&m_downSampligCocAndColorParam.downSamplingRt[0].GetRenderTargetSRV(),
 			&m_downSampligCocAndColorParam.downSamplingRt[1].GetRenderTargetSRV(),
+			&m_downSampligCocAndColorParam.downSamplingRt[2].GetRenderTargetSRV(),
 		};
+		static_assert(ARRAYSIZE(textures) == NUM_DOWN_SAMPLING, "error");
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
 
 		for (int i = 0; i < NUM_DOWN_SAMPLING; i++){
@@ -242,8 +243,6 @@ namespace tkEngine {
 			rc.IASetInputLayout(m_downSampligCocAndColorParam.vs.GetInputLayout());
 			postEffect->DrawFullScreenQuad(rc);
 
-			m_downSampligCocAndColorParam.blur[i].Execute(rc);
-
 		}
 		ge.EndGPUEvent();
 	}
@@ -268,7 +267,8 @@ namespace tkEngine {
 		rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.downSamplingRt[0].GetRenderTargetSRV());
 		rc.PSSetShaderResource(4, m_downSampligCocAndColorParam.downSamplingRt[1].GetRenderTargetSRV());
 		rc.PSSetShaderResource(5, m_downSampligCocAndColorParam.downSamplingRt[2].GetRenderTargetSRV());
-		
+		rc.PSSetShaderResource(6, m_downSampligCocAndColorParam.downSamplingRt[2].GetRenderTargetSRV());
+
 		rc.PSSetSampler(0, *m_finalParam.pointSamplerState);
 		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
 		rc.PSSetSampler(1, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
