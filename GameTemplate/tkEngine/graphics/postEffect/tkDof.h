@@ -126,7 +126,6 @@ namespace tkEngine {
 		/// </summary>
 		struct SCreateDofMaskAndCalcCoc {
 			CRenderTarget calcCocAndColorRt;			//ピクセルのCoCの計算結果が描き込まれるレンダリングターゲット。CoCはαチャンネルに書き込まれます。
-			CRenderTarget dofMaskRt;					//被写界深度内のピクセルを表すマスク。0と1の2値化されたデータ。0は被写界深度内のピクセルなのでボケない。
 			CShader vs;									//頂点シェーダー。
 			CShader ps;									//ピクセルシェーダー。
 			CSamplerState	samplerState;				//サンプラステート。
@@ -160,7 +159,6 @@ namespace tkEngine {
 		struct SFinal {
 			CShader vs;
 			CShader ps;
-			CSamplerState* pointSamplerState = nullptr;	//SCreateDofMaskAndCalcCocのsamplerStateを使わせていただく。
 		};
 		bool m_isEnable = false;	//Dofが有効かどうかのフラグ。
 		SCreateDofMaskAndCalcCoc m_createDofMaskAndCalcCocParam;

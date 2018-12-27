@@ -21,7 +21,6 @@ struct PSIn{
  */
 struct PSOutput{
 	float4 colorAndCoc : SV_Target0;	//シーンのカラー情報とCoC。CoCはαチャンネルに格納されている。
-	float4 dofMask : SV_Target1;			//被写界深度内のピクセルを表すマスク。0と1の2値化されたデータ。0は被写界深度内のピクセルなのでボケない。
 };
 /*!
  *@brief	定数バッファ。
@@ -75,14 +74,6 @@ PSOutput PSMain( PSIn psIn )
 	coc = min(1.0f, coc);
 	//αにCoCを格納する！
 	psOutput.colorAndCoc.a = coc;
-	
-	//マスクを生成する。
-	//Ｑ：なぜマスクを生成する？
-	//Ａ：後続のレンダリングパスのぼかした画像とシーンの合成の時に使用する。
-	//	  ぼかした画像が被写界深度内に侵入してしまう現象を防ぐために使います。
-	float mask = step(dofRange.z, depth);			//深度値が遠景ボケの開始深度値より大きければmaskに1を設定する。
-	mask = max( mask, step(depth, dofRange.y) );	//深度値が手前ボケの終了深度値より小さければmaskに1を設定する。
-	psOutput.dofMask.r = mask;
 
 	return psOutput;
 }

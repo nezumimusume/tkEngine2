@@ -115,8 +115,10 @@ namespace tkEngine{
 			m_blurParam.weights[i] /= total;
 		}
 	}
-	void CBlur::Execute(CRenderContext& rc)
-	{
+	void CBlur::Execute(
+		CRenderContext& rc, 
+		std::function<void(CRenderContext&, EnRenderStep)> onPreDraw
+	){
 		//ウェイトの更新
 		UpdateWeight(m_blurIntensity);
 
@@ -137,18 +139,24 @@ namespace tkEngine{
 			};
 			m_blurParam.offset.x = 16.0f / m_srcTextureWidth;
 			m_blurParam.offset.y = 0.0f;
-		
+			m_blurParam.uvOffset.x = 0.5f / m_xBlurRT.GetWidth();
+			m_blurParam.uvOffset.y = 0.5f / m_xBlurRT.GetHeight();
+
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
 			rc.OMSetRenderTargets(1, rts);
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetConstantBuffer(0, m_cbBlur);
+			rc.VSSetConstantBuffer(0, m_cbBlur);
 			rc.RSSetViewport(0.0f, 0.0f, (float)m_xBlurRT.GetWidth(), (float)m_xBlurRT.GetHeight());
 			rc.IASetInputLayout(m_vsXBlurShader.GetInputLayout());
 			rc.VSSetShader(m_vsXBlurShader);
 			rc.PSSetShader(m_psBlurShader);
 
+			if (onPreDraw != nullptr) {
+				onPreDraw(rc, enRenderStep_XBlur);
+			}
 			m_fullscreenQuad.Draw(rc);
 		}
 		//YBlur
@@ -158,6 +166,8 @@ namespace tkEngine{
 			};
 			m_blurParam.offset.x = 0.0f;
 			m_blurParam.offset.y = 16.0f / m_srcTextureHeight;
+			m_blurParam.uvOffset.x = 0.5f / m_yBlurRT.GetWidth();
+			m_blurParam.uvOffset.y = 0.5f / m_yBlurRT.GetHeight();
 			
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
 			rc.OMSetRenderTargets(1, rts);
@@ -165,11 +175,16 @@ namespace tkEngine{
 			rc.VSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetConstantBuffer(0, m_cbBlur);
+			rc.VSSetConstantBuffer(0, m_cbBlur);
+
 			rc.RSSetViewport(0.0f, 0.0f, (float)m_yBlurRT.GetWidth(), (float)m_yBlurRT.GetHeight());
 			rc.IASetInputLayout(m_vsYBlurShader.GetInputLayout());
 			rc.VSSetShader(m_vsYBlurShader);
 			rc.PSSetShader(m_psBlurShader);
 
+			if (onPreDraw != nullptr) {
+				onPreDraw(rc, enRenderStep_YBlur);
+			}
 			m_fullscreenQuad.Draw(rc);
 		}
 		rc.OMSetDepthStencilState(depthStenciil, 0);

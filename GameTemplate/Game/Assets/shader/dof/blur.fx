@@ -16,7 +16,6 @@ struct PS_BlurInput{
 };
 
 Texture2D<float4> blurTexture : register(t0);	//ブラーテクスチャ。
-Texture2D<float4> dofMaskTexture : register(t1);	//被写界深度マスクテクスチャ。
 
 struct VSInput{
 	float4 pos : SV_Position;
@@ -88,6 +87,8 @@ PS_BlurInput VSYBlur(VSInput In)
 }
 void ComputeNewWeightAndColor( out float4 newColor, out float newWeight, inout float totalWeight, float weightBase, float2 uv )
 {
+	//錯乱円の半径が小さいピクセルはブラーがかかるピクセルに侵入しないようにするために、
+	//錯乱円の半径をガウスブラーのウェイトに乗算する。
 	newColor = blurTexture.Sample( Sampler, uv );
 	newWeight = weightBase * newColor.a;
 	totalWeight += newWeight;
@@ -117,8 +118,11 @@ float4 PSBlur( PS_BlurInput In ) : SV_Target0
 	ComputeNewWeightAndColor(newColor[14], newWeight[14], totalWeight, weight[1].z, In.tex1 + offset);
 	ComputeNewWeightAndColor(newColor[15], newWeight[15], totalWeight, weight[1].w, In.tex0 + offset);
 	
+	//トータルウェイトが0.0001以下ならブラーを×すべてのピクセルがボケが発生しない
+	//ピクセルなのでピクセルキル～。
 	clip( totalWeight - 0.0001f);
-	//新しいウェイトを規格化する。
+	
+	//ウェイトが再計算されているので、もっかい規格化(ウェイトの合計を1.0にする)を行う。
 	for( int i = 0; i < 16; i++ ){
 		newWeight[i] /= totalWeight;
 	}
