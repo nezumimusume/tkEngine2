@@ -388,16 +388,30 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 		//何もしない。
 		Out.shadow = CalcShadow(In.Pos);
 	}
-	Out.depth = In.posInProj.z / In.posInProj.w;
+	//射影空間での深度値をxに。
+	Out.depth.x = In.posInProj.z / In.posInProj.w;
+	//カメラ空間での深度値をyに。
+	Out.depth.y = In.posInView.z;
 	//マテリアルID
 	Out.materialID = (float)materialID;
 	//自己発光色。
 	Out.emissionColor = emissionColor;
+
 	return Out;
 }
 
-//空用のピクセルシェーダーをインクルード。
-#include "skyPS.h"
+
+TextureCube<float4> skyCubeMap : register(t0);	//スカイキューブマップ。
+
+/*!
+ *@brief	空用のシェーダー。
+ */
+float4 PSMain_SkyCube( PSInput In ) : SV_Target0
+{
+	float4 color = skyCubeMap.Sample( Sampler, In.Normal);
+	color.xyz += emissionColor;
+	return color ;
+}
 
 /*!
  *@brief	シルエット描画。

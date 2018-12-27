@@ -37,9 +37,19 @@ namespace tkEngine{
 			m_pSwapChain->Release();
 			m_pSwapChain = nullptr;
 		}
+		for (auto& commandList : m_commandList) {
+			if (commandList != nullptr) {
+				commandList->Release();
+				commandList = nullptr;
+			}
+		}
 		if (m_pImmediateContext) {
 			m_pImmediateContext->Release();
 			m_pImmediateContext = nullptr;
+		}
+		if (m_pDeferredDeviceContext) {
+			m_pDeferredDeviceContext->Release();
+			m_pDeferredDeviceContext = nullptr;
 		}
 		if (m_pd3dDevice) {
 			m_pd3dDevice->Release();
@@ -76,6 +86,7 @@ namespace tkEngine{
 			D3D_FEATURE_LEVEL_10_1,
 			D3D_FEATURE_LEVEL_10_0,
 		};
+
 		UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
 		m_frameBufferWidth = initParam.frameBufferWidth;
@@ -111,6 +122,19 @@ namespace tkEngine{
 			//スワップチェインを作成できなかった。
 			return false;
 		}
+		//デバイスのマルチスレッドサポートの機能を調べる。
+		m_pd3dDevice->CheckFeatureSupport(
+			D3D11_FEATURE_THREADING,
+			&m_featureDataThreading,
+			sizeof(m_featureDataThreading)
+			);
+		
+		
+		if (m_featureDataThreading.DriverCommandLists == TRUE) {
+			//デバイズがディファードコンテキストに対応しているので
+			//ディファードコンテキストを作成。
+			m_pd3dDevice->CreateDeferredContext(0, &m_pDeferredDeviceContext);
+		}
 		return true;
 	}
 	
@@ -134,21 +158,7 @@ namespace tkEngine{
 		ZeroMemory(&m_mainRenderTargetMSAADesc, sizeof(m_mainRenderTargetMSAADesc));
 		m_mainRenderTargetMSAADesc.Count = 1;
 		m_mainRenderTargetMSAADesc.Quality = 0;
-#if 0
-		//最高でMSAAx4
-		for (int i = 1; i <= 4; i <<= 1)
-		{
-			UINT Quality;
-			if (SUCCEEDED(m_pd3dDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_D32_FLOAT, i, &Quality)))
-			{
-				if (0 < Quality)
-				{
-					m_mainRenderTargetMSAADesc.Count = i;
-					m_mainRenderTargetMSAADesc.Quality = Quality - 1;
-				}
-			}
-		}
-#endif
+
 		bool ret = m_mainRenderTarget.Create(
 			m_frameBufferWidth,
 			m_frameBufferHeight,
@@ -168,44 +178,7 @@ namespace tkEngine{
 		}
 		return true;
 	}
-	/*!
-	*@brief	ディファードシェーディング。
-	*/
-	void CGraphicsEngine::DefferdShading(CRenderContext& rc)
-	{
-		BeginGPUEvent(L"enRenderStep_DefferdShading");
-		rc.SetRenderStep(enRenderStep_ForwardRender);
-		//ライトの情報を転送転送。
-		LightManager().Render(rc);
-		//影を落とすための情報を転送。
-		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
-		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
-		//定数バッファを更新。
-		PSDefferdCb cb;
-		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
-		rc.UpdateSubresource(m_cbDefferd, &cb);
-		//定数バッファをb0のレジスタに設定。
-		rc.PSSetConstantBuffer(0, m_cbDefferd);
-		//シェーダーを設定。
-		rc.VSSetShader(m_vsDefferd);
-		rc.PSSetShader(m_psDefferd);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
-		
-		//ディファードレンダリング用のデプスステンシルステート。
-		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
-		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
-		//ポストエフェクトのフルスクリーン描画の機能を使う。
-		m_postEffect.DrawFullScreenQuad(rc);
-		
-		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
-
-		rc.OMSetDepthStencilState(depthStencil, 0);
-
-		EndGPUEvent();
-		
-	}
+	
 	bool CGraphicsEngine::Init(HWND hwnd, const SInitParam& initParam)
 	{
 		//D3Dデバイスとスワップチェインの作成。
@@ -221,7 +194,9 @@ namespace tkEngine{
 			return false;
 		}
 		//レンダリングコンテキストの初期化。
-		m_renderContext.Init(m_pImmediateContext);
+		m_renderContext.Init(m_pImmediateContext, m_pDeferredDeviceContext);
+		auto deviceContext = m_renderContext.GetD3DDeviceContext();
+
 		CRenderTarget* renderTargets[] = {
 			&m_mainRenderTarget
 		};
@@ -243,7 +218,7 @@ namespace tkEngine{
 		InitDefferdShading();
 
 		//フォント用のデータの初期化。
-		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_pImmediateContext);
+		m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(deviceContext);
 		m_spriteFont = std::make_unique<DirectX::SpriteFont>(m_pd3dDevice, L"font/myfile.spritefont");
 
 		//2Dカメラの初期化。
@@ -262,19 +237,56 @@ namespace tkEngine{
 		//エフェクトエンジンの初期化。
 		m_effectEngine.Init();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
-		m_pImmediateContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
+		deviceContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&m_userAnnoation);
 #endif
 		return true;
 
 	}
 	void CGraphicsEngine::BeginRender()
 	{
+		auto& commandList = m_commandList[m_commandListNoMainThread];
+		//作成したコマンドを実行。
+		if (commandList != nullptr) {
+			m_pImmediateContext->ExecuteCommandList(commandList, FALSE);
+			commandList->Release();
+			commandList = nullptr;
+		}
 	}
-	/*!
-	*@brief	ポストエフェクトの処理が完了したときに呼ばれる処理。
-	*@details
-	* ゲーム層では使用しないように。
-	*/
+	void CGraphicsEngine::DefferdShading(CRenderContext& rc)
+	{
+		BeginGPUEvent(L"enRenderStep_DefferdShading");
+		rc.SetRenderStep(enRenderStep_ForwardRender);
+		//ライトの情報を転送転送。
+		LightManager().Render(rc);
+		//影を落とすための情報を転送。
+		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
+		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
+		//定数バッファを更新。
+		PSDefferdCb cb;
+		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
+		rc.UpdateSubresource(m_cbDefferd, &cb);
+		//定数バッファをb0のレジスタに設定。
+		rc.PSSetConstantBuffer(0, m_cbDefferd);
+		//シェーダーを設定。
+		rc.VSSetShader(m_vsDefferd);
+		rc.PSSetShader(m_psDefferd);
+		//入力レイアウトを設定。
+		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
+
+		//ディファードレンダリング用のデプスステンシルステート。
+		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
+		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		//ポストエフェクトのフルスクリーン描画の機能を使う。
+		m_postEffect.DrawFullScreenQuad(rc);
+
+		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
+
+		rc.OMSetDepthStencilState(depthStencil, 0);
+
+		EndGPUEvent();
+
+	}
 	void CGraphicsEngine::EndPostEffect(CRenderContext& rc)
 	{
 		//バックバッファにメインレンダリングターゲットの内容をコピー。
@@ -283,23 +295,35 @@ namespace tkEngine{
 		ID3D11RenderTargetView* rts[] = {
 			m_backBufferRT
 		};
-		m_pImmediateContext->OMSetRenderTargets(1, rts, nullptr);
+		rc.OMSetRenderTargets(1, rts, nullptr);
 		rc.VSSetShader(m_copyVS);
 		rc.PSSetShader(m_copyPS);
 		//入力レイアウトを設定。
 		rc.IASetInputLayout(m_copyVS.GetInputLayout());
 		rc.PSSetShaderResource(0, m_postEffect.GetFinalRenderTarget().GetRenderTargetSRV());
 		rc.RSSetState(RasterizerState::spriteRender);
+		rc.RSSetViewport(0, 0, m_frameBufferWidth, m_frameBufferHeight);
 		//ポストエフェクトのフルスクリーン描画の機能を使う。
 		m_postEffect.DrawFullScreenQuad(rc);
 		pBackBuffer->Release();
 		rc.PSUnsetShaderResource(0);
 	}
-	void CGraphicsEngine::EndRender()
+	void CGraphicsEngine::EndRenderFromGameThread()
 	{
 		m_lightManager.EndRender(m_renderContext);
-		
-		//フラーッシュ
+		if (IsMultithreadRendering()) {
+			//コマンドリストを作成。
+			int commandListNo = 1 ^ m_commandListNoMainThread;
+			m_pDeferredDeviceContext->FinishCommandList(FALSE, &m_commandList[commandListNo]);
+		}
+	}
+
+	void CGraphicsEngine::EndRender()
+	{
 		m_pSwapChain->Present(1, 0);
+		if (IsMultithreadRendering()) {
+			//コマンドリストを入れ替える。
+			m_commandListNoMainThread = 1 ^ m_commandListNoMainThread;
+		}
 	}
 }

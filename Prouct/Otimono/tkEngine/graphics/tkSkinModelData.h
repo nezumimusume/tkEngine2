@@ -82,10 +82,18 @@ namespace tkEngine{
 		{
 			m_diffuseTex = tex;
 		}
+		void SetNormalMap(CShaderResourceView& srv)
+		{
+			SetNormalMap(srv.GetBody());
+		}
 		void SetNormalMap(ID3D11ShaderResourceView* tex)
 		{
 			m_normalMap = tex;
 			m_normalMap->AddRef();
+		}
+		void SetSpecularMap(CShaderResourceView& srv)
+		{
+			SetSpecularMap(srv.GetBody());
 		}
 		void SetSpecularMap(ID3D11ShaderResourceView* tex)
 		{

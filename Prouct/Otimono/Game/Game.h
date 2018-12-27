@@ -4,6 +4,8 @@
 #include "tkEngine/physics/tkPhysicsGhostObject.h"
 #include "tkEngine/character/tkCharacterController.h"
 
+class Player;
+
 class Game : public IGameObject
 {
 public:
@@ -57,5 +59,6 @@ private:
 	float m_restTimer = 90.0f;									//ゲームの残り時間。単位：秒。
 	EnState m_state = enState_Playing;							//ゲームのステート。
 	float m_clearEffectTimer = 0.0f;							//Clear演出タイム。
+	Player* m_player = nullptr;
 };
 

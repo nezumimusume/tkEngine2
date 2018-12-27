@@ -176,7 +176,7 @@ namespace tkEngine{
 			|| strcmp(filePath, "Assets/shader/model.fx") == 0) {
 			dwShaderFlags |= D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 			}*/
-#if BUILD_LEVEL == BUILD_LEVEL_DEBUG
+#if 1 //BUILD_LEVEL == BUILD_LEVEL_DEBUG
 			// Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
 			// Setting this flag improves the shader debugging experience, but still allows 
 			// the shaders to be optimized and to run exactly the way they will run in 

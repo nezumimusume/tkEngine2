@@ -35,6 +35,7 @@ namespace tkEngine {
 		enRenderStep_Bloom,						//!<ブルーム。
 		enRenderStep_Toonmap,					//!<トーンマップ。
 		enRenderStep_AntiAlias,					//!<アンチエイリアス。
+		enRenderStep_Dof,						//!<DOF。
 		enRenderStep_Render2DToScene,			//!<2Dをシーンに描画。
 	};
 	class CRenderContext : Noncopyable {
@@ -46,7 +47,7 @@ namespace tkEngine {
 		* @brief	初期化。
 		*@param[in]	pD3DDeviceContext	D3Dデバイスコンテキスト。開放は呼び出しもとで行ってください。
 		*/
-		void Init(ID3D11DeviceContext* pD3DDeviceContext);
+		void Init(ID3D11DeviceContext* pD3DDeviceContext, ID3D11DeviceContext* pD3DDeferredDeviceContext);
 		/*!
 		* @brief	Blendステートを設定する。
 		* @details
@@ -89,6 +90,11 @@ namespace tkEngine {
 		*@param[in]	renderTarget	バインドするレンダリングターゲットの配列へのポインタ。
 		*/
 		void OMSetRenderTargets(unsigned int NumViews, CRenderTarget* renderTarget[]);
+		void OMSetRenderTargets(unsigned int NumViews, ID3D11RenderTargetView *const *ppRenderTargetViews, ID3D11DepthStencilView *pDepthStencilView)
+		{
+			m_pD3DDeviceContext->OMSetRenderTargets(NumViews, ppRenderTargetViews, pDepthStencilView);
+			m_numRenderTargetView = NumViews;
+		}
 		/*!
 		* @brief	現在バインドされているレンダリングターゲットビューを取得。
 		*@param[out]	numViews		バインドされているレンダリングターゲットの数。
@@ -401,14 +407,14 @@ namespace tkEngine {
 		void Map(TBuffer& buffer, UINT subresource, D3D11_MAP mapType, UINT mapFlags, D3D11_MAPPED_SUBRESOURCE& mappedResource)
 		{
 			if (buffer.GetBody() != nullptr) {
-				m_pD3DDeviceContext->Map(buffer.GetBody(), subresource, mapType, mapFlags, &mappedResource);
+				m_pD3DImmidiateDeviceContext->Map(buffer.GetBody(), subresource, mapType, mapFlags, &mappedResource);
 			}
 		}
 		template<class TBuffer>
 		void Unmap(TBuffer& buffer, UINT subresource)
 		{
 			if (buffer.GetBody() != nullptr) {
-				m_pD3DDeviceContext->Unmap(buffer.GetBody(), subresource);
+				m_pD3DImmidiateDeviceContext->Unmap(buffer.GetBody(), subresource);
 			}
 		}
 		/*!
@@ -458,12 +464,21 @@ namespace tkEngine {
 				Format
 			);
 		}
+		/// <summary>
+		/// 描画コマンドの生成で使用しているデバイスコンテキストを取得する。
+		/// </summary>
+		/// <returns></returns>
+		ID3D11DeviceContext* GetD3DDeviceContext() const
+		{
+			return m_pD3DDeviceContext;
+		}
 	private:
 		ID3D11DepthStencilState*		m_currentDepthStencilState = nullptr;	//!<現在のデプスステンシルステート。
 		ID3D11RasterizerState*			m_currentRasterrizerState = nullptr;	//!<現在のラスタライザステート。
 		ID3D11BlendState*				m_currentBlendState = nullptr;			//!<現在のブレンドステート。
-		ID3D11DeviceContext*			m_pD3DDeviceContext = nullptr;	//!<D3Dデバイスコンテキスト。
-		D3D11_VIEWPORT 					m_viewport;						//!<ビューポート。
+		ID3D11DeviceContext*			m_pD3DImmidiateDeviceContext = nullptr;	//!<D3D即時デバイスコンテキスト。MapとUnmapでは即時デバイスコンテキストが必要なので、持たす。
+		ID3D11DeviceContext*			m_pD3DDeviceContext = nullptr;			//!<描画コマンドを積んでいくコンテキスト。
+		D3D11_VIEWPORT 					m_viewport;								//!<ビューポート。
 		CRenderTarget*					m_renderTargetViews[MRT_MAX] = { nullptr };
 		unsigned int 					m_numRenderTargetView = 0;		//!<レンダリングターゲットビューの数。
 		EnRenderStep					m_renderStep = enRenderStep_LightCulling;	//!<レンダリングステップ。

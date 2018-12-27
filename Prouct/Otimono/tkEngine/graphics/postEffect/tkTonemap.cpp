@@ -57,7 +57,6 @@ namespace tkEngine{
 		ZeroMemory(&multiSampleDesc, sizeof(multiSampleDesc));
 		multiSampleDesc.Count = 1;
 		multiSampleDesc.Quality = 0;
-	//	m_effect = EffectManager().LoadEffect("Assets/presetShader/tonemap.fx");
 		//平均輝度計算用のレンダリングターゲットを作成。
 		for (int i = 0; i < NUM_CALC_AVG_RT; i++)
 		{

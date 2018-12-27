@@ -12,6 +12,13 @@ namespace tkEngine{
 	 */
 	class CBlur : Noncopyable{
 	public:
+		/// <summary>
+		/// ガウシアンブラーのレンダリングステップ。
+		/// </summary>
+		enum EnRenderStep {
+			enRenderStep_XBlur,		//Xブラー。
+			enRenderStep_YBlur,		//Yブラー。
+		};
 		/*!
 		 * @brief	コンストラクタ。
 		 */
@@ -37,7 +44,7 @@ namespace tkEngine{
 		/*!
 		 * @brief	ブラーを実行。
 		 */
-		void Execute(CRenderContext& rc);
+		void Execute(CRenderContext& rc, std::function<void(CRenderContext&, EnRenderStep )> onPreDraw = nullptr );
 		/*!
 		* @brief	実行結果を格納しているSRVを取得。
 		*/
@@ -61,6 +68,7 @@ namespace tkEngine{
 		struct SBlurParam {
 			CVector4 offset;
 			float weights[NUM_WEIGHTS];
+			CVector2 uvOffset;
 		};
 		SBlurParam m_blurParam;				//!<ブラー用のパラメータ。
 		CConstantBuffer m_cbBlur;			//!<ブラー用のパラメータの定数バッファ。

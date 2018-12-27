@@ -100,10 +100,26 @@ namespace tkEngine{
 		/*!
 		*@brief	ID3D11DeviceContextの取得。
 		*/
-		ID3D11DeviceContext* GetD3DDeviceContext() const
+		ID3D11DeviceContext* GetD3DImmediateDeviceContext() const
 		{
 			return m_pImmediateContext;
 		}
+		/*!
+		*@brief	描画コマンドを積むのに使用しているID3D11DeviceContextの取得。
+		*/
+		ID3D11DeviceContext* GetD3DDeviceContext() const
+		{
+			return m_renderContext.GetD3DDeviceContext();
+		}
+		/// <summary>
+		/// マルチスレッドレンダリングを行っている？
+		/// </summary>
+		/// <returns>trueならマルチスレッドレンダリングを行っている。</returns>
+		bool IsMultithreadRendering() const
+		{
+			return m_pDeferredDeviceContext != nullptr;
+		}
+		
 		/*!
 		*@brief		フレームバッファの幅を取得。
 		*/
@@ -140,14 +156,22 @@ namespace tkEngine{
 		{
 			return m_mainRenderTarget;
 		}
-		/*!
-		* @brief	描画開始。
-		*/
+		/// <summary>
+		/// メインスレッドから呼び出す描画開始の処理。
+		/// </summary>
 		void BeginRender();
 		/*!
 		* @brief	描画終了。
 		*/
+		/// <summary>
+		/// メインスレッドから呼び出す描画終了処理。
+		/// これが1フレームの最後の描画処理になる。
+		/// </summary>
 		void EndRender();
+		/// <summary>
+		/// ゲームスレッドから呼び出す終了処理。
+		/// </summary>
+		void EndRenderFromGameThread();
 		/*!
 		* @brief	プリレンダリング取得。。
 		*/
@@ -274,6 +298,7 @@ namespace tkEngine{
 		ID3D11Device*			m_pd3dDevice = nullptr;						//!<D3D11デバイス。
 		CRenderContext			m_renderContext;							//!<レンダリングコンテキスト。
 		ID3D11DeviceContext*	m_pImmediateContext = nullptr;				//!<D3D11即時デバイスコンテキスト。
+		ID3D11DeviceContext*	m_pDeferredDeviceContext = nullptr;			//!<D3D11ディファードデバイスコンテキスト。
 		IDXGISwapChain*			m_pSwapChain = nullptr;						//!<SwapChain。
 		CRenderTarget			m_mainRenderTarget;							//!<メインレンダリングターゲット。
 		CPreRender				m_preRender;								//!<プリレンダリング。
@@ -300,6 +325,9 @@ namespace tkEngine{
 		CConstantBuffer			m_cbDefferd;								//!<ディファードシェーディング用の定数バッファ。
 		CShader					m_vsDefferd;								//!<ディファードシェーディング用の頂点シェーダー。
 		CShader					m_psDefferd;								//!<ディファードシェーディング用のピクセルシェーダー。
+		ID3D11CommandList*		m_commandList[2] = { nullptr };				//!<コマンドリスト。
+		D3D11_FEATURE_DATA_THREADING m_featureDataThreading;				//!<グラフィックドライバでサポートされているマルチスレッド機能についての情報。
+		int m_commandListNoMainThread = 0;									//!<メインスレッドでアクセスしているコマンドリストの番号。
 
 	};
 }

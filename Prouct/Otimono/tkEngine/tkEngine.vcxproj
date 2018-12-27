@@ -843,6 +843,8 @@
     <ClInclude Include="graphics\GPUView\tkUnorderedAccessView.h" />
     <ClInclude Include="graphics\postEffect\tkBloom.h" />
     <ClInclude Include="graphics\postEffect\tkDithering.h" />
+    <ClInclude Include="graphics\postEffect\tkDof.h" />
+    <ClInclude Include="graphics\postEffect\tkDofBlur.h" />
     <ClInclude Include="graphics\postEffect\tkFxaa.h" />
     <ClInclude Include="graphics\postEffect\tkPostEffect.h" />
     <ClInclude Include="graphics\postEffect\tkScreenSpaceReflection.h" />
@@ -951,6 +953,8 @@
     <ClCompile Include="graphics\GPUView\tkUnorderedAccessView.cpp" />
     <ClCompile Include="graphics\postEffect\tkBloom.cpp" />
     <ClCompile Include="graphics\postEffect\tkDithering.cpp" />
+    <ClCompile Include="graphics\postEffect\tkDof.cpp" />
+    <ClCompile Include="graphics\postEffect\tkDofBlur.cpp" />
     <ClCompile Include="graphics\postEffect\tkFxaa.cpp" />
     <ClCompile Include="graphics\postEffect\tkPostEffect.cpp" />
     <ClCompile Include="graphics\postEffect\tkScreenSpaceReflection.cpp" />

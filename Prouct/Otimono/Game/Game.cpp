@@ -62,7 +62,7 @@ bool Game::Start()
 
 	ge.GetPostEffect().GetTonemap().SetLuminance(0.42f);
 
-	NewGO< Player>(0, PLAYER_NAME);
+	m_player = NewGO< Player>(0, PLAYER_NAME);
 	NewGO< GameCamera>(0, GAME_CAMERA_NAME);
 	NewGO<StarGenerator>(0, STAR_GENERATOR_NAME);
 	NewGO< ScoreHUD>(0, SCORE_HUD);
@@ -86,6 +86,11 @@ bool Game::Start()
 
 void Game::Update()
 {
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	auto toPlayerVec = m_player->GetPosition() - MainCamera().GetPosition();
+	auto toPlayerLen = toPlayerVec.Length();
+
+	dof.SetDofRangeParam(toPlayerLen-200.0f, toPlayerLen - 100.0f, toPlayerLen + 200.0f, toPlayerLen + 500.0f);
 	m_restTimer = max(0.0f, m_restTimer - GameTime().GetFrameDeltaTime());
 	switch (m_state) {
 	case enState_Playing:

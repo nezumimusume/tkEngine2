@@ -22,6 +22,10 @@ namespace tkEngine{
 	void CPostEffect::Release()
 	{
 		m_fullscreenQuad.Release();
+		m_dof.Release();
+		m_fxaa.Release();
+		m_bloom.Release();
+		m_dithering.Release();
 	}
 	void CPostEffect::Create( const SGraphicsConfig& config )
 	{
@@ -31,6 +35,7 @@ namespace tkEngine{
 		m_bloom.Init(config);
 		m_dithering.Init(config);
 		m_ssr.Init(config);
+		m_dof.Init(config);
 		InitFullScreenQuadPrimitive();
 		InitFinalRenderTarget();
 	}
@@ -52,8 +57,9 @@ namespace tkEngine{
 			0,
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
-		m_ssr.Render(rc, this);
+		m_ssr.Render(rc, this); //todo SSRの最終合成で2.5ピクセルずれてる。なぜ？
 		m_bloom.Render(rc, this);
+		m_dof.Render(rc, this);
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);
 		//

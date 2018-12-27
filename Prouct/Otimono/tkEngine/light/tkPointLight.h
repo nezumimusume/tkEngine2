@@ -24,7 +24,7 @@ namespace tkEngine{
 			}
 			void SetPosition(const CVector3& pos);
 			
-			void SetColor(const CVector4& color);
+			void SetColor(const CVector3& color);
 			/*!
 			*@brief	減衰パラメータを設定。
 			*@param[in] attn	減衰定数。xはポイントライトの影響が届く範囲。yはポイントライトの減衰率に影響を与えます。</br>

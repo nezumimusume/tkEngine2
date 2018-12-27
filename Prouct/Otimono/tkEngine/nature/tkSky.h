@@ -122,7 +122,7 @@ namespace prefab{
 		CVector3 m_emissionColor = CVector3::Zero;				//自己発光カラー。
 		bool m_isDirty = false;									//ダーティフラグ。
 		std::wstring m_skyCubeMapFilePath = L"modelData/preset/skyCubeMap.dds";		//空のキューブマップのファイルパス。
-		std::wstring m_skyModelFilePath = L"modelData/sky.cmo";						//空のcmoファイルのファイルパス。
+		std::wstring m_skyModelFilePath = L"modelData/preset/sky.cmo";				//空のcmoファイルのファイルパス。
 	};
 }
 }

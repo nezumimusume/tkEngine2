@@ -16,6 +16,7 @@ namespace tkEngine{
 		*@param[in]		config		グラフィック設定。
 		*/
 		void Init(const SGraphicsConfig& config);
+		void Release();
 		/*!
 		 *@brief	平均輝度の計算。
 		 *@param[in]	renderContext		レンダリングコンテキスト

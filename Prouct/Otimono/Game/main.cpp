@@ -100,6 +100,8 @@ namespace {
 		initParam.graphicsConfing.ssrConfig.isEnable = true;
 		//ÉfÉBÉU
 		initParam.graphicsConfing.ditheringConfig.isEnable = true;
+		//Dof
+		initParam.graphicsConfing.dofConfig.isEnable = true;
 	}
 }
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
