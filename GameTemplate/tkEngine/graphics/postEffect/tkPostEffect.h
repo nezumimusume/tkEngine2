@@ -17,7 +17,7 @@ namespace tkEngine{
 	/*!
 	 *@brief	ポストエフェクト。
 	 */
-	class CPostEffect : Noncopyable{
+	class CPostEffect : Noncopyable {
 	public:
 		/*!
 		 *@brief	コンストラクタ。
@@ -35,7 +35,7 @@ namespace tkEngine{
 		 *@brief	作成。
 		 *@param[in]	config		コンフィグ。
 		 */
-		void Create( const SGraphicsConfig& config );
+		void Create(const SGraphicsConfig& config);
 		/*!
 		*@brief	描画。
 		*@param[in]		rc		レンダリングコンテキスト。
@@ -49,9 +49,17 @@ namespace tkEngine{
 		/*!
 		*@brief	トーンマップの取得。。
 		*/
-		CTonemap& GetTonemap() 
+		CTonemap& GetTonemap()
 		{
 			return m_tonemap;
+		}
+		/// <summary>
+		/// DofDofDof
+		/// </summary>
+		/// <returns></returns>
+		CDof& GetDof()
+		{
+			return m_dof;
 		}
 		/*!
 		* @brief	最終書き込みのレンダリングターゲットを切り替え。

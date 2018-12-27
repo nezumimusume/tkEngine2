@@ -115,7 +115,7 @@ namespace tkEngine{
 		texDesc.Height = ge.GetFrameBufferHeight();
 		texDesc.MipLevels = 1;
 		texDesc.ArraySize = 1;
-		texDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		texDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
 		texDesc.SampleDesc = msaaDesc;
 		texDesc.Usage = D3D11_USAGE_DEFAULT;
 		texDesc.CPUAccessFlags = 0;

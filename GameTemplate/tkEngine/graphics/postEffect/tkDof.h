@@ -3,6 +3,8 @@
 /// </summary>
 #pragma once
 
+#include "tkEngine/graphics/postEffect/tkDofBlur.h"
+
 namespace tkEngine {
 	class CPostEffect;
 	/// <summary>
@@ -132,7 +134,7 @@ namespace tkEngine {
 			CConstantBuffer cb;							//定数バッファ。
 		};
 		//ダウンサンプリングの回数
-		static const int NUM_DOWN_SAMPLING = 4;
+		static const int NUM_DOWN_SAMPLING = 3;
 		/// <summary>
 		/// DownSamplingCocAndColorCBのパスで使用する定数バッファの構造体。
 		/// </summary>
@@ -147,7 +149,7 @@ namespace tkEngine {
 		/// CoCの情報とシーンカラーの画像をダウンサンプリングしていく時に使用するデータ集。
 		/// </summary>
 		struct SDownSamplingCocAndColor {
-			CRenderTarget downSamplingRt[NUM_DOWN_SAMPLING];
+			CDofBlur blur;			 //todo Release関数がないぞ。						//ブラー。
 			CShader vs;
 			CShader ps;
 			CConstantBuffer cb;

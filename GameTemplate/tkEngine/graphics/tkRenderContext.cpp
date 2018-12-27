@@ -31,9 +31,11 @@ namespace tkEngine{
 
 		if (renderTarget != nullptr) {
 			memcpy(m_renderTargetViews, renderTarget, sizeof(CRenderTarget*) * NumViews);
-			depthStencilView = m_renderTargetViews[0]->GetDepthStencilView();
-			for (unsigned int i = 0; i < NumViews; i++) {
-				renderTargetViews[i] = m_renderTargetViews[i]->GetRenderTargetView();
+			if (m_renderTargetViews[0] != nullptr) {
+				depthStencilView = m_renderTargetViews[0]->GetDepthStencilView();
+				for (unsigned int i = 0; i < NumViews; i++) {
+					renderTargetViews[i] = m_renderTargetViews[i]->GetRenderTargetView();
+				}
 			}
 		}
 		m_pD3DDeviceContext->OMSetRenderTargets(NumViews, renderTargetViews, depthStencilView);
