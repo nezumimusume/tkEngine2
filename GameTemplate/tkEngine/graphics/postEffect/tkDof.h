@@ -134,7 +134,7 @@ namespace tkEngine {
 			CConstantBuffer cb;							//定数バッファ。
 		};
 		//ダウンサンプリングの回数
-		static const int NUM_DOWN_SAMPLING = 3;
+		static const int NUM_DOWN_SAMPLING = 2;
 		/// <summary>
 		/// DownSamplingCocAndColorCBのパスで使用する定数バッファの構造体。
 		/// </summary>
@@ -149,7 +149,7 @@ namespace tkEngine {
 		/// CoCの情報とシーンカラーの画像をダウンサンプリングしていく時に使用するデータ集。
 		/// </summary>
 		struct SDownSamplingCocAndColor {
-			CDofBlur blur;			 //todo Release関数がないぞ。						//ブラー。
+			CDofBlur blur[NUM_DOWN_SAMPLING];		 //todo Release関数がないぞ。						//ブラー。
 			CShader vs;
 			CShader ps;
 			CConstantBuffer cb;

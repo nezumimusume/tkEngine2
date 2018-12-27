@@ -108,18 +108,16 @@ namespace tkEngine {
 			DXGI_FORMAT_UNKNOWN,
 			multiSampleDesc
 		);
-		//マスク作成用のレンダリングターゲットを作成する。
-		m_createDofMaskAndCalcCocParam.dofMaskRt.Create(
-			ge.GetFrameBufferWidth(),
-			ge.GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R8_UNORM,
-			DXGI_FORMAT_UNKNOWN,
-			multiSampleDesc
-		);
+		
 		//ガウシアーン。
-		m_downSampligCocAndColorParam.blur.Init(m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV(), 200.0f);
+		m_downSampligCocAndColorParam.blur[0].Init(
+			m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
+			5.0f
+		);
+		m_downSampligCocAndColorParam.blur[1].Init(
+			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
+			5.0f
+		);
 	}
 	void CDof::InitBlendStates()
 	{
@@ -197,7 +195,9 @@ namespace tkEngine {
 
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
 		rc.PSSetShaderResource(1, m_createDofMaskAndCalcCocParam.dofMaskRt.GetRenderTargetSRV());
-		m_downSampligCocAndColorParam.blur.Execute(rc);
+		for (auto& blur : m_downSampligCocAndColorParam.blur) {
+			blur.Execute(rc);
+		}
 
 		ge.EndGPUEvent();
 	}
@@ -214,7 +214,8 @@ namespace tkEngine {
 		rc.PSSetShader(m_finalParam.ps);
 		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, m_createDofMaskAndCalcCocParam.dofMaskRt.GetRenderTargetSRV());
-		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur.GetResultSRV());
+		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur[0].GetResultSRV());
+		rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
 
 		rc.PSSetSampler(0, *m_finalParam.pointSamplerState);
 		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);

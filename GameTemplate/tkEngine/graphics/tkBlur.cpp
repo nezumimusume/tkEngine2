@@ -137,6 +137,7 @@ namespace tkEngine{
 			};
 			m_blurParam.offset.x = 16.0f / m_srcTextureWidth;
 			m_blurParam.offset.y = 0.0f;
+		
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
 			rc.OMSetRenderTargets(1, rts);
 			rc.ClearRenderTargetView(0, clearColor);
@@ -157,6 +158,7 @@ namespace tkEngine{
 			};
 			m_blurParam.offset.x = 0.0f;
 			m_blurParam.offset.y = 16.0f / m_srcTextureHeight;
+			
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
 			rc.OMSetRenderTargets(1, rts);
 			rc.ClearRenderTargetView(0, clearColor);
