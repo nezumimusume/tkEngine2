@@ -44,6 +44,16 @@ namespace tkEngine{
 			m_skinModels.push_back(skinModel);
 		}
 		/*!
+		*@brief	スキンモデルを除去。
+		*/
+		void RemoveSkinModel(CSkinModel* skinModel)
+		{
+			auto it = std::find(m_skinModels.begin(), m_skinModels.end(), skinModel);
+			if (it != m_skinModels.end() ){
+				m_skinModels.erase(it);
+			}
+		}
+		/*!
 		 * @brief	描画。
 		 */
 		void Render(CRenderContext& rc);

@@ -15,7 +15,7 @@ bool GameCamera::Start()
 	//プレイヤーのインスタンスを探す。
 	m_player = FindGO<Player>("Player");
 	//カメラのニアクリップとファークリップを設定する。
-	MainCamera().SetNear(1.0f);
+	MainCamera().SetNear(5.0f);
 	MainCamera().SetFar(20000.0f);
 	MainCamera().SetTarget({ 0.0f, 50.0f, 0.0f });
 	MainCamera().SetPosition({ 0.0f, 300.0f, 300.0f });
@@ -82,9 +82,7 @@ void GameCamera::Update()
 	m_springCamera.SetTarget(target);
 	m_springCamera.SetPosition(pos);
 	m_springCamera.Update();
-	//被写界深度をほげほげ
-	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
-	dof.SetDofRangeParam(0.0f, 200.0f, 500.0f, 5000.0f);
+
 }
 void GameCamera::NotifyGameOver()
 {

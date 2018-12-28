@@ -46,6 +46,17 @@ namespace tkEngine{
 		* @brief	シャドウキャスターをエントリー。
 		*/
 		void Entry(IShadowCaster* caster);
+		/// <summary>
+		/// シャドウキャスターをリストから削除。
+		/// </summary>
+		void Remove(IShadowCaster* caster)
+		{
+			auto it = std::find(m_shadowCaster.begin(), m_shadowCaster.end(), caster);
+			if (it != m_shadowCaster.end()) {
+				//見つけたので削除。
+				m_shadowCaster.erase(it);
+			}
+		}
 		/*!
 		 *@brief	ライトの方向を設定。
 		 */

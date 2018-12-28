@@ -29,6 +29,13 @@ namespace prefab{
 			m_animation.Init(m_skinModel, m_animationClips, m_numAnimationClips);
 		}
 	}
+	void CSkinModelRender::OnDestroy()
+	{
+		auto& shadowMap = GraphicsEngine().GetShadowMap();
+		shadowMap.Remove(&m_skinModel.GetShadowCaster());
+		auto& gBuffer = GraphicsEngine().GetGBufferRender();
+		gBuffer.RemoveSkinModel(&m_skinModel);
+	}
 	/*!
 	 * @brief	更新前に呼ばれる関数。
 	 */

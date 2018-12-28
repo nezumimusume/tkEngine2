@@ -237,6 +237,14 @@ namespace tkEngine{
 		{
 			m_emissionColor = color;
 		}
+		/// <summary>
+		/// シャドウキャスターを取得。
+		/// </summary>
+		/// <returns>シャドウキャスターの参照</returns>
+		CShadowCaster_SkinModel& GetShadowCaster()
+		{
+			return m_shadowCaster;
+		}
 	private:
 		/*!
 		*@brief バウンディングボックスの初期化。

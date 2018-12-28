@@ -39,7 +39,11 @@ bool Background::Start()
 
 	pd3d->CreateRasterizerState(&desc, &m_rasterizerState);
 
-
+	//SSR‚ÍƒAƒ‹ƒSƒŠƒYƒ€‚ðŒ©’¼‚·I
+/*	m_specMap.CreateFromDDSTextureFromFile(L"modelData/Park-Texture_specMap.dds");
+	m_modelRender->FindMaterial([&](CModelEffect* mat) {
+		mat->SetSpecularMap(m_specMap.GetBody());
+	});*/
 	return true;
 }
 void Background::OnDestroy()

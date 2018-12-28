@@ -108,11 +108,11 @@ namespace tkEngine {
 		//ガウシアーン。
 		m_downSampligCocAndColorParam.blur[0].Init(
 			m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
-			5.0f
+			2.5f
 		);
 		m_downSampligCocAndColorParam.blur[1].Init(
 			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
-			5.0f
+			2.5f
 		);
 	}
 	void CDof::InitBlendStates()

@@ -129,7 +129,6 @@ bool Game::Start()
 	
 	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
 	dof.Disable();
-
 	m_fade->StartFadeIn();
 	m_state = enState_FadeIn;
 	return true;
@@ -220,7 +219,7 @@ void Game::Update()
 	auto toTargetVec = MainCamera().GetTarget() - MainCamera().GetPosition();
 	auto toTargetLen = toTargetVec.Length();
 	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
-	dof.SetDofRangeParam(toTargetLen * 0.3f, toTargetLen * 0.5f, toTargetLen * 1.2f, toTargetLen * 5.0f);
+	dof.SetDofRangeParam(toTargetLen * 0.3f, toTargetLen * 0.5f, toTargetLen, toTargetLen * 1.5f);
 
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 	CQuaternion qRot;

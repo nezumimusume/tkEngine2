@@ -96,4 +96,9 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\Park-Texture_specMap.tga">
+      <Filter>Assets\modelData</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

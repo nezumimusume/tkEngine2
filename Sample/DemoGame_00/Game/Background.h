@@ -12,7 +12,7 @@ public:
 	void OnDestroy() override;
 private:
 	prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラ。
-	
+	CShaderResourceView m_specMap;		//スペキュラマップ。
 	CRigidBody		m_rigidBody;		//!<剛体。
 	CMeshCollider	m_meshCollider;		//!<メッシュコライダー。
 	ID3D11RasterizerState* m_rasterizerState = nullptr;	//!<ラスタライザステート。

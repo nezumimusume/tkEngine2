@@ -48,6 +48,7 @@ void PlayerSilhouette::Update()
 void PlayerSilhouette::ForwardRender(CRenderContext& rc)
 {
 	return;
+#if 0
 	auto model = &m_player->GetModel();
 	rc.OMSetDepthStencilState(m_depthStencilState, 0);
 	//シルエット描画用のシェーダーに差し替える。
@@ -61,4 +62,5 @@ void PlayerSilhouette::ForwardRender(CRenderContext& rc)
 	model->FindMaterial([&](CModelEffect* effect) {
 		effect->SetRender3DModelDefaultShader();
 	});
+#endif
 }
