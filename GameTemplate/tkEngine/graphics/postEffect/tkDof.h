@@ -69,6 +69,27 @@ namespace tkEngine {
 			m_farStartDistance = std::max<float>(m_nearEndDistance + 0.001f, farStartDistance);
 			m_farEndDistance = std::max<float>(m_farStartDistance + 0.001f, farEndDistance);
 		}
+		void GetDofRangeParam(float& nearStartDistance, float& nearEndDistance, float& farStartDistance, float& farEndDistance)
+		{
+			nearStartDistance = m_nearStartDistance;
+			nearEndDistance = m_nearEndDistance;
+			farStartDistance = m_farStartDistance;
+			farEndDistance = m_farEndDistance;
+		}
+		/// <summary>
+		/// DoFを有効にする。
+		/// </summary>
+		void Enable()
+		{
+			m_isEnable = true;
+		}
+		/// <summary>
+		/// DoFを無効にする。
+		/// </summary>
+		void Disable()
+		{
+			m_isEnable = false;
+		}
 	private:
 		/// <summary>
 		/// ピクセル単位のDofマスクの作成とCocの計算を行う描画パス。
@@ -106,6 +127,7 @@ namespace tkEngine {
 		/// ブレンディングステートを初期化する。
 		/// </summary>
 		void InitBlendStates();
+		
 	private:
 		/// <summary>
 		/// CreateDofMaskAndCalcCocのパスで使用する定数バッファの構造体。

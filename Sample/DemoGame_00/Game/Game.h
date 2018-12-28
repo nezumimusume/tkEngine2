@@ -78,6 +78,7 @@ private:
 		enState_FadeIn,	//!<フェードイン中。
 		enState_InGame,	//!<インゲーム中。
 	};
+	prefab::CSky* m_sky = nullptr;					//!<空。
 	Player*	m_player = nullptr;						//!<プレイヤー
 	std::vector<Enemy*> m_enemyList;				//!<エネミーのリスト。
 	Background* m_background = nullptr;

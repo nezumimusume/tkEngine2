@@ -18,6 +18,8 @@ GameOverControl::~GameOverControl()
 void GameOverControl::OnDestroy()
 {
 	DeleteGO(m_gameOverCamera);
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.Disable();
 }
 bool GameOverControl::Start()
 {
@@ -31,6 +33,8 @@ bool GameOverControl::Start()
 		m_gameOverCamera = NewGO<GameOverCamera>(0, "GameOverCamera");
 		m_gameOverCamera->Init(*FindGO<Player>("Player"), *enemy);
 	}
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.Enable();
 	return true;
 }
 void GameOverControl::Update()

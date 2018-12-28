@@ -9,6 +9,8 @@ GameClearCamera::GameClearCamera()
 
 GameClearCamera::~GameClearCamera()
 {
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.Disable();
 }
 
 bool GameClearCamera::Start()
@@ -23,6 +25,9 @@ bool GameClearCamera::Start()
 	pos.y += 100.0f;
 	m_springCamera.SetTarget(target);
 	m_springCamera.SetPosition(pos);
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.Enable();
+
 	return true;
 }
 void GameClearCamera::Update()

@@ -63,14 +63,6 @@ void Game::InitSceneLight()
 }
 bool Game::Start()
 {
-	//カメラを設定。
-	MainCamera().SetTarget({ 0.0f, 50.0f, 0.0f });
-	MainCamera().SetPosition({ 0.0f, 300.0f, 300.0f });
-	MainCamera().SetNear(1.0f);
-	MainCamera().SetFar(10000.0f);
-	MainCamera().Update();
-
-	
 	m_background = NewGO<Background>(0, nullptr);
 	m_gameCamera = NewGO<GameCamera>(0, "GameCamera");
 	//シーンライトを初期化。
@@ -121,7 +113,9 @@ bool Game::Start()
 	m_bgmSource = NewGO<prefab::CSoundSource>(0, nullptr);
 	m_bgmSource->Init(L"sound/normalBGM.wav");
 	
-	
+	m_sky = NewGO<prefab::CSky>(0);
+	m_sky->SetScale(8000.0f);
+	m_sky->SetPosition({ 0.0f, -3000.0f, 0.0f });
 	//タイマー用のフォントを初期化。
 	m_timerFont = std::make_unique<DirectX::SpriteFont>(
 		GraphicsEngine().GetD3DDevice(),
@@ -133,6 +127,9 @@ bool Game::Start()
 	m_scoreFontPosition.x = -620.0f ;
 	m_scoreFontPosition.y = 280.0f;
 	
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.Disable();
+
 	m_fade->StartFadeIn();
 	m_state = enState_FadeIn;
 	return true;
@@ -155,6 +152,7 @@ void Game::OnDestroy()
 	});
 	DeleteGO(m_gameClearControl);
 	DeleteGO(m_playerSilhouette);
+	DeleteGO(m_sky);
 	//ゲーム再起動。
 	NewGO<Game>(0, "Game");
 	
@@ -217,6 +215,13 @@ void Game::Update()
 		}
 	}break;
 	}
+
+	//被写界深度をほげほげ
+	auto toTargetVec = MainCamera().GetTarget() - MainCamera().GetPosition();
+	auto toTargetLen = toTargetVec.Length();
+	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
+	dof.SetDofRangeParam(toTargetLen * 0.3f, toTargetLen * 0.5f, toTargetLen * 1.2f, toTargetLen * 5.0f);
+
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 	CQuaternion qRot;
 	qRot.SetRotation(CVector3::AxisY, Pad(0).GetRStickXF() * 0.05f);

@@ -16,10 +16,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	SInitParam initParam;
 	initParam.nCmdShow = nCmdShow;
 	initParam.hInstance = hInstance;
-	initParam.screenWidth = 1280;
-	initParam.screenHeight = 720;
-	initParam.frameBufferWidth = 1280;
-	initParam.frameBufferHeight = 720;
+	initParam.screenWidth = 1920;
+	initParam.screenHeight = 1080;
+	initParam.frameBufferWidth = 1920;
+	initParam.frameBufferHeight = 1080;
 	//影の設定。
 	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
@@ -35,9 +35,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = true;
-	initParam.graphicsConfing.tonemapConfig.luminance = 0.34f;
-	//ディザリング。
+	//SSR
+	initParam.graphicsConfing.ssrConfig.isEnable = true;
+	//ディザ
 	initParam.graphicsConfing.ditheringConfig.isEnable = true;
+	//Dof
+	initParam.graphicsConfing.dofConfig.isEnable = true;
 
 	MainCamera().SetNear(100.0f);
 	MainCamera().SetFar(10000.0f);

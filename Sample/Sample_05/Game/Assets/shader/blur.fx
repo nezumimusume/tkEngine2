@@ -33,7 +33,7 @@ cbuffer CBBlur : register(b0)
 {
 	float4 offset;		//!<オフセット。
 	float4 weight[2];	//!<重み。
-	
+	float2 uvOffset;	//!<uvのオフセット。
 };
 /*!
  * @brief	Xブラー頂点シェーダー。
@@ -45,8 +45,7 @@ PS_BlurInput VSXBlur(VSInput In)
 	blurTexture.GetDimensions( 0, texSize.x, texSize.y, level );
 	PS_BlurInput Out;
 	Out.pos = In.pos;
-	float2 tex = In.uv;
-	tex += float2( -0.5/texSize.x, -0.5/texSize.y);
+	float2 tex = In.uv + uvOffset;
 	Out.tex0 = tex + float2( - 1.0f/texSize.x, 0.0f );
     Out.tex1 = tex + float2( - 3.0f/texSize.x, 0.0f );
     Out.tex2 = tex + float2( - 5.0f/texSize.x, 0.0f );
@@ -68,8 +67,7 @@ PS_BlurInput VSYBlur(VSInput In)
 	blurTexture.GetDimensions( 0, texSize.x, texSize.y, level );
 	PS_BlurInput Out;
 	Out.pos = In.pos;
-	float2 tex = In.uv;
-	tex += float2( -0.5/texSize.x, -0.5/texSize.y);
+	float2 tex = In.uv + uvOffset;
 	Out.tex0 = tex + float2( 0.0f,- 1.0f/texSize.y  );
     Out.tex1 = tex + float2( 0.0f,- 3.0f/texSize.y  );
     Out.tex2 = tex + float2( 0.0f,- 5.0f/texSize.y  );

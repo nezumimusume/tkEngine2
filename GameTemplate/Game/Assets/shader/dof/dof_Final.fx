@@ -8,7 +8,7 @@ Texture2D<float4> cocTexture : register(t0);	//CoCが書き込まれたテクスチャ
 Texture2D<float4> bokeTexture_0 : register(t1);	//ボケテクスチャ　レベル０。
 Texture2D<float4> bokeTexture_1 : register(t2);	//ボケテクスチャ　レベル１。
 
-sampler bilinearSampler : register(s01);			//バイリニアサンプリングを行うサンプラ。
+sampler bilinearSampler : register(s0);			//バイリニアサンプリングを行うサンプラ。
 
 /*!
  *@brief	ピクセルシェーダーへの入力。

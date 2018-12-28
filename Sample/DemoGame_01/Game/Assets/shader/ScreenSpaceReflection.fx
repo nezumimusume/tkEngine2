@@ -106,7 +106,8 @@ float4 PSFinal(PSInput In) : SV_Target0
 {
 	//反射カラーの平均をとる。
 	float4 reflectColor = reflectTexture.Sample(Sampler, In.uv);
-	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv);
+	//ピクセルずれてるので、微調整・・・。あとで治したいな。
+	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv + float2( -1.5f / 1920.0f, -0.5f / 1080.0f));
 	//映り込みあり。
 	float spec = min( 1.0f, specTexture.Sample(Sampler, In.uv).r );
 	//spec *= all(max(0.0f, length(reflectColor.xyz)-0.1f));

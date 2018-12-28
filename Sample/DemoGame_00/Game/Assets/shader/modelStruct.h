@@ -56,7 +56,7 @@ struct PSOutput_RenderGBuffer{
 	float3 normal		: SV_Target1;		//法線。
 	float2 spacular		: SV_Target2;		//スペキュラ。
 	float shadow		: SV_Target3;		//シャドウ。
-	float depth			: SV_Target4;		//深度値。
+	float2 depth		: SV_Target4;		//深度値。
 	float3 tangent		: SV_Target5;		//接ベクトル。
 	float materialID	: SV_Target6;		//マテリアルID。
 	float3 emissionColor : SV_Target7;		//自己発光色。
