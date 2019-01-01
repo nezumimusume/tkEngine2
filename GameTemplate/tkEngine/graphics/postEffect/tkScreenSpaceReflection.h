@@ -39,6 +39,7 @@ namespace tkEngine{
 			CMatrix mViewProj;				//!<ビュープロジェクション行列。
 			CMatrix mViewProjInvLastFrame;	//!<1フレーム前のビュープロジェクション行列の逆行列。
 			CVector4 cameraPos;				//!<カメラの視点。
+			CVector4 renderTargteSize;		//!<レンダリングターゲットのサイズ。
 			float rayMarchStepRate;			//!<レイマーチのステップレート。
 		};
 		bool m_isEnable = false;					//!<有効。

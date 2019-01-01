@@ -65,6 +65,8 @@ namespace tkEngine {
 		cb.mViewProj = MainCamera().GetViewProjectionMatrix();
 		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
 		cb.mViewProjInvLastFrame = m_viewProjInvLastFrame;
+		cb.renderTargteSize.x = GraphicsEngine().GetFrameBufferWidth();
+		cb.renderTargteSize.y = GraphicsEngine().GetFrameBufferHeight();
 		cb.rayMarchStepRate = (float)(m_mt()%1000000)/1000000.0f;
 		rc.UpdateSubresource(m_cb, &cb);
 		rc.PSSetConstantBuffer(0, m_cb);
@@ -105,6 +107,7 @@ namespace tkEngine {
 				static_cast<float>(renderTargets[0]->GetWidth()), 
 				static_cast<float>(renderTargets[0]->GetHeight())
 			);
+			rc.PSSetConstantBuffer(0, m_cb);
 			rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_blur.GetResultSRV());
 			/*for (int i = 0; i < NUM_CALC_AVG_RT; i++) {
