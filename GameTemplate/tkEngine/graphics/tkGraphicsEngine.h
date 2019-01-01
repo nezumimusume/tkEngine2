@@ -328,6 +328,6 @@ namespace tkEngine{
 		ID3D11CommandList*		m_commandList[2] = { nullptr };				//!<コマンドリスト。
 		D3D11_FEATURE_DATA_THREADING m_featureDataThreading;				//!<グラフィックドライバでサポートされているマルチスレッド機能についての情報。
 		int m_commandListNoMainThread = 0;									//!<メインスレッドでアクセスしているコマンドリストの番号。
-
+		CConstantBuffer m_cb;
 	};
 }

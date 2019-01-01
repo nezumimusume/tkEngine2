@@ -128,7 +128,7 @@ namespace tkEngine {
 		void RSSetState(ID3D11RasterizerState *pRasterizerState)
 		{
 			m_currentRasterrizerState = pRasterizerState;
-			m_pD3DDeviceContext->RSSetState(pRasterizerState);
+			m_pD3DDeviceContext->RSSetState(pRasterizerState);	
 		}
 		/*!
 		*@brief	現在のラスタライザステートを取得。

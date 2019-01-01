@@ -149,14 +149,10 @@ namespace tkEngine{
 		//輝度抽出。
 		{
 			ge.BeginGPUEvent(L"enRenderStep_Bloom::Luminance");
-			CRenderTarget* rts[] = {
-				&m_luminanceRT
-			};
 			
-			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
-			
+			CChangeRenderTarget rtChange(rc, m_luminanceRT);
 
-			rc.OMSetRenderTargets(1, rts);
+			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.PSSetShaderResource(0, finalRT.GetRenderTargetSRV());
 			rc.VSSetShader(m_vsShader);
@@ -175,18 +171,15 @@ namespace tkEngine{
 			for (int i = 0; i < NUM_DOWN_SAMPLING_RT / 2; i++) {
 				//XBlur
 				{
-					CRenderTarget* rts[] = {
-						&m_downSamplingRT[rtIndex]
-					};
+					CChangeRenderTarget rtChange(rc, m_downSamplingRT[rtIndex]);
+					
 					m_blurParam.offset.x = 16.0f / prevRt->GetWidth();
 					m_blurParam.offset.y = 0.0f;
 					rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-					rc.OMSetRenderTargets(1, rts);
 					rc.ClearRenderTargetView(0, clearColor);
 					rc.VSSetShaderResource(0, prevRt->GetRenderTargetSRV());
 					rc.PSSetShaderResource(0, prevRt->GetRenderTargetSRV());
 					rc.PSSetConstantBuffer(0, m_cbBlur);
-					rc.RSSetViewport(0.0f, 0.0f, (float)m_downSamplingRT[rtIndex].GetWidth(), (float)m_downSamplingRT[rtIndex].GetHeight());
 					rc.VSSetShader(m_vsXBlur);
 					rc.PSSetShader(m_psBlur);
 					postEffect->DrawFullScreenQuad(rc);
@@ -196,18 +189,14 @@ namespace tkEngine{
 				rtIndex++;
 				//YBlur
 				{
-					CRenderTarget* rts[] = {
-						&m_downSamplingRT[rtIndex]
-					};
+					CChangeRenderTarget rtChange(rc, m_downSamplingRT[rtIndex]);
 					m_blurParam.offset.x = 0.0f;
 					m_blurParam.offset.y = 16.0f / prevRt->GetWidth();
 					rc.UpdateSubresource(m_cbBlur, &m_blurParam);
 					rc.PSSetConstantBuffer(0, m_cbBlur);
-					rc.OMSetRenderTargets(1, rts);
 					rc.ClearRenderTargetView(0, clearColor);
 					rc.VSSetShaderResource(0, prevRt->GetRenderTargetSRV());
 					rc.PSSetShaderResource(0, prevRt->GetRenderTargetSRV());
-					rc.RSSetViewport(0.0f, 0.0f, (float)m_downSamplingRT[rtIndex].GetWidth(), (float)m_downSamplingRT[rtIndex].GetHeight());
 					rc.VSSetShader(m_vsYBlur);
 					rc.PSSetShader(m_psBlur);
 					postEffect->DrawFullScreenQuad(rc);
@@ -226,8 +215,8 @@ namespace tkEngine{
 			//
 			rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 
-			rc.RSSetViewport(0.0f, 0.0f, (float)m_combineRT.GetWidth(), (float)m_combineRT.GetHeight());
-			rc.OMSetRenderTargets(1, rts);
+			CChangeRenderTarget rtChange(rc, m_combineRT);
+			
 			rc.ClearRenderTargetView(0, clearColor);
 
 			rc.PSSetShaderResource(0, m_downSamplingRT[3].GetRenderTargetSRV());
@@ -239,13 +228,8 @@ namespace tkEngine{
 			postEffect->DrawFullScreenQuad(rc);
 		}
 		//最終合成。
-		{
-			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
-			CRenderTarget* rts[] = {
-				&finalRT
-			};
-			rc.RSSetViewport(0.0f, 0.0f, (float)finalRT.GetWidth(), (float)finalRT.GetHeight());
-			rc.OMSetRenderTargets(1, rts);
+		{		
+			CChangeRenderTarget rtChange(rc, postEffect->GetFinalRenderTarget());
 			// アルファブレンディングを加算合成にする。
 			rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
 			

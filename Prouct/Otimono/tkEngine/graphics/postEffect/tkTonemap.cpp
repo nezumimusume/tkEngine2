@@ -132,11 +132,8 @@ namespace tkEngine{
 		{
 			ge.BeginGPUEvent(L"CTonemap::CalcLuminanceLogAvarage");
 			
-			CRenderTarget* rts[] = {
-				&m_calcAvgRT[curRtNo]
-			};
-			rc.OMSetRenderTargets(1, rts);
-			rc.RSSetViewport(0.0f, 0.0f, (float)m_calcAvgRT[curRtNo].GetWidth(), (float)m_calcAvgRT[curRtNo].GetHeight());
+			CChangeRenderTarget changeRt(rc, m_calcAvgRT[curRtNo]);
+			
 			rc.IASetInputLayout(m_vsShader.GetInputLayout());
 			rc.UpdateSubresource(m_cbCalcLuminanceLog, m_avSampleOffsets);
 			rc.PSSetConstantBuffer(0, m_cbCalcLuminanceLog);
@@ -152,11 +149,7 @@ namespace tkEngine{
 		{
 			ge.BeginGPUEvent(L"CTonemap::CalcLuminanceAvarage");
 			while (curRtNo > 0) {
-				CRenderTarget* rts[] = {
-					&m_calcAvgRT[curRtNo]
-				};
-				rc.OMSetRenderTargets(1, rts);
-				rc.RSSetViewport(0.0f, 0.0f, (float)m_calcAvgRT[curRtNo].GetWidth(), (float)m_calcAvgRT[curRtNo].GetHeight());
+				CChangeRenderTarget changeRt(rc, m_calcAvgRT[curRtNo]);
 				GetSampleOffsets_DownScale4x4(m_calcAvgRT[curRtNo].GetWidth(), m_calcAvgRT[curRtNo].GetHeight(), m_avSampleOffsets);
 				rc.UpdateSubresource(m_cbCalcLuminanceLog, m_avSampleOffsets);
 				rc.PSSetConstantBuffer(0, m_cbCalcLuminanceLog);
@@ -168,14 +161,11 @@ namespace tkEngine{
 			ge.EndGPUEvent();
 		}
 		//exp関数を用いて最終平均を求める。
-		CRenderTarget* rts[] = {
-			&m_calcAvgRT[curRtNo]
-		};
-		rc.OMSetRenderTargets(1, rts);
+		
 		GetSampleOffsets_DownScale4x4(m_calcAvgRT[curRtNo].GetWidth(), m_calcAvgRT[curRtNo].GetHeight(), m_avSampleOffsets);
 		{
+			CChangeRenderTarget changeRt(rc, m_calcAvgRT[curRtNo]);
 			ge.BeginGPUEvent(L"CTonemap::CalcLuminanceExpAvarage");
-			rc.RSSetViewport(0.0f, 0.0f, (float)m_calcAvgRT[curRtNo].GetWidth(), (float)m_calcAvgRT[curRtNo].GetHeight());
 			rc.UpdateSubresource(m_cbCalcLuminanceLog, m_avSampleOffsets);
 			rc.PSSetConstantBuffer(0, m_cbCalcLuminanceLog);
 			rc.PSSetShaderResource(0, m_calcAvgRT[curRtNo + 1].GetRenderTargetSRV());	
@@ -189,11 +179,8 @@ namespace tkEngine{
 			if (m_isFirstWhenChangeScene == true) {
 				//シーンが切り替わって初回。
 				m_currentAvgRT = 1 ^ m_currentAvgRT;
-				CRenderTarget* rts[] = {
-					&m_avgRT[m_currentAvgRT]
-				};
-				rc.RSSetViewport(0.0f, 0.0f, (float)m_avgRT[m_currentAvgRT].GetWidth(), (float)m_avgRT[m_currentAvgRT].GetHeight());
-				rc.OMSetRenderTargets(1, rts);
+
+				CChangeRenderTarget changeRt(rc, m_avgRT[m_currentAvgRT]);
 				rc.PSSetShaderResource(1, m_calcAvgRT[0].GetRenderTargetSRV());
 				rc.PSSetShader(m_psCalcAdaptedLuminanceFirstShader);
 				postEffect->DrawFullScreenQuad(rc);
@@ -203,11 +190,8 @@ namespace tkEngine{
 					
 				CRenderTarget& lastRT = m_avgRT[m_currentAvgRT];
 				m_currentAvgRT = 1 ^ m_currentAvgRT;
-				CRenderTarget* rts[] = {
-					&m_avgRT[m_currentAvgRT]
-				};
-				rc.OMSetRenderTargets(1, rts);
-				rc.RSSetViewport(0.0f, 0.0f, (float)m_avgRT[m_currentAvgRT].GetWidth(), (float)m_avgRT[m_currentAvgRT].GetHeight());
+				CChangeRenderTarget changeRt(rc, m_avgRT[m_currentAvgRT]);
+			
 				float deltaTime = GameTime().GetFrameDeltaTime();
 				rc.PSSetShaderResource(1, m_calcAvgRT[0].GetRenderTargetSRV());
 				rc.PSSetShaderResource(2, lastRT.GetRenderTargetSRV());
@@ -237,12 +221,8 @@ namespace tkEngine{
 		
 		CShaderResourceView& sceneSRV = GraphicsEngine().GetMainRenderTarget().GetRenderTargetSRV();
 		
-		CRenderTarget& rt = GraphicsEngine().GetMainRenderTarget();
-		CRenderTarget* rts[] = {
-			&rt
-		};
-		rc.RSSetViewport(0.0f, 0.0f, (float)rt.GetWidth(), (float)rt.GetHeight());
-		rc.OMSetRenderTargets(1, rts);
+		CChangeRenderTarget changeRt(rc, GraphicsEngine().GetMainRenderTarget());
+		
 		rc.PSSetShaderResource(0, sceneSRV);
 		rc.PSSetShaderResource(1, m_avgRT[m_currentAvgRT].GetRenderTargetSRV());
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);

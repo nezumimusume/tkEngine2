@@ -19,6 +19,8 @@ cbuffer cb : register(b0){
 	float4x4 mViewProj;					//ビュープロジェクション行列。
 	float4x4 mViewProjInvLastFrame;		//1フレーム前のビュープロジェクション行列。
 	float4 cameraPosInWorld;	//ワールド座標系でのカメラの視点。
+	float4 renderTargetSize;	//レンダリングターゲットのサイズ。PSFinalでしか使用できません。
+								//ほかの箇所で使いたいなら、cpp側の対応が必要です。
 	float rayMarchStepRate;		//レイマーチのステップレート。。
 };
 
@@ -106,8 +108,8 @@ float4 PSFinal(PSInput In) : SV_Target0
 {
 	//反射カラーの平均をとる。
 	float4 reflectColor = reflectTexture.Sample(Sampler, In.uv);
-	//ピクセルずれてるので、微調整・・・。あとで治したいな。
-	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv + float2( -1.5f / 1920.0f, -0.5f / 1080.0f));
+	//ピクセルずれてるので、微調整・・・。不具合なので、あとで治すように。
+	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv + float2( -1.5f / renderTargetSize.x, -0.5f / renderTargetSize.y));
 	//映り込みあり。
 	float spec = min( 1.0f, specTexture.Sample(Sampler, In.uv).r );
 	//spec *= all(max(0.0f, length(reflectColor.xyz)-0.1f));

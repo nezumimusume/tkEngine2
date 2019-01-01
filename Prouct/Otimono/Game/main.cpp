@@ -67,6 +67,8 @@ namespace {
 		initParam.graphicsConfing.tonemapConfig.isEnable = true;
 		//SSR
 		initParam.graphicsConfing.ssrConfig.isEnable = true;
+		//DOF
+		initParam.graphicsConfing.dofConfig.isEnable = true;
 		//ディザ
 		initParam.graphicsConfing.ditheringConfig.isEnable = false;
 	}
@@ -99,7 +101,7 @@ namespace {
 		//SSR
 		initParam.graphicsConfing.ssrConfig.isEnable = true;
 		//ディザ
-		initParam.graphicsConfing.ditheringConfig.isEnable = true;
+		initParam.graphicsConfing.ditheringConfig.isEnable = false;
 		//Dof
 		initParam.graphicsConfing.dofConfig.isEnable = true;
 	}

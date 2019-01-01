@@ -46,18 +46,14 @@ namespace tkEngine{
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		//レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
-		auto& finalRt = postEffect->GetFinalRenderTarget();
-		CRenderTarget* renderTargets[] = {
-			&finalRt
-		};
+		CChangeRenderTarget changeRt(rc, postEffect->GetFinalRenderTarget());
+
 		rc.PSSetSampler(0, m_samplerState);
-		rc.OMSetRenderTargets(1, renderTargets);
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShader(m_psShader);
 		rc.VSSetShader(m_vsShader);
 		//入力レイアウトを設定。
 		rc.IASetInputLayout(m_vsShader.GetInputLayout());
-		rc.RSSetViewport(0.0f, 0.0f, finalRt.GetWidth(), finalRt.GetHeight());
 		
 		postEffect->DrawFullScreenQuad(rc);
 

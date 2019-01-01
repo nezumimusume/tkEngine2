@@ -119,6 +119,7 @@ namespace tkEngine{
 		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		m_samplerState.Create(desc);
 
+		m_cb.Create(nullptr, 16);
 	}
 	void CBloom::UpdateWeight(float dispersion)
 	{
@@ -249,6 +250,11 @@ namespace tkEngine{
 			// アルファブレンディングを加算合成にする。
 			rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
 			
+			CVector2 uvOffset;
+			uvOffset.x = 0.5f / finalRT.GetWidth();
+			uvOffset.y = 0.5f / finalRT.GetHeight();
+			rc.UpdateSubresource(m_cb, &uvOffset);
+			rc.PSSetConstantBuffer(0, m_cb);
 			//定数バッファを設定する。
 			rc.VSSetShader(m_copyVS);
 			rc.PSSetShader(m_copyPS);

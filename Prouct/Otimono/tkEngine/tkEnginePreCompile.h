@@ -137,3 +137,4 @@ namespace tkEngine {
 #include "tkEngine/physics/tkPhysicsDynamicObject.h"
 #include "tkEngine/graphics/font/tkFontRender.h"
 #include "tkEngine/nature/tkSky.h"
+#include "tkEngine/graphics/tkChangeRenderTarget.h"

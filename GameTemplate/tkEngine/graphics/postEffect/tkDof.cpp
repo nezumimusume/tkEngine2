@@ -70,16 +70,6 @@ namespace tkEngine {
 			"PSMain",
 			CShader::EnType::PS);
 
-		m_downSampligCocAndColorParam.vs.Load(
-			"shader/dof/dof_DownSamplingCocAndColor.fx",
-			"VSMain",
-			CShader::EnType::VS);
-
-		m_downSampligCocAndColorParam.ps.Load(
-			"shader/dof/dof_DownSamplingCocAndColor.fx",
-			"PSMain",
-			CShader::EnType::PS);
-
 		m_finalParam.vs.Load(
 			"shader/dof/dof_Final.fx",
 			"VSMain",
@@ -112,8 +102,14 @@ namespace tkEngine {
 		);
 		m_downSampligCocAndColorParam.blur[1].Init(
 			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
-			2.5f
+			5.5f,
+			true
 		);
+		/*m_downSampligCocAndColorParam.blur[2].Init(
+			m_downSampligCocAndColorParam.blur[1].GetResultSRV(),
+			2.5f,
+			true
+		);*/
 	}
 	void CDof::InitBlendStates()
 	{
@@ -209,6 +205,7 @@ namespace tkEngine {
 		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, m_downSampligCocAndColorParam.blur[0].GetResultSRV());
 		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
+		//rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.blur[2].GetResultSRV());
 
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);

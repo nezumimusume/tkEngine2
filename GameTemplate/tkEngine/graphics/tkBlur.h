@@ -33,6 +33,7 @@ namespace tkEngine{
 		 *@param[in]	blurIntensity	ブラーの強さ。値が大きいほどボケる。
 		 */
 		void Init( CShaderResourceView& srcTexture, float blurIntensity = 25.0f );
+		void InitScaleup(CShaderResourceView& srcTexture, float blurIntensity = 25.0f );
 		/*!
 		* @brief	ブラーをかけるソーステクスチャを設定。。
 		*@param[in]	srcTexture		元テクスチャ。

@@ -19,6 +19,88 @@ namespace tkEngine{
 	CBlur::~CBlur()
 	{
 	}
+	void CBlur::InitScaleup(CShaderResourceView& srcTexture, float blurIntensity )
+	{
+		m_srcTexture = &srcTexture;
+		m_blurIntensity = blurIntensity;
+		//SRVに関連付けされているテクスチャの情報を取得。
+		D3D11_TEXTURE2D_DESC desc;
+		srcTexture.GetTextureDesc(desc);
+
+		m_srcTextureWidth = desc.Width;
+		m_srcTextureHeight = desc.Height;
+
+		DXGI_SAMPLE_DESC multiSampleDesc;
+		ZeroMemory(&multiSampleDesc, sizeof(multiSampleDesc));
+		multiSampleDesc.Count = 1;
+		multiSampleDesc.Quality = 0;
+		//Xブラー用のレンダリングターゲットを作成。
+		m_xBlurRT.Create(
+			desc.Width * 2,
+			desc.Height,
+			desc.MipLevels,
+			desc.ArraySize,
+			desc.Format,
+			DXGI_FORMAT_UNKNOWN,
+			multiSampleDesc
+		);
+		//Yブラー用のレンダリングターゲットを作成。
+		m_yBlurRT.Create(
+			desc.Width * 2,
+			desc.Height * 2,
+			desc.MipLevels,
+			desc.ArraySize,
+			desc.Format,
+			DXGI_FORMAT_UNKNOWN,
+			multiSampleDesc
+		);
+		m_cbBlur.Create(&m_blurParam, sizeof(m_blurParam));
+
+		//頂点バッファのソースデータ。
+		SSimpleVertex vertices[] =
+		{
+			{
+				CVector4(-1.0f, -1.0f, 0.0f, 1.0f),
+				CVector2(0.0f, 1.0f),
+			},
+			{
+				CVector4(1.0f, -1.0f, 0.0f, 1.0f),
+				CVector2(1.0f, 1.0f),
+			},
+			{
+				CVector4(-1.0f, 1.0f, 0.0f, 1.0f),
+				CVector2(0.0f, 0.0f)
+			},
+			{
+				CVector4(1.0f, 1.0f, 0.0f, 1.0f),
+				CVector2(1.0f, 0.0f)
+			}
+
+		};
+		short indices[] = { 0,1,2,3 };
+
+		m_fullscreenQuad.Create(
+			D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+			4,
+			sizeof(SSimpleVertex),
+			vertices,
+			4,
+			CIndexBuffer::enIndexType_16,
+			indices
+		);
+		//シェーダーをロード。
+		m_vsXBlurShader.Load("shader/blur.fx", "VSXBlur", CShader::EnType::VS);
+		m_vsYBlurShader.Load("shader/blur.fx", "VSYBlur", CShader::EnType::VS);
+		m_psBlurShader.Load("shader/blur.fx", "PSBlur", CShader::EnType::PS);
+
+		D3D11_SAMPLER_DESC samplerDesc;
+		ZeroMemory(&samplerDesc, sizeof(samplerDesc));
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		m_samplerState.Create(samplerDesc);
+	}
 	void CBlur::Init( CShaderResourceView& srcTexture, float blurIntensity )
 	{
 		m_srcTexture = &srcTexture;

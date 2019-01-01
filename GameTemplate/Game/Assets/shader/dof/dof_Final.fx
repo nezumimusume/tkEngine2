@@ -7,6 +7,8 @@
 Texture2D<float4> cocTexture : register(t0);	//CoCが書き込まれたテクスチャ
 Texture2D<float4> bokeTexture_0 : register(t1);	//ボケテクスチャ　レベル０。
 Texture2D<float4> bokeTexture_1 : register(t2);	//ボケテクスチャ　レベル１。
+Texture2D<float4> bokeTexture_2 : register(t3);	//ボケテクスチャ　レベル２。
+
 
 sampler bilinearSampler : register(s0);			//バイリニアサンプリングを行うサンプラ。
 
@@ -43,6 +45,7 @@ float4 PSMain( PSIn psIn ) : SV_Target0
 		cocTexture.Sample(bilinearSampler, psIn.uv),
 		bokeTexture_0.Sample(bilinearSampler, psIn.uv),
 		bokeTexture_1.Sample(bilinearSampler, psIn.uv),
+	//	bokeTexture_2.Sample(bilinearSampler, psIn.uv),
 	};
 	
 	float fTexIndex = min( 0.998f, coc ) / 0.5f;

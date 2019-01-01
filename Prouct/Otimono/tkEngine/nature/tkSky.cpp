@@ -37,6 +37,7 @@ namespace tkEngine {
 			if (m_isDirty == true) {
 				//更新の必要あり。
 				m_skinModelRender->SetScale(m_scale);
+				m_skinModelRender->SetPosition(m_position);
 				m_skinModelRender->SetEmissionColor(m_emissionColor);
 				m_isDirty = false;
 			}

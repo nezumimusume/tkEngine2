@@ -53,6 +53,15 @@ namespace prefab{
 			m_isDirty = true;
 		}
 		/// <summary>
+		/// 空の位置を決める。
+		/// </summary>
+		/// <param name="pos"></param>
+		void SetPosition(CVector3 pos)
+		{
+			m_position = pos;
+			m_isDirty = true;
+		}
+		/// <summary>
 		/// 更新処理。
 		/// </summary>
 		void Update() override;
@@ -119,6 +128,7 @@ namespace prefab{
 		CShaderResourceView m_skyCube;							//スカイキューブマップのSRV
 		CShader m_psSkyShader;									//空用のシェーダー。
 		CVector3 m_scale = { 8000.0f, 8000.0f, 8000.0f };		//空の拡大率。
+		CVector3 m_position = CVector3::Zero;					//座標。
 		CVector3 m_emissionColor = CVector3::Zero;				//自己発光カラー。
 		bool m_isDirty = false;									//ダーティフラグ。
 		std::wstring m_skyCubeMapFilePath = L"modelData/preset/skyCubeMap.dds";		//空のキューブマップのファイルパス。

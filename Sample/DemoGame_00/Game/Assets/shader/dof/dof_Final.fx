@@ -39,7 +39,6 @@ float4 PSMain( PSIn psIn ) : SV_Target0
 	coc = min( 1.0f, coc );
 	//錯乱円の半径が0.001以下はボケないので、ピクセルキル。
 	clip( coc - 0.0001f );
-	coc = pow( coc, 4.0f);
 	float4 colorTbl[3] = {
 		cocTexture.Sample(bilinearSampler, psIn.uv),
 		bokeTexture_0.Sample(bilinearSampler, psIn.uv),

@@ -32,6 +32,10 @@ namespace prefab{
 		 * @brief	コンストラクタ。
 		 */
 		CSkinModelRender() {}
+		/// <summary>
+		/// DeleteGOが実行されたときに呼ばれる。
+		/// </summary>
+		void OnDestroy() override;
 		/*!
 		* @brief	初期化。
 		*@param[in]	filePath			ロードしたいcmoファイルのファイルパス。

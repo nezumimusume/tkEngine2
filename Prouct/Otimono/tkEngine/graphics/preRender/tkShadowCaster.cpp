@@ -15,6 +15,8 @@ namespace tkEngine{
 	}
 	CShadowCaster_SkinModel::~CShadowCaster_SkinModel()
 	{
+		//シャドウマップに登録されているかもしれないので、削除する。
+		GraphicsEngine().GetShadowMap().Remove(this);
 	}
 	void CShadowCaster_SkinModel::Create(CSkinModel* model)
 	{

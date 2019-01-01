@@ -53,9 +53,9 @@ namespace tkEngine {
 		
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
 
-		CRenderTarget* renderTargets[] = {
-			&m_reflectionRT[m_currentRTNo]
-		};
+		//レンダリングターゲットを切り替え
+		CChangeRenderTarget changeRt(rc, m_reflectionRT[m_currentRTNo]);
+
 		m_currentRTNo = (m_currentRTNo + 1) % NUM_CALC_AVG_RT;
 		
 		
@@ -65,6 +65,8 @@ namespace tkEngine {
 		cb.mViewProj = MainCamera().GetViewProjectionMatrix();
 		cb.mViewProjInv.Inverse(MainCamera().GetViewProjectionMatrix());
 		cb.mViewProjInvLastFrame = m_viewProjInvLastFrame;
+		cb.renderTargteSize.x = GraphicsEngine().GetFrameBufferWidth();
+		cb.renderTargteSize.y = GraphicsEngine().GetFrameBufferHeight();
 		cb.rayMarchStepRate = (float)(m_mt()%1000000)/1000000.0f;
 		rc.UpdateSubresource(m_cb, &cb);
 		rc.PSSetConstantBuffer(0, m_cb);
@@ -72,14 +74,7 @@ namespace tkEngine {
 		CGBufferRender& gBuffer = GraphicsEngine().GetGBufferRender();
 
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
-		rc.OMSetRenderTargets(1, renderTargets);
-		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
-		rc.RSSetViewport(
-			0.0f, 
-			0.0f, 
-			static_cast<float>(m_reflectionRT[m_currentRTNo].GetWidth()), 
-			static_cast<float>(m_reflectionRT[m_currentRTNo].GetHeight())
-		);
+		
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, gBuffer.GetRenderTarget(enGBufferNormal).GetRenderTargetSRV());
 		rc.PSSetShaderResource(2, gBuffer.GetRenderTarget(enGBufferDepth).GetRenderTargetSRV());
@@ -97,14 +92,9 @@ namespace tkEngine {
 		////レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
 		{
-			renderTargets[0] = &postEffect->GetFinalRenderTarget();
-			rc.OMSetRenderTargets(1, renderTargets);
-			rc.RSSetViewport(
-				0.0f, 
-				0.0f, 
-				static_cast<float>(renderTargets[0]->GetWidth()), 
-				static_cast<float>(renderTargets[0]->GetHeight())
-			);
+			CChangeRenderTarget changeRt(rc, postEffect->GetFinalRenderTarget());
+			
+			rc.PSSetConstantBuffer(0, m_cb);
 			rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_blur.GetResultSRV());
 			/*for (int i = 0; i < NUM_CALC_AVG_RT; i++) {
