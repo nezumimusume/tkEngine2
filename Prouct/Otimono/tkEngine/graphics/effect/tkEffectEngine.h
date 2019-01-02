@@ -65,6 +65,7 @@ namespace tkEngine{
 		CRenderTarget m_addEffectBuffer;
 		std::vector<int>	m_renderFlags;
 		ID3D11BlendState* m_finalCombineAddBlendState = nullptr;
+		CConstantBuffer m_cb;
 		CShader		m_copyVS;					//!<コピー用の頂点シェーダー。
 		CShader		m_copyPS;					//!<コピー用の頂点シェーダー。
 	};

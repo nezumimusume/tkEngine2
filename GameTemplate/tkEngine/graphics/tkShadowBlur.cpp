@@ -134,7 +134,6 @@ namespace tkEngine{
 		ID3D11DepthStencilState* depthStenciil = rc.GetDepthStencilState();
 		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
 		rc.PSSetSampler(0, m_samplerState);
-		rc.IASetInputLayout(m_vsBlurShader.GetInputLayout());
 		rc.VSSetShader(m_vsBlurShader);
 		rc.PSSetShaderResource(1, GetGBufferSRV(enGBufferDepth));
 		//XBlur

@@ -264,6 +264,7 @@ namespace tkEngine {
 		void VSSetShader(CShader& shader)
 		{
 			m_pD3DDeviceContext->VSSetShader((ID3D11VertexShader*)shader.GetBody(), NULL, 0);
+			IASetInputLayout(shader.GetInputLayout());
 		}
 		/*!
 		* @brief	ピクセルシェーダーを設定。
@@ -368,6 +369,7 @@ namespace tkEngine {
 		{
 			m_pD3DDeviceContext->Dispatch(threadGroupCountX, threadGroupCountY, thredGroupCountZ);
 		}
+		private:
 		/*!
 		* @brief	入力レイアウトを設定。
 		*/
@@ -375,6 +377,7 @@ namespace tkEngine {
 		{
 			m_pD3DDeviceContext->IASetInputLayout(inputLayout);
 		}
+		public:
 		/*!
 		* @brief	リソースをコピー。
 		*@param[out]	destRes		コピー先。

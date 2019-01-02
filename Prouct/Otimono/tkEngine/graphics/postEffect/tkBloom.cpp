@@ -119,6 +119,7 @@ namespace tkEngine{
 		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		m_samplerState.Create(desc);
 
+		m_cb.Create(nullptr, 16);
 	}
 	void CBloom::UpdateWeight(float dispersion)
 	{
@@ -149,15 +150,12 @@ namespace tkEngine{
 		//輝度抽出。
 		{
 			ge.BeginGPUEvent(L"enRenderStep_Bloom::Luminance");
-			
-			CChangeRenderTarget rtChange(rc, m_luminanceRT);
-
+			CChangeRenderTarget chgRt(rc, m_luminanceRT);
 			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
+			
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.PSSetShaderResource(0, finalRT.GetRenderTargetSRV());
 			rc.VSSetShader(m_vsShader);
-			//入力レイアウトを設定。
-			rc.IASetInputLayout(m_vsShader.GetInputLayout());
 			rc.PSSetShader(m_psLuminance);
 			postEffect->DrawFullScreenQuad(rc);
 			ge.EndGPUEvent();
@@ -171,15 +169,17 @@ namespace tkEngine{
 			for (int i = 0; i < NUM_DOWN_SAMPLING_RT / 2; i++) {
 				//XBlur
 				{
-					CChangeRenderTarget rtChange(rc, m_downSamplingRT[rtIndex]);
 					
+					CChangeRenderTarget chgRt(rc, m_downSamplingRT[rtIndex]);
 					m_blurParam.offset.x = 16.0f / prevRt->GetWidth();
 					m_blurParam.offset.y = 0.0f;
 					rc.UpdateSubresource(m_cbBlur, &m_blurParam);
+					
 					rc.ClearRenderTargetView(0, clearColor);
 					rc.VSSetShaderResource(0, prevRt->GetRenderTargetSRV());
 					rc.PSSetShaderResource(0, prevRt->GetRenderTargetSRV());
 					rc.PSSetConstantBuffer(0, m_cbBlur);
+					
 					rc.VSSetShader(m_vsXBlur);
 					rc.PSSetShader(m_psBlur);
 					postEffect->DrawFullScreenQuad(rc);
@@ -189,7 +189,7 @@ namespace tkEngine{
 				rtIndex++;
 				//YBlur
 				{
-					CChangeRenderTarget rtChange(rc, m_downSamplingRT[rtIndex]);
+					CChangeRenderTarget chgRt(rc, m_downSamplingRT[rtIndex]);
 					m_blurParam.offset.x = 0.0f;
 					m_blurParam.offset.y = 16.0f / prevRt->GetWidth();
 					rc.UpdateSubresource(m_cbBlur, &m_blurParam);
@@ -207,18 +207,12 @@ namespace tkEngine{
 			ge.EndGPUEvent();
 		}
 		//ボケ画像の作成。
-		{
-			
-			CRenderTarget* rts[] = {
-				&m_combineRT
-			};
+		{			
 			//
+			CChangeRenderTarget chgRt(rc, m_combineRT);
 			rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 
-			CChangeRenderTarget rtChange(rc, m_combineRT);
-			
 			rc.ClearRenderTargetView(0, clearColor);
-
 			rc.PSSetShaderResource(0, m_downSamplingRT[3].GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_downSamplingRT[5].GetRenderTargetSRV());
 			rc.PSSetShaderResource(2, m_downSamplingRT[7].GetRenderTargetSRV());
@@ -228,11 +222,17 @@ namespace tkEngine{
 			postEffect->DrawFullScreenQuad(rc);
 		}
 		//最終合成。
-		{		
-			CChangeRenderTarget rtChange(rc, postEffect->GetFinalRenderTarget());
+		{
+			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
+			CChangeRenderTarget chgRt(rc, finalRT);
 			// アルファブレンディングを加算合成にする。
 			rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
 			
+			CVector2 uvOffset;
+			uvOffset.x = 0.5f / finalRT.GetWidth();
+			uvOffset.y = 0.5f / finalRT.GetHeight();
+			rc.UpdateSubresource(m_cb, &uvOffset);
+			rc.PSSetConstantBuffer(0, m_cb);
 			//定数バッファを設定する。
 			rc.VSSetShader(m_copyVS);
 			rc.PSSetShader(m_copyPS);

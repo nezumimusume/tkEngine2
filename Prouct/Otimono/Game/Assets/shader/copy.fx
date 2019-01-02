@@ -12,6 +12,10 @@ struct PSInput{
 	float2 uv  : TEXCOORD0;
 };
 
+cbuffer cb : register(b0)
+{
+	float2 uvOffset;
+}
 Texture2D<float4> sceneTexture : register(t0);	//シーンテクスチャ。
 sampler Sampler : register(s0);
 
@@ -24,5 +28,5 @@ PSInput VSMain(VSInput In)
 }
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return sceneTexture.Sample(Sampler, In.uv);
+	return sceneTexture.Sample(Sampler, In.uv + uvOffset);
 }

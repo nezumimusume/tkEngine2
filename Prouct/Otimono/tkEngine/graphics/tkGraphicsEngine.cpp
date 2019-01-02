@@ -214,6 +214,7 @@ namespace tkEngine{
 		m_copyVS.Load("shader/copy.fx", "VSMain", CShader::EnType::VS);
 		m_copyPS.Load("shader/copy.fx", "PSMain", CShader::EnType::PS);
 
+		m_cb.Create(nullptr, 16);
 		//ディファードシェーディング用の初期化を行う。
 		InitDefferdShading();
 
@@ -270,8 +271,6 @@ namespace tkEngine{
 		//シェーダーを設定。
 		rc.VSSetShader(m_vsDefferd);
 		rc.PSSetShader(m_psDefferd);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
 
 		//ディファードレンダリング用のデプスステンシルステート。
 		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
@@ -298,8 +297,12 @@ namespace tkEngine{
 		rc.OMSetRenderTargets(1, rts, nullptr);
 		rc.VSSetShader(m_copyVS);
 		rc.PSSetShader(m_copyPS);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_copyVS.GetInputLayout());
+		CVector2 uvOffset;
+		uvOffset.x = 0.5f / m_frameBufferWidth;
+		uvOffset.y = 0.5f / m_frameBufferHeight;
+		rc.UpdateSubresource(m_cb, &uvOffset);
+		rc.PSSetConstantBuffer(0, m_cb);
+
 		rc.PSSetShaderResource(0, m_postEffect.GetFinalRenderTarget().GetRenderTargetSRV());
 		rc.RSSetState(RasterizerState::spriteRender);
 		rc.RSSetViewport(0, 0, m_frameBufferWidth, m_frameBufferHeight);

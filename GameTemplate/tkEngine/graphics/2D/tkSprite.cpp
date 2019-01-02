@@ -123,7 +123,6 @@ namespace tkEngine{
 		rc.PSSetShaderResource(0, *m_textureSRV);
 		rc.PSSetShader(m_ps);
 		rc.VSSetShader(m_vs);
-		rc.IASetInputLayout(m_vs.GetInputLayout());
 		m_primitive.Draw(rc);
 	}
 }

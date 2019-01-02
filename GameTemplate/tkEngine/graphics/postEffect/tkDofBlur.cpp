@@ -62,17 +62,8 @@ namespace tkEngine{
 			rc.VSSetShader(m_vsDownSample);
 			rc.PSSetShader(m_psDownSample);
 			rc.PSSetShaderResource(0, *m_srcTexture);
-			rc.IASetInputLayout(m_vsDownSample.GetInputLayout());
-			CRenderTarget* rts[] = {
-				&m_downSamplingRT
-			};
-			rc.RSSetViewport(
-				0,
-				0,
-				static_cast<float>(rts[0]->GetWidth()),
-				static_cast<float>(rts[0]->GetHeight())
-			);
-			rc.OMSetRenderTargets(1, rts);
+			CChangeRenderTarget chgRt(rc, m_downSamplingRT);
+			
 			GraphicsEngine().GetPostEffect().DrawFullScreenQuad(rc);
 		}
 		m_blur.Execute(rc, [&](CRenderContext& rc, CBlur::EnRenderStep enRenderStep) {

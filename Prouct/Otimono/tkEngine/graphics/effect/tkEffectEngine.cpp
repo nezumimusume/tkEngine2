@@ -89,6 +89,8 @@ namespace tkEngine {
 		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_RED | D3D11_COLOR_WRITE_ENABLE_BLUE | D3D11_COLOR_WRITE_ENABLE_GREEN;
 		pd3d->CreateBlendState(&blendDesc, &m_finalCombineAddBlendState);
 
+		m_cb.Create(nullptr, 16);
+
 	}
 	
 	Effekseer::Effect* CEffectEngine::CreateEffekseerEffect(const wchar_t* filePath)
@@ -183,11 +185,15 @@ namespace tkEngine {
 			//MSAAƒŠƒ]ƒ‹ƒuB
 			m_addEffectBuffer.ResovleMSAATexture(rc);
 
+			CVector2 uvOffset;
+			uvOffset.x = 0.5f / oldRenderTargets[0]->GetWidth();
+			uvOffset.y = 0.5f / oldRenderTargets[0]->GetHeight();
+			rc.UpdateSubresource(m_cb, &uvOffset);
+			rc.PSSetConstantBuffer(0, m_cb);
 			rc.PSSetShaderResource(0, m_addEffectBuffer.GetRenderTargetSRV());
 			rc.PSSetShader(m_copyPS);
 			rc.VSSetShader(m_copyVS);
-			rc.IASetInputLayout(m_copyVS.GetInputLayout());
-
+		
 			ID3D11DepthStencilState* oldDepthStencil = rc.GetDepthStencilState();
 			ID3D11RasterizerState* oldRSState = rc.GetRSState();
 			ID3D11BlendState* oldBlendState = rc.GetBlendState();

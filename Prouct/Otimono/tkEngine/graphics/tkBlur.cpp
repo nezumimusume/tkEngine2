@@ -19,6 +19,88 @@ namespace tkEngine{
 	CBlur::~CBlur()
 	{
 	}
+	void CBlur::InitScaleup(CShaderResourceView& srcTexture, float blurIntensity )
+	{
+		m_srcTexture = &srcTexture;
+		m_blurIntensity = blurIntensity;
+		//SRVに関連付けされているテクスチャの情報を取得。
+		D3D11_TEXTURE2D_DESC desc;
+		srcTexture.GetTextureDesc(desc);
+
+		m_srcTextureWidth = desc.Width;
+		m_srcTextureHeight = desc.Height;
+
+		DXGI_SAMPLE_DESC multiSampleDesc;
+		ZeroMemory(&multiSampleDesc, sizeof(multiSampleDesc));
+		multiSampleDesc.Count = 1;
+		multiSampleDesc.Quality = 0;
+		//Xブラー用のレンダリングターゲットを作成。
+		m_xBlurRT.Create(
+			desc.Width * 2,
+			desc.Height,
+			desc.MipLevels,
+			desc.ArraySize,
+			desc.Format,
+			DXGI_FORMAT_UNKNOWN,
+			multiSampleDesc
+		);
+		//Yブラー用のレンダリングターゲットを作成。
+		m_yBlurRT.Create(
+			desc.Width * 2,
+			desc.Height * 2,
+			desc.MipLevels,
+			desc.ArraySize,
+			desc.Format,
+			DXGI_FORMAT_UNKNOWN,
+			multiSampleDesc
+		);
+		m_cbBlur.Create(&m_blurParam, sizeof(m_blurParam));
+
+		//頂点バッファのソースデータ。
+		SSimpleVertex vertices[] =
+		{
+			{
+				CVector4(-1.0f, -1.0f, 0.0f, 1.0f),
+				CVector2(0.0f, 1.0f),
+			},
+			{
+				CVector4(1.0f, -1.0f, 0.0f, 1.0f),
+				CVector2(1.0f, 1.0f),
+			},
+			{
+				CVector4(-1.0f, 1.0f, 0.0f, 1.0f),
+				CVector2(0.0f, 0.0f)
+			},
+			{
+				CVector4(1.0f, 1.0f, 0.0f, 1.0f),
+				CVector2(1.0f, 0.0f)
+			}
+
+		};
+		short indices[] = { 0,1,2,3 };
+
+		m_fullscreenQuad.Create(
+			D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+			4,
+			sizeof(SSimpleVertex),
+			vertices,
+			4,
+			CIndexBuffer::enIndexType_16,
+			indices
+		);
+		//シェーダーをロード。
+		m_vsXBlurShader.Load("shader/blur.fx", "VSXBlur", CShader::EnType::VS);
+		m_vsYBlurShader.Load("shader/blur.fx", "VSYBlur", CShader::EnType::VS);
+		m_psBlurShader.Load("shader/blur.fx", "PSBlur", CShader::EnType::PS);
+
+		D3D11_SAMPLER_DESC samplerDesc;
+		ZeroMemory(&samplerDesc, sizeof(samplerDesc));
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		m_samplerState.Create(samplerDesc);
+	}
 	void CBlur::Init( CShaderResourceView& srcTexture, float blurIntensity )
 	{
 		m_srcTexture = &srcTexture;
@@ -134,23 +216,18 @@ namespace tkEngine{
 		rc.PSSetSampler(0, m_samplerState);
 		//XBlur
 		{
-			CRenderTarget* rts[] = {
-				&m_xBlurRT
-			};
+			CChangeRenderTarget chgRt(rc, m_xBlurRT);
 			m_blurParam.offset.x = 16.0f / m_srcTextureWidth;
 			m_blurParam.offset.y = 0.0f;
 			m_blurParam.uvOffset.x = 0.5f / m_xBlurRT.GetWidth();
 			m_blurParam.uvOffset.y = 0.5f / m_xBlurRT.GetHeight();
 
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.OMSetRenderTargets(1, rts);
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetConstantBuffer(0, m_cbBlur);
 			rc.VSSetConstantBuffer(0, m_cbBlur);
-			rc.RSSetViewport(0.0f, 0.0f, (float)m_xBlurRT.GetWidth(), (float)m_xBlurRT.GetHeight());
-			rc.IASetInputLayout(m_vsXBlurShader.GetInputLayout());
 			rc.VSSetShader(m_vsXBlurShader);
 			rc.PSSetShader(m_psBlurShader);
 
@@ -161,24 +238,19 @@ namespace tkEngine{
 		}
 		//YBlur
 		{
-			CRenderTarget* rts[] = {
-				&m_yBlurRT
-			};
+			CChangeRenderTarget chgRt(rc, m_yBlurRT);
 			m_blurParam.offset.x = 0.0f;
 			m_blurParam.offset.y = 16.0f / m_srcTextureHeight;
 			m_blurParam.uvOffset.x = 0.5f / m_yBlurRT.GetWidth();
 			m_blurParam.uvOffset.y = 0.5f / m_yBlurRT.GetHeight();
 			
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.OMSetRenderTargets(1, rts);
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetConstantBuffer(0, m_cbBlur);
 			rc.VSSetConstantBuffer(0, m_cbBlur);
 
-			rc.RSSetViewport(0.0f, 0.0f, (float)m_yBlurRT.GetWidth(), (float)m_yBlurRT.GetHeight());
-			rc.IASetInputLayout(m_vsYBlurShader.GetInputLayout());
 			rc.VSSetShader(m_vsYBlurShader);
 			rc.PSSetShader(m_psBlurShader);
 

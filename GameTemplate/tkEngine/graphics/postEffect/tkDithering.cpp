@@ -54,9 +54,6 @@ namespace tkEngine{
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShader(m_psShader);
 		rc.VSSetShader(m_vsShader);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsShader.GetInputLayout());
-
 		postEffect->DrawFullScreenQuad(rc);
 		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 		rc.PSUnsetShaderResource(0);

@@ -449,6 +449,9 @@
     <ClInclude Include="graphics\postEffect\tkDofBlur.h">
       <Filter>Source Files\graphics\postEffect</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\tkChangeRenderTarget.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">

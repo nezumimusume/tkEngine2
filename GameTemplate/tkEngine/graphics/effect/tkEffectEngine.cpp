@@ -193,8 +193,7 @@ namespace tkEngine {
 			rc.PSSetShaderResource(0, m_addEffectBuffer.GetRenderTargetSRV());
 			rc.PSSetShader(m_copyPS);
 			rc.VSSetShader(m_copyVS);
-			rc.IASetInputLayout(m_copyVS.GetInputLayout());
-
+		
 			ID3D11DepthStencilState* oldDepthStencil = rc.GetDepthStencilState();
 			ID3D11RasterizerState* oldRSState = rc.GetRSState();
 			ID3D11BlendState* oldBlendState = rc.GetBlendState();

@@ -140,9 +140,8 @@ namespace tkEngine {
 		auto& samplerState = m_createDofMaskAndCalcCocParam.samplerState;
 		auto& depthTextureSrv = ge.GetGBufferRender().GetRenderTarget(enGBufferDepth).GetRenderTargetSRV();
 		//レンダリングターゲットを切り替える。
-		CRenderTarget* rts[] = {
-			&calcCocAndColorRt
-		};
+
+		CChangeRenderTarget chgRt(rc, calcCocAndColorRt);
 		//定数バッファの更新。
 		SCreateDofMaskAndCalcCocCB cbParam;
 		cbParam.dofRange.x = m_nearStartDistance;
@@ -155,18 +154,11 @@ namespace tkEngine {
 		//定数バッファをレジスタb0に設定する。
 		rc.VSSetConstantBuffer(0, cb);
 		rc.PSSetConstantBuffer(0, cb);
-		rc.OMSetRenderTargets(1, rts );
 		rc.PSSetShaderResource(0, sceneRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, depthTextureSrv);
 		rc.VSSetShader(vs);
-		rc.IASetInputLayout(vs.GetInputLayout());
 		rc.PSSetShader(ps);
-		rc.RSSetViewport(
-			0, 
-			0, 
-			static_cast<float>(calcCocAndColorRt.GetWidth()), 
-			static_cast<float>(calcCocAndColorRt.GetHeight())
-		);
+
 		rc.PSSetSampler(0, samplerState);
 		rc.OMSetBlendState(m_createDofMaskAndCalcCocParam.blendState, 0, 0xFFFFFFFF);
 		
@@ -195,11 +187,10 @@ namespace tkEngine {
 	{
 		auto& ge = GraphicsEngine();
 		ge.BeginGPUEvent(L"enRenderStep_Dof::Final");
-		auto& rt = postEffect->GetFinalRenderTarget();
-		CRenderTarget* rts[] = {
-			&rt,
-		};
-		rc.OMSetRenderTargets(1, rts);
+
+		//レンダリングターゲット切り替え。
+		CChangeRenderTarget chgRt(rc, postEffect->GetFinalRenderTarget());
+
 		rc.VSSetShader(m_finalParam.vs);
 		rc.PSSetShader(m_finalParam.ps);
 		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
@@ -209,13 +200,6 @@ namespace tkEngine {
 
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
-		rc.RSSetViewport(
-			0,
-			0,
-			static_cast<float>(rt.GetWidth()),
-			static_cast<float>(rt.GetHeight())
-		);
-		rc.IASetInputLayout(m_finalParam.vs.GetInputLayout());
 		postEffect->DrawFullScreenQuad(rc);
 
 		ge.EndGPUEvent();

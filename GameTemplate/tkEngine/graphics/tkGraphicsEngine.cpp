@@ -271,8 +271,6 @@ namespace tkEngine{
 		//シェーダーを設定。
 		rc.VSSetShader(m_vsDefferd);
 		rc.PSSetShader(m_psDefferd);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsDefferd.GetInputLayout());
 
 		//ディファードレンダリング用のデプスステンシルステート。
 		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
@@ -305,8 +303,6 @@ namespace tkEngine{
 		rc.UpdateSubresource(m_cb, &uvOffset);
 		rc.PSSetConstantBuffer(0, m_cb);
 
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_copyVS.GetInputLayout());
 		rc.PSSetShaderResource(0, m_postEffect.GetFinalRenderTarget().GetRenderTargetSRV());
 		rc.RSSetState(RasterizerState::spriteRender);
 		rc.RSSetViewport(0, 0, m_frameBufferWidth, m_frameBufferHeight);

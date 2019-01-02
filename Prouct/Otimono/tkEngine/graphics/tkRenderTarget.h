@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 namespace tkEngine{
 
 	class CRenderContext;
@@ -145,6 +144,4 @@ namespace tkEngine{
 		int m_width = 0;
 		int m_height = 0;
 	};
-
-	
 }

@@ -856,6 +856,7 @@
     <ClInclude Include="graphics\preRender\tkShadowMap.h" />
     <ClInclude Include="graphics\tkBlur.h" />
     <ClInclude Include="graphics\tkCamera.h" />
+    <ClInclude Include="graphics\tkChangeRenderTarget.h" />
     <ClInclude Include="graphics\tkGPUEventMarker.h" />
     <ClInclude Include="graphics\tkGraphicsEngine.h" />
     <ClInclude Include="graphics\tkGraphicsEngine_Inline.h" />

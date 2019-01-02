@@ -53,9 +53,7 @@ namespace tkEngine {
 		
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
 
-		//レンダリングターゲットを切り替え
-		CChangeRenderTarget changeRt(rc, m_reflectionRT[m_currentRTNo]);
-
+		CChangeRenderTarget chgRt(rc, m_reflectionRT[m_currentRTNo]);
 		m_currentRTNo = (m_currentRTNo + 1) % NUM_CALC_AVG_RT;
 		
 		
@@ -74,16 +72,14 @@ namespace tkEngine {
 		CGBufferRender& gBuffer = GraphicsEngine().GetGBufferRender();
 
 		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
-		
+		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
+	
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, gBuffer.GetRenderTarget(enGBufferNormal).GetRenderTargetSRV());
 		rc.PSSetShaderResource(2, gBuffer.GetRenderTarget(enGBufferDepth).GetRenderTargetSRV());
 		rc.PSSetShaderResource(3, gBuffer.GetDepthTextureLastFrameSRV());
 		rc.PSSetShader(m_psShader);
 		rc.VSSetShader(m_vsShader);
-		//入力レイアウトを設定。
-		rc.IASetInputLayout(m_vsShader.GetInputLayout());
-
 		postEffect->DrawFullScreenQuad(rc);
 		
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
@@ -92,8 +88,8 @@ namespace tkEngine {
 		////レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
 		{
-			CChangeRenderTarget changeRt(rc, postEffect->GetFinalRenderTarget());
-			
+			CChangeRenderTarget chgRt(rc, postEffect->GetFinalRenderTarget());
+		
 			rc.PSSetConstantBuffer(0, m_cb);
 			rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_blur.GetResultSRV());

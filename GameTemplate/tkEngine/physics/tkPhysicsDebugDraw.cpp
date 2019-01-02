@@ -43,8 +43,6 @@ namespace tkEngine {
 		m_renderContext->VSSetShader(m_vs);
 		m_renderContext->PSSetShader(m_ps);
 		m_renderContext->VSSetConstantBuffer(0, m_cb);
-		//入力レイアウトを設定。
-		m_renderContext->IASetInputLayout(m_vs.GetInputLayout());
 		m_renderContext->UpdateSubresource(m_primitive.GetVertexBuffer(), &m_vertexBuffer[0]);
 		m_primitive.Draw(*m_renderContext, m_numLine*2);
 	}
