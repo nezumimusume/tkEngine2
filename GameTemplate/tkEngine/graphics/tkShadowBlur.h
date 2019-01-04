@@ -66,7 +66,6 @@ namespace tkEngine{
 		int m_srcTextureWidth = 0;			//!<ソーステクスチャの幅。
 		int m_srcTextureHeight = 0;			//!<ソーステクスチャの高さ。
 		CPrimitive	m_fullscreenQuad;		//!<フルスクリーン描画用の矩形プリミティブ。
-		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい?。
 		float m_blurIntensity = 25.0f;
 	};
 }

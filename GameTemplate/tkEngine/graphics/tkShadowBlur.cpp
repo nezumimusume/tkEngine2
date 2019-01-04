@@ -94,13 +94,6 @@ namespace tkEngine{
 		m_psXBlurShader.Load("shader/shadowBlur.fx", "PSXBlur", CShader::EnType::PS);
 		m_psYBlurShader.Load("shader/shadowBlur.fx", "PSYBlur", CShader::EnType::PS);
 
-		D3D11_SAMPLER_DESC samplerDesc;
-		ZeroMemory(&samplerDesc, sizeof(samplerDesc));
-		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		m_samplerState.Create(samplerDesc);
 		m_blurParam.offsetTexelWorld = shadowConfig.offsetTexelWorld;
 
 	}
@@ -132,8 +125,8 @@ namespace tkEngine{
 			0.0f, 0.0f, 0.0f, 0.0f
 		};
 		ID3D11DepthStencilState* depthStenciil = rc.GetDepthStencilState();
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
-		rc.PSSetSampler(0, m_samplerState);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.VSSetShader(m_vsBlurShader);
 		rc.PSSetShaderResource(1, GetGBufferSRV(enGBufferDepth));
 		//XBlur
@@ -170,7 +163,7 @@ namespace tkEngine{
 
 			m_fullscreenQuad.Draw(rc);
 		}
-		rc.OMSetDepthStencilState(depthStenciil, 0);
+		rc.OMSetDepthStencilState(depthStenciil);
 		//レンダリングターゲットを戻す。
 		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		rc.RSSetViewport(0.0f, 0.0f, (float)oldRenderTargets[0]->GetWidth(), (float)oldRenderTargets[0]->GetHeight());

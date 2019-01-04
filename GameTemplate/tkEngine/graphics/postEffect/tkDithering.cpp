@@ -40,7 +40,7 @@ namespace tkEngine{
 		BeginGPUEvent(L"enRenderStep_Dithering");
 
 		//レンダリングステートをディザようにする。
-		rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::disable);
 		//現在のレンダリングターゲットを取得。
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
 		//レンダリングターゲットを切り替える。
@@ -48,14 +48,14 @@ namespace tkEngine{
 		CRenderTarget* renderTargets[] = {
 			&postEffect->GetFinalRenderTarget()
 		};
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		rc.OMSetBlendState(AlphaBlendState::disable);
 		rc.PSSetSampler(0, m_samplerState);
 		rc.OMSetRenderTargets(1, renderTargets);
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShader(m_psShader);
 		rc.VSSetShader(m_vsShader);
 		postEffect->DrawFullScreenQuad(rc);
-		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::SceneRender);
 		rc.PSUnsetShaderResource(0);
 		EndGPUEvent();
 	}

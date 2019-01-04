@@ -4,18 +4,30 @@
 
 namespace tkEngine {
 
-	CSamplerState* CPresetSamplerState::sampler_clamp_clamp_clamp_linear = nullptr;
+	CSamplerState* CPresetSamplerState::clamp_clamp_clamp_linear = nullptr;
+	CSamplerState* CPresetSamplerState::clamp_clamp_clamp_point = nullptr;
 	void CPresetSamplerState::Init()
 	{
-		D3D11_SAMPLER_DESC desc;
-		ZeroMemory(&desc, sizeof(desc));
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		{
+			
+			CD3D11_DEFAULT def;
+			CD3D11_SAMPLER_DESC desc(def);
+			
+			desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 
-		sampler_clamp_clamp_clamp_linear = new CSamplerState;
-		sampler_clamp_clamp_clamp_linear->Create(desc);
+			clamp_clamp_clamp_linear = new CSamplerState;
+			clamp_clamp_clamp_linear->Create(desc);
+		}
+		{
+
+			CD3D11_DEFAULT def;
+			CD3D11_SAMPLER_DESC desc(def);
+
+			desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+
+			clamp_clamp_clamp_point = new CSamplerState;
+			clamp_clamp_clamp_point->Create(desc);
+		}
 	}
 
 }

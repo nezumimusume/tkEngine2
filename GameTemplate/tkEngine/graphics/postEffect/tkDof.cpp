@@ -19,7 +19,6 @@ namespace tkEngine {
 		m_createDofMaskAndCalcCocParam.calcCocAndColorRt.Release();
 		m_createDofMaskAndCalcCocParam.vs.Release();
 		m_createDofMaskAndCalcCocParam.ps.Release();
-		m_createDofMaskAndCalcCocParam.samplerState.Release();
 		m_createDofMaskAndCalcCocParam.cb.Release();
 		if (m_createDofMaskAndCalcCocParam.blendState != nullptr) {
 			m_createDofMaskAndCalcCocParam.blendState->Release();
@@ -42,8 +41,6 @@ namespace tkEngine {
 		InitShaders();
 		//レンダリングターゲットを初期化。
 		InitRenderTargets();
-		//サンプラステートの初期化。
-		InitSamplerStates();
 		//定数バッファの初期化。
 		InitConstantBuffers();
 	}
@@ -52,13 +49,7 @@ namespace tkEngine {
 		m_createDofMaskAndCalcCocParam.cb.Create(nullptr, sizeof(SCreateDofMaskAndCalcCoc));
 		m_downSampligCocAndColorParam.cb.Create(nullptr, sizeof(SDownSamplingCocAndColorCB));
 	}
-	void CDof::InitSamplerStates()
-	{
-		CD3D11_DEFAULT def;
-		CD3D11_SAMPLER_DESC desc(def);
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		m_createDofMaskAndCalcCocParam.samplerState.Create(desc);
-	}
+
 	void CDof::InitShaders()
 	{
 		m_createDofMaskAndCalcCocParam.vs.Load(
@@ -137,7 +128,6 @@ namespace tkEngine {
 		auto& vs = m_createDofMaskAndCalcCocParam.vs;
 		auto& ps = m_createDofMaskAndCalcCocParam.ps;
 		auto& cb = m_createDofMaskAndCalcCocParam.cb;
-		auto& samplerState = m_createDofMaskAndCalcCocParam.samplerState;
 		auto& depthTextureSrv = ge.GetGBufferRender().GetRenderTarget(enGBufferDepth).GetRenderTargetSRV();
 		//レンダリングターゲットを切り替える。
 
@@ -159,8 +149,8 @@ namespace tkEngine {
 		rc.VSSetShader(vs);
 		rc.PSSetShader(ps);
 
-		rc.PSSetSampler(0, samplerState);
-		rc.OMSetBlendState(m_createDofMaskAndCalcCocParam.blendState, 0, 0xFFFFFFFF);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_point);
+		rc.OMSetBlendState(m_createDofMaskAndCalcCocParam.blendState);
 		
 		postEffect->DrawFullScreenQuad(rc);
 
@@ -175,7 +165,7 @@ namespace tkEngine {
 		auto& ge = GraphicsEngine();
 		ge.BeginGPUEvent(L"enRenderStep_Dof::DownSamplingCocAndColor");
 
-		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.PSSetShaderResource(1, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
 		for (auto& blur : m_downSampligCocAndColorParam.blur) {
 			blur.Execute(rc);
@@ -198,8 +188,8 @@ namespace tkEngine {
 		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
 		//rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.blur[2].GetResultSRV());
 
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
-		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
+		rc.OMSetBlendState(AlphaBlendState::disable);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		postEffect->DrawFullScreenQuad(rc);
 
 		ge.EndGPUEvent();
@@ -209,8 +199,13 @@ namespace tkEngine {
 		if (m_isEnable == false) {
 			return;
 		}
+		
 		auto& ge = GraphicsEngine();
 		ge.BeginGPUEvent(L"enRenderStep_Dof");
+
+		//レンダリングステートを退避する。
+		rc.PushRenderState();
+
 		rc.SetRenderStep(enRenderStep_Dof);
 
 		CreateDofMaskAndCalcCoc(rc, postEffect);
@@ -218,6 +213,9 @@ namespace tkEngine {
 		DownSamplingCocAndColor(rc, postEffect);
 
 		Final(rc, postEffect);
+
+		//レンダリングステートを戻す。
+		rc.PopRenderState(true);
 
 		ge.EndGPUEvent();
 	}

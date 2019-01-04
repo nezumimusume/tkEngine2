@@ -25,6 +25,9 @@ namespace tkEngine{
 
 	void CFont::Begin(CRenderContext& rc)
 	{
+		//レンダリングステートを退避させる。
+		rc.PushRenderState();
+
 		m_spriteBatch->Begin(
 			DirectX::SpriteSortMode_Deferred,
 			nullptr,
@@ -38,11 +41,8 @@ namespace tkEngine{
 	void CFont::End(CRenderContext& rc)
 	{
 		m_spriteBatch->End();
-		//レンダリングステートを戻す。
-		float blendFactor[4] = { 0.0f };
-		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
-		rc.RSSetState(RasterizerState::spriteRender);
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		//レンダリングステートを復活させる。
+		rc.PopRenderState(true);
 	}
 	void CFont::Draw(
 		wchar_t const* text,

@@ -36,14 +36,19 @@ namespace tkEngine{
 		if (!m_isEnable) {
 			return;
 		}
+		
 		BeginGPUEvent(L"enRenderStep_AntiAlias");
+
+		//レンダリングステートを退避させる。
+		rc.PushRenderState();
+
 		//レンダリングステートをFXAA用に設定するようにする。
-		rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::disable);
 		//現在のレンダリングターゲットを取得。
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
 		
 
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		rc.OMSetBlendState(AlphaBlendState::disable);
 		//レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
 
@@ -55,8 +60,11 @@ namespace tkEngine{
 		
 		postEffect->DrawFullScreenQuad(rc);
 
-		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 		rc.PSUnsetShaderResource(0);
+
+		//レンダリングステートを戻す。
+		rc.PopRenderState(true);
+
 		EndGPUEvent();
 	}
 }

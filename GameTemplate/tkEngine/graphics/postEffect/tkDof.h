@@ -115,10 +115,7 @@ namespace tkEngine {
 		/// シェーダーを初期化。
 		/// </summary>
 		void InitShaders();
-		/// <summary>
-		/// サンプラステートの初期化。
-		/// </summary>
-		void InitSamplerStates();
+
 		/// <summary>
 		/// 定数バッファの初期化。
 		/// </summary>
@@ -150,7 +147,6 @@ namespace tkEngine {
 			CRenderTarget calcCocAndColorRt;			//ピクセルのCoCの計算結果が描き込まれるレンダリングターゲット。CoCはαチャンネルに書き込まれます。
 			CShader vs;									//頂点シェーダー。
 			CShader ps;									//ピクセルシェーダー。
-			CSamplerState	samplerState;				//サンプラステート。
 			ID3D11BlendState* blendState = nullptr;		//アルファブレンディングステート。
 			CConstantBuffer cb;							//定数バッファ。
 		};

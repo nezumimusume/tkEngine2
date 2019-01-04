@@ -200,15 +200,15 @@ namespace tkEngine {
 
 
 			rc.RSSetState(RasterizerState::spriteRender);
-			rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
-			rc.OMSetBlendState(m_finalCombineAddBlendState, 0, 0xFFFFFFFF);
+			rc.OMSetDepthStencilState(DepthStencilState::disable);
+			rc.OMSetBlendState(m_finalCombineAddBlendState );
 
 			ps->DrawFullScreenQuad(rc);
 
 			//ñﬂÇ∑ÅB
-			rc.OMSetDepthStencilState(oldDepthStencil, 0);
+			rc.OMSetDepthStencilState(oldDepthStencil);
 			rc.RSSetState(oldRSState);
-			rc.OMSetBlendState(oldBlendState, 0, 0xFFFFFFFF);
+			rc.OMSetBlendState(oldBlendState);
 
 		}
 

@@ -94,14 +94,6 @@ namespace tkEngine{
 		m_psCalcAdaptedLuminanceFirstShader.Load("shader/tonemap.fx", "PSCalcAdaptedLuminanceFirst", CShader::EnType::PS);
 		m_psFinal.Load("shader/tonemap.fx", "PSFinal", CShader::EnType::PS);
 		m_cbCalcLuminanceLog.Create(m_avSampleOffsets, sizeof(m_avSampleOffsets));
-
-		D3D11_SAMPLER_DESC desc;
-		ZeroMemory(&desc, sizeof(desc));
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		m_samplerState.Create(desc);
 	}
 	void CTonemap::CalcLuminanceAvarage(CRenderContext& rc, CPostEffect* postEffect)
 	{
@@ -215,7 +207,7 @@ namespace tkEngine{
 		m_tonemapParam.deltaTime = GameTime().GetFrameDeltaTime();
 		rc.UpdateSubresource(m_cbTonemapCommon, &m_tonemapParam);
 		rc.PSSetConstantBuffer(1, m_cbTonemapCommon);
-		rc.PSSetSampler(0, m_samplerState);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		CalcLuminanceAvarage(rc, postEffect);
 
 		
@@ -225,14 +217,14 @@ namespace tkEngine{
 		CChangeRenderTarget chgRt(rc, GraphicsEngine().GetMainRenderTarget());
 		rc.PSSetShaderResource(0, sceneSRV);
 		rc.PSSetShaderResource(1, m_avgRT[m_currentAvgRT].GetRenderTargetSRV());
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
-		rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
+		rc.OMSetBlendState(AlphaBlendState::disable);
+		rc.OMSetDepthStencilState(DepthStencilState::disable);
 		
 		rc.PSSetShader(m_psFinal);
 		postEffect->DrawFullScreenQuad(rc);
 		
 		//ñﬂÇ∑ÅB
-		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::SceneRender);
 
 		rc.PSUnsetShaderResource(0);
 		rc.PSUnsetShaderResource(1);

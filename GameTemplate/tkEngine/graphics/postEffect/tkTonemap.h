@@ -80,6 +80,5 @@ namespace tkEngine{
 		CConstantBuffer	m_cbCalcLuminanceLog;
 		CConstantBuffer m_cbTonemapCommon;
 		STonemapParam	m_tonemapParam;
-		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい?。
 	};
 }
