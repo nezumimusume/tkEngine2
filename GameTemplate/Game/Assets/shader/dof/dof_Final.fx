@@ -7,10 +7,9 @@
 Texture2D<float4> cocTexture : register(t0);	//CoCが書き込まれたテクスチャ
 Texture2D<float4> bokeTexture_0 : register(t1);	//ボケテクスチャ　レベル０。
 Texture2D<float4> bokeTexture_1 : register(t2);	//ボケテクスチャ　レベル１。
-Texture2D<float4> bokeTexture_2 : register(t3);	//ボケテクスチャ　レベル２。
-
 
 sampler bilinearSampler : register(s0);			//バイリニアサンプリングを行うサンプラ。
+sampler pointSampler : register(s1);			//ポイントサンプリング。
 
 /*!
  *@brief	ピクセルシェーダーへの入力。
@@ -37,15 +36,15 @@ float4 PSMain( PSIn psIn ) : SV_Target0
 {
 
 	//ピクセルのCoCを取得。
-	float coc = cocTexture.Sample( bilinearSampler, psIn.uv).a;
+	float4 color = cocTexture.Sample( bilinearSampler, psIn.uv);
+	float coc = color.a;
 	coc = min( 1.0f, coc );
 	//錯乱円の半径が0.001以下はボケないので、ピクセルキル。
-	clip( coc - 0.0001f );
+	//clip( coc - 0.0001f );
 	float4 colorTbl[3] = {
-		cocTexture.Sample(bilinearSampler, psIn.uv),
-		bokeTexture_0.Sample(bilinearSampler, psIn.uv),
+		color,
 		bokeTexture_1.Sample(bilinearSampler, psIn.uv),
-	//	bokeTexture_2.Sample(bilinearSampler, psIn.uv),
+		bokeTexture_1.Sample(bilinearSampler, psIn.uv),
 	};
 	
 	float fTexIndex = min( 0.998f, coc ) / 0.5f;

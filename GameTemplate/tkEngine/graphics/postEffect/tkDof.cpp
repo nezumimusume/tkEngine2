@@ -93,7 +93,7 @@ namespace tkEngine {
 		);
 		m_downSampligCocAndColorParam.blur[1].Init(
 			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
-			5.5f,
+			2.5f,
 			true
 		);
 		/*m_downSampligCocAndColorParam.blur[2].Init(
@@ -163,10 +163,12 @@ namespace tkEngine {
 	void CDof::DownSamplingCocAndColor(CRenderContext& rc, CPostEffect* postEffect)
 	{
 		auto& ge = GraphicsEngine();
+		auto& depthTextureSrv = ge.GetGBufferRender().GetRenderTarget(enGBufferDepth).GetRenderTargetSRV();
+
 		ge.BeginGPUEvent(L"enRenderStep_Dof::DownSamplingCocAndColor");
 
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
-		rc.PSSetShaderResource(1, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
+		rc.PSSetShaderResource(1, depthTextureSrv);
 		for (auto& blur : m_downSampligCocAndColorParam.blur) {
 			blur.Execute(rc);
 		}
@@ -186,10 +188,10 @@ namespace tkEngine {
 		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, m_downSampligCocAndColorParam.blur[0].GetResultSRV());
 		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
-		//rc.PSSetShaderResource(3, m_downSampligCocAndColorParam.blur[2].GetResultSRV());
-
+	
 		rc.OMSetBlendState(AlphaBlendState::disable);
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
+		rc.PSSetSampler(1, *CPresetSamplerState::clamp_clamp_clamp_point);
 		postEffect->DrawFullScreenQuad(rc);
 
 		ge.EndGPUEvent();

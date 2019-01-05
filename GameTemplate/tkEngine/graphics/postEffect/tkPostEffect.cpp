@@ -57,7 +57,7 @@ namespace tkEngine{
 			0,
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
-		m_ssr.Render(rc, this); //todo SSRの最終合成で2.5ピクセルずれてる。なぜ？
+		m_ssr.Render(rc, this); 
 		m_bloom.Render(rc, this);
 		m_dof.Render(rc, this);
 		m_fxaa.Render(rc, this);

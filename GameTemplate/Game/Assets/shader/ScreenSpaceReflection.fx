@@ -106,10 +106,10 @@ Texture2D<float4> specTexture : register(t2);	//スペキュッラ
 //最終合成。
 float4 PSFinal(PSInput In) : SV_Target0
 {
+	return sceneTexture.Sample(Sampler, In.uv);
 	//反射カラーの平均をとる。
 	float4 reflectColor = reflectTexture.Sample(Sampler, In.uv);
-	//ピクセルずれてるので、微調整・・・。不具合なので、あとで治すように。
-	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv + float2( -0.5f / renderTargetSize.x, 0.5f / renderTargetSize.y));
+	float4 sceneColor = sceneTexture.Sample(Sampler, In.uv);
 	//映り込みあり。
 	float spec = min( 1.0f, specTexture.Sample(Sampler, In.uv).r );
 	//spec *= all(max(0.0f, length(reflectColor.xyz)-0.1f));

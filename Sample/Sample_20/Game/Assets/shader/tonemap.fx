@@ -16,6 +16,7 @@ cbuffer cbTonemapCommon : register(b1){
 	float deltaTime;
 	float middleGray;
 }
+
 /*!
  * @brief	頂点シェーダー。
  */
@@ -142,7 +143,7 @@ float4 PSCalcAdaptedLuminanceFirst(PSInput In) : SV_Target0
  */
 float4 PSFinal( PSInput In) : SV_Target0
 {
-	float4 vSample = sceneTexture.Sample(Sampler, In.uv);
+	float4 vSample = sceneTexture.Sample(Sampler, In.uv );
 	float fAvgLum = lumAvgTexture.Sample(Sampler, float2( 0.5f, 0.5f));
 	
 	vSample.rgb *= middleGray/max( 0.0001f, fAvgLum );

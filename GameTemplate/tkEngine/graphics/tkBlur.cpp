@@ -201,13 +201,10 @@ namespace tkEngine{
 		//XBlur
 		{
 			CChangeRenderTarget chgRt(rc, m_xBlurRT);
+			rc.ClearRenderTargetView(0, clearColor);
 			m_blurParam.offset.x = 16.0f / m_srcTextureWidth;
 			m_blurParam.offset.y = 0.0f;
-			m_blurParam.uvOffset.x = 0.5f / m_xBlurRT.GetWidth();
-			m_blurParam.uvOffset.y = 0.5f / m_xBlurRT.GetHeight();
-
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetConstantBuffer(0, m_cbBlur);
@@ -220,16 +217,15 @@ namespace tkEngine{
 			}
 			m_fullscreenQuad.Draw(rc);
 		}
-		//YBlur
+		////YBlur
 		{
 			CChangeRenderTarget chgRt(rc, m_yBlurRT);
+			rc.ClearRenderTargetView(0, clearColor);
+			
 			m_blurParam.offset.x = 0.0f;
 			m_blurParam.offset.y = 16.0f / m_srcTextureHeight;
-			m_blurParam.uvOffset.x = 0.5f / m_yBlurRT.GetWidth();
-			m_blurParam.uvOffset.y = 0.5f / m_yBlurRT.GetHeight();
-			
+		
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetConstantBuffer(0, m_cbBlur);

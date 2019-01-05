@@ -44,7 +44,6 @@ namespace tkEngine {
 	*/
 	void CScreenSpaceReflection::Render(CRenderContext& rc, CPostEffect* postEffect)
 	{
-
 		if (m_isEnable == false) {
 			return;
 		}
@@ -86,7 +85,9 @@ namespace tkEngine {
 		postEffect->DrawFullScreenQuad(rc);
 		
 		rc.OMSetBlendState(AlphaBlendState::disable);
+
 		m_blur.Execute(rc);
+
 		//戻す。
 		////レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
@@ -103,6 +104,7 @@ namespace tkEngine {
 			rc.PSSetShaderResource(2, gBuffer.GetRenderTarget(enGBufferSpecular).GetRenderTargetSRV());
 
 			//最終合成
+			rc.VSSetShader(m_vsShader);
 			rc.PSSetShader(m_psFinalShader);
 			postEffect->DrawFullScreenQuad(rc);
 			for (int i = 0; i < NUM_CALC_AVG_RT; i++) {

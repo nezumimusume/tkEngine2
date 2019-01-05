@@ -286,8 +286,8 @@ namespace tkEngine {
 		*/
 		void VSSetShader(CShader& shader)
 		{
-			m_pD3DDeviceContext->VSSetShader((ID3D11VertexShader*)shader.GetBody(), NULL, 0);
 			IASetInputLayout(shader.GetInputLayout());
+			m_pD3DDeviceContext->VSSetShader((ID3D11VertexShader*)shader.GetBody(), NULL, 0);
 		}
 		/*!
 		* @brief	ピクセルシェーダーを設定。

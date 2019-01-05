@@ -33,9 +33,7 @@ sampler Sampler : register(s0);
 cbuffer CBBlur : register(b0)
 {
 	float4 offset;		//!<オフセット。
-	float4 weight[2];	//!<重み。
-	float2 uvOffset;
-	
+	float4 weight[2];	//!<重み。	
 };
 /*!
  * @brief	Xブラー頂点シェーダー。
@@ -45,10 +43,10 @@ PS_BlurInput VSXBlur(VSInput In)
 	float2 texSize;
 	float level;
 	blurTexture.GetDimensions( 0, texSize.x, texSize.y, level );
+	
 	PS_BlurInput Out;
 	Out.pos = In.pos;
 	float2 tex = In.uv;
-	tex += uvOffset;
 	Out.originTex = tex;
 	Out.tex0 = tex + float2( - 1.0f/texSize.x, 0.0f );
     Out.tex1 = tex + float2( - 3.0f/texSize.x, 0.0f );
@@ -69,12 +67,11 @@ PS_BlurInput VSYBlur(VSInput In)
 	float2 texSize;
 	float level;
 	blurTexture.GetDimensions( 0, texSize.x, texSize.y, level );
+	
 	PS_BlurInput Out;
 	Out.pos = In.pos;
 	float2 tex = In.uv;
-	tex += uvOffset;
-	Out.originTex = tex;
-	
+	Out.originTex = tex;	
 	Out.tex0 = tex + float2( 0.0f,- 1.0f/texSize.y  );
     Out.tex1 = tex + float2( 0.0f,- 3.0f/texSize.y  );
     Out.tex2 = tex + float2( 0.0f,- 5.0f/texSize.y  );
@@ -85,12 +82,12 @@ PS_BlurInput VSYBlur(VSInput In)
     Out.tex7 = tex + float2( 0.0f,-15.0f/texSize.y  );
     return Out;
 }
-void ComputeNewWeightAndColor( out float4 newColor, out float newWeight, inout float totalWeight, float weightBase, float2 uv )
+void ComputeNewWeightAndColor( out float4 newColor, out float newWeight, inout float totalWeight, float weightBase, float2 uv)
 {
 	//錯乱円の半径が小さいピクセルはブラーがかかるピクセルに侵入しないようにするために、
 	//錯乱円の半径をガウスブラーのウェイトに乗算する。
 	newColor = blurTexture.Sample( Sampler, uv );
-	newWeight = weightBase * newColor.a;
+	newWeight = weightBase * newColor.a ;
 	totalWeight += newWeight;
 }
 /*!
@@ -101,6 +98,7 @@ float4 PSBlur( PS_BlurInput In ) : SV_Target0
 	float totalWeight = 0.0f;
 	float newWeight[16];
 	float4 newColor[16];
+	
 	ComputeNewWeightAndColor(newColor[ 0], newWeight[ 0], totalWeight, weight[0].x, In.tex0);
 	ComputeNewWeightAndColor(newColor[ 1], newWeight[ 1], totalWeight, weight[0].y, In.tex1);
 	ComputeNewWeightAndColor(newColor[ 2], newWeight[ 2], totalWeight, weight[0].z, In.tex2);

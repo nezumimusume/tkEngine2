@@ -219,7 +219,6 @@ namespace tkEngine{
 		rc.PSSetShaderResource(1, m_avgRT[m_currentAvgRT].GetRenderTargetSRV());
 		rc.OMSetBlendState(AlphaBlendState::disable);
 		rc.OMSetDepthStencilState(DepthStencilState::disable);
-		
 		rc.PSSetShader(m_psFinal);
 		postEffect->DrawFullScreenQuad(rc);
 		

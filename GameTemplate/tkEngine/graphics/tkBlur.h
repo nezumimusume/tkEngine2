@@ -53,7 +53,6 @@ namespace tkEngine{
 		{
 			return m_yBlurRT.GetRenderTargetSRV();
 		}
-	
 	private:
 		/*!
 		* @brief	ガウスフィルタの重みを更新。
@@ -69,7 +68,6 @@ namespace tkEngine{
 		struct SBlurParam {
 			CVector4 offset;
 			float weights[NUM_WEIGHTS];
-			CVector2 uvOffset;
 		};
 		SBlurParam m_blurParam;				//!<ブラー用のパラメータ。
 		CConstantBuffer m_cbBlur;			//!<ブラー用のパラメータの定数バッファ。

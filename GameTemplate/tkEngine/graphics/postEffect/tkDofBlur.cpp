@@ -36,7 +36,8 @@ namespace tkEngine{
 				DXGI_FORMAT_UNKNOWN,
 				multiSampleDesc
 			);
-			m_blur.InitScaleup(srcTexture, blurIntensity);
+			//ダウンサンプリングしたテクスチャに対して拡大ブラー。
+			m_blur.InitScaleup(m_downSamplingRT.GetRenderTargetSRV(), blurIntensity);
 
 			m_vsDownSample.Load("shader/dof/dof_DownSampling.fx", "VSDownSample", CShader::EnType::VS);
 			m_psDownSample.Load("shader/dof/dof_DownSampling.fx", "PSDownSample", CShader::EnType::PS);
@@ -54,6 +55,7 @@ namespace tkEngine{
 	void CDofBlur::Execute(CRenderContext& rc)
 	{
 		if (m_isScaleupBlur == true) {
+			//一旦ダウンサンプリング。
 			CVector2 invRenderTargetSize;
 			invRenderTargetSize.x = 1.0f / m_downSamplingRT.GetWidth();
 			invRenderTargetSize.y = 1.0f / m_downSamplingRT.GetHeight();
