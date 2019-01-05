@@ -16,10 +16,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	SInitParam initParam;
 	initParam.nCmdShow = nCmdShow;
 	initParam.hInstance = hInstance;
-	initParam.screenWidth = 1920;
-	initParam.screenHeight = 1080;
-	initParam.frameBufferWidth = 1920;
-	initParam.frameBufferHeight = 1080;
+	initParam.screenWidth = 1280;
+	initParam.screenHeight = 720;
+	initParam.frameBufferWidth = 1280;
+	initParam.frameBufferHeight = 720;
 	//âeÇÃê›íËÅB
 	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
