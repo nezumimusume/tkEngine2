@@ -37,10 +37,12 @@ namespace tkEngine{
 				multiSampleDesc
 			);
 			//ダウンサンプリングしたテクスチャに対して拡大ブラー。
-			m_blur.InitScaleup(m_downSamplingRT.GetRenderTargetSRV(), blurIntensity);
+		//	m_blur.InitScaleup(m_downSamplingRT.GetRenderTargetSRV(), blurIntensity);
+			m_hexaBlur.Init(m_downSamplingRT.GetRenderTargetSRV(), true);
 
 			m_vsDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "VSDownSample", CShader::EnType::VS);
 			m_psDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "PSDownSample", CShader::EnType::PS);
+			m_psVerticalDiagonalBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSVerticalDiagonalBlur", CShader::EnType::PS);
 			m_cb.Create(nullptr, sizeof(CVector4));
 		}
 		else {
@@ -67,18 +69,27 @@ namespace tkEngine{
 			CChangeRenderTarget chgRt(rc, m_downSamplingRT);
 			
 			GraphicsEngine().GetPostEffect().DrawFullScreenQuad(rc);
+
+			m_hexaBlur.Execute(rc, [&](CRenderContext& rc, CHexaBlur::EnRenderPass renderPass) {
+				if (renderPass == CHexaBlur::enRenderPass_VerticalDiagonalBlur) {
+					//ピクセルシェーダー差し替え。
+					rc.PSSetShader(m_psVerticalDiagonalBlur);
+				}
+			});
 		}
-		m_blur.Execute(rc, [&](CRenderContext& rc, CBlur::EnRenderStep enRenderStep) {
-			if (enRenderStep == CBlur::enRenderStep_XBlur) {
-				//Xブラー。
-				rc.VSSetShader(m_vsXBlurShader);
-				rc.PSSetShader(m_psBlurShader);
-			}
-			else if (enRenderStep == CBlur::enRenderStep_YBlur) {
-				//Yブラー。
-				rc.VSSetShader(m_vsYBlurShader);
-				rc.PSSetShader(m_psBlurShader);
-			}
-		});
+		else {
+			m_blur.Execute(rc, [&](CRenderContext& rc, CBlur::EnRenderStep enRenderStep) {
+				if (enRenderStep == CBlur::enRenderStep_XBlur) {
+					//Xブラー。
+					rc.VSSetShader(m_vsXBlurShader);
+					rc.PSSetShader(m_psBlurShader);
+				}
+				else if (enRenderStep == CBlur::enRenderStep_YBlur) {
+					//Yブラー。
+					rc.VSSetShader(m_vsYBlurShader);
+					rc.PSSetShader(m_psBlurShader);
+				}
+			});
+		}
 	}
 }

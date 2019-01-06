@@ -860,6 +860,7 @@
     <ClInclude Include="graphics\tkGPUEventMarker.h" />
     <ClInclude Include="graphics\tkGraphicsEngine.h" />
     <ClInclude Include="graphics\tkGraphicsEngine_Inline.h" />
+    <ClInclude Include="graphics\tkHexaBlur.h" />
     <ClInclude Include="graphics\tkLight.h" />
     <ClInclude Include="graphics\tkMapper.h" />
     <ClInclude Include="graphics\tkPresetRenderState.h" />
@@ -969,6 +970,7 @@
     <ClCompile Include="graphics\tkCamera.cpp" />
     <ClCompile Include="graphics\tkGPUEventMarker.cpp" />
     <ClCompile Include="graphics\tkGraphicsEngine.cpp" />
+    <ClCompile Include="graphics\tkHexaBlur.cpp" />
     <ClCompile Include="graphics\tkPresetRenderState.cpp" />
     <ClCompile Include="graphics\tkPresetSamplerState.cpp" />
     <ClCompile Include="graphics\tkPrimitive.cpp" />

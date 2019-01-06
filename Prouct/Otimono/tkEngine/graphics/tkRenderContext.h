@@ -49,6 +49,31 @@ namespace tkEngine {
 		*/
 		void Init(ID3D11DeviceContext* pD3DDeviceContext, ID3D11DeviceContext* pD3DDeferredDeviceContext);
 		/// <summary>
+		/// 現在のレンダリングターゲットをスタックにプッシュ。
+		/// </summary>
+		void PushRenderTargets()
+		{
+			SRenderTarget renderTarget;
+			OMGetRenderTargets(renderTarget.numRenderTargetViews, renderTarget.renderTargets);
+			m_renderTargetStack.push(renderTarget);
+		}
+		/// <summary>
+		/// スタックからレンダリングターゲットをポップ。
+		/// </summary>
+		/// <param name="isApplyRenderState">
+		/// ポップしたレンダリングターゲットをレンダリングパイプラインに設定するかどうかのフラグ。
+		/// </param>
+		void PopRenderTargets(bool isSetRenderStateToRenderPipeline)
+		{
+			auto rt = m_renderTargetStack.top();
+			m_renderTargetStack.pop();
+			OMSetRenderTargets(rt.numRenderTargetViews, rt.renderTargets);
+			if (rt.renderTargets[0] != nullptr) {
+				RSSetViewport(
+					0.0f, 0.0f, (float)rt.renderTargets[0]->GetWidth(), (float)rt.renderTargets[0]->GetHeight());
+			}
+		}
+		/// <summary>
 		/// 現在のレンダリングステートをスタックにプッシュ。
 		/// </summary>
 		void PushRenderState()
@@ -508,8 +533,16 @@ namespace tkEngine {
 			ID3D11BlendState*			blendState = nullptr;			//!<現在のブレンドステート。
 
 		};
+		/// <summary>
+		/// レンダリングターゲット。
+		/// </summary>
+		struct SRenderTarget {
+			CRenderTarget* renderTargets[MRT_MAX] = { nullptr };
+			unsigned int numRenderTargetViews = 0;
+		};
 		SRenderState m_currentRenderState;	//現在のレンダリングステート。
 		std::stack< SRenderState> m_renderStateStack;	//レンダリングステートのスタック。
+		std::stack<SRenderTarget> m_renderTargetStack;	//レンダリングターゲットのスタック。
 		ID3D11DeviceContext*			m_pD3DImmidiateDeviceContext = nullptr;	//!<D3D即時デバイスコンテキスト。MapとUnmapでは即時デバイスコンテキストが必要なので、持たす。
 		ID3D11DeviceContext*			m_pD3DDeviceContext = nullptr;			//!<描画コマンドを積んでいくコンテキスト。
 		D3D11_VIEWPORT 					m_viewport;								//!<ビューポート。

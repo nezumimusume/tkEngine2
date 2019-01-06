@@ -15,12 +15,6 @@ Star::~Star()
 }
 bool Star::Start()
 {
-	if (m_starLight == nullptr) {
-		m_starLight = NewGO<prefab::CDirectionLight>(0);
-		m_starLight->SetDirection({ 0.0f, 0.0f, -1.0f });
-		m_starLight->SetLightingMaterialIDGroup(1 << enMaterialID_Star);
-		m_starLight->SetColor({ 30.0f, 30.0f, 30.0f, 1.0f });
-	}
 	m_player = FindGO<Player>("Player");
 	return true;
 }
@@ -52,6 +46,6 @@ void Star::Update()
 			DeleteGO(this);
 		}
 	}
-	m_renderer->UpdateWorldMatrix(m_position, m_rotation, { 20.0f, 20.0f, 20.0f });
+	m_renderer->UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });
 }
 

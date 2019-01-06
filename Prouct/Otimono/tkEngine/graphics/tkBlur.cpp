@@ -188,10 +188,11 @@ namespace tkEngine{
 		//ウェイトの更新
 		UpdateWeight(m_blurIntensity);
 
-		CRenderTarget* oldRenderTargets[MRT_MAX];
-		unsigned int numRenderTargetViews;
+		//現在のレンダリングターゲットを退避させる。
+		rc.PushRenderTargets();
+		//現在のレンダリングステートを退避させる。
+		rc.PushRenderState();
 
-		rc.OMGetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		float clearColor[] = {
 			0.0f, 0.0f, 0.0f, 0.0f
 		};
@@ -239,11 +240,9 @@ namespace tkEngine{
 			}
 			m_fullscreenQuad.Draw(rc);
 		}
-		rc.OMSetDepthStencilState(depthStenciil);
+		//レンダリングステートを戻す。
+		rc.PopRenderState(true);
 		//レンダリングターゲットを戻す。
-		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
-		if (oldRenderTargets[0] != nullptr) {
-			rc.RSSetViewport(0.0f, 0.0f, (float)oldRenderTargets[0]->GetWidth(), (float)oldRenderTargets[0]->GetHeight());
-		}
+		rc.PopRenderTargets(true);
 	}
 }

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "tkEngine/graphics/tkBlur.h"
+#include "tkEngine/graphics/tkHexaBlur.h"
 
 namespace tkEngine{
 	/*!
@@ -36,6 +37,9 @@ namespace tkEngine{
 		*/
 		CShaderResourceView& GetResultSRV()
 		{
+			if (m_isScaleupBlur) {
+				return m_hexaBlur.GetResultSRV();
+			}
 			return m_blur.GetResultSRV();
 		}
 	
@@ -49,6 +53,8 @@ namespace tkEngine{
 		CShader m_vsXBlurShader;			//!<Xブラー用の頂点シェーダー。
 		CShader m_vsYBlurShader;			//!<Yブラー用の頂点シェーダー。
 		CShader m_psBlurShader;				//!<ブラー用のピクセルシェーダー。
+		CShader m_psVerticalDiagonalBlur;	//垂直斜めブラー。
 		CBlur m_blur;						//!<ガウシアンブラー。
+		CHexaBlur m_hexaBlur;				//!<六角形ブラー。
 	};
 }

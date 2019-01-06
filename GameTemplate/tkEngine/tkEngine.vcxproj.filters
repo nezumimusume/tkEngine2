@@ -452,6 +452,9 @@
     <ClInclude Include="graphics\tkChangeRenderTarget.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\tkHexaBlur.h">
+      <Filter>Source Files\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -723,6 +726,9 @@
     </ClCompile>
     <ClCompile Include="graphics\postEffect\tkDofBlur.cpp">
       <Filter>Source Files\graphics\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\tkHexaBlur.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

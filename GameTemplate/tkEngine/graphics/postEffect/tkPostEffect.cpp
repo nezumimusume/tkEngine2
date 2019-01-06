@@ -4,6 +4,7 @@
 
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/graphics/postEffect/tkPostEffect.h"
+#include "tkEngine/graphics/tkHexaBlur.h"
 
 namespace tkEngine{
 	namespace {
@@ -57,9 +58,10 @@ namespace tkEngine{
 			0,
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
+		
 		m_ssr.Render(rc, this); 
-		m_bloom.Render(rc, this);
 		m_dof.Render(rc, this);
+		m_bloom.Render(rc, this);
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);
 		//

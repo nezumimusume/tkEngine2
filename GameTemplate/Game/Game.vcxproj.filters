@@ -42,6 +42,9 @@
     <MeshContentTask Include="Assets\modelData\bg\bg.fbx">
       <Filter>Assets\modelData\bg</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\star.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\dummy.png">
