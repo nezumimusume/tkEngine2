@@ -272,7 +272,6 @@ namespace tkEngine{
 		CShadowCaster_SkinModel m_shadowCaster;					//!<シャドウキャスター。
 		bool m_isShadowCaster = false;							//!<シャドウキャスター？
 		bool m_isShadowReceiver = false;						//!<シャドウレシーバー？
-		CSamplerState m_samplerState;							//!<サンプラステート。@todo ひとまとめにした方がいい。
 		std::unique_ptr<CMatrix[]>	m_instancingData;			//!<インスタンシング描画用のデータ。
 		CStructuredBuffer	m_instancingDataSB;					//!<インスタンシング描画用のストラクチャーバッファ。
 		int m_maxInstance = 1;									//!<インスタンスの最大数

@@ -49,12 +49,13 @@ namespace tkEngine{
 		CRenderTarget* renderTargets[] = {
 			&GraphicsEngine().GetMainRenderTarget()
 		};
+	//	rc.BeginRender();
 		rc.OMSetRenderTargets(1, renderTargets);
 		rc.ClearRenderTargetView(0, ClearColor);
 		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
 		rc.RSSetState(RasterizerState::sceneRender);
-		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
-		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
+		rc.OMSetDepthStencilState(DepthStencilState::SceneRender);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 	}
 	void CGameObjectManager::ForwardPreRender(CRenderContext& rc)
 	{
@@ -85,10 +86,10 @@ namespace tkEngine{
 	void CGameObjectManager::PostRender(CRenderContext& rc)
 	{
 		BeginGPUEvent(L"enRenderStep_Render2DToScene");
-		float blendFactor[4] = { 0.0f };
-		rc.OMSetBlendState(AlphaBlendState::trans, blendFactor, 0xFFFFFFFF);
+
+		rc.OMSetBlendState(AlphaBlendState::trans);
 		rc.RSSetState(RasterizerState::spriteRender);
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender);
 		rc.SetRenderStep(enRenderStep_Render2DToScene);
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {

@@ -16,12 +16,12 @@ namespace tkEngine {
 	}
 	void CDof::Release()
 	{
-		m_createDofMaskAndCalcCocParam.calcCocAndColorRt.Release();
-		m_createDofMaskAndCalcCocParam.vs.Release();
-		m_createDofMaskAndCalcCocParam.ps.Release();
-		m_createDofMaskAndCalcCocParam.cb.Release();
-		if (m_createDofMaskAndCalcCocParam.blendState != nullptr) {
-			m_createDofMaskAndCalcCocParam.blendState->Release();
+		m_createCocParam.calcCocAndColorRt.Release();
+		m_createCocParam.vs.Release();
+		m_createCocParam.ps.Release();
+		m_createCocParam.cb.Release();
+		if (m_createCocParam.blendState != nullptr) {
+			m_createCocParam.blendState->Release();
 		}
 
 		m_downSampligCocAndColorParam.vs.Release();
@@ -46,18 +46,18 @@ namespace tkEngine {
 	}
 	void CDof::InitConstantBuffers()
 	{
-		m_createDofMaskAndCalcCocParam.cb.Create(nullptr, sizeof(SCreateDofMaskAndCalcCoc));
+		m_createCocParam.cb.Create(nullptr, sizeof(SCreateCocParamCB));
 		m_downSampligCocAndColorParam.cb.Create(nullptr, sizeof(SDownSamplingCocAndColorCB));
 	}
 
 	void CDof::InitShaders()
 	{
-		m_createDofMaskAndCalcCocParam.vs.Load(
-			"shader/dof/dof_CreateDofMaskAndCalcCoc.fx",
+		m_createCocParam.vs.Load(
+			"shader/dof/dof_CreateCoCTexture.fx",
 			"VSMain",
 			CShader::EnType::VS);
-		m_createDofMaskAndCalcCocParam.ps.Load(
-			"shader/dof/dof_CreateDofMaskAndCalcCoc.fx",
+		m_createCocParam.ps.Load(
+			"shader/dof/dof_CreateCoCTexture.fx",
 			"PSMain",
 			CShader::EnType::PS);
 
@@ -77,7 +77,7 @@ namespace tkEngine {
 		multiSampleDesc.Count = 1;
 		multiSampleDesc.Quality = 0;
 		//CoC計算用のレンダリングターゲットを作成する。
-		m_createDofMaskAndCalcCocParam.calcCocAndColorRt.Create(
+		m_createCocParam.calcCocAndColorRt.Create(
 			ge.GetFrameBufferWidth(),
 			ge.GetFrameBufferHeight(),
 			1,
@@ -88,19 +88,14 @@ namespace tkEngine {
 		);
 		//ガウシアーン。
 		m_downSampligCocAndColorParam.blur[0].Init(
-			m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
-			2.5f
+			m_createCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
+			1.5f
 		);
 		m_downSampligCocAndColorParam.blur[1].Init(
 			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
-			2.5f,
+			1.5f,
 			true
 		);
-		/*m_downSampligCocAndColorParam.blur[2].Init(
-			m_downSampligCocAndColorParam.blur[1].GetResultSRV(),
-			2.5f,
-			true
-		);*/
 	}
 	void CDof::InitBlendStates()
 	{
@@ -113,27 +108,27 @@ namespace tkEngine {
 		//Dofマスクを作成するレンダリングターゲットもアルファブレンディングはオフ。
 		desc.RenderTarget[1].BlendEnable = false;
 
-		d3dDevice->CreateBlendState(&desc, &m_createDofMaskAndCalcCocParam.blendState);
+		d3dDevice->CreateBlendState(&desc, &m_createCocParam.blendState);
 	}
 	void CDof::Update()
 	{
 	}
-	void CDof::CreateDofMaskAndCalcCoc(CRenderContext& rc, CPostEffect* postEffect)
+	void CDof::CreateCoCTexture(CRenderContext& rc, CPostEffect* postEffect)
 	{
 		auto& ge = GraphicsEngine();
-		ge.BeginGPUEvent(L"enRenderStep_Dof::CreateDofMaskAndCalcCoc");
+		ge.BeginGPUEvent(L"enRenderStep_Dof::CreateCoCTexture");
 		//シーンが書き込まれているレンダリングターゲットを取得する。
 		auto& sceneRt = postEffect->GetFinalRenderTarget();
-		auto& calcCocAndColorRt = m_createDofMaskAndCalcCocParam.calcCocAndColorRt;
-		auto& vs = m_createDofMaskAndCalcCocParam.vs;
-		auto& ps = m_createDofMaskAndCalcCocParam.ps;
-		auto& cb = m_createDofMaskAndCalcCocParam.cb;
+		auto& calcCocAndColorRt = m_createCocParam.calcCocAndColorRt;
+		auto& vs = m_createCocParam.vs;
+		auto& ps = m_createCocParam.ps;
+		auto& cb = m_createCocParam.cb;
 		auto& depthTextureSrv = ge.GetGBufferRender().GetRenderTarget(enGBufferDepth).GetRenderTargetSRV();
 		//レンダリングターゲットを切り替える。
 
 		CChangeRenderTarget chgRt(rc, calcCocAndColorRt);
 		//定数バッファの更新。
-		SCreateDofMaskAndCalcCocCB cbParam;
+		SCreateCocParamCB cbParam;
 		cbParam.dofRange.x = m_nearStartDistance;
 		cbParam.dofRange.y = m_nearEndDistance;
 		cbParam.dofRange.z = m_farStartDistance;
@@ -150,7 +145,7 @@ namespace tkEngine {
 		rc.PSSetShader(ps);
 
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_point);
-		rc.OMSetBlendState(m_createDofMaskAndCalcCocParam.blendState);
+		rc.OMSetBlendState(m_createCocParam.blendState);
 		
 		postEffect->DrawFullScreenQuad(rc);
 
@@ -160,13 +155,17 @@ namespace tkEngine {
 		ge.EndGPUEvent();
 
 	}
-	void CDof::DownSamplingCocAndColor(CRenderContext& rc, CPostEffect* postEffect)
+	void CDof::CreateBokeTexture(CRenderContext& rc, CPostEffect* postEffect)
 	{
 		auto& ge = GraphicsEngine();
 		auto& depthTextureSrv = ge.GetGBufferRender().GetRenderTarget(enGBufferDepth).GetRenderTargetSRV();
 
-		ge.BeginGPUEvent(L"enRenderStep_Dof::DownSamplingCocAndColor");
+		ge.BeginGPUEvent(L"enRenderStep_Dof::CreateBokeTexture");
 
+		//ボケ画像の生成
+		//① 1/2の解像度への縮小ガウシアンブラー
+		//② ①で生成されたが画像を使って、1/2の解像度へのダウンサンプリング
+		//③ ②で生成されたがぞうを使って２倍の解像度への拡大ガウシアンブラー(3番目で作成された画像がボケ画像)
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.PSSetShaderResource(1, depthTextureSrv);
 		for (auto& blur : m_downSampligCocAndColorParam.blur) {
@@ -185,9 +184,8 @@ namespace tkEngine {
 
 		rc.VSSetShader(m_finalParam.vs);
 		rc.PSSetShader(m_finalParam.ps);
-		rc.PSSetShaderResource(0, m_createDofMaskAndCalcCocParam.calcCocAndColorRt.GetRenderTargetSRV());
-		rc.PSSetShaderResource(1, m_downSampligCocAndColorParam.blur[0].GetResultSRV());
-		rc.PSSetShaderResource(2, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
+		rc.PSSetShaderResource(0, m_createCocParam.calcCocAndColorRt.GetRenderTargetSRV());
+		rc.PSSetShaderResource(1, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
 	
 		rc.OMSetBlendState(AlphaBlendState::disable);
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
@@ -210,9 +208,9 @@ namespace tkEngine {
 
 		rc.SetRenderStep(enRenderStep_Dof);
 
-		CreateDofMaskAndCalcCoc(rc, postEffect);
+		CreateCoCTexture(rc, postEffect);
 
-		DownSamplingCocAndColor(rc, postEffect);
+		CreateBokeTexture(rc, postEffect);
 
 		Final(rc, postEffect);
 

@@ -74,6 +74,7 @@ namespace tkEngine {
 #include <vector>
 #include <list>
 #include <queue>
+#include <stack>
 #include <algorithm>
 #include <map>
 #include <wincodec.h>
@@ -138,3 +139,4 @@ namespace tkEngine {
 #include "tkEngine/graphics/font/tkFontRender.h"
 #include "tkEngine/nature/tkSky.h"
 #include "tkEngine/graphics/tkChangeRenderTarget.h"
+#include "tkEngine/graphics/tkPresetSamplerState.h"

@@ -5,11 +5,9 @@
  */
 
 Texture2D<float4> cocTexture : register(t0);	//CoCが書き込まれたテクスチャ
-Texture2D<float4> bokeTexture_0 : register(t1);	//ボケテクスチャ　レベル０。
-Texture2D<float4> bokeTexture_1 : register(t2);	//ボケテクスチャ　レベル１。
+Texture2D<float4> bokeTexture : register(t1);	//ボケテクスチャ。
 
 sampler bilinearSampler : register(s0);			//バイリニアサンプリングを行うサンプラ。
-sampler pointSampler : register(s1);			//ポイントサンプリング。
 
 /*!
  *@brief	ピクセルシェーダーへの入力。
@@ -40,18 +38,12 @@ float4 PSMain( PSIn psIn ) : SV_Target0
 	float coc = color.a;
 	coc = min( 1.0f, coc );
 	//錯乱円の半径が0.001以下はボケないので、ピクセルキル。
-	//clip( coc - 0.0001f );
-	float4 colorTbl[3] = {
-		color,
-		bokeTexture_1.Sample(bilinearSampler, psIn.uv),
-		bokeTexture_1.Sample(bilinearSampler, psIn.uv),
-	};
+	clip( coc - 0.0001f );
 	
-	float fTexIndex = min( 0.998f, coc ) / 0.5f;
-	int iTexIndex = floor(fTexIndex);
-	float blendRate = frac(fTexIndex);
+	//CoCがそのままブレンディング率。
+	float blendRate = min( 1.0f, coc ) ;
 	
-	float4 blendColor = lerp(colorTbl[iTexIndex], colorTbl[iTexIndex+1], blendRate);
+	float4 blendColor = lerp(color, bokeTexture.Sample(bilinearSampler, psIn.uv), blendRate);
 	//適当にボケボケ
 	return float4(blendColor.xyz, 1.0f);
 }

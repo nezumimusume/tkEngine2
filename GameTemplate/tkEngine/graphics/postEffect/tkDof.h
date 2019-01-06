@@ -92,15 +92,15 @@ namespace tkEngine {
 		}
 	private:
 		/// <summary>
-		/// ピクセル単位のDofマスクの作成とCocの計算を行う描画パス。
+		/// 錯乱円テクスチャの作成行う描画パス。
 		/// </summary>
-		void CreateDofMaskAndCalcCoc(CRenderContext& rc, CPostEffect* postEffect);
+		void CreateCoCTexture(CRenderContext& rc, CPostEffect* postEffect);
 		/// <summary>
-		/// シーンのカラー情報とCoC情報のダウンサンプリングを行う描画パス。
+		/// ボケ画像の作成を行う描画パス。
 		/// </summary>
 		/// <param name="rc"></param>
 		/// <param name="postEffect"></param>
-		void DownSamplingCocAndColor(CRenderContext& rc, CPostEffect* postEffect);
+		void CreateBokeTexture(CRenderContext& rc, CPostEffect* postEffect);
 		/// <summary>
 		/// 最終シーン合成の描画パス。
 		/// </summary>
@@ -127,13 +127,13 @@ namespace tkEngine {
 		
 	private:
 		/// <summary>
-		/// CreateDofMaskAndCalcCocのパスで使用する定数バッファの構造体。
+		/// CreateCocのパスで使用する定数バッファの構造体。
 		/// </summary>
 		/// <remarks>
-		/// この構造体の中身を変更したら、Assets/shader/dof/dof_CreateDofMaskAndCalcCoc.fxの
+		/// この構造体の中身を変更したら、Assets/shader/dof/dof_CreateCoc.fxの
 		/// cbParamの内容も変更する。
 		/// </remarks>
-		struct SCreateDofMaskAndCalcCocCB {
+		struct SCreateCocParamCB {
 			CVector4 dofRange;				//被写界深度の範囲を表すデータ。SetDofRangeParam関数で設定されるデータ。
 											//xは手前ボケの減衰が開始するカメラからの距離。
 											//yは手前ボケの減衰が終了するカメラからの距離。
@@ -141,9 +141,9 @@ namespace tkEngine {
 											//wは奥ボケの増幅が終了するカメラからの距離。			
 		};
 		/// <summary>
-		/// CreateDofMaskAndCalcCocのパスで使用するデータ集。
+		/// CreateCoCTextureのパスで使用するデータ集。
 		/// </summary>
-		struct SCreateDofMaskAndCalcCoc {
+		struct SCreateCoCTexture {
 			CRenderTarget calcCocAndColorRt;			//ピクセルのCoCの計算結果が描き込まれるレンダリングターゲット。CoCはαチャンネルに書き込まれます。
 			CShader vs;									//頂点シェーダー。
 			CShader ps;									//ピクセルシェーダー。
@@ -179,7 +179,7 @@ namespace tkEngine {
 			CShader ps;
 		};
 		bool m_isEnable = false;	//Dofが有効かどうかのフラグ。
-		SCreateDofMaskAndCalcCoc m_createDofMaskAndCalcCocParam;
+		SCreateCoCTexture m_createCocParam;
 		SDownSamplingCocAndColor m_downSampligCocAndColorParam;
 		SFinal m_finalParam;
 

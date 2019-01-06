@@ -39,8 +39,8 @@ namespace tkEngine{
 			//ダウンサンプリングしたテクスチャに対して拡大ブラー。
 			m_blur.InitScaleup(m_downSamplingRT.GetRenderTargetSRV(), blurIntensity);
 
-			m_vsDownSample.Load("shader/dof/dof_DownSampling.fx", "VSDownSample", CShader::EnType::VS);
-			m_psDownSample.Load("shader/dof/dof_DownSampling.fx", "PSDownSample", CShader::EnType::PS);
+			m_vsDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "VSDownSample", CShader::EnType::VS);
+			m_psDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "PSDownSample", CShader::EnType::PS);
 			m_cb.Create(nullptr, sizeof(CVector4));
 		}
 		else {
@@ -48,9 +48,9 @@ namespace tkEngine{
 			m_blur.Init(srcTexture, blurIntensity);
 		}
 		//シェーダーをロード。
-		m_vsXBlurShader.Load("shader/dof/blur.fx", "VSXBlur", CShader::EnType::VS);
-		m_vsYBlurShader.Load("shader/dof/blur.fx", "VSYBlur", CShader::EnType::VS);
-		m_psBlurShader.Load("shader/dof/blur.fx", "PSBlur", CShader::EnType::PS);
+		m_vsXBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "VSXBlur", CShader::EnType::VS);
+		m_vsYBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "VSYBlur", CShader::EnType::VS);
+		m_psBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "PSBlur", CShader::EnType::PS);
 	}
 	void CDofBlur::Execute(CRenderContext& rc)
 	{

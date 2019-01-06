@@ -92,14 +92,6 @@ namespace tkEngine{
 		m_vsXBlurShader.Load("shader/blur.fx", "VSXBlur", CShader::EnType::VS);
 		m_vsYBlurShader.Load("shader/blur.fx", "VSYBlur", CShader::EnType::VS);
 		m_psBlurShader.Load("shader/blur.fx", "PSBlur", CShader::EnType::PS);
-
-		D3D11_SAMPLER_DESC samplerDesc;
-		ZeroMemory(&samplerDesc, sizeof(samplerDesc));
-		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		m_samplerState.Create(samplerDesc);
 	}
 	void CBlur::Init( CShaderResourceView& srcTexture, float blurIntensity )
 	{
@@ -175,14 +167,6 @@ namespace tkEngine{
 		m_vsYBlurShader.Load("shader/blur.fx", "VSYBlur", CShader::EnType::VS);
 		m_psBlurShader.Load("shader/blur.fx", "PSBlur", CShader::EnType::PS);
 
-		D3D11_SAMPLER_DESC samplerDesc;
-		ZeroMemory(&samplerDesc, sizeof(samplerDesc));
-		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		m_samplerState.Create(samplerDesc);
-
 	}
 	void CBlur::UpdateWeight(float dispersion)
 	{
@@ -212,18 +196,15 @@ namespace tkEngine{
 			0.0f, 0.0f, 0.0f, 0.0f
 		};
 		ID3D11DepthStencilState* depthStenciil = rc.GetDepthStencilState();
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
-		rc.PSSetSampler(0, m_samplerState);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		//XBlur
 		{
 			CChangeRenderTarget chgRt(rc, m_xBlurRT);
+			rc.ClearRenderTargetView(0, clearColor);
 			m_blurParam.offset.x = 16.0f / m_srcTextureWidth;
 			m_blurParam.offset.y = 0.0f;
-			m_blurParam.uvOffset.x = 0.5f / m_xBlurRT.GetWidth();
-			m_blurParam.uvOffset.y = 0.5f / m_xBlurRT.GetHeight();
-
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetShaderResource(0, *m_srcTexture);
 			rc.PSSetConstantBuffer(0, m_cbBlur);
@@ -236,16 +217,15 @@ namespace tkEngine{
 			}
 			m_fullscreenQuad.Draw(rc);
 		}
-		//YBlur
+		////YBlur
 		{
 			CChangeRenderTarget chgRt(rc, m_yBlurRT);
+			rc.ClearRenderTargetView(0, clearColor);
+			
 			m_blurParam.offset.x = 0.0f;
 			m_blurParam.offset.y = 16.0f / m_srcTextureHeight;
-			m_blurParam.uvOffset.x = 0.5f / m_yBlurRT.GetWidth();
-			m_blurParam.uvOffset.y = 0.5f / m_yBlurRT.GetHeight();
-			
+		
 			rc.UpdateSubresource(m_cbBlur, &m_blurParam);
-			rc.ClearRenderTargetView(0, clearColor);
 			rc.VSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetShaderResource(0, m_xBlurRT.GetRenderTargetSRV());
 			rc.PSSetConstantBuffer(0, m_cbBlur);
@@ -259,7 +239,7 @@ namespace tkEngine{
 			}
 			m_fullscreenQuad.Draw(rc);
 		}
-		rc.OMSetDepthStencilState(depthStenciil, 0);
+		rc.OMSetDepthStencilState(depthStenciil);
 		//レンダリングターゲットを戻す。
 		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		if (oldRenderTargets[0] != nullptr) {

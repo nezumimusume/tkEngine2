@@ -44,12 +44,14 @@ namespace tkEngine {
 	*/
 	void CScreenSpaceReflection::Render(CRenderContext& rc, CPostEffect* postEffect)
 	{
-
 		if (m_isEnable == false) {
 			return;
 		}
 		BeginGPUEvent(L"enRenderStep_ScreenSpaceReflection");
-		rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
+		//レンダリングステートを退避させる。
+		rc.PushRenderState();
+
+		rc.OMSetDepthStencilState(DepthStencilState::disable);
 		
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
 
@@ -71,8 +73,8 @@ namespace tkEngine {
 		m_viewProjInvLastFrame = cb.mViewProjInv;
 		CGBufferRender& gBuffer = GraphicsEngine().GetGBufferRender();
 
-		rc.PSSetSampler(0, *CPresetSamplerState::sampler_clamp_clamp_clamp_linear);
-		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
+		rc.OMSetBlendState(AlphaBlendState::trans);
 	
 		rc.PSSetShaderResource(0, rt.GetRenderTargetSRV());
 		rc.PSSetShaderResource(1, gBuffer.GetRenderTarget(enGBufferNormal).GetRenderTargetSRV());
@@ -82,8 +84,10 @@ namespace tkEngine {
 		rc.VSSetShader(m_vsShader);
 		postEffect->DrawFullScreenQuad(rc);
 		
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		rc.OMSetBlendState(AlphaBlendState::disable);
+
 		m_blur.Execute(rc);
+
 		//戻す。
 		////レンダリングターゲットを切り替える。
 		postEffect->ToggleFinalRenderTarget();
@@ -100,14 +104,17 @@ namespace tkEngine {
 			rc.PSSetShaderResource(2, gBuffer.GetRenderTarget(enGBufferSpecular).GetRenderTargetSRV());
 
 			//最終合成
+			rc.VSSetShader(m_vsShader);
 			rc.PSSetShader(m_psFinalShader);
 			postEffect->DrawFullScreenQuad(rc);
 			for (int i = 0; i < NUM_CALC_AVG_RT; i++) {
 				rc.PSUnsetShaderResource(1 + i);
 			}
 		}
-		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+	
 		rc.PSUnsetShaderResource(0);
+		//レンダリングステートを元に戻す。
+		rc.PopRenderState(true);
 
 		EndGPUEvent();
 	}

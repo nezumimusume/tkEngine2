@@ -111,14 +111,6 @@ namespace tkEngine{
 		m_cbBlur.Create(&m_blurParam, sizeof(m_blurParam));
 		m_isEnable = config.bloomConfig.isEnable;
 
-		D3D11_SAMPLER_DESC desc;
-		ZeroMemory(&desc, sizeof(desc));
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		m_samplerState.Create(desc);
-
 		m_cb.Create(nullptr, 16);
 	}
 	void CBloom::UpdateWeight(float dispersion)
@@ -139,11 +131,14 @@ namespace tkEngine{
 		if (!m_isEnable) {
 			return;
 		}
+		//レンダリングステートを退避させる。
+		rc.PushRenderState();
+
 		UpdateWeight(25.0f);
 		rc.SetRenderStep(enRenderStep_Bloom);
 		CGraphicsEngine& ge = Engine().GetGraphicsEngine();
 		ge.BeginGPUEvent(L"enRenderStep_Bloom");
-		rc.PSSetSampler(0, m_samplerState);
+		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		float clearColor[] = {
 			0.0f, 0.0f, 0.0f, 0.0f
 		};
@@ -210,7 +205,7 @@ namespace tkEngine{
 		{			
 			//
 			CChangeRenderTarget chgRt(rc, m_combineRT);
-			rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+			rc.OMSetBlendState(AlphaBlendState::disable);
 
 			rc.ClearRenderTargetView(0, clearColor);
 			rc.PSSetShaderResource(0, m_downSamplingRT[3].GetRenderTargetSRV());
@@ -226,7 +221,7 @@ namespace tkEngine{
 			CRenderTarget& finalRT = postEffect->GetFinalRenderTarget();
 			CChangeRenderTarget chgRt(rc, finalRT);
 			// アルファブレンディングを加算合成にする。
-			rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
+			rc.OMSetBlendState(AlphaBlendState::add);
 			
 			CVector2 uvOffset;
 			uvOffset.x = 0.5f / finalRT.GetWidth();
@@ -238,15 +233,15 @@ namespace tkEngine{
 			rc.PSSetShader(m_copyPS);
 			rc.PSSetShaderResource(0, m_combineRT.GetRenderTargetSRV());
 			postEffect->DrawFullScreenQuad(rc);
-
-			//アルファブレンディングをもとに戻す。
-			rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
 		}
 
 		rc.PSUnsetShaderResource(0);
 		rc.PSUnsetShaderResource(1);
 		rc.PSUnsetShaderResource(2);
 		rc.PSUnsetShaderResource(3);
+
+		//レンダリングステートを戻す。
+		rc.PopRenderState(true);
 
 		Engine().GetGraphicsEngine().EndGPUEvent();
 	}

@@ -8,10 +8,10 @@ namespace tkEngine {
 	{
 	public:
 		static void Init();
-		static CSamplerState* sampler_clamp_clamp_clamp_linear;	//デフォルトのサンプラステート
+		static CSamplerState* clamp_clamp_clamp_linear;	//デフォルトのサンプラステート
 																//AddressU = CLAMP
 																//AddressV = CLAMP
 																//AddressW = CLAMP
-																//Filter = LINEAR
+		static CSamplerState* clamp_clamp_clamp_point;														//Filter = LINEAR
 	};
 }

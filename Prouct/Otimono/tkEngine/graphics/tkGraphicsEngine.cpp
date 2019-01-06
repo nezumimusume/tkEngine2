@@ -275,13 +275,13 @@ namespace tkEngine{
 		//ディファードレンダリング用のデプスステンシルステート。
 		ID3D11DepthStencilState* depthStencil = rc.GetDepthStencilState();
 		//rc.OMSetDepthStencilState(DepthStencilState::defferedRender, 0);
-		rc.OMSetDepthStencilState(DepthStencilState::spriteRender, 0);
+		rc.OMSetDepthStencilState(DepthStencilState::spriteRender);
 		//ポストエフェクトのフルスクリーン描画の機能を使う。
 		m_postEffect.DrawFullScreenQuad(rc);
 
 		GraphicsEngine().GetGBufferRender().UnsetGBufferParamFromReg(rc);
 
-		rc.OMSetDepthStencilState(depthStencil, 0);
+		rc.OMSetDepthStencilState(depthStencil);
 
 		EndGPUEvent();
 

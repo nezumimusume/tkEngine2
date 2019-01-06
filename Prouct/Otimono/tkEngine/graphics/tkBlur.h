@@ -53,7 +53,6 @@ namespace tkEngine{
 		{
 			return m_yBlurRT.GetRenderTargetSRV();
 		}
-	
 	private:
 		/*!
 		* @brief	ガウスフィルタの重みを更新。
@@ -69,7 +68,6 @@ namespace tkEngine{
 		struct SBlurParam {
 			CVector4 offset;
 			float weights[NUM_WEIGHTS];
-			CVector2 uvOffset;
 		};
 		SBlurParam m_blurParam;				//!<ブラー用のパラメータ。
 		CConstantBuffer m_cbBlur;			//!<ブラー用のパラメータの定数バッファ。
@@ -82,7 +80,6 @@ namespace tkEngine{
 		int m_srcTextureWidth = 0;			//!<ソーステクスチャの幅。
 		int m_srcTextureHeight = 0;			//!<ソーステクスチャの高さ。
 		CPrimitive	m_fullscreenQuad;		//!<フルスクリーン描画用の矩形プリミティブ。
-		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい?。
 		float m_blurIntensity = 25.0f;
 	};
 }

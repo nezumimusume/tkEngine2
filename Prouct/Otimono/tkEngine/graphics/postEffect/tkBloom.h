@@ -63,6 +63,5 @@ namespace tkEngine{
 		SBlurParam m_blurParam;			//!<ブラー用のパラメータ。
 		CConstantBuffer m_cbBlur;
 		CConstantBuffer m_cb;
-		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい?。
 	};
 }
