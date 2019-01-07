@@ -258,7 +258,26 @@ namespace tkEngine{
 	{
 		return Engine().GetGraphicsEngine().GetGBufferRender().GetRenderTarget(gBuffer).GetRenderTargetSRV();
 	}
-
+	/// <summary>
+	/// ポストエフェクトの機能に簡易的にアクセスするための名前空間。
+	/// </summary>
+	namespace postEffect {
+		/// <summary>
+		/// 被写界深度にアクセス
+		/// </summary>
+		static inline CDof& Dof()
+		{
+			return GraphicsEngine().GetPostEffect().GetDof();
+		}
+		/// <summary>
+		/// トーンマップにアクセス。
+		/// </summary>
+		/// <returns></returns>
+		static inline CTonemap& Tonemap()
+		{
+			return GraphicsEngine().GetPostEffect().GetTonemap();
+		}
+	}
 	//デバッグ機能を簡易的にアクセスするための名前空間
 	namespace dbg {
 		

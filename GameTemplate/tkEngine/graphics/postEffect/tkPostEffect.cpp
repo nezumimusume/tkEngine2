@@ -60,8 +60,8 @@ namespace tkEngine{
 		);
 		
 		m_ssr.Render(rc, this); 
-		m_dof.Render(rc, this);
 		m_bloom.Render(rc, this);
+		m_dof.Render(rc, this);
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);
 		//

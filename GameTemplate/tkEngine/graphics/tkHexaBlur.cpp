@@ -76,13 +76,16 @@ namespace tkEngine {
 			rc.PSSetShaderResource(0, *m_srcTexture);
 			rc.VSSetShader(m_vs);
 			rc.PSSetShader(m_psVerticalDiagonalBlur);
+			float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+			rc.ClearRenderTargetView(0, color);
+			rc.ClearRenderTargetView(1, color);
 			if (onPreDraw != nullptr) {
 				onPreDraw(rc, enRenderPass_VerticalDiagonalBlur);
 			}
 			postEffect.DrawFullScreenQuad(rc);
 		}
 		//垂直ブラーと斜めブラーを合成する。
-		{
+	/*	{
 			CChangeRenderTarget chgRt(rc, m_renderTarget[enRenderTarget_VerticalDiagonalBlur]);
 			rc.PSSetShaderResource(0, m_renderTarget[enRenderTarget_VerticalBlur].GetRenderTargetSRV());
 			rc.PSSetShaderResource(1, m_renderTarget[enRenderTarget_DiagonalBlur].GetRenderTargetSRV());
@@ -92,12 +95,12 @@ namespace tkEngine {
 				onPreDraw(rc, enRenderPass_CombineVerticalDiagonalBlur);
 			}
 			postEffect.DrawFullScreenQuad(rc);
-		}
+		}*/
 		//六角形ブラーを作成する。
 		{
 			CChangeRenderTarget chgRt(rc, m_renderTarget[enRenderTarget_RhomboidBlur]);
 			rc.PSSetShaderResource(0, m_renderTarget[enRenderTarget_VerticalBlur].GetRenderTargetSRV());
-			rc.PSSetShaderResource(1, m_renderTarget[enRenderTarget_VerticalDiagonalBlur].GetRenderTargetSRV());
+			rc.PSSetShaderResource(1, m_renderTarget[enRenderTarget_DiagonalBlur].GetRenderTargetSRV());
 			rc.VSSetShader(m_vs);
 			rc.PSSetShader(m_psRhomboidBlur);
 			if (onPreDraw != nullptr) {

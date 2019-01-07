@@ -14,82 +14,55 @@ namespace tkEngine{
 	CDofBlur::~CDofBlur()
 	{
 	}
-	void CDofBlur::Init( CShaderResourceView& srcTexture, float blurIntensity, bool isScaleupBlur )
+	void CDofBlur::Init( CShaderResourceView& srcTexture, float blurIntensity )
 	{
-		m_isScaleupBlur = isScaleupBlur;
 		m_srcTexture = &srcTexture;
-		if (isScaleupBlur) {
-			//このフラグがtrueの場合は一旦ダウンサンプリングを行って
-			//そこから拡大ブラーを行う。
-			//縮小バッファのアーティファクトの軽減のため。
-			DXGI_SAMPLE_DESC multiSampleDesc;
-			multiSampleDesc.Count = 1;
-			multiSampleDesc.Quality = 0;
-			D3D11_TEXTURE2D_DESC texDesc;
-			srcTexture.GetTextureDesc(texDesc);
-			m_downSamplingRT.Create(
-				texDesc.Width / 2,
-				texDesc.Height / 2,
-				1,
-				1,
-				DXGI_FORMAT_R16G16B16A16_FLOAT,
-				DXGI_FORMAT_UNKNOWN,
-				multiSampleDesc
-			);
-			//ダウンサンプリングしたテクスチャに対して拡大ブラー。
-		//	m_blur.InitScaleup(m_downSamplingRT.GetRenderTargetSRV(), blurIntensity);
-			m_hexaBlur.Init(m_downSamplingRT.GetRenderTargetSRV(), true);
-
-			m_vsDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "VSDownSample", CShader::EnType::VS);
-			m_psDownSample.Load("shader/dof/dof_CreateBokeTexture.fx", "PSDownSample", CShader::EnType::PS);
-			m_psVerticalDiagonalBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSVerticalDiagonalBlur", CShader::EnType::PS);
-			m_cb.Create(nullptr, sizeof(CVector4));
-		}
-		else {
-			//こちらは縮小ブラー。
-			m_blur.Init(srcTexture, blurIntensity);
-		}
-		//シェーダーをロード。
-		m_vsXBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "VSXBlur", CShader::EnType::VS);
-		m_vsYBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "VSYBlur", CShader::EnType::VS);
-		m_psBlurShader.Load("shader/dof/dof_CreateBokeTexture.fx", "PSBlur", CShader::EnType::PS);
+		//まずは小規模ブラー。
+		DXGI_SAMPLE_DESC multiSampleDesc;
+		multiSampleDesc.Count = 1;
+		multiSampleDesc.Quality = 0;
+		D3D11_TEXTURE2D_DESC texDesc;
+		srcTexture.GetTextureDesc(texDesc);
+		m_downSamplingRT.Create(
+			texDesc.Width / 2,
+			texDesc.Height / 2,
+			1,
+			1,
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			DXGI_FORMAT_UNKNOWN,
+			multiSampleDesc
+		);
+		
+		//続いて六角形ブラー。
+		m_hexaBlur.Init(m_downSamplingRT.GetRenderTargetSRV());
+		m_hexaBlur.SetRadius(6.0f);
+		m_vsMiniBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "VSMinBlur", CShader::EnType::VS);
+		m_psMiniBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSMinBlur", CShader::EnType::PS);
+		m_psVerticalDiagonalBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSVerticalDiagonalBlur", CShader::EnType::PS);
+		m_cb.Create(nullptr, sizeof(CVector4));
+		
 	}
 	void CDofBlur::Execute(CRenderContext& rc)
 	{
-		if (m_isScaleupBlur == true) {
-			//一旦ダウンサンプリング。
-			CVector2 invRenderTargetSize;
-			invRenderTargetSize.x = 1.0f / m_downSamplingRT.GetWidth();
-			invRenderTargetSize.y = 1.0f / m_downSamplingRT.GetHeight();
-			rc.UpdateSubresource(m_cb, &invRenderTargetSize);
-			rc.VSSetConstantBuffer(0, m_cb);
-			rc.VSSetShader(m_vsDownSample);
-			rc.PSSetShader(m_psDownSample);
-			rc.PSSetShaderResource(0, *m_srcTexture);
-			CChangeRenderTarget chgRt(rc, m_downSamplingRT);
+		//1/2の解像度への小規模な縮小ブラー。
+		CVector2 invRenderTargetSize;
+		invRenderTargetSize.x = 1.0f / m_downSamplingRT.GetWidth();
+		invRenderTargetSize.y = 1.0f / m_downSamplingRT.GetHeight();
+		rc.UpdateSubresource(m_cb, &invRenderTargetSize);
+		rc.VSSetConstantBuffer(0, m_cb);
+		rc.VSSetShader(m_vsMiniBlur);
+		rc.PSSetShader(m_psMiniBlur);
+		rc.PSSetShaderResource(0, *m_srcTexture);
+		CChangeRenderTarget chgRt(rc, m_downSamplingRT);
 			
-			GraphicsEngine().GetPostEffect().DrawFullScreenQuad(rc);
+		GraphicsEngine().GetPostEffect().DrawFullScreenQuad(rc);
 
-			m_hexaBlur.Execute(rc, [&](CRenderContext& rc, CHexaBlur::EnRenderPass renderPass) {
-				if (renderPass == CHexaBlur::enRenderPass_VerticalDiagonalBlur) {
-					//ピクセルシェーダー差し替え。
-					rc.PSSetShader(m_psVerticalDiagonalBlur);
-				}
-			});
-		}
-		else {
-			m_blur.Execute(rc, [&](CRenderContext& rc, CBlur::EnRenderStep enRenderStep) {
-				if (enRenderStep == CBlur::enRenderStep_XBlur) {
-					//Xブラー。
-					rc.VSSetShader(m_vsXBlurShader);
-					rc.PSSetShader(m_psBlurShader);
-				}
-				else if (enRenderStep == CBlur::enRenderStep_YBlur) {
-					//Yブラー。
-					rc.VSSetShader(m_vsYBlurShader);
-					rc.PSSetShader(m_psBlurShader);
-				}
-			});
-		}
+		//1/4の解像度への六角形の縮小ブラーをかける。
+		m_hexaBlur.Execute(rc, [&](CRenderContext& rc, CHexaBlur::EnRenderPass renderPass) {
+			if (renderPass == CHexaBlur::enRenderPass_VerticalDiagonalBlur) {
+				//ピクセルシェーダー差し替え。
+				rc.PSSetShader(m_psVerticalDiagonalBlur);
+			}
+		});
 	}
 }

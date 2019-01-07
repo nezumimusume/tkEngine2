@@ -12,7 +12,6 @@ namespace tkEngine{
 			CVector4 pos;
 			CVector2 tex;
 		};
-		CHexaBlur hexaBlurTest;
 	}
 	CPostEffect::CPostEffect()
 	{
@@ -40,8 +39,6 @@ namespace tkEngine{
 		m_dof.Init(config);
 		InitFullScreenQuadPrimitive();
 		InitFinalRenderTarget();
-
-		hexaBlurTest.Init(GetFinalRenderTarget().GetRenderTargetSRV());
 	}
 	void CPostEffect::Render(CRenderContext& rc)
 	{
@@ -61,10 +58,7 @@ namespace tkEngine{
 			0,
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
-		//六角ブラーのテスト。
-		hexaBlurTest.ChangeSrcTexture(GetFinalRenderTarget().GetRenderTargetSRV());
-		hexaBlurTest.Execute(rc);
-
+		
 		m_ssr.Render(rc, this); 
 		m_bloom.Render(rc, this);
 		m_dof.Render(rc, this);

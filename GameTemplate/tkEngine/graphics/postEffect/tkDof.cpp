@@ -24,9 +24,9 @@ namespace tkEngine {
 			m_createCocParam.blendState->Release();
 		}
 
-		m_downSampligCocAndColorParam.vs.Release();
-		m_downSampligCocAndColorParam.ps.Release();
-		
+		m_createBokeTextureParam.vs.Release();
+		m_createBokeTextureParam.ps.Release();
+		m_createBokeTextureParam.cb.Release();
 	}
 	void CDof::Init(const SGraphicsConfig& config)
 	{
@@ -47,7 +47,8 @@ namespace tkEngine {
 	void CDof::InitConstantBuffers()
 	{
 		m_createCocParam.cb.Create(nullptr, sizeof(SCreateCocParamCB));
-		m_downSampligCocAndColorParam.cb.Create(nullptr, sizeof(SDownSamplingCocAndColorCB));
+		m_createBokeTextureParam.cb.Create(nullptr, sizeof(SCreateBokeTextureCB));
+		m_finalParam.gpuCB.Create(nullptr, sizeof(SFinalCB));
 	}
 
 	void CDof::InitShaders()
@@ -86,15 +87,9 @@ namespace tkEngine {
 			DXGI_FORMAT_UNKNOWN,
 			multiSampleDesc
 		);
-		//ƒKƒEƒVƒA[ƒ“B
-		m_downSampligCocAndColorParam.blur[0].Init(
+		m_createBokeTextureParam.blur.Init(
 			m_createCocParam.calcCocAndColorRt.GetRenderTargetSRV(),
 			1.5f
-		);
-		m_downSampligCocAndColorParam.blur[1].Init(
-			m_downSampligCocAndColorParam.blur[0].GetResultSRV(),
-			1.5f,
-			true
 		);
 	}
 	void CDof::InitBlendStates()
@@ -168,9 +163,8 @@ namespace tkEngine {
 		//‡B ‡A‚Å¶¬‚³‚ê‚½‚ª‚¼‚¤‚ðŽg‚Á‚Ä‚Q”{‚Ì‰ð‘œ“x‚Ö‚ÌŠg‘åƒKƒEƒVƒAƒ“ƒuƒ‰[(3”Ô–Ú‚Åì¬‚³‚ê‚½‰æ‘œ‚ªƒ{ƒP‰æ‘œ)
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.PSSetShaderResource(1, depthTextureSrv);
-		for (auto& blur : m_downSampligCocAndColorParam.blur) {
-			blur.Execute(rc);
-		}
+		m_createBokeTextureParam.blur.Execute(rc);
+		
 
 		ge.EndGPUEvent();
 	}
@@ -185,11 +179,14 @@ namespace tkEngine {
 		rc.VSSetShader(m_finalParam.vs);
 		rc.PSSetShader(m_finalParam.ps);
 		rc.PSSetShaderResource(0, m_createCocParam.calcCocAndColorRt.GetRenderTargetSRV());
-		rc.PSSetShaderResource(1, m_downSampligCocAndColorParam.blur[1].GetResultSRV());
+		rc.PSSetShaderResource(1, m_createBokeTextureParam.blur.GetHexaBlurResultSRV());
 	
 		rc.OMSetBlendState(AlphaBlendState::disable);
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.PSSetSampler(1, *CPresetSamplerState::clamp_clamp_clamp_point);
+		rc.UpdateSubresource(m_finalParam.gpuCB, &m_finalParam.cpuCB);
+		rc.PSSetConstantBuffer(0, m_finalParam.gpuCB);
+
 		postEffect->DrawFullScreenQuad(rc);
 
 		ge.EndGPUEvent();

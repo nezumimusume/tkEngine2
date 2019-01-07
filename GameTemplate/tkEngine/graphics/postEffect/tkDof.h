@@ -77,6 +77,26 @@ namespace tkEngine {
 			farEndDistance = m_farEndDistance;
 		}
 		/// <summary>
+		/// 六角形ボケの半径を設定。
+		/// </summary>
+		/// <param name="radius">半径。テクセル空間。デフォルトは8です。</param>
+		void SetHexaBokeRadius(float radius)
+		{
+			m_createBokeTextureParam.blur.SetHexaBokeRadius(radius);
+		}
+		/// <summary>
+		/// ボケの明るさを設定
+		/// </summary>
+		/// <param name="luminance">明るさ。大きな値を入れると明るくなります。</param>
+		/// <remarks>
+		/// ボケている部分の明るさを調整したいときに使用してください。
+		/// デフォルトの明るさは1.0です。
+		/// </remarks>
+		void SetBokeLuminance(float luminance)
+		{
+			m_finalParam.cpuCB.bokeTextureLuminance = luminance;
+		}
+		/// <summary>
 		/// DoFを有効にする。
 		/// </summary>
 		void Enable()
@@ -153,23 +173,33 @@ namespace tkEngine {
 		//ダウンサンプリングの回数
 		static const int NUM_DOWN_SAMPLING = 2;
 		/// <summary>
-		/// DownSamplingCocAndColorCBのパスで使用する定数バッファの構造体。
+		/// CreateBokeTextureのパスで使用する定数バッファの構造体。
 		/// </summary>
 		/// <remarks>
-		/// この構造体の中身を変更したら、Assets/shader/dof/dof_DownSamplingCocAndColor.fxの
+		/// この構造体の中身を変更したら、Assets/shader/dof/dof_CreateBokeTexture.fxの
 		/// cbParamの内容も変更する。
 		/// </remarks>
-		struct SDownSamplingCocAndColorCB {
+		struct SCreateBokeTextureCB {
 			CVector2 invRenderTargetSize;	//レンダリングターゲットの逆数。
 		};
 		/// <summary>
-		/// CoCの情報とシーンカラーの画像をダウンサンプリングしていく時に使用するデータ集。
+		/// ボケ画像を作成するときのデータ集。
 		/// </summary>
-		struct SDownSamplingCocAndColor {
-			CDofBlur blur[NUM_DOWN_SAMPLING];		 //todo Release関数がないぞ。						//ブラー。
+		struct SCreateBokeTexture {
+			CDofBlur blur;		 //todo Release関数がないぞ。						//ブラー。
 			CShader vs;
 			CShader ps;
 			CConstantBuffer cb;
+		};
+		/// <summary>
+		/// Finalの描画パスで使用する定数バッファの構造体。
+		/// </summary>
+		/// /// <remarks>
+		/// この構造体の中身を変更したら、Assets/shader/dof/dof_Final.fxの
+		/// cbParamの内容も変更する。
+		/// </remarks>
+		struct SFinalCB {
+			float bokeTextureLuminance = 1.0f;	//ボケの明るさ。大きな値にすると、ボケの部分の明るさが強くなります。デフォルト1.0。
 		};
 		/// <summary>
 		/// 最終合成のパスで使用するデータ。
@@ -177,10 +207,12 @@ namespace tkEngine {
 		struct SFinal {
 			CShader vs;
 			CShader ps;
+			SFinalCB cpuCB;
+			CConstantBuffer gpuCB;
 		};
 		bool m_isEnable = false;	//Dofが有効かどうかのフラグ。
 		SCreateCoCTexture m_createCocParam;
-		SDownSamplingCocAndColor m_downSampligCocAndColorParam;
+		SCreateBokeTexture m_createBokeTextureParam;
 		SFinal m_finalParam;
 
 		float m_nearStartDistance = 0.0f;		//手前ボケの減衰が開始するカメラからの距離。

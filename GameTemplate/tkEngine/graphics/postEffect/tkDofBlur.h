@@ -26,30 +26,35 @@ namespace tkEngine{
 		 *@param[in]	srcTexture		元テクスチャ。
 		 *@param[in]	blurIntensity	ブラーの強さ。値が大きいほどボケる。
 		 */
-		void Init( CShaderResourceView& srcTexture, float blurIntensity = 25.0f, bool isScaleupBlur = false );
+		void Init( CShaderResourceView& srcTexture, float blurIntensity = 25.0f );
 		
 		/*!
 		 * @brief	ブラーを実行。
 		 */
 		void Execute(CRenderContext& rc);
-		/*!
-		* @brief	実行結果を格納しているSRVを取得。
-		*/
-		CShaderResourceView& GetResultSRV()
+		/// <summary>
+		/// 六角形ブラーの結果を取得。
+		/// </summary>
+		/// <returns></returns>
+		CShaderResourceView& GetHexaBlurResultSRV()
 		{
-			if (m_isScaleupBlur) {
-				return m_hexaBlur.GetResultSRV();
-			}
-			return m_blur.GetResultSRV();
+			return m_hexaBlur.GetResultSRV();
 		}
-	
+		/// <summary>
+		/// 六角形ボケの半径を設定する。
+		/// </summary>
+		/// <param name="r">半径。テクセル空間。デフォルトは8です。</param>
+		void SetHexaBokeRadius(float r)
+		{
+			m_hexaBlur.SetRadius(r);
+		}
 	private:
 		bool m_isScaleupBlur = false;
 		CShaderResourceView* m_srcTexture = nullptr;
 		CRenderTarget m_downSamplingRT;
 		CConstantBuffer m_cb;
-		CShader m_vsDownSample;
-		CShader m_psDownSample;
+		CShader m_vsMiniBlur;				//小規模ブラーの頂点シェーダー。
+		CShader m_psMiniBlur;				//小規模ブラーのピクセルシェーダー。
 		CShader m_vsXBlurShader;			//!<Xブラー用の頂点シェーダー。
 		CShader m_vsYBlurShader;			//!<Yブラー用の頂点シェーダー。
 		CShader m_psBlurShader;				//!<ブラー用のピクセルシェーダー。

@@ -46,8 +46,19 @@ Texture2D<float4> originalTexture	: register(t0);		//ƒuƒ‰[‚ğ‚©‚¯‚é‘O‚ÌƒIƒŠƒWƒiƒ
  */
 PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 {
-	float2 uvOffset = float2(0.0f, -radius / 8.0f / texSize.y );
-	PSOutput_1 psOut = (PSOutput_1)0;\
+	//ƒuƒ‰[ƒXƒeƒbƒv‚Ì’·‚³B8ƒeƒNƒZƒ‹•ª‚Éƒuƒ‰[‚ğ‚©‚¯‚éê‡‚ÍA
+	//blurStepLen‚Í1.0‚É‚È‚éB16ƒeƒNƒZƒ‹•ª‚Éƒuƒ‰[‚ğ~ê‡‚ÍAblurStepLen‚Í2.0‚É‚È‚éB
+	//8ƒeƒNƒZƒ‹ƒtƒFƒbƒ`‚µ‚Äƒuƒ‰[‚ğ‚©‚¯‚é‚Ì‚ÅAblurStepLen‚ª2.0‚Ìê‡‚ÍA2 ~ 8 ‚Å16ƒeƒNƒZƒ‹•ª
+	//ƒuƒ‰[‚ª‚©‚©‚éB
+	float blurStepLen = radius / 8.0f;
+	
+	float4 sceneColor = originalTexture.Sample(
+		clamp_clamp_clamp_linearSampler, pIn.uv );
+		
+	float2 uvOffset = float2(0.0f, -1.0f / texSize.y );
+	uvOffset *= blurStepLen;
+	
+	PSOutput_1 psOut = (PSOutput_1)0;
 	
 	psOut.color_0 += originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset );
@@ -77,7 +88,8 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 	
 	uvOffset.x = -0.86602f / texSize.x;
 	uvOffset.y = 0.5f / texSize.y;
-			
+	uvOffset *= blurStepLen;
+	
 	psOut.color_1 = originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset );
 	
@@ -101,8 +113,10 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 		
 	psOut.color_1 += originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
-		
-	psOut.color_1 /= 8.0f;
+	
+	psOut.color_1 += sceneColor;
+	psOut.color_1 /= 9.0f;
+	psOut.color_1 += psOut.color_0;
 	return psOut;
 }
 
@@ -125,9 +139,16 @@ float4 PSCombineVerticalDiagonalBlur(PSInput pIn) : SV_Target0
  */
 float4 PSRhomboidBlur(PSInput pIn) : SV_Target0
 {
+	//ƒuƒ‰[ƒXƒeƒbƒv‚Ì’·‚³B8ƒeƒNƒZƒ‹•ª‚Éƒuƒ‰[‚ğ‚©‚¯‚éê‡‚ÍA
+	//blurStepLen‚Í1.0‚É‚È‚éB16ƒeƒNƒZƒ‹•ª‚Éƒuƒ‰[‚ğ~ê‡‚ÍAblurStepLen‚Í2.0‚É‚È‚éB
+	//8ƒeƒNƒZƒ‹ƒtƒFƒbƒ`‚µ‚Äƒuƒ‰[‚ğ‚©‚¯‚é‚Ì‚ÅAblurStepLen‚ª2.0‚Ìê‡‚ÍA2 ~ 8 ‚Å16ƒeƒNƒZƒ‹•ª
+	//ƒuƒ‰[‚ª‚©‚©‚éB
+	float blurStepLen = radius / 8.0f;
+		
 	float2 uvOffset;
 	uvOffset.x = -0.86602f / texSize.x;
 	uvOffset.y = 0.5f / texSize.y;
+	uvOffset *= blurStepLen;
 	
 	float4 color = blurTexture_0.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset );
@@ -153,7 +174,7 @@ float4 PSRhomboidBlur(PSInput pIn) : SV_Target0
 	color += blurTexture_0.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
 
-	uvOffset.x = 0.86602f / texSize.x;
+	uvOffset.x = 0.86602f / texSize.x * blurStepLen;
 
 	color += blurTexture_1.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv );

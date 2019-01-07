@@ -69,7 +69,7 @@ bool Game::Start()
 	NewGO<TimerHUD>(0, TIMER_HUD_NAME);
 	auto sky = NewGO<prefab::CSky>(0, SKY_NAME);
 	sky->SetScale(8000.0f);
-	sky->SetEmissionColor({ 0.2f, 0.2f, 0.2f });
+	//sky->SetEmissionColor({ 0.2f, 0.2f, 0.2f });
 	m_bgm = NewGO<prefab::CSoundSource>(0);
 	m_bgm->Init(L"sound/bgm.wav");
 	m_bgm->Play(false);
@@ -90,7 +90,7 @@ void Game::Update()
 	auto toPlayerVec = m_player->GetPosition() - MainCamera().GetPosition();
 	auto toPlayerLen = toPlayerVec.Length();
 
-	dof.SetDofRangeParam(toPlayerLen-200.0f, toPlayerLen - 100.0f, toPlayerLen + 200.0f, toPlayerLen + 500.0f);
+	dof.SetDofRangeParam(0.0f, toPlayerLen - 100.0f, toPlayerLen + 200.0f, toPlayerLen + 2000.0f);
 	m_restTimer = max(0.0f, m_restTimer - GameTime().GetFrameDeltaTime());
 	switch (m_state) {
 	case enState_Playing:

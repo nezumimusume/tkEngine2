@@ -127,8 +127,8 @@ bool Game::Start()
 	m_scoreFontPosition.x = -620.0f ;
 	m_scoreFontPosition.y = 280.0f;
 	
-	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
-	dof.Disable();
+	postEffect::Dof().Disable();
+	postEffect::Dof().SetHexaBokeRadius(6.0f);
 	m_fade->StartFadeIn();
 	m_state = enState_FadeIn;
 	return true;
