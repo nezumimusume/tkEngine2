@@ -63,6 +63,8 @@ void Game::InitSceneLight()
 }
 bool Game::Start()
 {
+	m_bokeRadius = NewGO<prefab::CFontRender>(0);
+	m_bokeRadius->SetText(L"ボケ半径");
 	m_background = NewGO<Background>(0, nullptr);
 	m_gameCamera = NewGO<GameCamera>(0, "GameCamera");
 	//シーンライトを初期化。
@@ -128,7 +130,8 @@ bool Game::Start()
 	m_scoreFontPosition.y = 280.0f;
 	
 	postEffect::Dof().Disable();
-	postEffect::Dof().SetHexaBokeRadius(8.0f);
+	postEffect::Dof().SetHexaBokeRadius(2.0f);
+	postEffect::Dof().SetBokeLuminance(0.9f);
 	m_fade->StartFadeIn();
 	m_state = enState_FadeIn;
 	return true;
@@ -145,6 +148,7 @@ void Game::OnDestroy()
 	}
 	DeleteGO(m_gameCamera);
 	DeleteGO(m_bgmSource);
+	DeleteGO(m_bokeRadius);
 	//Starを削除。
 	FindGameObjectsWithTag(enGameObject_Star, [](IGameObject* go) {
 		DeleteGO(go);
@@ -218,8 +222,18 @@ void Game::Update()
 	//被写界深度をほげほげ
 	auto toTargetVec = MainCamera().GetTarget() - MainCamera().GetPosition();
 	auto toTargetLen = toTargetVec.Length();
-	auto& dof = GraphicsEngine().GetPostEffect().GetDof();
-	dof.SetDofRangeParam(toTargetLen * 0.3f, toTargetLen * 0.5f, toTargetLen * 1.2, toTargetLen * 2.0f);
+	postEffect::Dof().SetDofRangeParam(toTargetLen * 0.3f, toTargetLen * 0.5f, toTargetLen * 1.2, toTargetLen * 2.0f);
+	float radius = postEffect::Dof().GetHexaBokeRadius();
+	if (Pad(0).IsPress(enButtonLeft)) {
+		radius = std::max<float>( radius - 0.04f, 0.0f);
+	}
+	else if (Pad(0).IsPress(enButtonRight)) {
+		radius = std::min<float>(radius + 0.04f, 8.0f);
+	}
+	postEffect::Dof().SetHexaBokeRadius(radius);
+	wchar_t text[256];
+	swprintf(text, L"ボケ半径 = %0.3f", radius);
+	m_bokeRadius->SetText(text);
 
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 	CQuaternion qRot;

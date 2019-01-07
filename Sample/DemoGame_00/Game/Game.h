@@ -102,5 +102,6 @@ private:
 	bool m_isToneMapReset = false;
 	EnState m_state = enState_FadeIn;
 	Fade* m_fade = nullptr;
+	prefab::CFontRender* m_bokeRadius = nullptr;
 };
 

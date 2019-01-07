@@ -52,6 +52,13 @@ namespace tkEngine{
 			m_radius = radius;
 		}
 		/// <summary>
+		/// ブラーの半径を取得。
+		/// </summary>
+		float GetRadius() const
+		{
+			return m_radius;
+		}
+		/// <summary>
 		/// 結果を取得。
 		/// </summary>
 		/// <returns></returns>
@@ -82,6 +89,6 @@ namespace tkEngine{
 		CShader m_psCombineVerticalDiagonalBlur;			//垂直、斜めブラーの合成用のピクセルシェーダー。
 		CShader m_psRhomboidBlur;							//六角形ブラーを作成する。
 		CConstantBuffer m_cb;								//定数バッファ。
-		float m_radius = 8.0f;								//ブラー半径。
+		float m_radius = 4.0f;								//ブラー半径。
 	};
 }

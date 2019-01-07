@@ -48,6 +48,13 @@ namespace tkEngine{
 		{
 			m_hexaBlur.SetRadius(r);
 		}
+		/// <summary>
+		/// ˜ZŠpŒ`ƒ{ƒP‚Ì”¼Œa‚ğæ“¾B
+		/// </summary>
+		float GetHexaBokeRadius() const
+		{
+			return m_hexaBlur.GetRadius();
+		}
 	private:
 		bool m_isScaleupBlur = false;
 		CShaderResourceView* m_srcTexture = nullptr;

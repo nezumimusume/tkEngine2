@@ -107,27 +107,27 @@ struct PSOutput_1{
 PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 {
 	float totalWeight = 0.0f;
-	float newWeight[9];
-	float4 newColor[9];
-	
+	float newWeight[5];
+	float4 newColor[5];
+
 	//ブラーステップの長さ。8テクセル分にブラーをかける場合は、
 	//blurStepLenは1.0になる。16テクセル分にブラーを×場合は、blurStepLenは2.0になる。
 	//8テクセルフェッチしてブラーをかけるので、blurStepLenが2.0の場合は、2 × 8 で16テクセル分
 	//ブラーがかかる。
-	float blurStepLen = radius / 8.0f;
+	float blurStepLen = radius / 4.0f;
 	
 	float2 uvOffset = float2(0.0f, -blurStepLen / texSize.y );
 	PSOutput_1 psOut = (PSOutput_1)0;
 	
 	{
 		//垂直ブラー
-		for( int i = 0; i < 8; i++ ){
+		for( int i = 0; i < 4; i++ ){
 			ComputeNewWeightAndColor(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * (i + 1));
 		}
 		totalWeight = max( 0.001f, totalWeight);
 		
 		//ウェイトを規格化(ウェイトの合計を1.0にする)を行う。
-		for( int i = 0; i < 8; i++ ){
+		for( int i = 0; i < 4; i++ ){
 			newWeight[i] /= totalWeight;
 			psOut.color_0 += newColor[i] * newWeight[i];
 		}
@@ -139,13 +139,13 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 		//斜めブラー。
 		totalWeight = 0.0f;
 		
-		for( int i = 0; i < 9; i++ ){
+		for( int i = 0; i < 5; i++ ){
 			ComputeNewWeightAndColor(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * i);
 		}
 		totalWeight = max( 0.001f, totalWeight);
 		
 		//ウェイトを規格化(ウェイトの合計を1.0にする)を行う。
-		for( int i = 0; i < 9; i++ ){
+		for( int i = 0; i < 5; i++ ){
 			newWeight[i] /= totalWeight;
 			psOut.color_1 += newColor[i] * newWeight[i];
 		}

@@ -17,15 +17,15 @@ namespace tkEngine{
 	void CDofBlur::Init( CShaderResourceView& srcTexture, float blurIntensity )
 	{
 		m_srcTexture = &srcTexture;
-		//まずは小規模ブラー。
+		//まずは1/4の解像度への小規模な縮小ブラー。
 		DXGI_SAMPLE_DESC multiSampleDesc;
 		multiSampleDesc.Count = 1;
 		multiSampleDesc.Quality = 0;
 		D3D11_TEXTURE2D_DESC texDesc;
 		srcTexture.GetTextureDesc(texDesc);
 		m_downSamplingRT.Create(
-			texDesc.Width / 2,
-			texDesc.Height / 2,
+			texDesc.Width / 4,
+			texDesc.Height / 4,
 			1,
 			1,
 			DXGI_FORMAT_R16G16B16A16_FLOAT,
@@ -33,9 +33,9 @@ namespace tkEngine{
 			multiSampleDesc
 		);
 		
-		//続いて六角形ブラー。
-		m_hexaBlur.Init(m_downSamplingRT.GetRenderTargetSRV());
-		m_hexaBlur.SetRadius(6.0f);
+		//続いて小規模ブラーのテクスチャを利用した拡大六角形ブラー。
+		m_hexaBlur.Init(m_downSamplingRT.GetRenderTargetSRV(), true);
+		m_hexaBlur.SetRadius(4.0f);
 		m_vsMiniBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "VSMinBlur", CShader::EnType::VS);
 		m_psMiniBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSMinBlur", CShader::EnType::PS);
 		m_psVerticalDiagonalBlur.Load("shader/dof/dof_CreateBokeTexture.fx", "PSVerticalDiagonalBlur", CShader::EnType::PS);

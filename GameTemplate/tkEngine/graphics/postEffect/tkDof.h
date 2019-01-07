@@ -85,6 +85,13 @@ namespace tkEngine {
 			m_createBokeTextureParam.blur.SetHexaBokeRadius(radius);
 		}
 		/// <summary>
+		/// 六角形ボケの半径を取得。
+		/// </summary>
+		float GetHexaBokeRadius() const
+		{
+			return m_createBokeTextureParam.blur.GetHexaBokeRadius();
+		}
+		/// <summary>
 		/// ボケの明るさを設定
 		/// </summary>
 		/// <param name="luminance">明るさ。大きな値を入れると明るくなります。</param>
