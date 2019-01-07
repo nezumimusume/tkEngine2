@@ -34,6 +34,7 @@ namespace tkEngine {
 			return;
 		}
 		m_isEnable = config.dofConfig.isEnable;
+		m_isEnableGlobal = config.dofConfig.isEnable;
 		//âï˙ÅB
 		Release();
 
@@ -193,7 +194,7 @@ namespace tkEngine {
 	}
 	void CDof::Render(CRenderContext& rc, CPostEffect* postEffect)
 	{
-		if (m_isEnable == false) {
+		if (m_isEnable == false || m_isEnableGlobal == false) {
 			return;
 		}
 		

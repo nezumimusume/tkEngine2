@@ -211,6 +211,7 @@ namespace tkEngine {
 			CConstantBuffer gpuCB;
 		};
 		bool m_isEnable = false;	//Dofが有効かどうかのフラグ。
+		bool m_isEnableGlobal = false;	//グローバル設定でDofが有効かどうかのフラグ。
 		SCreateCoCTexture m_createCocParam;
 		SCreateBokeTexture m_createBokeTextureParam;
 		SFinal m_finalParam;

@@ -128,7 +128,7 @@ bool Game::Start()
 	m_scoreFontPosition.y = 280.0f;
 	
 	postEffect::Dof().Disable();
-	postEffect::Dof().SetHexaBokeRadius(6.0f);
+	postEffect::Dof().SetHexaBokeRadius(8.0f);
 	m_fade->StartFadeIn();
 	m_state = enState_FadeIn;
 	return true;
