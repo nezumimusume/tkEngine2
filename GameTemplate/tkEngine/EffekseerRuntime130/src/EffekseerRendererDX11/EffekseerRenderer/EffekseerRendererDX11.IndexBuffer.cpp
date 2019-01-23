@@ -94,7 +94,7 @@ void IndexBuffer::Unlock()
 	if( m_isDynamic )
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		GetRenderer()->GetContext()->Map(
+		GetRenderer()->GetImmidiateContext()->Map(
 			m_buffer,
 			0,
 			D3D11_MAP_WRITE_DISCARD,
@@ -103,7 +103,7 @@ void IndexBuffer::Unlock()
 
 		memcpy( mappedResource.pData, m_resource, sizeof(uint16_t) * GetMaxCount() );
 
-		GetRenderer()->GetContext()->Unmap( m_buffer, 0 );
+		GetRenderer()->GetImmidiateContext()->Unmap( m_buffer, 0 );
 	}
 	else
 	{

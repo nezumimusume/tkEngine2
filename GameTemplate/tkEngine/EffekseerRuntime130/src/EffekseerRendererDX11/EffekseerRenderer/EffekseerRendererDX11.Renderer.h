@@ -43,6 +43,7 @@ public:
 		@brief	インスタンスを生成する。
 		@param	device		DirectXのデバイス
 		@param	context		DirectXのコンテキスト
+		@param	immidiateContext		DirectXの即時コンテキスト
 		@param	squareMaxCount	最大描画スプライト数
 		@param	depthFunc	奥行きの計算方法
 		@return	インスタンス
@@ -50,6 +51,7 @@ public:
 	static Renderer* Create(
 		ID3D11Device* device, 
 		ID3D11DeviceContext* context, 
+		ID3D11DeviceContext* immidiateContext,
 		int32_t squareMaxCount, 
 		D3D11_COMPARISON_FUNC depthFunc = D3D11_COMPARISON_LESS);
 

@@ -298,7 +298,7 @@ friend class DeviceObject;
 private:
 	ID3D11Device*			m_device;
 	ID3D11DeviceContext*	m_context;
-
+	ID3D11DeviceContext*	m_immidiateContext = nullptr;	//即時コンテキスト。
 	VertexBuffer*		m_vertexBuffer;
 	IndexBuffer*		m_indexBuffer;
 	int32_t				m_squareMaxCount;
@@ -354,7 +354,11 @@ public:
 	/**
 		@brief	初期化
 	*/
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* context, D3D11_COMPARISON_FUNC depthFunc);
+	bool Initialize(
+		ID3D11Device* device, 
+		ID3D11DeviceContext* context, 
+		ID3D11DeviceContext* immidiateContext,
+		D3D11_COMPARISON_FUNC depthFunc) ;
 
 	void Destroy();
 
@@ -373,12 +377,19 @@ public:
 	/**
 		@brief	デバイス取得
 	*/
-	ID3D11Device* GetDevice();
+	ID3D11Device* GetDevice() ;
 
 	/**
 		@brief	コンテキスト取得
 	*/
 	ID3D11DeviceContext* GetContext();
+	/**
+		@brief	即時コンテキスト取得
+	*/
+	ID3D11DeviceContext* GetImmidiateContext()
+	{
+		return m_immidiateContext;
+	}
 
 	/**
 		@brief	頂点バッファ取得
