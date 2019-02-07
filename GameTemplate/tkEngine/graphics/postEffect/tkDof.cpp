@@ -159,9 +159,6 @@ namespace tkEngine {
 		ge.BeginGPUEvent(L"enRenderStep_Dof::CreateBokeTexture");
 
 		//ボケ画像の生成
-		//① 1/2の解像度への縮小ガウシアンブラー
-		//② ①で生成されたが画像を使って、1/2の解像度へのダウンサンプリング
-		//③ ②で生成されたがぞうを使って２倍の解像度への拡大ガウシアンブラー(3番目で作成された画像がボケ画像)
 		rc.PSSetSampler(0, *CPresetSamplerState::clamp_clamp_clamp_linear);
 		rc.PSSetShaderResource(1, depthTextureSrv);
 		m_createBokeTextureParam.blur.Execute(rc);

@@ -38,6 +38,7 @@ namespace tkEngine {
 		m_renderer = EffekseerRendererDX11::Renderer::Create(
 			GraphicsEngine().GetD3DDevice(),
 			GraphicsEngine().GetD3DDeviceContext(),
+			GraphicsEngine().GetD3DImmediateDeviceContext(),
 			2000);
 		//エフェクトマネージャを初期化。
 		m_manager = Effekseer::Manager::Create(10000);

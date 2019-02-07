@@ -229,10 +229,16 @@ void OriginalState::ReleaseState()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-Renderer* Renderer::Create(ID3D11Device* device, ID3D11DeviceContext* context, int32_t squareMaxCount, D3D11_COMPARISON_FUNC depthFunc)
+Renderer* Renderer::Create(
+	ID3D11Device* device, 
+	ID3D11DeviceContext* context, 
+	ID3D11DeviceContext* immidiateContext,
+	int32_t squareMaxCount, 
+	D3D11_COMPARISON_FUNC depthFunc
+)
 {
 	RendererImplemented* renderer = new RendererImplemented( squareMaxCount );
-	if( renderer->Initialize( device, context, depthFunc) )
+	if( renderer->Initialize( device, context, immidiateContext, depthFunc) )
 	{
 		return renderer;
 	}
@@ -333,10 +339,11 @@ void RendererImplemented::OnResetDevice()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-bool RendererImplemented::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, D3D11_COMPARISON_FUNC depthFunc)
+bool RendererImplemented::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, ID3D11DeviceContext* immidiateContext, D3D11_COMPARISON_FUNC depthFunc)
 {
 	m_device = device;
 	m_context = context;
+	m_immidiateContext = immidiateContext;
 	m_depthFunc = depthFunc;
 
 	// 頂点の生成
