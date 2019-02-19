@@ -23,6 +23,8 @@ bool Game::Start()
 	//ライトの色を設定。
 	m_lig->SetColor({ 300.5f, 300.5f, 300.5f, 1.0f });
 
+	GraphicsEngine().GetShadowMap().SetLightDirection({ 0.0f, -1.0f, 0.0f });
+
 	dbg::SetDrawPhysicsCollisionEnable();
 	//GameCameraのインスタンスを生成する。
 	m_gameCamera = NewGO<GameCamera>(0);
