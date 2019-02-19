@@ -50,6 +50,7 @@ bool Game::Start()
 */
 void Game::OnDestroy()
 {
+	DeleteGO("Player");
 	DeleteGO(m_player);
 	DeleteGO(m_gameCamera);
 	for (auto& star : m_starList) {
@@ -58,4 +59,8 @@ void Game::OnDestroy()
 }
 void Game::Update()
 {
+	if (Pad(0).IsPress(enButtonA)) {
+		DeleteGO(this);
+		NewGO<Game>(0);
+	}
 }
