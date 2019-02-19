@@ -455,6 +455,9 @@
     <ClInclude Include="graphics\tkHexaBlur.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="level\tkMapChipRender.h">
+      <Filter>Source Files\level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -729,6 +732,9 @@
     </ClCompile>
     <ClCompile Include="graphics\tkHexaBlur.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="level\tkMapChipRender.cpp">
+      <Filter>Source Files\level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

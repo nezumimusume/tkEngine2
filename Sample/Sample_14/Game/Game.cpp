@@ -23,20 +23,13 @@ bool Game::Start()
 	//ライトの色を設定。
 	m_lig->SetColor({ 300.5f, 300.5f, 300.5f, 1.0f });
 
+	dbg::SetDrawPhysicsCollisionEnable();
 	//GameCameraのインスタンスを生成する。
 	m_gameCamera = NewGO<GameCamera>(0);
 	//レベルを構築する。
 	m_level.Init(L"level/stage_00.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualObjectName(L"star") == true) {
-			//Starオブジェクト。
-			Star* star = NewGO<Star>(0);
-			star->m_position = objData.position;
-			star->m_rotation = objData.rotation;
-			star->m_scale = objData.scale;
-			//後で削除するのでリストに積んで記憶しておく。
-			m_starList.push_back(star);
-			//フックしたのでtrueを返す。
-			return true;
+			
 		}
 		else if (objData.EqualObjectName(L"UnityChan") == true) {
 			//Unityちゃん。
