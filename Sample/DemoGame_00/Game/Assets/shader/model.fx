@@ -109,7 +109,12 @@ float CalcSoftShadow( float3 worldPos )
 			//uvç¿ïWÇ…ïœä∑ÅB
 			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
 			float shadow_val = 1.0f;
-			if(shadowMapUV.x < 0.95f && shadowMapUV.y < 0.95f && shadowMapUV.x > 0.05f && shadowMapUV.y > 0.05f){
+			if(shadowMapUV.x < 0.99f 
+				&& shadowMapUV.y < 0.99f 
+				&& shadowMapUV.x > 0.01f 
+				&& shadowMapUV.y > 0.0f
+				&& posInLVP.z < 1.0f 
+				&& posInLVP.z > 0.0f ){
 				if(i == 0){					
 					shadow = CalcShadowPercentPCF4x4(shadowMap_0, shadowMapUV, texOffset[i], depth, depthOffset.x);
 				}else if(i == 1){
