@@ -1,7 +1,7 @@
 
 @rem クリーンアップ
 @setlocal
-
+@echo off
 @set CURRENT_DIR=%~dp0
 @pushd %CURRENT_DIR%
 @for /d %%a in (.\*) do (call :deleteSymbolicLink "%%a")
@@ -14,6 +14,8 @@ pushd %~1
 
 @rmdir /s /q tkEngine
 @rmdir /s /q tkTools
+@del tkEngine
+@del tkTools
 
 @popd
 
@@ -23,4 +25,3 @@ pushd %~1
 :end
 @popd
 
-pause

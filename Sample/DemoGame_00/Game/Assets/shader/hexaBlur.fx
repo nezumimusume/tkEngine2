@@ -50,7 +50,7 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 	//blurStepLenは1.0になる。16テクセル分にブラーを×場合は、blurStepLenは2.0になる。
 	//8テクセルフェッチしてブラーをかけるので、blurStepLenが2.0の場合は、2 × 8 で16テクセル分
 	//ブラーがかかる。
-	float blurStepLen = radius / 8.0f;
+	float blurStepLen = radius / 4.0f;
 	
 	float4 sceneColor = originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv );
@@ -72,19 +72,7 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 	psOut.color_0 += originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 4 );
 		
-	psOut.color_0 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 5 );
-	
-	psOut.color_0 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 6 );
-		
-	psOut.color_0 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 7 );
-		
-	psOut.color_0 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
-	
-	psOut.color_0 /= 8.0f;	
+	psOut.color_0 /= 4.0f;	
 	
 	uvOffset.x = -0.86602f / texSize.x;
 	uvOffset.y = 0.5f / texSize.y;
@@ -102,20 +90,8 @@ PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 	psOut.color_1 += originalTexture.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 4 );
 		
-	psOut.color_1 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 5 );
-	
-	psOut.color_1 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 6 );
-		
-	psOut.color_1 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 7 );
-		
-	psOut.color_1 += originalTexture.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
-	
 	psOut.color_1 += sceneColor;
-	psOut.color_1 /= 9.0f;
+	psOut.color_1 /= 5.0f;
 	psOut.color_1 += psOut.color_0;
 	return psOut;
 }
@@ -143,7 +119,7 @@ float4 PSRhomboidBlur(PSInput pIn) : SV_Target0
 	//blurStepLenは1.0になる。16テクセル分にブラーを×場合は、blurStepLenは2.0になる。
 	//8テクセルフェッチしてブラーをかけるので、blurStepLenが2.0の場合は、2 × 8 で16テクセル分
 	//ブラーがかかる。
-	float blurStepLen = radius / 8.0f;
+	float blurStepLen = radius / 4.0f;
 		
 	float2 uvOffset;
 	uvOffset.x = -0.86602f / texSize.x;
@@ -162,17 +138,6 @@ float4 PSRhomboidBlur(PSInput pIn) : SV_Target0
 	color += blurTexture_0.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 4 );
 	
-	color += blurTexture_0.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 5 );
-	
-	color += blurTexture_0.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 6 );
-		
-	color += blurTexture_0.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 7 );
-	
-	color += blurTexture_0.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
 
 	uvOffset.x = 0.86602f / texSize.x * blurStepLen;
 
@@ -191,19 +156,7 @@ float4 PSRhomboidBlur(PSInput pIn) : SV_Target0
 	color += blurTexture_1.Sample(
 		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 4 );
 	
-	color += blurTexture_1.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 5 );
-	
-	color += blurTexture_1.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 6 );
-		
-	color += blurTexture_1.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 7 );
-	
-	color += blurTexture_1.Sample(
-		clamp_clamp_clamp_linearSampler, pIn.uv + uvOffset * 8 );
-	
-	color /= 17.0f;
+	color /= 9.0f;
 	
 	return color;
 }

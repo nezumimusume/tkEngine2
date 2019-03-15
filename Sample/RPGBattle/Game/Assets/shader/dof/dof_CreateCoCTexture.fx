@@ -24,7 +24,7 @@ struct PSOutput{
 };
 /*!
  *@brief	定数バッファ。
- * この中身を変更したら、tkDof.hのSCreateDofMaskAndCalcCocCBも
+ * この中身を変更したら、tkDof.hのSCreateCocParamCBも
  * 更新する。
  */
 cbuffer cbParam : register( b0 )

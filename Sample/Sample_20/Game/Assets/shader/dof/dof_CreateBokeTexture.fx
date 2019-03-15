@@ -4,20 +4,21 @@
  * ボケテクスチャ作成の描画パスで使用されるシェーダー。
  */
 
+Texture2D<float4> blurTexture : register(t0);	//ブラーをかけるテクスチャ。
 sampler linearSampler : register(s0);			//バイリニアサンプリングを行うサンプラ。
 
-//////////////////////////////////////////////////////////////////////////////////////
-// ダウンサンプリング
-//////////////////////////////////////////////////////////////////////////////////////
-Texture2D<float4> cocTexture : register(t0);	//シーンテクスチャ。
+void ComputeNewWeightAndColor( out float4 newColor, out float newWeight, inout float totalWeight,  float2 uv)
+{
+	//錯乱円の半径が小さいピクセルはブラーがかかるピクセルに侵入しないようにするために、
+	//錯乱円の半径をガウスブラーのウェイトに乗算する。
+	newColor = blurTexture.Sample( linearSampler, uv );
+	newWeight = newColor.a;
+	totalWeight += newWeight;
+}
 
-/*!
- *@brief	ピクセルシェーダーへの入力。
- */
-struct PSDownSampleIn{
-	float4 position : SV_Position;
-	float2 uv : TEXCOORD0;
-};
+//////////////////////////////////////////////////////////////////////////////////////
+// ミニブラー
+//////////////////////////////////////////////////////////////////////////////////////
 
 /*!
  *@brief	定数バッファ。
@@ -26,29 +27,59 @@ cbuffer cbDownSampleParam : register( b0 )
 {
 	float2 invRenderTargetSize;		//レンダリングターゲットの逆数。
 };
+// 4点サンプリングブラー
 /*!
- *@brief	ダウンサンプリングの頂点シェーダー。
+ *@brief	ピクセルシェーダーへの入力。
  */
-PSDownSampleIn VSDownSample( float4 pos : POSITION, float2 uv : TEXCOORD0 )
+struct PSBlurIn{
+	float4 position : SV_Position;
+	float4 uv0_1	: TEXCOORD0;
+	float4 uv2_3	: TEXCOORD1;
+};
+
+/*!
+ *@brief	頂点シェーダー。
+ */
+PSBlurIn VSMinBlur( float4 pos : POSITION, float2 uv : TEXCOORD0 )
 {
-	PSDownSampleIn psIn = (PSDownSampleIn)0;
+	PSBlurIn psIn = (PSBlurIn)0;
 	psIn.position = pos;
-	psIn.uv = uv;
+	float offset =  0.25f;
+	psIn.uv0_1.xy = uv + float2( -offset, -offset ) * invRenderTargetSize;
+	psIn.uv0_1.zw = uv + float2(  offset, -offset ) * invRenderTargetSize;
+	psIn.uv2_3.xy = uv + float2( -offset,  offset ) * invRenderTargetSize;
+	psIn.uv2_3.zw = uv + float2(  offset,  offset ) * invRenderTargetSize;
 	return psIn;
 }
 /*!
- *@brief	ダウンサンプリングのピクセルシェーダー。
+ *@brief	ピクセルシェーダー。
  */
-float4 PSDownSample( PSDownSampleIn psIn ) : SV_Target0
+float4 PSMinBlur( PSBlurIn psIn ) : SV_Target0
 {
-	return cocTexture.Sample( linearSampler, psIn.uv );
+	float4 color[4];
+	float weight[4];
+	float totalWeight = 0;
+	ComputeNewWeightAndColor(color[0], weight[0], totalWeight, psIn.uv0_1.xy);
+	ComputeNewWeightAndColor(color[1], weight[1], totalWeight, psIn.uv0_1.zw);
+	ComputeNewWeightAndColor(color[2], weight[2], totalWeight, psIn.uv2_3.xy);
+	ComputeNewWeightAndColor(color[3], weight[3], totalWeight, psIn.uv2_3.zw);
+	
+	clip( totalWeight - 0.001f );	//ウェイトの合計が0.001以下ならピクセルキル。
+	
+	float4 finalColor = 0;
+	//ウェイトを規格化(ウェイトの合計を1.0にする)を行う。
+	for( int i = 0; i < 4; i++ ){
+		weight[i] /= totalWeight;
+		finalColor += color[i] * weight[i];
+	}
+	
+	return finalColor;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
 // 六角形ブラー
 // ボケが発生しないピクセルがボケ画像に侵入しないようにしている。
 //////////////////////////////////////////////////////////////////////////////////////
-Texture2D<float4> blurTexture : register(t0);	//ブラーテクスチャ。
 
 /*!
  *@brief	定数バッファ。
@@ -69,59 +100,61 @@ struct PSOutput_1{
 	float4 color_1 : SV_Target1;	//斜めブラーの出力先。
 };
 
-void ComputeNewWeightAndColor2( out float4 newColor, out float newWeight, inout float totalWeight,  float2 uv)
-{
-	//錯乱円の半径が小さいピクセルはブラーがかかるピクセルに侵入しないようにするために、
-	//錯乱円の半径をガウスブラーのウェイトに乗算する。
-	newColor = blurTexture.Sample( linearSampler, uv );
-	newWeight = newColor.a ;
-	totalWeight += newWeight;
-}
+
 /*!
  *@brief	垂直、斜めブラーのピクセルシェーダー。
  */
 PSOutput_1 PSVerticalDiagonalBlur(PSInput pIn)
 {
 	float totalWeight = 0.0f;
-	float newWeight[8];
-	float4 newColor[8];
+	float newWeight[5];
+	float4 newColor[5];
+
+	//ブラーステップの長さ。8テクセル分にブラーをかける場合は、
+	//blurStepLenは1.0になる。16テクセル分にブラーを×場合は、blurStepLenは2.0になる。
+	//8テクセルフェッチしてブラーをかけるので、blurStepLenが2.0の場合は、2 × 8 で16テクセル分
+	//ブラーがかかる。
+	float blurStepLen = radius / 4.0f;
 	
-	float2 uvOffset = float2(0.0f, -radius / 8.0f / texSize.y );
+	float2 uvOffset = float2(0.0f, -blurStepLen / texSize.y );
 	PSOutput_1 psOut = (PSOutput_1)0;
 	
 	{
 		//垂直ブラー
-		for( int i = 0; i < 8; i++ ){
-			ComputeNewWeightAndColor2(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * (i + 1));
+		for( int i = 0; i < 4; i++ ){
+			ComputeNewWeightAndColor(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * (i + 1));
 		}
 		totalWeight = max( 0.001f, totalWeight);
 		
 		//ウェイトを規格化(ウェイトの合計を1.0にする)を行う。
-		for( int i = 0; i < 8; i++ ){
+		for( int i = 0; i < 4; i++ ){
 			newWeight[i] /= totalWeight;
 			psOut.color_0 += newColor[i] * newWeight[i];
 		}
 	}
 	uvOffset.x = -0.86602f / texSize.x;
 	uvOffset.y = 0.5f / texSize.y;
+	uvOffset *= blurStepLen;
 	{
 		//斜めブラー。
 		totalWeight = 0.0f;
 		
-		for( int i = 0; i < 8; i++ ){
-			ComputeNewWeightAndColor2(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * (i + 1));
+		for( int i = 0; i < 5; i++ ){
+			ComputeNewWeightAndColor(newColor[i], newWeight[i], totalWeight, pIn.uv + uvOffset * i);
 		}
 		totalWeight = max( 0.001f, totalWeight);
 		
 		//ウェイトを規格化(ウェイトの合計を1.0にする)を行う。
-		for( int i = 0; i < 8; i++ ){
+		for( int i = 0; i < 5; i++ ){
 			newWeight[i] /= totalWeight;
 			psOut.color_1 += newColor[i] * newWeight[i];
 		}
 	}
+	psOut.color_1 += psOut.color_0;
 	return psOut;
 }
 
+#if 0
 //////////////////////////////////////////////////////////////////////////////////////
 // ガウシアンブラー
 // ボケが発生しないピクセルがボケ画像に侵入しないようにしている。
@@ -253,42 +286,6 @@ float4 PSBlur( PS_BlurInput In ) : SV_Target0
 	return Color;
 }
 
-
-#if 0 // 4点サンプリングブラー
-/*!
- *@brief	ピクセルシェーダーへの入力。
- */
-struct PSBlurIn{
-	float4 position : SV_Position;
-	float4 uv0_1	: TEXCOORD0;
-	float4 uv2_3	: TEXCOORD1;
-};
-
-/*!
- *@brief	頂点シェーダー。
- */
-PSBlurIn VSBlur( float4 pos : POSITION, float2 uv : TEXCOORD0 )
-{
-	PSBlurIn psIn = (PSBlurIn)0;
-	psIn.position = pos;
-	float offset =  0.25f;
-	psIn.uv0_1.xy = uv + float2( -offset, -offset ) * invRenderTargetSize;
-	psIn.uv0_1.zw = uv + float2(  offset, -offset ) * invRenderTargetSize;
-	psIn.uv2_3.xy = uv + float2( -offset,  offset ) * invRenderTargetSize;
-	psIn.uv2_3.zw = uv + float2(  offset,  offset ) * invRenderTargetSize;
-	return psIn;
-}
-/*!
- *@brief	ピクセルシェーダー。
- */
-float4 PSBlur( PSBlurIn psIn ) : SV_Target0
-{
-	float4 color = cocTexture.Sample( linearSampler, psIn.uv0_1.xy );
-	color += cocTexture.Sample( linearSampler, psIn.uv0_1.zw );
-	color += cocTexture.Sample( linearSampler, psIn.uv2_3.xy );
-	color += cocTexture.Sample( linearSampler, psIn.uv2_3.zw );
-	color /= 4.0f;
-	return color;
-}
 #endif
+
 
