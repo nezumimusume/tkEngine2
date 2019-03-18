@@ -5,28 +5,33 @@
 #pragma once
 
 #include "tkEngine/physics/tkPhysicsStaticObject.h"
+#include "tkEngine/level/tkMapChipRender.h"
 
 namespace tkEngine{
 	struct LevelObjectData;
+	class CMapChipRender;
 	/*!
 	 *@brief	マップチップ。
 	 */
 	class CMapChip : Noncopyable{
 	public:
-		CMapChip(LevelObjectData& objData);
+		CMapChip(const LevelObjectData& objData, CMapChipRender* mapChipRender);
 		~CMapChip()
 		{
-			DeleteGO(m_modelRender);
 		}
 		/*!
 		*@brief	スキンモデルレンダラーを取得。
 		*/
 		prefab::CSkinModelRender* GetSkinModelRender()
 		{
-			return m_modelRender;
+			if (m_mapChipRender == nullptr ){
+				return nullptr;
+			}
+			return m_mapChipRender->GetSkinModelRender();
 		}
+		
 	private:
-		prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラー。
+		CMapChipRender* m_mapChipRender = nullptr;			//マップチップレンダラー。
 		CPhysicsStaticObject m_physicsStaticObject;			//!<静的物理オブジェクト。
 	};
 }

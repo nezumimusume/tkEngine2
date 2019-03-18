@@ -1,0 +1,1 @@
+MakeSpriteFont.exe "SystemSevenThin" myfile.spritefont /FontSize:32

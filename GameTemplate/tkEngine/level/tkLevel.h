@@ -6,6 +6,7 @@
 
 namespace tkEngine{
 	class CMapChip;
+	class CMapChipRender;
 	/*!
 	* @brief	オブジェクト名。
 	*/
@@ -41,7 +42,11 @@ namespace tkEngine{
 	 *@brief	レベル。
 	 */
 	class CLevel : Noncopyable{
+	private:
+		using CMapChipPtr = std::unique_ptr<CMapChip>;
+		using CMapChipRenderPtr = std::unique_ptr<CMapChipRender>;
 	public:
+		~CLevel();
 		/*!
 		 * @brief	レベルを初期化。
 		 *@param[in]	levelDataFilePath		tklファイルのファイルパス。
@@ -56,7 +61,18 @@ namespace tkEngine{
 		 */
 		void Init( const wchar_t* filePath,  std::function<bool(LevelObjectData& objData)> hookFunc);
 	private:
-		using CMapChipPtr = std::unique_ptr<CMapChip>;
-		std::vector<CMapChipPtr>	m_mapChipPtr;		//マップチップの可変長配列。
+		/// <summary>
+		/// マップチップレンダラーを作成出来たら作成するor描画すべきオブジェクトの数をインクリメントする。
+		/// </summary>
+		/// <remarks>
+		/// 未登録のオブジェクトが渡されたときは、レンダラーを作成します。
+		/// 登録済みの場合は、マップチップレンダラーが描画すべきオブジェクトの数が
+		/// インクリメントされます。
+		/// </remarks>
+		/// <returns></returns>
+		CMapChipRender* CreateMapChipRenderOrAddRenderObject( const LevelObjectData& objData );
+	private:
+		std::vector<CMapChipPtr> m_mapChipPtrs;			//マップチップの可変長配列。
+		std::map< unsigned int, CMapChipRender*> m_mapChipRenderPtrs;	//マップチップレンダラーの可変長配列。
 	};
 }
