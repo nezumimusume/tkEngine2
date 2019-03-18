@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="inc">
+      <UniqueIdentifier>{a12c0136-232f-435f-9164-f750f91ca1a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{08b73b7c-f28d-4e7b-a186-69b127740340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{5d8996c7-408e-4b8e-a91e-f3b031f868d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demo_memory_cocos2dx_windows">
+      <UniqueIdentifier>{a22a7c90-0d8c-4556-ac60-f567acd01adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demo_memory_cocos2dx_windows\res">
+      <UniqueIdentifier>{4a793e9d-0d80-44c9-b52a-443c2f27828e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{32811781-15df-4e85-8083-8635fdd2d1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\common">
+      <UniqueIdentifier>{0a5b5e99-8ba5-4cc4-be88-e45768642de1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cocos2dx">
+      <UniqueIdentifier>{cf0ad150-24d0-4b0a-8987-d4155e925a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc\cocos2dx">
+      <UniqueIdentifier>{132d5064-9768-4dab-b5de-96cd8301041a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="demo_memory_cocos2dx_windows\resource.h">
+      <Filter>demo_memory_cocos2dx_windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BaseView.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\LoadBalancingListener.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\DemoConstants.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\inc\AppDelegate.h">
+      <Filter>inc\cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\inc\ViewConstants.h">
+      <Filter>inc\cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\inc\ListController.h">
+      <Filter>inc\cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Game.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\inc\View.h">
+      <Filter>inc\cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\shared\inc\OutputListener.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\shared\inc\Console.h">
+      <Filter>inc\common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\BaseView.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LoadBalancingListener.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Main.cpp">
+      <Filter>src\cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ListController.cpp">
+      <Filter>src\cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Game.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AppDelegate.cpp">
+      <Filter>src\cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\View.cpp">
+      <Filter>src\cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\shared\src\Console.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\resources\arial16.fnt">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\arial16.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowDown.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowDownSelected.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowLeft.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowLeftSelected.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowRight.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowRightSelected.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowUp.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\ArrowUpSelected.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\bitmapFontTest3.fnt">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\bitmapFontTest3.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\CloseNormal.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\CloseSelected.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="..\resources\HelloWorld.png">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="demo_memory_cocos2dx_windows\res\demo_memory_cocos2dx_windows.ico">
+      <Filter>demo_memory_cocos2dx_windows\res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="demo_memory_cocos2dx_windows\demo_memory_cocos2dx_windows.rc">
+      <Filter>demo_memory_cocos2dx_windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

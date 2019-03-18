@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_windows_chat_console", "demo_windows_chat_console.vcxproj", "{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug_windows_md|Win32 = debug_windows_md|Win32
+		debug_windows_md|x64 = debug_windows_md|x64
+		debug_windows_mt|Win32 = debug_windows_mt|Win32
+		debug_windows_mt|x64 = debug_windows_mt|x64
+		release_windows_md|Win32 = release_windows_md|Win32
+		release_windows_md|x64 = release_windows_md|x64
+		release_windows_mt|Win32 = release_windows_mt|Win32
+		release_windows_mt|x64 = release_windows_mt|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_md|Win32.ActiveCfg = debug_windows_md|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_md|Win32.Build.0 = debug_windows_md|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_md|x64.ActiveCfg = debug_windows_md|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_md|x64.Build.0 = debug_windows_md|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_mt|Win32.ActiveCfg = debug_windows_mt|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_mt|Win32.Build.0 = debug_windows_mt|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_mt|x64.ActiveCfg = debug_windows_mt|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.debug_windows_mt|x64.Build.0 = debug_windows_mt|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_md|Win32.ActiveCfg = release_windows_md|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_md|Win32.Build.0 = release_windows_md|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_md|x64.ActiveCfg = release_windows_md|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_md|x64.Build.0 = release_windows_md|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_mt|Win32.ActiveCfg = release_windows_mt|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_mt|Win32.Build.0 = release_windows_mt|Win32
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_mt|x64.ActiveCfg = release_windows_mt|x64
+		{A2B9E6E3-4AC0-474D-88C4-25D4190761ED}.release_windows_mt|x64.Build.0 = release_windows_mt|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

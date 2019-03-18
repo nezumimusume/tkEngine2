@@ -1,0 +1,12 @@
+<map id="CustomType.h" name="CustomType.h">
+<area shape="rect" id="node2" href="$a00125.html" title="Common&#45;cpp/inc/CustomType\lBase.h" alt="" coords="133,77,299,113"/>
+<area shape="rect" id="node26" href="$a00128.html" title="Common&#45;cpp/inc/CustomType\lFactory.h" alt="" coords="323,77,488,113"/>
+<area shape="rect" id="node4" href="$a00110.html" title="Common&#45;cpp/inc/Base.h" alt="" coords="336,161,475,185"/>
+<area shape="rect" id="node5" href="$a00278.html" title="Common&#45;cpp/inc/Logger.h" alt="" coords="531,239,679,263"/>
+<area shape="rect" id="node21" href="$a00281.html" title="Common&#45;cpp/inc/MemoryManagement\l/Allocate.h" alt="" coords="303,233,507,269"/>
+<area shape="rect" id="node6" href="$a00116.html" title="Common&#45;cpp/inc/BaseListener.h" alt="" coords="632,323,811,347"/>
+<area shape="rect" id="node19" href="$a00146.html" title="Common&#45;cpp/inc/Enums\l/DebugLevel.h" alt="" coords="523,401,661,437"/>
+<area shape="rect" id="node8" href="$a00266.html" title="Common&#45;cpp/inc/JString.h" alt="" coords="648,491,795,515"/>
+<area shape="rect" id="node9" href="$a00320.html" title="Common&#45;cpp/inc/ToString.h" alt="" coords="408,569,563,593"/>
+<area shape="rect" id="node24" href="$a00284.html" title="Common&#45;cpp/inc/MemoryManagement\l/AllocatorInterface.h" alt="" coords="243,485,447,521"/>
+</map>
