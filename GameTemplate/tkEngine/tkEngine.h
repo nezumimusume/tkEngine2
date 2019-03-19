@@ -270,6 +270,10 @@ namespace tkEngine{
 		{
 			return GraphicsEngine().GetDirectionShadowMap();
 		}
+		static inline COminiDirectionShadowMap& OminiDirectionShadowMap()
+		{
+			return GraphicsEngine().GetOminiDirectionShadowMap();
+		}
 	}
 	/// <summary>
 	/// ポストエフェクトの機能に簡易的にアクセスするための名前空間。

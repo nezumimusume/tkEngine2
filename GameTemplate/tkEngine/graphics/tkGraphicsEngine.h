@@ -63,11 +63,18 @@ namespace tkEngine{
 			return m_effectEngine;
 		}
 		/*!
-		* @brief	シャドウマップを取得。
+		* @brief	指向性シャドウマップを取得。
 		*/
 		CDirectionShadowMap& GetDirectionShadowMap()
 		{
 			return m_preRender.GetDirectionShadowMap();
+		}
+		/*!
+		* @brief	全方位シャドウマップを取得。
+		*/
+		COminiDirectionShadowMap& GetOminiDirectionShadowMap()
+		{
+			return m_preRender.GetOminiDirectionShadowMap();
 		}
 		/*!
 		* @brief	トーンマップを取得。

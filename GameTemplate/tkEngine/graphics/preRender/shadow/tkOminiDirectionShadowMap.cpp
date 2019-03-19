@@ -55,10 +55,11 @@ namespace tkEngine {
 		D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
 		ZeroMemory(&rtDesc, sizeof(rtDesc));
 		rtDesc.Format = m_texDesc.Format;
-		rtDesc.Texture2DArray.ArraySize = NUM_TEXTURE;
+		
 		for (int i = 0; i < NUM_TEXTURE; i++) {
-			rtDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+			rtDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
 			rtDesc.Texture2DArray.FirstArraySlice = i;
+			rtDesc.Texture2DArray.ArraySize = 1;
 			auto hr = pD3DDevice->CreateRenderTargetView(
 				m_shadowMap, &rtDesc, &m_renderTargets[i]);
 			if (FAILED(hr)) {
@@ -81,10 +82,11 @@ namespace tkEngine {
 	}
 	bool COminiDirectionShadowMap::InitDepthStencilViews(ID3D11Device* pD3DDevice)
 	{
-		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {0};
-		descDSV.Format = m_depthTexDesc.Format;
-		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-		descDSV.Texture2D.MipSlice = 0;
+		CD3D11_DEPTH_STENCIL_VIEW_DESC descDSV(
+			D3D11_DSV_DIMENSION_TEXTURE2D,
+			m_depthTexDesc.Format
+		);
+
 		auto hr = pD3DDevice->CreateDepthStencilView(
 			m_depthStencilTexture, &descDSV, &m_depthStencilView
 		);
@@ -97,6 +99,8 @@ namespace tkEngine {
 	{
 		auto pD3DDevice = GraphicsEngine().GetD3DDevice();
 		
+		m_isEnable = config.isEnable;
+
 		//シャドウマップ描画用のテクスチャを作成する。
 		if (InitShadowMapTextures(pD3DDevice) == false) {
 			//シャドウマップ用のテクスチャの作成に失敗。
@@ -125,6 +129,13 @@ namespace tkEngine {
 	
 	void COminiDirectionShadowMap::RenderToShadowMapImp(CRenderContext& rc)
 	{
+		rc.SetRenderStep(enRenderStep_RenderToShadowMap);
+
+		BeginGPUEvent(L"enRenderStep_COminiDirectionShadowMap::RenderToShadowMap");
+
+		if (m_isEnable == false) {
+			return;
+		}
 		static const CVector3 cameraDirectionTbl[NUM_TEXTURE] = {
 			{ 1.0f,  0.0f,  0.0f },	//POSITIVE_X
 			{-1.0f,  0.0f,  0.0f },	//NEGATIVE_X
@@ -141,7 +152,16 @@ namespace tkEngine {
 			{ 0.0f,  1.0f,  0.0f },	//POSITIVE_Z
 			{ 0.0f,  1.0f,  0.0f },	//NEGATIVE_Z
 		};
+
+		//全方位シャドウマップをレジスタから外す。
+		rc.PSUnsetShaderResource(enSkinModelSRVReg_OminiDirectionShadowMap);
+
+		CRenderTarget* oldRenderTargets[MRT_MAX];
+		unsigned int numRenderTargetViews;
+		rc.OMGetRenderTargets(numRenderTargetViews, oldRenderTargets);
+
 		for (int i = 0; i < NUM_TEXTURE; i++) {
+			BeginGPUEvent(L"Render 3DModel");
 			//カメラ行列を作成する。
 			CMatrix mView;
 			mView.MakeLookAt(
@@ -153,17 +173,35 @@ namespace tkEngine {
 			mProj.MakeProjectionMatrix(
 				CMath::DegToRad(90.0f),
 				1.0f,
-				0.0f,
+				0.1f,
 				m_distanceAffectedByLight
 			);
 			CMatrix mLightViewProjection;
 			mLightViewProjection = mView * mProj;
+
+
+			rc.OMSetRenderTarget(m_renderTargets[i], m_depthStencilView);
+			rc.RSSetViewport(
+				0.0f, 0.0f,
+				(float)m_texDesc.Width,
+				(float)m_texDesc.Height
+			);
+			float ClearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; //red,green,blue,alpha
+			rc.ClearRenderTargetView(0, ClearColor);
 			//
 			//シャドウキャスターをドロー
 			for (auto& caster : m_shadowCaster) {
 				caster->Render(rc, mLightViewProjection);
 			}
+
+			EndGPUEvent();
 		}
+
+		//レンダリングターゲットを差し戻す。
+		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
+		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
+
+		EndGPUEvent();
 	}
 	void COminiDirectionShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
 	{

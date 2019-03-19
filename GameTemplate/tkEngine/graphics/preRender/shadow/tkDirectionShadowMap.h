@@ -90,7 +90,6 @@ namespace tkEngine{
 			CVector4 texOffset[NUM_SHADOW_MAP];
 			float depthOffset[NUM_SHADOW_MAP];
 		};
-		bool m_isEnable = false;							//!<影の処理が有効？
 		CVector3 m_lightDirection = CVector3::Down;			//!<ライトの方向。
 		float m_near = 0.1f;								//!<近平面。
 		float m_far = 100.0f;								//!<遠平面。

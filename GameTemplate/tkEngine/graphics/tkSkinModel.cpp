@@ -99,6 +99,8 @@ namespace tkEngine{
 		}
 		if (m_isShadowCaster == true) {
 			shadow::DirectionShadowMap().Entry(&m_shadowCaster);
+			//todo　全方位シャドウマップテスト。あとで分ける。
+			shadow::OminiDirectionShadowMap().Entry(&m_shadowCaster);
 		}
 		m_numInstance = 1;
 		//スケルトン更新。

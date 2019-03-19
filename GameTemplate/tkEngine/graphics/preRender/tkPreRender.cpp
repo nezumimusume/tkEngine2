@@ -31,6 +31,7 @@ namespace tkEngine{
 	
 	void CPreRender::Render(CRenderContext& rc)
 	{
+		m_ominiDirectionShadowMap.RenderToShadowMap(rc);
 		m_directionShadowMap.RenderToShadowMap(rc);
 		m_gbufferRender.Render(rc);
 		m_lightCulling.Render(rc);

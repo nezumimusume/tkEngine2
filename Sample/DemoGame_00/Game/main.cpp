@@ -29,6 +29,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[1] = 0.001f;
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
 	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::eSSSS_PCF;
+	//全方位シャドウマップ
+	initParam.graphicsConfing.ominiShadowRenderConfig.isEnable = true;
+
 	//アンチ
 	initParam.graphicsConfing.aaConfig.isEnable = true;
 	//Bloom

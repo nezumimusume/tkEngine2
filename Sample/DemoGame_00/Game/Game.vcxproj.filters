@@ -95,10 +95,6 @@
     <ImageContentTask Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\Park-Texture_specMap.tga">
-      <Filter>Assets\modelData</Filter>
-    </Image>
+    <ImageContentTask Include="Assets\modelData\Park-Texture_specMap.tga" />
   </ItemGroup>
 </Project>

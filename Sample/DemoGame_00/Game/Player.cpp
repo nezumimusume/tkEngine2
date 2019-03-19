@@ -261,6 +261,10 @@ void Player::Update()
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
 	m_forward.z = mRot.m[2][2];
+
+	//todo 全方位シャドウマップのテスト
+	shadow::OminiDirectionShadowMap().SetLightPosition(m_position + CVector3(.0f, 100.0f, 0.0f));
+	shadow::OminiDirectionShadowMap().SetDistanceAffectedByLight(300.0f);
 }
 
 void Player::NotifyGameOver()

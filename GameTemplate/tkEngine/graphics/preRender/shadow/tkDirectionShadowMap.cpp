@@ -205,7 +205,7 @@ namespace tkEngine{
 		if (!m_isEnable) {
 			return;
 		}
-		BeginGPUEvent(L"enRenderStep_RenderToShadowMap");
+		BeginGPUEvent(L"enRenderStep_CDirectionShadowMap::RenderToShadowMap");
 		for (int i = 0; i < NUM_SHADOW_MAP; i++) {
 			rc.PSUnsetShaderResource(enSkinModelSRVReg_ShadowMap_0 + i);
 		}
@@ -215,11 +215,9 @@ namespace tkEngine{
 		rc.OMGetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		for (int i = 0; i < NUM_SHADOW_MAP; i++) {
 			BeginGPUEvent(L"Render 3DModel");
-			CRenderTarget* renderTargets[] = {
-				&m_shadowMapRT[i]
-			};
 
-			rc.OMSetRenderTargets(1, renderTargets);
+			rc.OMSetRenderTarget(m_shadowMapRT[i]);
+
 			rc.RSSetViewport(
 				0.0f, 0.0f, 
 				(float)m_shadowMapRT[i].GetWidth(),

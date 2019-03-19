@@ -87,7 +87,7 @@ namespace tkEngine{
 		ID3D11Texture2D* m_depthStencilTexture = nullptr;					//デプスステンシルテクスチャ。
 		ID3D11DepthStencilView* m_depthStencilView = nullptr;				//デプスステンシルビュー。
 		CVector3 m_lightPosition = CVector3::Zero;							//光源の座標。
-		float m_distanceAffectedByLight = 0;								//ライトの影響を受ける距離。
+		float m_distanceAffectedByLight = 100;								//ライトの影響を受ける距離。
 		D3D11_TEXTURE2D_DESC m_texDesc = { 0 };								//テクスチャ定義。
 		D3D11_TEXTURE2D_DESC m_depthTexDesc = { 0 };						//デプスステンシルテクスチャの定義。
 	};

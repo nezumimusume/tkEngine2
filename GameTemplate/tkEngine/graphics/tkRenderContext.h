@@ -132,11 +132,30 @@ namespace tkEngine {
 		}
 		/*!
 		* @brief	レンダリングターゲットビューを設定。
+		*@param[in]	renderTarget	バインドするレンダリングターゲット。
+		*/
+		void OMSetRenderTarget(CRenderTarget& renderTarget)
+		{
+			CRenderTarget* renderTargets[] = {
+				&renderTarget
+			};
+			OMSetRenderTargets(1, renderTargets);
+		}
+		void OMSetRenderTarget(ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStencliView)
+		{
+			ID3D11RenderTargetView* renderTargets[] = {
+				renderTarget
+			};
+			OMSetRenderTargets(1, renderTargets, depthStencliView);
+		}
+		/*!
+		* @brief	レンダリングターゲットビューを設定。
 		* @details
 		*  ID3D11DeviceContext::OMSetRenderTargetsと同じ。
 		*@param[in]	NumViews		バインドするレンダリングターゲットの数。
 		*@param[in]	renderTarget	バインドするレンダリングターゲットの配列へのポインタ。
 		*/
+		
 		void OMSetRenderTargets(unsigned int NumViews, CRenderTarget* renderTarget[]);
 		void OMSetRenderTargets(unsigned int NumViews, ID3D11RenderTargetView *const *ppRenderTargetViews, ID3D11DepthStencilView *pDepthStencilView)
 		{
