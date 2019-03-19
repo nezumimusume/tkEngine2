@@ -154,7 +154,7 @@ namespace tkEngine{
 		rc.PSSetShaderResource(enSkinModelSRVReg_MaterialID, m_GBuffer[enGBufferMateriaID].GetRenderTargetSRV());
 		rc.PSSetShaderResource(enSkinModelSRVReg_EmissionColor, m_GBuffer[enGBufferEmission].GetRenderTargetSRV());
 
-		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
+		if (shadow::DirectionShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
 			rc.PSSetShaderResource(enSkinModelSRVReg_SoftShadowMap, m_GBuffer[enGBufferShadow].GetRenderTargetSRV());
 		}
@@ -173,7 +173,7 @@ namespace tkEngine{
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_MaterialID);
 		rc.PSUnsetShaderResource(enSkinModelSRVReg_EmissionColor);
 
-		if (GraphicsEngine().GetShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
+		if (shadow::DirectionShadowMap().GetSoftShadowLevel() == EnSoftShadowQualityLevel::enNone) {
 			//ハードシャドウ。
 			rc.PSUnsetShaderResource(enSkinModelSRVReg_SoftShadowMap);
 		}
@@ -185,11 +185,11 @@ namespace tkEngine{
 	void CGBufferRender::Render(CRenderContext& rc)
 	{
 		BeginGPUEvent(L"enRenderStep_RenderGBuffer");
-		EnSoftShadowQualityLevel ssLevel = GraphicsEngine().GetShadowMap().GetSoftShadowLevel();
+		EnSoftShadowQualityLevel ssLevel = shadow::DirectionShadowMap().GetSoftShadowLevel();
 
 		rc.CopyResource(m_depthTextureLastFrame, m_GBuffer[enGBufferDepth].GetRenderTarget());
 		//影を落とすための情報を転送。
-		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
+		shadow::DirectionShadowMap().SendShadowReceiveParamToGPU(rc);
 
 		rc.SetRenderStep(enRenderStep_RenderGBuffer);
 

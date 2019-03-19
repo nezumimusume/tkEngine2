@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "tkEngine/graphics/preRender/tkShadowCaster.h"
+#include "tkEngine/graphics/preRender/shadow/tkShadowCaster.h"
 #include "tkEngine/math/tkBox.h"
 
 namespace tkEngine{

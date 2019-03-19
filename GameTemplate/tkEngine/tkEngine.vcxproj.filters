@@ -111,6 +111,9 @@
     <Filter Include="Source Files\nature">
       <UniqueIdentifier>{0633ba0e-bad6-47ef-863a-6c15ce68dabc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\graphics\preRender\shadow">
+      <UniqueIdentifier>{247c1cb6-203e-40b2-9a5c-13e797840959}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameObject\tkGameObjectManager.h">
@@ -296,14 +299,8 @@
     <ClInclude Include="graphics\animation\tkAnimationPlayController.h">
       <Filter>Source Files\graphics\animation</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\preRender\tkShadowMap.h">
-      <Filter>Source Files\graphics\preRender</Filter>
-    </ClInclude>
     <ClInclude Include="tkEngineStruct.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\preRender\tkShadowCaster.h">
-      <Filter>Source Files\graphics\preRender</Filter>
     </ClInclude>
     <ClInclude Include="graphics\tkSkinModelShaderConst.h">
       <Filter>Source Files\graphics</Filter>
@@ -458,6 +455,15 @@
     <ClInclude Include="level\tkMapChipRender.h">
       <Filter>Source Files\level</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\preRender\shadow\tkIShadowMap.h">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\shadow\tkShadowCaster.h">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\shadow\tkShadowMap.h">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -598,12 +604,6 @@
     <ClCompile Include="graphics\animation\tkAnimationPlayController.cpp">
       <Filter>Source Files\graphics\animation</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\preRender\tkShadowMap.cpp">
-      <Filter>Source Files\graphics\preRender</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\preRender\tkShadowCaster.cpp">
-      <Filter>Source Files\graphics\preRender</Filter>
-    </ClCompile>
     <ClCompile Include="camera\tkSpringCamera.cpp">
       <Filter>Source Files\camera</Filter>
     </ClCompile>
@@ -735,6 +735,15 @@
     </ClCompile>
     <ClCompile Include="level\tkMapChipRender.cpp">
       <Filter>Source Files\level</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\shadow\tkIShadowMap.cpp">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\shadow\tkShadowCaster.cpp">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\shadow\tkShadowMap.cpp">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

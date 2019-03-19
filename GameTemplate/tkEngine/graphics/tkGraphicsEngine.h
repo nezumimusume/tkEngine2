@@ -65,9 +65,9 @@ namespace tkEngine{
 		/*!
 		* @brief	シャドウマップを取得。
 		*/
-		CShadowMap& GetShadowMap()
+		CDirectionShadowMap& GetDirectionShadowMap()
 		{
-			return m_preRender.GetShadowMap();
+			return m_preRender.GetDirectionShadowMap();
 		}
 		/*!
 		* @brief	トーンマップを取得。

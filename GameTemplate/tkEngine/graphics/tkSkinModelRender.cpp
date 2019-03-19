@@ -31,8 +31,7 @@ namespace prefab{
 	}
 	void CSkinModelRender::OnDestroy()
 	{
-		auto& shadowMap = GraphicsEngine().GetShadowMap();
-		shadowMap.Remove(&m_skinModel.GetShadowCaster());
+		shadow::DirectionShadowMap().Remove(&m_skinModel.GetShadowCaster());
 		auto& gBuffer = GraphicsEngine().GetGBufferRender();
 		gBuffer.RemoveSkinModel(&m_skinModel);
 	}

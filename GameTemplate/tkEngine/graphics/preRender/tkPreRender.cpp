@@ -19,18 +19,18 @@ namespace tkEngine{
 	void CPreRender::Create( const SGraphicsConfig& config )
 	{
 		m_lightCulling.Init();
-		m_shadowMap.Init(config.shadowRenderConfig);
+		m_directionShadowMap.Init(config.shadowRenderConfig);
 		m_gbufferRender.Init(config);
 	}
 	
 	void CPreRender::Update() 
 	{
-		m_shadowMap.Update();
+		m_directionShadowMap.Update();
 	}
 	
 	void CPreRender::Render(CRenderContext& rc)
 	{
-		m_shadowMap.RenderToShadowMap(rc);
+		m_directionShadowMap.RenderToShadowMap(rc);
 		m_gbufferRender.Render(rc);
 		m_lightCulling.Render(rc);
 	}

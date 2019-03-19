@@ -260,7 +260,7 @@ namespace tkEngine{
 		//ライトの情報を転送転送。
 		LightManager().Render(rc);
 		//影を落とすための情報を転送。
-		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(rc);
+		shadow::DirectionShadowMap().SendShadowReceiveParamToGPU(rc);
 		GraphicsEngine().GetGBufferRender().SetGBufferParamToReg(rc);
 		//定数バッファを更新。
 		PSDefferdCb cb;

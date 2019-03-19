@@ -3,21 +3,21 @@
  */
 
 #include "tkEngine/tkEnginePreCompile.h"
-#include "tkEngine/graphics/preRender/tkShadowMap.h"
-#include "tkEngine/graphics/preRender/tkShadowCaster.h"
+#include "tkEngine/graphics/preRender/shadow/tkShadowMap.h"
+#include "tkEngine/graphics/preRender/shadow/tkShadowCaster.h"
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
 namespace tkEngine{
 	
-	CShadowMap::CShadowMap()
+	CDirectionShadowMap::CDirectionShadowMap()
 	{
 	}
 	
-	CShadowMap::~CShadowMap()
+	CDirectionShadowMap::~CDirectionShadowMap()
 	{
 	}
 	
-	bool CShadowMap::Init(const SShadowRenderConfig& config)
+	bool CDirectionShadowMap::Init(const SShadowRenderConfig& config)
 	{
 		Release();
 		m_lightHeight = config.lightHeight;
@@ -64,7 +64,7 @@ namespace tkEngine{
 		return true;
 	}
 	
-	void CShadowMap::Release()
+	void CDirectionShadowMap::Release()
 	{
 		m_shadowCb.Release();
 		for (auto& rt : m_shadowMapRT) {
@@ -72,7 +72,7 @@ namespace tkEngine{
 		}
 	}
 	
-	void CShadowMap::Entry(IShadowCaster* caster)
+	void CDirectionShadowMap::Entry(IShadowCaster* caster)
 	{
 		if (!m_isEnable) {
 			return;
@@ -80,7 +80,7 @@ namespace tkEngine{
 		m_shadowCaster.push_back(caster);
 	}
 	
-	void CShadowMap::Update()
+	void CDirectionShadowMap::Update()
 	{
 		if (!m_isEnable) {
 			return;
@@ -208,10 +208,7 @@ namespace tkEngine{
 			nearPlaneZ = farPlaneZ;
 		}
 	}
-	/*!
-	*@brief	シャドウマップへ書き込み。
-	*/
-	void CShadowMap::RenderToShadowMap(CRenderContext& rc)
+	void CDirectionShadowMap::RenderToShadowMap(CRenderContext& rc)
 	{
 		rc.SetRenderStep(enRenderStep_RenderToShadowMap);
 		if (!m_isEnable) {
@@ -253,10 +250,7 @@ namespace tkEngine{
 		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
 		EndGPUEvent();
 	}
-	/*!
-	*@brief	影を落とすためのパラメータをGPUに転送する。
-	*/
-	void CShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
+	void CDirectionShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
 	{
 		rc.UpdateSubresource(m_shadowCb, &m_shadowCbEntity);
 		rc.PSSetConstantBuffer(enSkinModelCBReg_Shadow, m_shadowCb);

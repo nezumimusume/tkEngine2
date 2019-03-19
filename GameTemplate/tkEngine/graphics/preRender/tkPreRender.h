@@ -7,7 +7,7 @@
 
 #include "tkEngine/graphics/tkGraphicsConfig.h"
 #include "tkEngine/graphics/preRender/tkLightCulling.h"
-#include "tkEngine/graphics/preRender/tkShadowMap.h"
+#include "tkEngine/graphics/preRender/shadow/tkShadowMap.h"
 #include "tkEngine/graphics/preRender/tkGBufferRender.h"
 
 namespace tkEngine{
@@ -43,11 +43,11 @@ namespace tkEngine{
 		void Update();
 		
 		/*!
-		 *@brief	シャドウマップを取得。
+		 *@brief	指向性シャドウマップを取得。
 		 */
-		CShadowMap& GetShadowMap()
+		CDirectionShadowMap& GetDirectionShadowMap()
 		{
-			return m_shadowMap;
+			return m_directionShadowMap;
 		}
 		/*!
 		 *@brief	G-Bufferを取得。
@@ -57,10 +57,10 @@ namespace tkEngine{
 			return m_gbufferRender;
 		}
 	private:
-		SGraphicsConfig	m_config;			//!<コンフィグ。
-		CLightCulling	m_lightCulling;		//!<ライトカリング。
-		CShadowMap		m_shadowMap;		//!<シャドウマップ。
-		CGBufferRender	m_gbufferRender;	//!<G-Buffer。
+		SGraphicsConfig		m_config;				//!<コンフィグ。
+		CLightCulling		m_lightCulling;			//!<ライトカリング。
+		CDirectionShadowMap	m_directionShadowMap;	//!<指向性シャドウマップ。
+		CGBufferRender		m_gbufferRender;		//!<G-Buffer。
 	};
 }
 #endif //_TKPRERENDER_H_

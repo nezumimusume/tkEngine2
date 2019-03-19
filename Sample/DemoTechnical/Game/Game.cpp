@@ -73,7 +73,7 @@ bool Game::Start()
 	m_dirLights.push_back(lig);
 
 	//シャドウマップ
-	GraphicsEngine().GetShadowMap().SetLightDirection({ 0.0f, -0.707f, -0.707f });
+	shadow::DirectionShadowMap().SetLightDirection({ 0.0f, -0.707f, -0.707f });
 
 	m_charaNormalMap.CreateFromDDSTextureFromFile(L"modelData/utc_normal.dds");
 	m_charaSpecMap.CreateFromDDSTextureFromFile(L"modelData/utc_spec.dds");

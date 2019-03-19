@@ -2,7 +2,7 @@
  * @brief	シャドウキャスター。
  */
 #include "tkEngine/tkEnginePreCompile.h"
-#include "tkEngine/graphics/preRender/tkShadowCaster.h"
+#include "tkEngine/graphics/preRender/shadow/tkShadowCaster.h"
 
 namespace tkEngine{
 
@@ -16,7 +16,7 @@ namespace tkEngine{
 	CShadowCaster_SkinModel::~CShadowCaster_SkinModel()
 	{
 		//シャドウマップに登録されているかもしれないので、削除する。
-		GraphicsEngine().GetShadowMap().Remove(this);
+		shadow::DirectionShadowMap().Remove(this);
 	}
 	void CShadowCaster_SkinModel::Create(CSkinModel* model)
 	{

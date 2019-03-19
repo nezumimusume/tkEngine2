@@ -56,7 +56,7 @@ void Game::InitSceneLight()
 	LightManager().SetAmbientLight({ 5.0f, 5.0f, 5.0f });
 	
 	if (m_directionLight != nullptr) {
-		GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
+		shadow::DirectionShadowMap().SetLightDirection(m_directionLight->GetDirection());
 	}
 
 
@@ -111,7 +111,7 @@ bool Game::Start()
 		star->SetTags(enGameObject_Star);	//ƒ^ƒO‚ğİ’èB
 	}
 	m_fade = FindGO<Fade>("Fade");
-	GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
+	shadow::DirectionShadowMap().SetLightDirection(m_directionLight->GetDirection());
 	m_bgmSource = NewGO<prefab::CSoundSource>(0, nullptr);
 	m_bgmSource->Init(L"sound/normalBGM.wav");
 	
@@ -247,7 +247,7 @@ void Game::Update()
 	qRot.Apply(lightDir);
 
 	m_directionLight->SetDirection(lightDir);
-	GraphicsEngine().GetShadowMap().SetLightDirection(m_directionLight->GetDirection());
+	shadow::DirectionShadowMap().SetLightDirection(m_directionLight->GetDirection());
 #endif
 }
 

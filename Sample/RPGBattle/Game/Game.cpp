@@ -53,7 +53,7 @@ bool Game::Start()
 			auto ptLig = NewGO<prefab::CPointLight>(0);
 			ptLig->SetPosition(objData.position);
 			ptLig->SetAttn({ 200.0f, 3.0f, 0.0f });
-			ptLig->SetColor({ 10.0f, 5.0f, 5.0f, 1.0f });
+			ptLig->SetColor({ 10.0f, 5.0f, 5.0f });
 			m_pointLight.push_back(ptLig);
 			return true;
 		}else if (objData.EqualObjectName(L"Camera001") == true) {
@@ -99,7 +99,7 @@ bool Game::Start()
 	lig->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 	m_dirLight.push_back(lig);
 
-	GraphicsEngine().GetShadowMap().SetLightDirection(ligDir);
+	shadow::DirectionShadowMap().SetLightDirection(ligDir);
 	lig = NewGO<prefab::CDirectionLight>(0);
 	ligDir.Set(1.0f, 1.0f, -1.0f);
 	lig->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });

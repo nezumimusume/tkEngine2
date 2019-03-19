@@ -259,6 +259,19 @@ namespace tkEngine{
 		return Engine().GetGraphicsEngine().GetGBufferRender().GetRenderTarget(gBuffer).GetRenderTargetSRV();
 	}
 	/// <summary>
+	/// 影生成の機能に簡易的にアクセスするための名前空間。
+	/// </summary>
+	namespace shadow {
+		/// <summary>
+		/// 指向性シャドウ生成機能にアクセス。
+		/// </summary>
+		/// <returns></returns>
+		static inline CDirectionShadowMap& DirectionShadowMap()
+		{
+			return GraphicsEngine().GetDirectionShadowMap();
+		}
+	}
+	/// <summary>
 	/// ポストエフェクトの機能に簡易的にアクセスするための名前空間。
 	/// </summary>
 	namespace postEffect {

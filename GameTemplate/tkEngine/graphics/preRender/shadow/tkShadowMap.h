@@ -1,5 +1,5 @@
 /*!
- * @brief	シャドウマップ
+ * @brief	指向性シャドウマップ
  */
 
 #pragma once
@@ -7,19 +7,19 @@
 namespace tkEngine{
 	class IShadowCaster;
 	/*!
-	 * @brief	シャドウマップ。
+	 * @brief	指向性シャドウマップ。
 	 */
-	class CShadowMap : Noncopyable{
+	class CDirectionShadowMap : Noncopyable{
 	public:
 		
 		/*!
 		 * @brief	コンストラクタ。
 		 */
-		CShadowMap();
+		CDirectionShadowMap();
 		/*!
 		 * @brief	デストラクタ。
 		 */
-		~CShadowMap();
+		~CDirectionShadowMap();
 		/*!
 		 * @brief	シャドウマップの作成。
 		 *@param[in]	config		コンフィグ。

@@ -98,7 +98,7 @@ namespace tkEngine{
 			GraphicsEngine().GetGBufferRender().AddSkinModel(this);
 		}
 		if (m_isShadowCaster == true) {
-			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
+			shadow::DirectionShadowMap().Entry(&m_shadowCaster);
 		}
 		m_numInstance = 1;
 		//スケルトン更新。
@@ -139,7 +139,7 @@ namespace tkEngine{
 				GraphicsEngine().GetGBufferRender().AddSkinModel(this);
 			}
 			if (m_isShadowCaster == true) {
-				GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
+				shadow::DirectionShadowMap().Entry(&m_shadowCaster);
 			}
 		}
 	}
