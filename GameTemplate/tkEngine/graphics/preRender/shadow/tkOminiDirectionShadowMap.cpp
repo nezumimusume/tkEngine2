@@ -158,6 +158,11 @@ namespace tkEngine {
 			);
 			CMatrix mLightViewProjection;
 			mLightViewProjection = mView * mProj;
+			//
+			//シャドウキャスターをドロー
+			for (auto& caster : m_shadowCaster) {
+				caster->Render(rc, mLightViewProjection);
+			}
 		}
 	}
 	void COminiDirectionShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
