@@ -461,7 +461,10 @@
     <ClInclude Include="graphics\preRender\shadow\tkShadowCaster.h">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\preRender\shadow\tkShadowMap.h">
+    <ClInclude Include="graphics\preRender\shadow\tkOminiDirectionShadowMap.h">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\preRender\shadow\tkDirectionShadowMap.h">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClInclude>
   </ItemGroup>
@@ -742,7 +745,10 @@
     <ClCompile Include="graphics\preRender\shadow\tkShadowCaster.cpp">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\preRender\shadow\tkShadowMap.cpp">
+    <ClCompile Include="graphics\preRender\shadow\tkOminiDirectionShadowMap.cpp">
+      <Filter>Source Files\graphics\preRender\shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\preRender\shadow\tkDirectionShadowMap.cpp">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClCompile>
   </ItemGroup>

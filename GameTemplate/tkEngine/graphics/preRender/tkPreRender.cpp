@@ -21,6 +21,7 @@ namespace tkEngine{
 		m_lightCulling.Init();
 		m_directionShadowMap.Init(config.shadowRenderConfig);
 		m_gbufferRender.Init(config);
+		m_ominiDirectionShadowMap.Init(config.ominiShadowRenderConfig);
 	}
 	
 	void CPreRender::Update() 

@@ -3,7 +3,7 @@
  */
 
 #include "tkEngine/tkEnginePreCompile.h"
-#include "tkEngine/graphics/preRender/shadow/tkShadowMap.h"
+#include "tkEngine/graphics/preRender/shadow/tkDirectionShadowMap.h"
 #include "tkEngine/graphics/preRender/shadow/tkShadowCaster.h"
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
@@ -71,15 +71,6 @@ namespace tkEngine{
 			rt.Release();
 		}
 	}
-	
-	void CDirectionShadowMap::Entry(IShadowCaster* caster)
-	{
-		if (!m_isEnable) {
-			return;
-		}
-		m_shadowCaster.push_back(caster);
-	}
-	
 	void CDirectionShadowMap::Update()
 	{
 		if (!m_isEnable) {
@@ -208,7 +199,7 @@ namespace tkEngine{
 			nearPlaneZ = farPlaneZ;
 		}
 	}
-	void CDirectionShadowMap::RenderToShadowMap(CRenderContext& rc)
+	void CDirectionShadowMap::RenderToShadowMapImp(CRenderContext& rc)
 	{
 		rc.SetRenderStep(enRenderStep_RenderToShadowMap);
 		if (!m_isEnable) {
@@ -243,7 +234,6 @@ namespace tkEngine{
 			EndGPUEvent();
 
 		}
-		m_shadowCaster.clear();
 		//レンダリングターゲットを差し戻す。
 		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);
 		//@todo レンダリングステートはリストアする方法に変更する。

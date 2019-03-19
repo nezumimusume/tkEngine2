@@ -4,12 +4,14 @@
 
 #pragma once
 
+#include "tkEngine/graphics/preRender/shadow/tkIShadowMap.h"
+
 namespace tkEngine{
 	class IShadowCaster;
 	/*!
 	 * @brief	指向性シャドウマップ。
 	 */
-	class CDirectionShadowMap : Noncopyable{
+	class CDirectionShadowMap : public IShadowMap{
 	public:
 		
 		/*!
@@ -34,29 +36,11 @@ namespace tkEngine{
 		 *@brief	影を落とすためのパラメータをGPUに転送する。
 		 */
 		void SendShadowReceiveParamToGPU(CRenderContext& rc);
-		/*!
-		 *@brief	シャドウマップへ書き込み。
-		 */
-		void RenderToShadowMap(CRenderContext& rc);
+		
 		/*!
 		* @brief	開放。
 		*/
 		void Release();
-		/*!
-		* @brief	シャドウキャスターをエントリー。
-		*/
-		void Entry(IShadowCaster* caster);
-		/// <summary>
-		/// シャドウキャスターをリストから削除。
-		/// </summary>
-		void Remove(IShadowCaster* caster)
-		{
-			auto it = std::find(m_shadowCaster.begin(), m_shadowCaster.end(), caster);
-			if (it != m_shadowCaster.end()) {
-				//見つけたので削除。
-				m_shadowCaster.erase(it);
-			}
-		}
 		/*!
 		 *@brief	ライトの方向を設定。
 		 */
@@ -64,7 +48,6 @@ namespace tkEngine{
 		{
 			m_lightDirection = lightDir;
 		}
-		
 		/*!
 		* @brief	遠平面を設定。
 		*/
@@ -95,6 +78,11 @@ namespace tkEngine{
 		}
 	private:
 		/*!
+		 *@brief	シャドウマップへ書き込み。
+		 */
+		void RenderToShadowMapImp(CRenderContext& rc) override;
+	private:
+		/*!
 		 *@brief	この中身を変更したら、modelCB.hのShadowCbも変更するように。
 		 */
 		struct SShadowCb {
@@ -111,7 +99,6 @@ namespace tkEngine{
 		float m_shadowAreaW[NUM_SHADOW_MAP] = {0};			//!<影を落とす範囲の幅。
 		float m_shadowAreaH[NUM_SHADOW_MAP] = {0};			//!<影を落とす範囲の高さ。
 		CRenderTarget	m_shadowMapRT[NUM_SHADOW_MAP];		//!<シャドウマップを書き込むレンダリングターゲット。
-		std::vector<IShadowCaster*> m_shadowCaster;			//!<シャドウキャスター。
 		CMatrix	m_LVPMatrix[NUM_SHADOW_MAP] = { CMatrix::Identity };				//!<ライトビュープロジェクション行列。
 		SShadowCb m_shadowCbEntity;
 		CConstantBuffer m_shadowCb;							//!<影を落とす時に使用する定数バッファ。

@@ -21,6 +21,12 @@ namespace tkEngine{
 																							//0：ハードシャドウ、1：ScreenSpaceSoftShadow、2:ScreenSpaceSoftShadow + PCF
 	};
 	/*!
+	* @brief	全方位シャドウ描画のコンフィグ。
+	*/
+	struct SOminiShadowRenderConfig {
+		bool isEnable = false;		//全方位シャドウが有効かどうかのフラグ。
+	};
+	/*!
 	* @brief	Bloomのコンフィグ
 	*/
 	struct SBloomConfig {		
@@ -70,11 +76,12 @@ namespace tkEngine{
 	 * @brief	グラフィックスコンフィグ。
 	 */
 	struct SGraphicsConfig{
-		SShadowRenderConfig				shadowRenderConfig;		//影の処理のコンフィグ。
-		SBloomConfig					bloomConfig;			//Bloomのコンフィグ。
-		SDofConfig						dofConfig;				//被写界深度のコンフィグ。
-		SAAConfig						aaConfig;				//アンチエイリアスのコンフィグ。
-		SMotionBlurConfig				motionBlurConfig;		//モーションブラーのコンフィグ。
+		SShadowRenderConfig				shadowRenderConfig;			//影の処理のコンフィグ。
+		SOminiShadowRenderConfig		ominiShadowRenderConfig;	//全方位シャドウのコンフィグ。	
+		SBloomConfig					bloomConfig;				//Bloomのコンフィグ。
+		SDofConfig						dofConfig;					//被写界深度のコンフィグ。
+		SAAConfig						aaConfig;					//アンチエイリアスのコンフィグ。
+		SMotionBlurConfig				motionBlurConfig;			//モーションブラーのコンフィグ。
 		STonemapConfig					tonemapConfig;			//トーンマップのコンフィグ。
 		SDitheringConfig				ditheringConfig;		//ディザリング。
 		SScreenSpaceReflectionConfig	ssrConfig;				//ssrコンフィグ

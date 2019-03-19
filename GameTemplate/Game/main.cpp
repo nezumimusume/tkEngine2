@@ -84,7 +84,7 @@ namespace {
 		initParam.screenHeight = 1080;
 		initParam.frameBufferWidth = 1920;
 		initParam.frameBufferHeight = 1080;
-		//影の設定。
+		//指向性シャドウの設定。
 		initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 		initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
 		initParam.graphicsConfing.shadowRenderConfig.shadowMapHeight = 2048;
@@ -93,6 +93,8 @@ namespace {
 		initParam.graphicsConfing.shadowRenderConfig.depthOffset[1] = 0.001f;
 		initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
 		initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::eSSSS_PCF;
+		//全方位シャドウの設定。
+		initParam.graphicsConfing.ominiShadowRenderConfig.isEnable = true;
 
 		//アンチ
 		initParam.graphicsConfing.aaConfig.isEnable = true;

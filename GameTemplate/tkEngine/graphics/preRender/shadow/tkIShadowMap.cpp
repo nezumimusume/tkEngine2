@@ -8,3 +8,12 @@
 #include "tkEngine/graphics/tkSkinModelShaderConst.h"
 
 
+namespace tkEngine {
+	void IShadowMap::RenderToShadowMap(CRenderContext& rc)
+	{
+		//シャドウマップへの書き込み処理を呼び出す。
+		RenderToShadowMapImp(rc);
+		//シャドウキャスターをクリア。
+		m_shadowCaster.clear();
+	}
+}
