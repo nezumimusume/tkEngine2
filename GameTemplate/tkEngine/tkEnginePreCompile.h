@@ -66,6 +66,7 @@ namespace tkEngine {
 
 	static constexpr int NUM_SHADOW_MAP = 3;	//シャドウマップの枚数。
 }
+#include <WinSock2.h>
 #include <windows.h>
 #include <d3d11.h>
 #include <D3Dcompiler.h>
@@ -95,6 +96,8 @@ namespace tkEngine {
 #include "DirectXTK/Inc/CommonStates.h"
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
+
+#include "Photon-cpp/Inc/PhotonPeer.h"
 
 #include "tkEngine/tkEngineConst.h"
 #include "tkEngine/policy/tkNoncopyable.h"

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug_windows_md|Win32">
+      <Configuration>debug_windows_md</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release_windows_md|Win32">
+      <Configuration>release_windows_md</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F8583CB4-B600-45F0-B1CF-B328EEB1EF55}</ProjectGuid>
+    <RootNamespace>demo_memory_cocos2dx_windows</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">$(ProjectDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">$(ProjectDir)$(Configuration)_$(Platform)\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'">$(ProjectDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'">$(ProjectDir)$(Configuration)_$(Platform)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_windows_md|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..;..\..\..\etc-bin\cocos2dx\cocos2dx\platform;..\..\..\etc-bin\cocos2dx\cocos2dx\include;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\win32;..\..\..\etc-bin\cocos2dx\cocos2dx;..\..\..\etc-bin\cocos2dx\cocos2dx\kazmath\include;..\..\..\etc-bin\cocos2dx\extensions;..\..\..\shared\inc;..\inc;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\third_party\win32;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\third_party\win32\OGLES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;STRICT;COCOS2D_DEBUG=1;_EG_WINDOWS_PLATFORM;EG_DEBUGGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;Common-cpp_$(Configuration)_$(Platform).lib;Photon-cpp_$(Configuration)_$(Platform).lib;LoadBalancing-cpp_$(Configuration)_$(Platform).lib;libcocos2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\Common-cpp;..\..\..\..\Photon-cpp;..\..\..\..\LoadBalancing-cpp;..\..\..\..\Common-cpp\lib;..\..\..\..\Photon-cpp\lib;..\..\..\..\LoadBalancing-cpp\lib;..\..\..\etc-bin\cocos2dx\cocos2dx\out\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Message>copy ressources to local folder</Message>
+      <Command>CopyResources.cmd $(Configuration)_$(Platform)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release_windows_md|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\..;..\..\..\etc-bin\cocos2dx\cocos2dx\platform;..\..\..\etc-bin\cocos2dx\cocos2dx\include;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\win32;..\..\..\etc-bin\cocos2dx\cocos2dx;..\..\..\etc-bin\cocos2dx\cocos2dx\kazmath\include;..\..\..\etc-bin\cocos2dx\extensions;..\..\..\shared\inc;..\inc;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\third_party\win32;..\..\..\etc-bin\cocos2dx\cocos2dx\platform\third_party\win32\OGLES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_EG_WINDOWS_PLATFORM;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;Common-cpp_$(Configuration)_$(Platform).lib;Photon-cpp_$(Configuration)_$(Platform).lib;LoadBalancing-cpp_$(Configuration)_$(Platform).lib;libcocos2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\Common-cpp;..\..\..\..\Photon-cpp;..\..\..\..\LoadBalancing-cpp;..\..\..\..\Common-cpp\lib;..\..\..\..\Photon-cpp\lib;..\..\..\..\LoadBalancing-cpp\lib;..\..\..\etc-bin\cocos2dx\cocos2dx\out\$(Configuration)_$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Message>copy ressources to local folder</Message>
+      <Command>CopyResources.cmd $(Configuration)_$(Platform)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\shared\inc\Console.h" />
+    <ClInclude Include="..\..\..\shared\inc\OutputListener.h" />
+    <ClInclude Include="..\..\src\BaseView.h" />
+    <ClInclude Include="..\..\src\DemoConstants.h" />
+    <ClInclude Include="..\..\src\Game.h" />
+    <ClInclude Include="..\..\src\LoadBalancingListener.h" />
+    <ClInclude Include="..\inc\AppDelegate.h" />
+    <ClInclude Include="..\inc\ListController.h" />
+    <ClInclude Include="..\inc\View.h" />
+    <ClInclude Include="..\inc\ViewConstants.h" />
+    <ClInclude Include="demo_memory_cocos2dx_windows\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\shared\src\Console.cpp" />
+    <ClCompile Include="..\..\src\BaseView.cpp" />
+    <ClCompile Include="..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\src\LoadBalancingListener.cpp" />
+    <ClCompile Include="..\src\AppDelegate.cpp" />
+    <ClCompile Include="..\src\ListController.cpp" />
+    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\View.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\resources\arial16.fnt" />
+    <None Include="..\resources\arial16.png" />
+    <None Include="..\resources\ArrowDown.png" />
+    <None Include="..\resources\ArrowDownSelected.png" />
+    <None Include="..\resources\ArrowLeft.png" />
+    <None Include="..\resources\ArrowLeftSelected.png" />
+    <None Include="..\resources\ArrowRight.png" />
+    <None Include="..\resources\ArrowRightSelected.png" />
+    <None Include="..\resources\ArrowUp.png" />
+    <None Include="..\resources\ArrowUpSelected.png" />
+    <None Include="..\resources\bitmapFontTest3.fnt" />
+    <None Include="..\resources\bitmapFontTest3.png" />
+    <None Include="..\resources\CloseNormal.png" />
+    <None Include="..\resources\CloseSelected.png" />
+    <None Include="..\resources\HelloWorld.png" />
+    <None Include="demo_memory_cocos2dx_windows\res\demo_memory_cocos2dx_windows.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="demo_memory_cocos2dx_windows\demo_memory_cocos2dx_windows.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

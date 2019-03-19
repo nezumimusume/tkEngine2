@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+     <key>CFBundleName</key>
+     <string>Photon C++ Client API</string>
+     <key>CFBundleIdentifier</key>
+     <string>../com.exitgames.photon.client.cpp</string>
+     <key>CFBundleVersion</key>
+     <string>4.1.12.2</string>
+     <key>DocSetFeedName</key>
+     <string>ExitGames Photon C++ Client Library</string>
+     <key>DocSetPublisherIdentifier</key>
+     <string>com.exitgames</string>
+     <key>DocSetPublisherName</key>
+     <string>Exit Games GmbH</string>
+     <key>DashDocSetFamily</key>
+     <string>doxy</string>
+     <key>DocSetPlatformFamily</key>
+     <string>doxygen</string>
+</dict>
+</plist>
