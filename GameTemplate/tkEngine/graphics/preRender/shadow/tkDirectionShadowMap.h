@@ -49,20 +49,6 @@ namespace tkEngine{
 			m_lightDirection = lightDir;
 		}
 		/*!
-		* @brief	遠平面を設定。
-		*/
-		void SetFar(float Far)
-		{
-			m_far = Far;
-		}
-		/*!
-		* @brief	遠平面を設定。
-		*/
-		void SetNear(float Near)
-		{
-			m_near = Near;
-		}
-		/*!
 		 *@brief	ライトの高さを設定。
 		 */
 		void SetLightHeight(float h)
@@ -77,6 +63,30 @@ namespace tkEngine{
 			return m_softShadowLevel;
 		}
 	private:
+		/// <summary>
+		/// ライトの座標を計算する。
+		/// </summary>
+		/// <remarks>
+		/// 分割された視推台を写すライトの座標を計算します。
+		/// ライトの座標の計算はライトの高さ、ライトの方向、そして、
+		/// 視推台の中心座標(近平面の中心座標と遠平面の中心座標を結んだ線分の中点座標)
+		/// から計算されます。
+		/// これらのパラメータをもとにライトの座標は下記の計算で求められます。
+		/// 
+		/// ①　未知数αについての一次方程式を解きます。
+		/// ライトの高さ = 視推台の中心座標.y + ライトの方向.y * α
+		/// α = ( ライトの高さ - 視推台の中心座標.y ) / ライトの方向.y
+		/// ②　αを使って、ライトの座標を求める。
+		/// ライトの座標 = 視推台の中心座標 + ライトの方向 * α
+		/// </remarks>
+		/// <param name="lightHeight">
+		/// ライトの高さ。
+		/// </param>
+		/// <param name="viewFrustomCenterPosition">
+		/// 分割された視推台の中心座標。
+		/// </param>
+		/// <returns>計算されたライトの座標</returns>
+		CVector3 CalcLightPosition(float lightHeight, CVector3 viewFrustomCenterPosition);
 		/*!
 		 *@brief	シャドウマップへ書き込み。
 		 */
@@ -91,8 +101,6 @@ namespace tkEngine{
 			float depthOffset[NUM_SHADOW_MAP];
 		};
 		CVector3 m_lightDirection = CVector3::Down;			//!<ライトの方向。
-		float m_near = 0.1f;								//!<近平面。
-		float m_far = 100.0f;								//!<遠平面。
 		float m_lightHeight = UnitM(20.0f);				//!<ライトの高さ。
 		float m_accpect = 1.0f;								//!<アスペクト。不要？
 		float m_shadowAreaW[NUM_SHADOW_MAP] = {0};			//!<影を落とす範囲の幅。

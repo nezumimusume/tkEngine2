@@ -22,14 +22,7 @@ namespace tkEngine{
 		Release();
 		m_lightHeight = config.lightHeight;
 		m_isEnable = config.isEnable;
-		m_far = m_lightHeight * 2.0f;
-		m_near = m_lightHeight * 0.2f;
-		if (config.farPlane > 0.0f) {
-			m_far = config.farPlane;
-		}
-		if (config.nearPlane > 0.0f) {
-			m_near = config.nearPlane;
-		}
+		
 		m_softShadowLevel = config.softShadowLevel;
 
 		m_shadowCbEntity.depthOffset[0] = config.depthOffset[0];
@@ -70,6 +63,14 @@ namespace tkEngine{
 		for (auto& rt : m_shadowMapRT) {
 			rt.Release();
 		}
+	}
+	
+	CVector3 CDirectionShadowMap::CalcLightPosition(float lightHeight, CVector3 viewFrustomCenterPosition)
+	{
+		//計算式の詳細はヘッダーファイルの関数コメントを参照してください。
+		auto alpha = (lightHeight - viewFrustomCenterPosition.y) / m_lightDirection.y;
+		auto lightPos = viewFrustomCenterPosition + m_lightDirection * alpha;
+		return lightPos;
 	}
 	void CDirectionShadowMap::Update()
 	{
@@ -115,17 +116,13 @@ namespace tkEngine{
 		lightViewRot.m[2][3] = 0.0f;
 
 		float shadowAreaTbl[] = {
-			m_lightHeight * 0.4f,
 			m_lightHeight * 0.8f,
-			m_lightHeight * 1.6f
+			m_lightHeight * 1.6f,
+			m_lightHeight * 3.6f
 		};
 
-		//ライトビューのターゲットを計算。
-		CVector3 lightTarget;
-		lightTarget = MainCamera().GetPosition();
-		lightTarget.y = MainCamera().GetTarget().y;
-		lightTarget += cameraDirXZ ;
-		CVector3 lightPos = lightTarget + m_lightDirection * -m_lightHeight;
+		//ライトビューの高さを計算。
+		float lightHeight = MainCamera().GetTarget().y + m_lightHeight;
 		
 		SShadowCb shadowCB;
 		float nearPlaneZ = 0.0f;
@@ -163,8 +160,8 @@ namespace tkEngine{
 				v[7] = v[6] - toUpperFar * 2.0f;
 
 				//ライト行列を作成。
-				lightPos = ( nearPlaneCenterPos + farPlaneCneterPos ) * 0.5f;
-				lightPos += m_lightDirection * -m_lightHeight;
+				auto viewFrustumCenterPosition = (nearPlaneCenterPos + farPlaneCneterPos) * 0.5f;
+				auto lightPos = CalcLightPosition(lightHeight, viewFrustumCenterPosition);
 				
 				mLightView = lightViewRot;
 				
@@ -184,13 +181,13 @@ namespace tkEngine{
 				}
 				w = vMax.x - vMin.x;
 				h = vMax.y - vMin.y;
-				far_z = min( m_far, vMax.z );
+				far_z =  vMax.z ;
 			}
 			CMatrix proj;
 			proj.MakeOrthoProjectionMatrix(
-				w,	//ちょい太らせる。
+				w,
 				h,
-				m_near,
+				far_z/100.0f,
 				far_z
 			);
 			m_LVPMatrix[i] = mLightView * proj;

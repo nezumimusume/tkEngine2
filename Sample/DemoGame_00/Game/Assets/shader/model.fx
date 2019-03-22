@@ -104,12 +104,18 @@ float CalcSoftShadow( float3 worldPos )
 			float4 posInLVP = mul(mLVP[i], float4(worldPos, 1.0f) );
 			posInLVP.xyz /= posInLVP.w;
 			
-			float depth = min(posInLVP.z / posInLVP.w, 1.0f);
+			float depth = min(posInLVP.z, 1.0f);
 			
 			//uv座標に変換。
 			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
 			float shadow_val = 1.0f;
-			if(shadowMapUV.x < 0.95f && shadowMapUV.y < 0.95f && shadowMapUV.x > 0.05f && shadowMapUV.y > 0.05f){
+			if( shadowMapUV.x < 0.98f 
+			   && shadowMapUV.x > 0.02f
+			   && shadowMapUV.y < 0.98f  
+			   && shadowMapUV.y > 0.02f
+			   && depth < 1.0f
+			   && depth > 0.0f
+			){
 				if(i == 0){					
 					shadow = CalcShadowPercentPCF4x4(shadowMap_0, shadowMapUV, texOffset[i], depth, depthOffset.x);
 				}else if(i == 1){
@@ -138,12 +144,18 @@ float CalcShadow( float3 worldPos )
 			float4 posInLVP = mul(mLVP[i], float4(worldPos, 1.0f) );
 			posInLVP.xyz /= posInLVP.w;
 			
-			float depth = min(posInLVP.z / posInLVP.w, 1.0f);
+			float depth = min(posInLVP.z, 1.0f);
 			
 			//uv座標に変換。
 			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
 			float shadow_val = 1.0f;
-			if(shadowMapUV.x < 0.95f && shadowMapUV.y < 0.95f && shadowMapUV.x > 0.05f && shadowMapUV.y > 0.05f){
+			if( shadowMapUV.x < 1.0f 
+			   && shadowMapUV.x > 0.0f
+			   && shadowMapUV.y < 1.0f  
+			   && shadowMapUV.y > 0.0f
+			   && depth < 1.0f
+			   && depth > 0.0f
+			){
 				if(i == 0){
 					shadow = CalcShadowPercent(shadowMap_0, shadowMapUV, texOffset[i], depth, depthOffset.x);
 				}else if(i == 1){
