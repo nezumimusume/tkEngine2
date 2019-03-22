@@ -109,10 +109,10 @@ float CalcSoftShadow( float3 worldPos )
 			//uvç¿ïWÇ…ïœä∑ÅB
 			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
 			float shadow_val = 1.0f;
-			if( shadowMapUV.x < 0.98f 
-			   && shadowMapUV.x > 0.02f
-			   && shadowMapUV.y < 0.98f  
-			   && shadowMapUV.y > 0.02f
+			if( shadowMapUV.x < 1.0f 
+			   && shadowMapUV.x > 0.0f
+			   && shadowMapUV.y < 1.0f  
+			   && shadowMapUV.y > 0.0f
 			   && depth < 1.0f
 			   && depth > 0.0f
 			){

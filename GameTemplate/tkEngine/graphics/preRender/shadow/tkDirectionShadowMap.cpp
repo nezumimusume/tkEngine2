@@ -78,8 +78,8 @@ namespace tkEngine{
 			return;
 		}
 		//シーンをレンダリング使用としているカメラを使って、ライトカメラの回転を求める。
-		CVector3 cameraDirXZ = MainCamera().GetForward();
-		if (fabs(cameraDirXZ.x) < FLT_EPSILON && fabsf(cameraDirXZ.z) < FLT_EPSILON) {
+		auto cameraDir = MainCamera().GetForward();
+		if (fabs(cameraDir.x) < FLT_EPSILON && fabsf(cameraDir.z) < FLT_EPSILON) {
 			//ほぼ真上をむいている。
 			return;
 		}
@@ -145,7 +145,7 @@ namespace tkEngine{
 				toUpperFar = cameraUp * t * farPlaneZ;
 				t *= MainCamera().GetAspect();
 				//近平面の中央座標を計算。
-				auto nearPlaneCenterPos = MainCamera().GetPosition() + cameraDirXZ * nearPlaneZ;
+				auto nearPlaneCenterPos = MainCamera().GetPosition() + cameraDir * nearPlaneZ;
 				v[0] = nearPlaneCenterPos + MainCamera().GetRight() * t * nearPlaneZ + toUpperNear;
 				v[1] = v[0] - toUpperNear * 2.0f;
 
@@ -153,7 +153,7 @@ namespace tkEngine{
 				v[3] = v[2] - toUpperNear * 2.0f;
 
 				//遠平面の中央座標を計算。
-				auto farPlaneCneterPos = MainCamera().GetPosition() + cameraDirXZ * farPlaneZ;
+				auto farPlaneCneterPos = MainCamera().GetPosition() + cameraDir * farPlaneZ;
 				v[4] = farPlaneCneterPos + MainCamera().GetRight() * t * farPlaneZ + toUpperFar;
 				v[5] = v[4] - toUpperFar * 2.0f;
 				v[6] = farPlaneCneterPos + MainCamera().GetRight() * -t * farPlaneZ + toUpperFar;

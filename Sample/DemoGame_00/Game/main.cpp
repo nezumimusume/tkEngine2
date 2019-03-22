@@ -22,8 +22,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.frameBufferHeight = 1080;
 	//âeÇÃê›íËÅB
 	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
-	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
-	initParam.graphicsConfing.shadowRenderConfig.shadowMapHeight = 2048;
+	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 4096;
+	initParam.graphicsConfing.shadowRenderConfig.shadowMapHeight = 4096;
 	initParam.graphicsConfing.shadowRenderConfig.lightHeight = UnitM(15.0f);
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[0] = 0.001f;
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[1] = 0.002f;
