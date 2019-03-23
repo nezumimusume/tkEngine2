@@ -112,5 +112,6 @@ namespace tkEngine{
 		SShadowCb m_shadowCbEntity;
 		CConstantBuffer m_shadowCb;							//!<影を落とす時に使用する定数バッファ。
 		EnSoftShadowQualityLevel m_softShadowLevel = EnSoftShadowQualityLevel::enNone;							//!<ソフトシャドウのレベル。
+		CSamplerState m_fetchShadowMapSampler;	//シャドウマップをフェッチするときに使用するサンプラ。
 	};
 }

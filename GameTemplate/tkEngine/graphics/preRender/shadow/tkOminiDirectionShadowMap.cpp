@@ -119,6 +119,7 @@ namespace tkEngine {
 		if (InitDepthStencilViews(pD3DDevice) == false) {
 			return false;
 		}
+
 		return true;
 	}
 

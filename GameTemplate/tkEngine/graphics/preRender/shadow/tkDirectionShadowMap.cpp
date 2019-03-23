@@ -54,6 +54,18 @@ namespace tkEngine{
 		}
 
 		m_shadowCb.Create(&m_shadowCbEntity, sizeof(m_shadowCbEntity));
+
+		CD3D11_DEFAULT def;
+		CD3D11_SAMPLER_DESC desc(def);
+
+		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		desc.BorderColor[0] = 1.0f ;
+		desc.BorderColor[1] = 1.0f;
+		desc.BorderColor[2] = 1.0f;
+		desc.BorderColor[3] = 1.0f;
+		m_fetchShadowMapSampler.Create(desc);
 		return true;
 	}
 	
@@ -243,5 +255,8 @@ namespace tkEngine{
 		for (int i = 0; i < NUM_SHADOW_MAP; i++) {
 			rc.PSSetShaderResource(enSkinModelSRVReg_ShadowMap_0 + i, m_shadowMapRT[i].GetRenderTargetSRV());
 		}
+		D3D11_SAMPLER_DESC desc;
+		m_fetchShadowMapSampler.GetBody()->GetDesc(&desc);
+		rc.PSSetSampler(3, m_fetchShadowMapSampler);
 	}
 }
