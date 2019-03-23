@@ -185,14 +185,14 @@ namespace tkEngine{
 			}
 			CMatrix proj;
 			proj.MakeOrthoProjectionMatrix(
-				w * 1.2f, //カスケードの境目のキワキワの箇所で境界が起きてしまっているので、少しビューフラスタムを太らす。
-				h * 1.2f,
+				w,
+				h,
 				far_z/100.0f,
 				far_z 
 			);
 			m_LVPMatrix[i] = mLightView * proj;
 			m_shadowCbEntity.mLVP[i] = m_LVPMatrix[i];
-			m_shadowCbEntity.shadowAreaDepthInViewSpace[i] = farPlaneZ;
+			m_shadowCbEntity.shadowAreaDepthInViewSpace[i] = farPlaneZ * 0.8f;	//キワキワだと変な境界が発生していたので、ちょっとエリアを狭める。
 			nearPlaneZ = farPlaneZ;
 		}
 	}
