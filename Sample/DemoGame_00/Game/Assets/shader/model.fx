@@ -90,80 +90,93 @@ float CalcShadowPercent(Texture2D<float4> tex, float2 uv, float2 offset, float d
 	return 0.0f;
 }
 /*!
- *@brief	ソフト影を計算。
- *@return 影が落ちる確率が返ります。0.0なら影が落ちない。1.0なら影が落ちる。
+ *@brief	カスケードインデックスを取得。
  */
-float CalcSoftShadow( float3 worldPos )
+int GetCascadeIndex( float zInView )
 {
-	float shadow = 0.0f;
-	//ちょっと適当。
-	if(isShadowReceiver){
-		//影を落とす。
-		[unroll]
-		for(int i = 0; i < NUM_SHADOW_MAP; i++ ){
-			float4 posInLVP = mul(mLVP[i], float4(worldPos, 1.0f) );
-			posInLVP.xyz /= posInLVP.w;
-			
-			float depth = min(posInLVP.z, 1.0f);
-			
-			//uv座標に変換。
-			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
-			float shadow_val = 1.0f;
-			if( shadowMapUV.x < 1.0f 
-			   && shadowMapUV.x > 0.0f
-			   && shadowMapUV.y < 1.0f  
-			   && shadowMapUV.y > 0.0f
-			   && depth < 1.0f
-			   && depth > 0.0f
-			){
-				if(i == 0){					
-					shadow = CalcShadowPercentPCF4x4(shadowMap_0, shadowMapUV, texOffset[i], depth, depthOffset.x);
-				}else if(i == 1){
-					shadow = CalcShadowPercentPCF2x2(shadowMap_1, shadowMapUV, texOffset[i], depth, depthOffset.y);
-				}else if(i == 2){
-					shadow = CalcShadowPercent(shadowMap_2, shadowMapUV, texOffset[i], depth, depthOffset.z);
-				}
-				break;
-			}
+	[unroll]
+	for(int i = 0; i < NUM_SHADOW_MAP; i++ ){
+		if( zInView < shadowAreaDepthInViewSpace[i]){ 
+			return i;
 		}
 	}
-	return shadow;
+	return 0;
 }
 /*!
  *@brief	ソフト影を計算。
  *@return 影が落ちる確率が返ります。0.0なら影が落ちない。1.0なら影が落ちる。
  */
-float CalcShadow( float3 worldPos )
+float CalcSoftShadow( float3 worldPos, float zInView )
 {
 	float shadow = 0.0f;
 	//ちょっと適当。
 	if(isShadowReceiver){
 		//影を落とす。
-		[unroll]
-		for(int i = 0; i < NUM_SHADOW_MAP; i++ ){
-			float4 posInLVP = mul(mLVP[i], float4(worldPos, 1.0f) );
-			posInLVP.xyz /= posInLVP.w;
-			
-			float depth = min(posInLVP.z, 1.0f);
-			
-			//uv座標に変換。
-			float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
-			float shadow_val = 1.0f;
-			if( shadowMapUV.x < 1.0f 
-			   && shadowMapUV.x > 0.0f
-			   && shadowMapUV.y < 1.0f  
-			   && shadowMapUV.y > 0.0f
-			   && depth < 1.0f
-			   && depth > 0.0f
-			){
-				if(i == 0){
-					shadow = CalcShadowPercent(shadowMap_0, shadowMapUV, texOffset[i], depth, depthOffset.x);
-				}else if(i == 1){
-					shadow = CalcShadowPercent(shadowMap_1, shadowMapUV, texOffset[i], depth, depthOffset.y);
-				}else if(i == 2){
-					shadow = CalcShadowPercent(shadowMap_2, shadowMapUV, texOffset[i], depth, depthOffset.z);
-				}
-				break;
+		//使用するシャドウマップの番号を取得する。
+		int cascadeIndex = GetCascadeIndex( zInView );
+		
+		float4 posInLVP = mul(mLVP[cascadeIndex], float4(worldPos, 1.0f) );
+		posInLVP.xyz /= posInLVP.w;
+		
+		float depth = min(posInLVP.z, 1.0f);
+		
+		//uv座標に変換。
+		float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
+		float shadow_val = 1.0f;
+		if( shadowMapUV.x < 1.0f 
+		   && shadowMapUV.x > 0.0f
+		   && shadowMapUV.y < 1.0f  
+		   && shadowMapUV.y > 0.0f
+		   && depth < 1.0f
+		   && depth > 0.0f
+		){
+			if(cascadeIndex == 0){					
+				shadow = CalcShadowPercentPCF4x4(shadowMap_0, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
+			}else if(cascadeIndex == 1){
+				shadow = CalcShadowPercentPCF2x2(shadowMap_1, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
+			}else if(cascadeIndex == 2){
+				shadow = CalcShadowPercent(shadowMap_2, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
+			}
+		}
+	
+	}
+	return shadow;
+}
+
+/*!
+ *@brief	ハード影を計算。
+ *@return 影が落ちる確率が返ります。0.0なら影が落ちない。1.0なら影が落ちる。
+ */
+float CalcShadow( float3 worldPos, float zInView  )
+{
+	float shadow = 0.0f;
+	//ちょっと適当。
+	if(isShadowReceiver){
+		//影を落とす。
+		//使用するシャドウマップの番号を取得する。
+		int cascadeIndex = GetCascadeIndex( zInView );
+		
+		float4 posInLVP = mul(mLVP[cascadeIndex], float4(worldPos, 1.0f) );
+		posInLVP.xyz /= posInLVP.w;
+		
+		float depth = min(posInLVP.z, 1.0f);
+		
+		//uv座標に変換。
+		float2 shadowMapUV = float2(0.5f, -0.5f) * posInLVP.xy  + float2(0.5f, 0.5f);
+		float shadow_val = 1.0f;
+		if( shadowMapUV.x < 1.0f 
+		   && shadowMapUV.x > 0.0f
+		   && shadowMapUV.y < 1.0f  
+		   && shadowMapUV.y > 0.0f
+		   && depth < 1.0f
+		   && depth > 0.0f
+		){
+			if(cascadeIndex == 0){
+				shadow = CalcShadowPercent(shadowMap_0, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
+			}else if(cascadeIndex == 1){
+				shadow = CalcShadowPercent(shadowMap_1, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
+			}else if(cascadeIndex == 2){
+				shadow = CalcShadowPercent(shadowMap_2, shadowMapUV, texOffset[cascadeIndex], depth, depthOffset[cascadeIndex]);
 			}
 		}
 	}
@@ -395,10 +408,10 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 	//シャドウマスク出力する。
 	if(isPCFShadowMap){
 		//PCFをかける。
-		Out.shadow = CalcSoftShadow(In.Pos);
+		Out.shadow = CalcSoftShadow(In.Pos, In.posInView.z);
 	}else{
 		//何もしない。
-		Out.shadow = CalcShadow(In.Pos);
+		Out.shadow = CalcShadow(In.Pos, In.posInView.z);
 	}
 	//射影空間での深度値をxに。
 	Out.depth.x = In.posInProj.z / In.posInProj.w;

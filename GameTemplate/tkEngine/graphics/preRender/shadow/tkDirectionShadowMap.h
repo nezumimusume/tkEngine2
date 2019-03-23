@@ -99,6 +99,8 @@ namespace tkEngine{
 			CMatrix mLVP[NUM_SHADOW_MAP];
 			CVector4 texOffset[NUM_SHADOW_MAP];
 			float depthOffset[NUM_SHADOW_MAP];
+			float pading;
+			float shadowAreaDepthInViewSpace[NUM_SHADOW_MAP];	//カメラ空間での影を落とすエリアの深度テーブル。
 		};
 		CVector3 m_lightDirection = CVector3::Down;			//!<ライトの方向。
 		float m_lightHeight = UnitM(20.0f);				//!<ライトの高さ。
