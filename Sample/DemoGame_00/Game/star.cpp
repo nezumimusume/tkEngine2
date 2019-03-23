@@ -46,6 +46,6 @@ void Star::Update()
 			DeleteGO(this);
 		}
 	}
-	m_renderer->UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });
+	m_renderer->UpdateWorldMatrix(m_position, m_rotation, { 10.0f, 10.0f, 10.0f });
 }
 

@@ -55,6 +55,7 @@ namespace tkEngine{
 
 		m_shadowCb.Create(&m_shadowCbEntity, sizeof(m_shadowCbEntity));
 
+		//シャドウマップサンプリング用のサンプラを作成する。
 		CD3D11_DEFAULT def;
 		CD3D11_SAMPLER_DESC desc(def);
 
