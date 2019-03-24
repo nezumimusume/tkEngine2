@@ -263,8 +263,10 @@ void Player::Update()
 	m_forward.z = mRot.m[2][2];
 
 	//todo 全方位シャドウマップのテスト
-	shadow::OminiDirectionShadowMap().SetLightPosition(m_position + CVector3(.0f, 100.0f, 0.0f));
-	shadow::OminiDirectionShadowMap().SetDistanceAffectedByLight(300.0f);
+	shadow::OminiDirectionShadowMap().SetLightPosition(m_position + CVector3(.0f, 200.0f, 0.0f));
+	shadow::OminiDirectionShadowMap().SetDistanceAffectedByLight(1000.0f);
+	shadow::OminiDirectionShadowMap().SetShadowBias(0.002f);
+	shadow::OminiDirectionShadowMap().SetNearClip(10.0f);
 }
 
 void Player::NotifyGameOver()

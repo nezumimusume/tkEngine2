@@ -190,6 +190,7 @@ namespace tkEngine{
 		rc.CopyResource(m_depthTextureLastFrame, m_GBuffer[enGBufferDepth].GetRenderTarget());
 		//‰e‚ğ—‚Æ‚·‚½‚ß‚Ìî•ñ‚ğ“]‘—B
 		shadow::DirectionShadowMap().SendShadowReceiveParamToGPU(rc);
+		shadow::OminiDirectionShadowMap().SendShadowReceiveParamToGPU(rc);
 
 		rc.SetRenderStep(enRenderStep_RenderGBuffer);
 

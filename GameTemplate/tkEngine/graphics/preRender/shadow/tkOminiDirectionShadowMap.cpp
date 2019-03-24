@@ -32,7 +32,7 @@ namespace tkEngine {
 	{
 		m_texDesc.Width = 512;
 		m_texDesc.Height = 512;
-		m_texDesc.MipLevels = 0;
+		m_texDesc.MipLevels = 1;
 		m_texDesc.ArraySize = NUM_TEXTURE;
 		m_texDesc.Format = DXGI_FORMAT_R32_FLOAT;
 		m_texDesc.SampleDesc.Count = 1;
@@ -40,11 +40,15 @@ namespace tkEngine {
 		m_texDesc.Usage = D3D11_USAGE_DEFAULT;
 		m_texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 		m_texDesc.CPUAccessFlags = 0;
-		m_texDesc.MiscFlags = 0;
+		m_texDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
 
 		auto hr = pD3DDevice->CreateTexture2D(&m_texDesc, nullptr, &m_shadowMap);
 		if (FAILED(hr)) {
 			//キューブマップの作成に失敗。
+			return false;
+		}
+		//SRVも作成。
+		if (m_shadowMapSRV.Create(m_shadowMap) == false) {
 			return false;
 		}
 		return true;
@@ -99,27 +103,33 @@ namespace tkEngine {
 	{
 		auto pD3DDevice = GraphicsEngine().GetD3DDevice();
 		
-		m_isEnable = config.isEnable;
-
 		//シャドウマップ描画用のテクスチャを作成する。
 		if (InitShadowMapTextures(pD3DDevice) == false) {
 			//シャドウマップ用のテクスチャの作成に失敗。
+			TK_WARNING_MESSAGE_BOX("COminiDirectionShadowMap::InitShadowMapTextures()で失敗しました。");
 			return false;
 		}
 		//レンダリングターゲットビューを作成。
 		if (InitRenderTargetViews(pD3DDevice) == false) {
 			//レンダリングターゲットビューの作成に失敗。
+			TK_WARNING_MESSAGE_BOX("COminiDirectionShadowMap::InitRenderTargetViews()で失敗しました。");
 			return false;
 		}
 		//デプスステンシルテクスチャを作成する。
 		if (InitDepthStencilTextures(pD3DDevice) == false) {
+			TK_WARNING_MESSAGE_BOX("COminiDirectionShadowMap::InitDepthStencilTextures()で失敗しました。");
 			return false;
 		}
 		//デプスステンシルビューを作成する。
 		if (InitDepthStencilViews(pD3DDevice) == false) {
+			TK_WARNING_MESSAGE_BOX("COminiDirectionShadowMap::InitDepthStencilViews()で失敗しました。");
 			return false;
 		}
 
+		//ＧＰＵ側の定数バッファを作成する。
+		m_ominiDirectionShadowCbGPU.Create(nullptr, sizeof(SOminiDirectionShadowCb));
+
+		m_isEnable = config.isEnable;
 		return true;
 	}
 
@@ -148,7 +158,7 @@ namespace tkEngine {
 		static const CVector3 cameraUpTbl[NUM_TEXTURE] = {
 			{ 0.0f,  1.0f,  0.0f },	//POSITIVE_X
 			{ 0.0f,  1.0f,  0.0f },	//NEGATIVE_X
-			{ 0.0f,  0.0f,  1.0f },	//POSITIVE_Y
+			{ 0.0f,  0.0f, -1.0f },	//POSITIVE_Y
 			{ 0.0f,  0.0f,  1.0f },	//NEGATIVE_Y
 			{ 0.0f,  1.0f,  0.0f },	//POSITIVE_Z
 			{ 0.0f,  1.0f,  0.0f },	//NEGATIVE_Z
@@ -166,19 +176,19 @@ namespace tkEngine {
 			//カメラ行列を作成する。
 			CMatrix mView;
 			mView.MakeLookAt(
-				m_lightPosition,
-				m_lightPosition + cameraDirectionTbl[i],
+				m_ominiDirectionShadowCbCPU.lightPosition,
+				m_ominiDirectionShadowCbCPU.lightPosition + cameraDirectionTbl[i],
 				cameraUpTbl[i] );
 			//射影行列を作成する。
 			CMatrix mProj;
 			mProj.MakeProjectionMatrix(
 				CMath::DegToRad(90.0f),
 				1.0f,
-				0.1f,
-				m_distanceAffectedByLight
+				m_near,
+				m_ominiDirectionShadowCbCPU.distanceAffectedByLight
 			);
-			CMatrix mLightViewProjection;
-			mLightViewProjection = mView * mProj;
+
+			m_ominiDirectionShadowCbCPU.lightViewProjMatrix[i] = mView * mProj;
 
 
 			rc.OMSetRenderTarget(m_renderTargets[i], m_depthStencilView);
@@ -192,7 +202,7 @@ namespace tkEngine {
 			//
 			//シャドウキャスターをドロー
 			for (auto& caster : m_shadowCaster) {
-				caster->Render(rc, mLightViewProjection);
+				caster->Render(rc, m_ominiDirectionShadowCbCPU.lightViewProjMatrix[i]);
 			}
 
 			EndGPUEvent();
@@ -206,5 +216,12 @@ namespace tkEngine {
 	}
 	void COminiDirectionShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
 	{
+		if (m_isEnable == false) {
+			return;
+		}
+		rc.UpdateSubresource(m_ominiDirectionShadowCbGPU, &m_ominiDirectionShadowCbCPU);
+		rc.PSSetConstantBuffer(enSkinModelCBReg_OminiDirectionShadow, m_ominiDirectionShadowCbGPU);
+		//キューブマップを転送する。
+		rc.PSSetShaderResource(enSkinModelSRVReg_OminiDirectionShadowMap, m_shadowMapSRV);
 	}
 }

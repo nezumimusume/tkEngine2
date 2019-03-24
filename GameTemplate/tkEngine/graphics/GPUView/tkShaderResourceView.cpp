@@ -63,8 +63,17 @@ namespace tkEngine{
 			D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 			ZeroMemory(&SRVDesc, sizeof(SRVDesc));
 			SRVDesc.Format = texDesc.Format;
-			SRVDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
-			SRVDesc.Texture2D.MipLevels = texDesc.MipLevels;
+			if (texDesc.ArraySize == 1) {
+				SRVDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
+				SRVDesc.Texture2D.MipLevels = texDesc.MipLevels;
+			}
+			else {
+				//テクスチャ配列。
+				//todo とりあえずキューブマップ固定で・・・
+				SRVDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
+				SRVDesc.TextureCube.MipLevels = texDesc.MipLevels;
+				SRVDesc.TextureCube.MostDetailedMip = 0;
+			}
 
 			HRESULT hr = GraphicsEngine().GetD3DDevice()->CreateShaderResourceView(texture, &SRVDesc, &m_srv);
 			if (FAILED(hr)) {

@@ -8,12 +8,13 @@ namespace tkEngine{
 	/*!
 	 *@brief	定数バッファのレジスタ番号
 	 */
-	enum EnSkinModelCBReg{
+	enum EnSkinModelCBReg {
 		enSkinModelCBReg_VSPS,		//!<頂点シェーダーとピクセルシェーダー共通の定数バッファ。
 		enSkinModelCBReg_Light,		//!<ライト用の定数バッファ。
 		enSkinModelCBReg_Material,	//!<マテリアルパラメータ。
 		enSkinModelCBReg_Shadow,	//!<影。
 		enSkinModelCBReg_GBuffer,	//!<G-Buffer。
+		enSkinModelCBReg_OminiDirectionShadow,	//全方位シャドウ。
 		
 	};
 	/*!

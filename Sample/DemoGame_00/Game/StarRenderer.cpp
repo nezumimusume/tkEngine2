@@ -23,7 +23,7 @@ bool StarRenderer::Start()
 		//ƒ}ƒeƒŠƒAƒ‹‚h‚c‚ðÝ’è‚·‚éB
 		material->SetMaterialID(enMaterialID_Star);
 	});
-	m_modelRender->SetEmissionColor({3.5f, 3.5f, 0.5f });
+	m_modelRender->SetEmissionColor({6.5f, 6.5f, 0.5f });
 
 	return true;
 }

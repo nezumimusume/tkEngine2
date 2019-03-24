@@ -24,7 +24,8 @@ namespace tkEngine{
 		TK_ASSERT(NumViews <= MRT_MAX, "NumViews is invalid");
 		
 		ZeroMemory(m_renderTargetViews, sizeof(m_renderTargetViews));
-		
+		ZeroMemory(m_rowRenderTargetViews, sizeof(m_renderTargetViews));
+		m_rowDepthStencilView = nullptr;
 
 		ID3D11RenderTargetView* renderTargetViews[MRT_MAX] = { nullptr };
 		ID3D11DepthStencilView*	depthStencilView = nullptr;

@@ -63,8 +63,8 @@ void Game::InitSceneLight()
 }
 bool Game::Start()
 {
-	m_bokeRadius = NewGO<prefab::CFontRender>(0);
-	m_bokeRadius->SetText(L"ボケ半径");
+	/*m_bokeRadius = NewGO<prefab::CFontRender>(0);
+	m_bokeRadius->SetText(L"ボケ半径");*/
 	m_background = NewGO<Background>(0, nullptr);
 	m_gameCamera = NewGO<GameCamera>(0, "GameCamera");
 	//シーンライトを初期化。
@@ -233,7 +233,7 @@ void Game::Update()
 	postEffect::Dof().SetHexaBokeRadius(radius);
 	wchar_t text[256];
 	swprintf(text, L"ボケ半径 = %0.3f", radius);
-	m_bokeRadius->SetText(text);
+	//m_bokeRadius->SetText(text);
 
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 	CQuaternion qRot;
