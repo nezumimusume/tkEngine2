@@ -32,7 +32,7 @@ namespace tkEngine{
 	/// .2　ディファードシェーディング
 	///			1-4で作成されたシャドウマップ、G-Buffer、ライトカリング情報を元に
 	///			PBRベースのシェーディングを行う。
-	/// .3  フォワードレンダリング
+	/// .3  フォワードシェーディング
 	///			半透明や特殊なシェーディングを行うマテリアルの描画を行う。
 	/// .4  ポストエフェクト
 	///			1-1  トーンマップ。
@@ -40,33 +40,43 @@ namespace tkEngine{
 	///			1-3  Temporal Screen Space Reflection。
 	///			1-4  川瀬式ブルーム。
 	///			1-5  DOF
-	///			1-5  FXAA。
-	///			1-6  ディザリング。
-	/// .5  ポストレンダリング。HUDなどポストエフェクトをかけたくない描画を行う。
+	///			1-6  アンチエイリアス(FXAA)。
+	///			1-7  ディザリング。
+	/// .5  ポストレンダリング
+	///			HUDなどポストエフェクトをかけたくない描画を行う。
 	/// </remarks>
 	class CGraphicsEngine : Noncopyable {
 	public:
 		CGraphicsEngine();
 		~CGraphicsEngine();
-		/*!
-		* @brief	初期化。
-		*/
+		
+		/// <summary>
+		/// 初期化。
+		/// </summary>
+		/// <param name="hwnd">ウィンドウハンドル</param>
+		/// <param name="initParam">初期化用のパラメータ。</param>
+		/// <returns></returns>
 		bool Init(HWND hwnd, const SInitParam& initParam);
-		/*!
-		* @brief	開放。
-		*/
+
+		/// <summary>
+		/// 開放。
+		/// </summary>
+		/// <remarks>
+		/// エンジン内部で利用されています。ユーザーは利用しないでください。
+		/// </remarks>
 		void Release();
-		/*!
-		 *@brief	CGBufferRenderの取得。
-		 */
+
+		/// <summary>
+		/// GBufferRenderクラスのインスタンスを取得。
+		/// </summary>
 		CGBufferRender& GetGBufferRender()
 		{
 			return m_preRender.GetGBufferRender();
 		}
 
-		/*!
-		 *@brief	エフェクトエンジンの取得。
-		 */
+		/// <summary>
+		/// CEffectEngineクラスのインスタンスを取得。
+		/// </summary>
 		CEffectEngine& GetEffectEngine()
 		{
 			return m_effectEngine;
@@ -74,55 +84,61 @@ namespace tkEngine{
 		/*!
 		* @brief	指向性シャドウマップを取得。
 		*/
+		/// <summary>
+		/// 指向性シャドウマップクラスのインスタンスを取得。
+		/// </summary>
 		CDirectionShadowMap& GetDirectionShadowMap()
 		{
 			return m_preRender.GetDirectionShadowMap();
 		}
-		/*!
-		* @brief	全方位シャドウマップを取得。
-		*/
+		/// <summary>
+		/// 全方位シャドウマップクラスのインスタンスを取得。
+		/// </summary>
 		COminiDirectionShadowMap& GetOminiDirectionShadowMap()
 		{
 			return m_preRender.GetOminiDirectionShadowMap();
 		}
-		/*!
-		* @brief	トーンマップを取得。
-		*/
+		/// <summary>
+		/// トーンマップクラスのインスタンスを取得。
+		/// </summary>
 		CTonemap& GetTonemap()
 		{
 			return m_postEffect.GetTonemap();
 		}
-		/*!
-		*@brief	メインカメラを取得。
-		*/
+		/// <summary>
+		/// 3Dカメラを取得取。
+		/// </summary>
 		CCamera& GetMainCamera()
 		{
 			return m_mainCamera;
 		}
-		/*!
-		*@brief	2Dカメラを取得。
-		*/
+		/// <summary>
+		/// 2Dカメラを取得。
+		/// </summary>
 		CCamera& Get2DCamera()
 		{
 			return m_2dCamera;
 		}
-		/*!
-		*@brief	Direct3DDeviceの取得。
-		*/
+		/// <summary>
+		/// D3Dデバイスを取得。
+		/// </summary>
 		ID3D11Device* GetD3DDevice() const
 		{
 			return m_pd3dDevice;
 		}
-		/*!
-		*@brief	ID3D11DeviceContextの取得。
-		*/
+	
+		/// <summary>
+		/// D3D即時デバイスコンテキストの取得。
+		/// </summary>
+		/// <returns></returns>
 		ID3D11DeviceContext* GetD3DImmediateDeviceContext() const
 		{
 			return m_pImmediateContext;
 		}
-		/*!
-		*@brief	描画コマンドを積むのに使用しているID3D11DeviceContextの取得。
-		*/
+		/// <summary>
+		/// 描画コマンドを積むのに使用してるD3Dデバイスコンテキストを取得。
+		/// </summary>
+		/// <returns></returns>
 		ID3D11DeviceContext* GetD3DDeviceContext() const
 		{
 			return m_renderContext.GetD3DDeviceContext();
@@ -135,39 +151,38 @@ namespace tkEngine{
 		{
 			return m_pDeferredDeviceContext != nullptr;
 		}
-		
-		/*!
-		*@brief		フレームバッファの幅を取得。
-		*/
+		/// <summary>
+		/// フレームバッファの幅を取得。
+		/// </summary>
 		int GetFrameBufferWidth() const
 		{
 			return m_frameBufferWidth;
 		}
-		/*!
-		*@brief		フレームバッファの高さを取得。
-		*/
+		/// <summary>
+		/// フレームバッファの高さを取得。
+		/// </summary>
 		int GetFrameBufferHeight() const
 		{
 			return m_frameBufferHeight;
 		}
-		/*!
-		 *@brief	2D空間のスクリーンの幅。
-		 */
+		/// <summary>
+		/// 2D空間のスクリーンの幅を取得。
+		/// </summary>
 		int Get2DSpaceScreenWidth() const
 		{
 			return m_2dSpaceScreenWidth;
 		}
-		/*!
-		*@brief	2D空間のスクリーンの高さ。
-		*/
+		/// <summary>
+		/// 2D空間のスクリーンの高さを取得。
+		/// </summary>
 		int Get2DSpaceScreenHeight() const
 		{
 			return m_2dSpaceScreenHeight;
 		}
-
-		/*!
-		* @brief	メインレンダリングターゲットの取得。
-		*/
+		/// <summary>
+		/// メインレンダリングターゲットの取得。
+		/// </summary>
+		/// <returns></returns>
 		CRenderTarget& GetMainRenderTarget()
 		{
 			return m_mainRenderTarget;
@@ -176,54 +191,64 @@ namespace tkEngine{
 		/// メインスレッドから呼び出す描画開始の処理。
 		/// </summary>
 		void BeginRender();
-		/*!
-		* @brief	描画終了。
-		*/
+
 		/// <summary>
 		/// メインスレッドから呼び出す描画終了処理。
 		/// これが1フレームの最後の描画処理になる。
 		/// </summary>
 		void EndRender();
+
 		/// <summary>
 		/// ゲームスレッドから呼び出す終了処理。
 		/// </summary>
 		void EndRenderFromGameThread();
-		/*!
-		* @brief	プリレンダリング取得。。
-		*/
+
+		/// <summary>
+		/// プリレンダリングのインスタンスを取得。
+		/// </summary>
+		/// <returns></returns>
 		CPreRender& GetPreRender()
 		{
 			return m_preRender;
 		}
-		/*!
-		* @brief	ポストエフェクトを取得。
-		*/
+		/// <summary>
+		/// ポストエフェクトのインスタンスを取得。
+		/// </summary>
+		/// <returns></returns>
 		CPostEffect& GetPostEffect()
 		{
 			return m_postEffect;
 		}
+		/// <summary>
+		/// レンダリングコンテキストのインスタンスを取得。
+		/// </summary>
+		/// <returns></returns>
 		CRenderContext& GetRenderContext()
 		{
 			return m_renderContext;
 		}
-		/*!
-		*@brief	ライトの管理者を取得。
-		*/
+		/// <summary>
+		/// ライトの管理者のインスタンスを取得。
+		/// </summary>
+		/// <returns></returns>
 		CLightManager& GetLightManager()
 		{
 			return m_lightManager;
 		}
-		/*!
-		*@brief	メインレンダリングターゲットのMSAAの設定を取得。
-		*/
+
+		/// <summary>
+		/// メインレンダリングターゲットのMSAAの設定を取得。
+		/// </summary>
+		/// <returns></returns>
 		const DXGI_SAMPLE_DESC& GetMainRenderTargetMSAADesc() const
 		{
 			return m_mainRenderTargetMSAADesc;
 		}
-		/*!
-		*@brief	GPUイベント開始。
-		*@param[in]		eventName		イベントの名前。
-		*/
+
+		/// <summary>
+		/// GPUイベント開始。
+		/// </summary>
+		/// <param name="eventName">イベントの名前</param>
 		void BeginGPUEvent(const wchar_t* eventName)
 		{
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
@@ -234,9 +259,9 @@ namespace tkEngine{
 			(void)eventName;
 #endif
 		}
-		/*!
-		*@brief	GPUイベント終了。
-		*/
+		/// <summary>
+		/// GPUイベント終了。
+		/// </summary>
 		void EndGPUEvent()
 		{
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
@@ -245,9 +270,10 @@ namespace tkEngine{
 			}
 #endif
 		}
-		/*!
-		*@brief	シェーダーリソースを取得。
-		*/
+		/// <summary>
+		/// シェーダーリソースの取得。
+		/// </summary>
+		/// <returns></returns>
 		CShaderResources& GetShaderResources()
 		{
 			return m_shaderResources;
@@ -257,57 +283,78 @@ namespace tkEngine{
 		*@details
 		* ゲーム層では使用しないように。
 		*/
+		/// <summary>
+		/// SpriteBatchの取得
+		/// </summary>
+		/// <remarks>
+		/// エンジン内部で使用されます。ゲーム層では使用しないように。
+		/// </remarks>
+		/// <returns></returns>
 		DirectX::SpriteBatch* GetSpriteBatch() const
 		{
 			return m_spriteBatch.get();
 		}
-		/*!
-		*@brief	SpriteFontの取得。
-		*@details
-		* ゲーム層では使用しないように。
-		*/
+		/// <summary>
+		/// SpriteFontの取得。
+		/// </summary>
+		/// <remarks>
+		/// エンジン内部で使用されます。ゲーム層では使用しないように。
+		/// </remarks>
+		/// <returns></returns>
 		DirectX::SpriteFont* GetSpriteFont() const
 		{
 			return m_spriteFont.get();
 		}
-		/*!
-		*@brief	ポストエフェクトの処理が完了したときに呼ばれる処理。
-		*@details
-		* ゲーム層では使用しないように。
-		*/
+		/// <summary>
+		/// ポストエフェクトの処理が完了したときに呼ばれる処理。
+		/// </summary>
+		/// <remarks>
+		/// エンジン内部で使用されます。ゲーム層では使用しないように。
+		/// </remarks>
+		/// <param name="rc">レンダリングコンテキスト</param>
 		void EndPostEffect(CRenderContext& rc);
-		/*!
-		*@brief	DirectXモデルリソースの取得。
-		*/
+		
+		/// <summary>
+		/// DirectXモデルリソースの取得
+		/// </summary>
+		/// <returns></returns>
 		CDirectXModelResource& GetDirectXModelResource()
 		{
 			return m_directXModelResource;
 		}
-		/*!
-		*@brief	ディファードシェーディング。
-		*/
+		/// <summary>
+		/// ディファードシェーディングの実行。
+		/// </summary>
+		/// <param name="rc"></param>
 		void DefferdShading(CRenderContext& rc);
 	private:
-		/*!
-		 *@brief	D3Dデバイスとスワップチェインの初期化。
-		 */
+		/// <summary>
+		/// D3Dデバイスとスワップチェインの初期化。
+		/// </summary>
+		/// <param name="hwnd">ウィンドウハンドル</param>
+		/// <param name="initParam">初期化パラメータ</param>
+		/// <returns>trueが返ってきたら初期化成功</returns>
 		bool InitD3DDeviceAndSwapChain(HWND hwnd, const SInitParam& initParam);
-		/*!
-		 *@brief	バックバッファの初期化。
-		 */
+
+		/// <summary>
+		/// バックバッファの初期化。
+		/// </summary>
+		/// <returns>trueが返ってきたら初期化成功</returns>
 		bool InitBackBuffer();
-		/*!
-		 *@brief	メインレンダリングターゲットの初期化。
-		 */
+		/// <summary>
+		/// メインレンダリングターゲットの初期化。
+		/// </summary>
+		/// <returns></returns>
 		bool InitMainRenderTarget();
-		/*!
-		*@brief	ディファードシェーディングの初期化。
-		*/
+	
+		/// <summary>
+		/// ディファードシェーディングの初期化。
+		/// </summary>
 		void InitDefferdShading();
 	private:
-		/*!
-		*@brief	これのメンバを変更したら、defferdShading.fxのPSDefferdCbも変更するように！！！
-		*/
+		/// <summary>
+		/// この構造体のメンバを変更したら、defferdShading.fxのPSDefferdCbも変更するように！！！
+		/// </summary>
 		struct PSDefferdCb {
 			CMatrix mViewProjInv;		//!<ビュープロジェクション行列の逆行列。
 		};

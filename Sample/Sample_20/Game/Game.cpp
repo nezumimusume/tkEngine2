@@ -15,6 +15,7 @@ bool Game::Start()
 	//カメラを設定。
 	MainCamera().SetTarget({ 0.0f, 70.0f, 0.0f });
 	MainCamera().SetPosition({ 0.0f, 70.0f, 200.0f });
+	MainCamera().SetFar(10000.0f);
 	MainCamera().Update();
 
 	//スキンモデルレンダラーを作成。
@@ -25,6 +26,7 @@ bool Game::Start()
 
 void Game::Update()
 {
+	return;
 	if (m_rotateMode == 0) {
 		//自動回転モード。
 		//まず、Y軸周りに1度回転するクォータニオンを計算する。
