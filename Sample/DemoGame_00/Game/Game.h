@@ -93,7 +93,7 @@ private:
 	bool m_isGameClear = false;
 	prefab::CSoundSource* m_bgmSource = nullptr;		//!<BGM
 	CFont m_fontTest;
-	float m_timer = 30.0f;								//!<タイマー
+	float m_timer = 90.0f;								//!<タイマー
 	std::unique_ptr<DirectX::SpriteFont> m_timerFont;	//!<タイマー用のフォント。
 	CVector2 m_scoreFontPosition;
 	float m_scoreFontScale = 0.8f;

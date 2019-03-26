@@ -15,26 +15,35 @@
 #include "tkEngine/resource/tkDirectXModelResource.h"
 
 namespace tkEngine{
-	
-	 
-	/*!
-	*@brief	描画エンジン。
-	*@details
-	* 2018/08/03 release notes
-	* 	tkEngineの描画エンジンはTBDR(Tile Based Deferred Rendering)で実装されている。
-	* 	シーンの描画手順は下記となる。
-	*  	.1 プリレンダリング
-	*     		1-1 ShadowMapの作成
-	*	   		1-2 タイルごとの LightCulling
-	*			1-3 G-Bufferの作成。
-	*  	.2 ディファードシェーディング
-	*   .3 Forwardレンダリング
-	*			特殊なシェーディングを行うマテリアル、半透明マテリアルの描画はここで行う。
-	*  	.4 ポストエフェクト
-	*	.5 HUDなど、ポストをかけたくない描画を行う。	
-	* TBDRの採用により、大量の動的光源を高速に扱うことができる。
-	* 動的光源は最大で1024個設置することができる。エンジンをカスタマイズすることで拡張も可能。
-	*/
+	/// <summary>
+	/// 描画エンジン
+	/// </summary>
+	/// <remarks>
+	/// 2019/03/26 release notes
+	/// tkEngineの描画エンジンはTBDR(Tile Based Deferred Rendering)で実装されている。
+	/// TBDRの採用により、大量の動的光源を高速に扱うことができる。
+	/// 動的光源は最大で1024個設置することができる。エンジンをカスタマイズすることで拡張も可能。
+	/// シーンの描画手順は下記となる。
+	/// .1　プリレンダリング
+	///			1-1  全方位シャドウマップの生成。
+	///			1-2  指向性ライトによるシャドウマップの生成。
+	///			1-3  G-Bufferの作成。
+	///			1-4  ライトカリング。
+	/// .2　ディファードシェーディング
+	///			1-4で作成されたシャドウマップ、G-Buffer、ライトカリング情報を元に
+	///			PBRベースのシェーディングを行う。
+	/// .3  フォワードレンダリング
+	///			半透明や特殊なシェーディングを行うマテリアルの描画を行う。
+	/// .4  ポストエフェクト
+	///			1-1  トーンマップ。
+	///			1-2  Effekseerを利用したエフェクト描画。
+	///			1-3  Temporal Screen Space Reflection。
+	///			1-4  川瀬式ブルーム。
+	///			1-5  DOF
+	///			1-5  FXAA。
+	///			1-6  ディザリング。
+	/// .5  ポストレンダリング。HUDなどポストエフェクトをかけたくない描画を行う。
+	/// </remarks>
 	class CGraphicsEngine : Noncopyable {
 	public:
 		CGraphicsEngine();
