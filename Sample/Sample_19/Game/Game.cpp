@@ -26,7 +26,7 @@ bool Game::Start()
 	//ポイントライトを作成。
 	m_pointLig = NewGO<prefab::CPointLight>(0);
 	m_pointLig->SetPosition({ -727.52f, 500.0f, 29.45f });
-	m_pointLig->SetColor({ 100.0f, 0.0f, 0.0f, 1.0f });
+	m_pointLig->SetColor({ 100.0f, 0.0f, 0.0f });
 	m_pointLig->SetAttn({ 800.f, 10.0f, 0.0f });
 	m_pointLig->SetActiveFlag(false); //非アクティブにしておく。
 	return true;
