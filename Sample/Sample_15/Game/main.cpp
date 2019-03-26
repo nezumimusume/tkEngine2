@@ -29,7 +29,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.shadowRenderConfig.offsetTexelWorld = 0.000005f;
 	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::eSSSS_PCF;
 
-	GraphicsEngine().GetShadowMap().SetLightDirection({ 0.707f, -0.707f, 0.0f });
+	shadow::DirectionShadowMap().SetLightDirection({ 0.707f, -0.707f, 0.0f });
 	//アンチ
 	initParam.graphicsConfing.aaConfig.isEnable = true;
 	//Bloom
@@ -37,9 +37,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = true;
 
-	GraphicsEngine().GetShadowMap().SetFar(1000.0f);
-	GraphicsEngine().GetShadowMap().SetNear(50.0f);
-
+	
 	//エンジンを初期化。
 	if (Engine().Init(initParam) == true) {
 		NewGO<Game>(0);
