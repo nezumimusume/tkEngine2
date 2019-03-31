@@ -131,7 +131,7 @@
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x64;$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include;$(ProjectDir)/../tkEngine/Photon</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;$(ProjectDir)/x64/Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
@@ -152,14 +152,14 @@
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x64;$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include;$(ProjectDir)/../tkEngine/Photon</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;$(ProjectDir)/../tkEngine/DirectXTK/Bin/Desktop_2015_Win10/x64/Release;$(ProjectDir)/x64/Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Preview|X64'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x64;$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Windows Kits\8.1\Include\um;$(ProjectDir);$(ProjectDir)/../;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/../tkEngine/bulletPhysics/src;$(ProjectDir)/Src;$(ProjectDir)/../tkEngine/EffekseerRuntime130/src/include;$(ProjectDir)/../tkEngine/Photon</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Windows Kits\8.1\Lib\winv6.3\um\x64;$(ProjectDir)/x64/Preview;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|X64'">
@@ -363,13 +363,13 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <AdditionalIncludeDirectories>..\..\..\DXUT11\Core;..\..\..\DXUT11\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;BT_NO_SIMD_OPERATOR_OVERLOADS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;BT_NO_SIMD_OPERATOR_OVERLOADS;TK_MASTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;dxguid.lib;winmm.lib;comctl32.lib;tkEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;tkEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LargeAddressAware>true</LargeAddressAware>
@@ -497,14 +497,14 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <AdditionalIncludeDirectories>..\..\..\DXUT11\Core;..\..\..\DXUT11\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;BT_NO_SIMD_OPERATOR_OVERLOADS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;BT_NO_SIMD_OPERATOR_OVERLOADS;TK_MASTER</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;xaudio2.lib;xinput.lib;d3dx11.lib;d3dx9.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;DirectXTK.lib;tkEngine.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;comctl32.lib;tkEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

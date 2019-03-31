@@ -14,11 +14,11 @@ bool Background::Start()
 	m_skinModelRender->Init(L"modelData/background.cmo");
 	m_skinModelRender->SetShadowReceiverFlag(true);
 	//静的物理オブジェクトを作成。
-	m_physicsStaticObject.CreateMeshObject(
-		m_skinModelRender, 
+	m_physicsStaticObject.CreateMesh(
 		CVector3::Zero, 
 		CQuaternion::Identity, 
-		CVector3::One
+		CVector3::One,
+		m_skinModelRender
 	);
 	return true;
 }
