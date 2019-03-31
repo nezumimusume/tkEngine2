@@ -167,6 +167,28 @@ float CalcShadow( float3 worldPos, float zInView  )
 	}
 	return shadow;
 }
+float CalcOminiDirectionShadow( float3 worldPos )
+{
+
+	for( int i = 0; i < 6; i++ ){
+		float4 posInLVP = mul(lightViewProjMatrix[i], float4(worldPos, 1.0f) );
+		posInLVP.xyz /= posInLVP.w;
+		if( posInLVP.x > -1.0f && posInLVP.x < 1.0f
+		    && posInLVP.y > -1.0f && posInLVP.y < 1.0f
+		    && posInLVP.z > 0.0f && posInLVP.z < 1.0f 
+		){
+			float z = posInLVP.z;
+			float3 lightDir = worldPos - lightPosition;
+			lightDir = normalize( lightDir );
+			float zInShadowMap = ominiDirectionShadowMap.Sample(Sampler, lightDir);
+			if( zInShadowMap + shadowBias < z ){
+				return 1.0f * ( 1.0f - min( 1.0f, posInLVP.w / distanceAffectedByLight) );
+			}
+			return 0.0f;
+		}
+	}
+	return 0.0f;
+}
 /*!
  *@brief	法線を計算。
  */
@@ -394,10 +416,12 @@ PSOutput_RenderGBuffer PSMain_RenderGBuffer( PSInput In )
 	if(isPCFShadowMap){
 		//PCFをかける。
 		Out.shadow = CalcSoftShadow(In.Pos, In.posInView.z);
+		
 	}else{
 		//何もしない。
 		Out.shadow = CalcShadow(In.Pos, In.posInView.z);
 	}
+	Out.shadow = min( 1.0f, Out.shadow + CalcOminiDirectionShadow( In.Pos ) );
 	//射影空間での深度値をxに。
 	Out.depth.x = In.posInProj.z / In.posInProj.w;
 	//カメラ空間での深度値をyに。

@@ -56,3 +56,13 @@ cbuffer ShadowCb : register( b3 ){
 cbuffer GBufferCb : register( b4 ){
 	int isPCFShadowMap;
 };
+
+/*!
+ *@brief	全方位車シャドウ用の定数バッファ。
+ */
+cbuffer OminiDirectionShadowCb : register( b5 ){
+	float4x4 lightViewProjMatrix[6] : packoffset(c0);
+	float3 lightPosition			: packoffset(c24);
+	float  distanceAffectedByLight  : packoffset(c24.w);
+	float  shadowBias				: packoffset(c25);
+};

@@ -7,6 +7,8 @@
 
 
 namespace tkEngine{
+	
+
 	class CMatrix;
 	
 	class CVector2 {
@@ -691,6 +693,18 @@ namespace tkEngine{
 		qRet.Multiply(q2, q1);
 		return qRet;
 	}
+
+	const CVector3 cv3Zero	= CVector3::Zero;
+	const CVector3 cv3Right = CVector3::Right;
+	const CVector3 cv3Left  = CVector3::Left;
+	const CVector3 cv3Up    = CVector3::Up;
+	const CVector3 cv3Down  = CVector3::Down;
+	const CVector3 cv3Front = CVector3::Front;
+	const CVector3 cv3Back  = CVector3::Back;
+	const CVector3 cv3AxisX = CVector3::AxisX;
+	const CVector3 cv3AxisY = CVector3::AxisY;
+	const CVector3 cv3AxisZ = CVector3::AxisZ;
+	const CVector3 cv3One   = CVector3::One;
 }
 
 
