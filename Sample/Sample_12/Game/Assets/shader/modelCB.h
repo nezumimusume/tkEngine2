@@ -37,14 +37,17 @@ cbuffer MaterialParamCb : register(b2){
 
 };
 
-#define NUM_SHADOW_MAP 3
+//注意。シャドウマップの枚数を増やしたら、ShadowCbのメンバを割り当てているレジスタの番号を再調整する必要がある。
+#define NUM_SHADOW_MAP 3 
 /*!
  * @brief	シャドウマップ用の定数バッファ。
  */
 cbuffer ShadowCb : register( b3 ){
-	float4x4 mLVP[NUM_SHADOW_MAP];		//!<ライトビュープロジェクション行列。
-	float4 texOffset[NUM_SHADOW_MAP];	//!<シャドウマップのサイズ。
-	float4 depthOffset;
+	float4x4 mLVP[NUM_SHADOW_MAP];		//ライトビュープロジェクション行列。
+	float4 texOffset[NUM_SHADOW_MAP];	//シャドウマップのサイズ。
+	float4 depthOffset;					//深度オフセット。シャドウアクネを回避するためのバイアス。
+										//値が大きいほど影が落ちにくくなります。
+	float4  shadowAreaDepthInViewSpace;	//カメラ空間での影を落とすエリアの深度テーブル。
 };
 
 /*!
@@ -52,4 +55,14 @@ cbuffer ShadowCb : register( b3 ){
  */
 cbuffer GBufferCb : register( b4 ){
 	int isPCFShadowMap;
+};
+
+/*!
+ *@brief	全方位車シャドウ用の定数バッファ。
+ */
+cbuffer OminiDirectionShadowCb : register( b5 ){
+	float4x4 lightViewProjMatrix[6] : packoffset(c0);
+	float3 lightPosition			: packoffset(c24);
+	float  distanceAffectedByLight  : packoffset(c24.w);
+	float  shadowBias				: packoffset(c25);
 };

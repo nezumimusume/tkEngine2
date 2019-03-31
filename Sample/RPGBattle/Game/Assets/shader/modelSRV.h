@@ -28,4 +28,4 @@ Texture2D<float4> emissionColorTexture : register(t11);	//エミッションカラー。
 TextureCube<float4> ominiDirectionShadowMap : register(t12);	//全方位シャドウマップ。
 
 sampler Sampler : register(s0);
-
+sampler shadowMaSampler : register(s3);
