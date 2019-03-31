@@ -47,6 +47,7 @@ namespace tkEngine{
 		void SetLightDirection(const CVector3 lightDir)
 		{
 			m_lightDirection = lightDir;
+			m_lightDirection.Normalize();
 		}
 		/*!
 		 *@brief	ƒ‰ƒCƒg‚Ì‚‚³‚ğİ’èB
