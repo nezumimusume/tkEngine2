@@ -45,6 +45,31 @@ namespace tkEngine{
 		/// 描画処理。
 		/// </summary>
 		void RenderToShadowMap(CRenderContext& rc);
+		/// <summary>
+		/// 影生成処理を無効にする。
+		/// </summary>
+		void Disable()
+		{
+			m_isEnable = false;
+		}
+		/// <summary>
+		/// 影生成処理を有効にする。
+		/// </summary>
+		void Enable()
+		{
+			m_isEnable = true;
+		}
+	protected:
+		/// <summary>
+		/// 影生成が有効か判定する。
+		/// </summary>
+		/// <remark>
+		/// 
+		/// </remark>
+		bool IsEnable() const
+		{
+			return m_isInited && m_isEnable;
+		}
 	private:
 		/// <summary>
 		/// 派生クラスで実装する描画処理。
@@ -52,6 +77,7 @@ namespace tkEngine{
 		virtual void RenderToShadowMapImp(CRenderContext& rc) = 0;
 	protected:
 		bool m_isEnable = false;
+		bool m_isInited = false;
 		std::vector<IShadowCaster*> m_shadowCaster;			//!<シャドウキャスター。
 
 	};

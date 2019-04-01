@@ -30,9 +30,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = true;
 
-	shadow::DirectionShadowMap().SetFar(1000.0f);
-	shadow::DirectionShadowMap().SetNear(50.0f);
-
 	//ƒGƒ“ƒWƒ“‚ğ‰Šú‰»B
 	if (Engine().Init(initParam) == true) {
 		NewGO<Game>(0);

@@ -11,7 +11,7 @@
 namespace tkEngine {
 	void IShadowMap::RenderToShadowMap(CRenderContext& rc)
 	{
-		if (m_isEnable == false) {
+		if (IsEnable() == false) {
 			return;
 		}
 		//シャドウマップへの書き込み処理を呼び出す。

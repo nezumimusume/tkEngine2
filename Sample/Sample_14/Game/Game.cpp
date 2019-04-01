@@ -21,9 +21,9 @@ bool Game::Start()
 	//ライトの方向を設定。
 	m_lig->SetDirection(m_lightDir);
 	//ライトの色を設定。
-	m_lig->SetColor({ 300.5f, 300.5f, 300.5f, 1.0f });
+	m_lig->SetColor({ 3.5f, 3.5f, 3.5f, 1.0f });
 
-	GraphicsEngine().GetShadowMap().SetLightDirection({ 0.0f, -1.0f, 0.0f });
+	shadow::DirectionShadowMap().SetLightDirection({ 1, -1, 1 });
 
 	dbg::SetDrawPhysicsCollisionEnable();
 	//GameCameraのインスタンスを生成する。

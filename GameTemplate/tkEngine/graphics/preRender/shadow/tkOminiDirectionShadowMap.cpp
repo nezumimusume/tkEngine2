@@ -101,6 +101,10 @@ namespace tkEngine {
 	}
 	bool COminiDirectionShadowMap::Init(const SOminiShadowRenderConfig& config)
 	{
+		if (config.isEnable == false) {
+			return true;
+		}
+
 		auto pD3DDevice = GraphicsEngine().GetD3DDevice();
 		
 		//シャドウマップ描画用のテクスチャを作成する。
@@ -129,7 +133,8 @@ namespace tkEngine {
 		//ＧＰＵ側の定数バッファを作成する。
 		m_ominiDirectionShadowCbGPU.Create(nullptr, sizeof(SOminiDirectionShadowCb));
 
-		m_isEnable = config.isEnable;
+		m_isInited = config.isEnable;
+		m_isEnable = true;
 		return true;
 	}
 
@@ -144,7 +149,7 @@ namespace tkEngine {
 
 		BeginGPUEvent(L"enRenderStep_COminiDirectionShadowMap::RenderToShadowMap");
 
-		if (m_isEnable == false) {
+		if (IsEnable() == false) {
 			return;
 		}
 		static const CVector3 cameraDirectionTbl[NUM_TEXTURE] = {
@@ -216,7 +221,7 @@ namespace tkEngine {
 	}
 	void COminiDirectionShadowMap::SendShadowReceiveParamToGPU(CRenderContext& rc)
 	{
-		if (m_isEnable == false) {
+		if (IsEnable() == false) {
 			return;
 		}
 		rc.UpdateSubresource(m_ominiDirectionShadowCbGPU, &m_ominiDirectionShadowCbCPU);

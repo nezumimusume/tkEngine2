@@ -20,17 +20,19 @@ namespace tkEngine{
 	bool CDirectionShadowMap::Init(const SShadowRenderConfig& config)
 	{
 		Release();
+		if (config.isEnable == false) {
+			return true;
+		}
 		m_lightHeight = config.lightHeight;
-		m_isEnable = config.isEnable;
-		
+		m_isInited = config.isEnable;
+		m_isEnable = true;
+
 		m_softShadowLevel = config.softShadowLevel;
 
 		m_shadowCbEntity.depthOffset[0] = config.depthOffset[0];
 		m_shadowCbEntity.depthOffset[1] = config.depthOffset[1];
 		m_shadowCbEntity.depthOffset[2] = config.depthOffset[2];
-		if (m_isEnable == false) {
-			return true;
-		}
+		
 		int wh[][2] = {
 			{ config.shadowMapWidth, config.shadowMapHeight},
 			{ config.shadowMapWidth, config.shadowMapHeight >> 1},
@@ -87,7 +89,7 @@ namespace tkEngine{
 	}
 	void CDirectionShadowMap::Update()
 	{
-		if (!m_isEnable) {
+		if (IsEnable() == false) {
 			return;
 		}
 		//シーンをレンダリング使用としているカメラを使って、ライトカメラの回転を求める。
@@ -212,7 +214,7 @@ namespace tkEngine{
 	void CDirectionShadowMap::RenderToShadowMapImp(CRenderContext& rc)
 	{
 		rc.SetRenderStep(enRenderStep_RenderToShadowMap);
-		if (!m_isEnable) {
+		if (IsEnable() == false) {
 			return;
 		}
 		BeginGPUEvent(L"enRenderStep_CDirectionShadowMap::RenderToShadowMap");
