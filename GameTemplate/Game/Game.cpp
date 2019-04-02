@@ -2,7 +2,11 @@
 #include "Game.h"
 #include "tkEngine/light/tkDirectionLight.h"
 
-Game::Game()
+Game::Game() :
+	m_lobbyManager( 
+		L"41b72c35-96cd-4cab-ab81-cc1313e36213",
+		L"tkEngine_Sample_22",
+		L"1.0f")
 {
 }
 
@@ -26,4 +30,5 @@ bool Game::Start()
 
 void Game::Update()
 {
+	m_lobbyManager.Update();
 }
