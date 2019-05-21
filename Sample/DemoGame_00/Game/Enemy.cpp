@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Game.h"
+
 Enemy::Enemy() :
 	m_pathMoveLoop(this, m_movePath)
 {
@@ -11,10 +12,16 @@ Enemy::Enemy() :
 Enemy::~Enemy()
 {
 	DeleteGO(m_modelRender);
+	DeleteGO(m_spotLig);
 }
 bool Enemy::Start()
 {
 	
+	//スポットライトを作成。
+	m_spotLig = NewGO < prefab::CSpotLight>(0);
+	m_spotLig->SetColor({ 100, 100, 100 });
+	m_spotLig->SetAttn({ 1000.0f, 5.0f, 0.0f });
+	m_spotLig->EnableSpotLight();
 
 	m_animClip[enAnimationClip_idle].Load(L"animData/enemy/idle.tka");
 	m_animClip[enAnimationClip_idle].SetLoopFlag(true);
@@ -74,4 +81,10 @@ void Enemy::Update()
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
 	m_forward.z = mRot.m[2][2];
+
+	CVector3 pos = m_position;
+	pos.y += 100.0f;
+	m_spotLig->SetPosition(pos);
+	m_spotLig->SetSpotLightDirection(m_forward);
+	m_spotLig->SetSpotLightAngle(CMath::DegToRad(30.0f));
 }
