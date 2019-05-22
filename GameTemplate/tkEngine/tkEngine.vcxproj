@@ -891,6 +891,7 @@
     <ClInclude Include="light\tkLightBase.h" />
     <ClInclude Include="light\tkLightManager.h" />
     <ClInclude Include="light\tkPointLight.h" />
+    <ClInclude Include="light\tkSpotLight.h" />
     <ClInclude Include="math\tkAabb.h" />
     <ClInclude Include="math\tkBox.h" />
     <ClInclude Include="math\tkMath.h" />
@@ -999,6 +1000,7 @@
     <ClCompile Include="light\tkLightBase.cpp" />
     <ClCompile Include="light\tkLightManager.cpp" />
     <ClCompile Include="light\tkPointLight.cpp" />
+    <ClCompile Include="light\tkSpotLight.cpp" />
     <ClCompile Include="math\tkAabb.cpp" />
     <ClCompile Include="math\tkBox.cpp" />
     <ClCompile Include="math\tkMath.cpp" />
