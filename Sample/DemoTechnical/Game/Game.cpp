@@ -103,4 +103,11 @@ void Game::Update()
 	qAddRot.SetRotation(CVector3::AxisY, 4.0f * dt);
 	m_starRot *= qAddRot;
 	m_starModelRender->SetRotation(m_starRot);
+	auto pos = m_charaPos;
+	pos.y += 50.0f;
+	MainCamera().SetTarget(pos);
+	auto target = pos;
+	target.z += 300.0f;
+	MainCamera().SetPosition(target);
+	MainCamera().Update();
 }

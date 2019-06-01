@@ -9,7 +9,7 @@ namespace tkEngine{
 	namespace prefab {
 		class CDirectionLight;
 		class CPointLight;
-		class CSpotLight;
+	//	class CSpotLight;
 		class CLightBase;
 	}
 	/*!
@@ -109,7 +109,7 @@ namespace tkEngine{
 		std::list<prefab::CDirectionLight*>	m_directionLights;		//!<平行光源のリスト。
 		CStructuredBuffer					m_directionLightSB;		//!<平行光源のリストのストラクチャーバッファ。
 		std::list<prefab::CPointLight*>		m_pointLights;			//!<ポイントライトのリスト。
-		std::list<prefab::CSpotLight*>		m_spotLights;			//スポットライトのリスト。
+	//	std::list<prefab::CSpotLight*>		m_spotLights;			//スポットライトのリスト。
 		CStructuredBuffer					m_pointLightsSB;		//!<ポイントライトのリストのストラクチャーバッファ。
 		CStructuredBuffer					m_pointLightsInTileSB;	//!<各タイルに含まれるポイントライトのリストのストラクチャーバッファ。
 

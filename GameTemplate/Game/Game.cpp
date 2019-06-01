@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "tkEngine/light/tkDirectionLight.h"
 
+CVector3 cameraPos = { 0.0f, 70.0f, 200.0f };
+CVector3 cameraTarget;
 Game::Game()
 {
 }
@@ -26,4 +28,17 @@ bool Game::Start()
 
 void Game::Update()
 {
+	float speed = 1.0f;
+	if (Pad(0).IsPress(enButtonB)) {
+		speed *= 10.0f;
+	}
+	if (Pad(0).IsPress(enButtonUp)) {
+		cameraPos.z -= speed;
+	}
+	if (Pad(0).IsPress(enButtonDown)) {
+		cameraPos.z += speed;
+	}
+
+	MainCamera().SetPosition(cameraPos);
+	MainCamera().Update();
 }
