@@ -14,9 +14,7 @@ bool Background::Start()
 	m_skinModelRender->Init(L"modelData/background.cmo");
 	
 	//静的物理オブジェクトを作成。
-	m_physicsStaticObject.CreateMesh(
-		CVector3::Zero, CQuaternion::Identity, CVector3::One, m_skinModelRender
-	);
+	m_physicsStaticObject.CreateMesh(CVector3::Zero, CQuaternion::Identity, CVector3::One, m_skinModelRender);
 	return true;
 }
 

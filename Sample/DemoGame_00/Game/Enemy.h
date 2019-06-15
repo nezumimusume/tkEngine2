@@ -3,6 +3,7 @@
 #include "Path.h"
 #include "EnemyPathMoveLoop.h"
 #include "tkEngine/character/tkCharacterController.h"
+#include "tkEngine/light/tkPointLight.h"
 
 class Player;
 class Game;
@@ -86,7 +87,7 @@ private:
 	 */
 	void SearchPlayer();
 private:
-	
+	prefab::CSpotLight* m_spotLig = nullptr;			//!<スポットライト。
 	prefab::CSkinModelRender* m_modelRender = nullptr;	//!<モデルレンダラー。
 	CAnimationClip m_animClip[enAnimationClip_num];	//!<アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero;			//!<座標。

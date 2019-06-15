@@ -101,6 +101,14 @@ float3 CalcPointLightInner(
 			float	litRate = len / light.attn.x;
 			float	attn = max(1.0 - litRate * litRate, 0.0);
 			pointLightColor *= pow(attn, light.attn.y);
+			if( light.hasDirection == 1){
+				//こいつはスポットライト
+				//ライトの照射方向との内積を計算する。
+				t = acos( saturate(dot(light.directionAndAngle.xyz, lightDir)));
+				t = abs(t);
+				//超適当あっはっは。
+				pointLightColor *= step( t, light.directionAndAngle.w );
+			}
 			lig += pointLightColor;
 		}
 		

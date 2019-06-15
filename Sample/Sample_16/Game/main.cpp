@@ -31,7 +31,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//Dithering
 	initParam.graphicsConfing.ditheringConfig.isEnable = true;
 
-	
+
 	//ƒGƒ“ƒWƒ“‚ğ‰Šú‰»B
 	if (Engine().Init(initParam) == true) {
 		NewGO<Game>(0);

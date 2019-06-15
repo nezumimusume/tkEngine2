@@ -12,10 +12,14 @@
 #define MAX_LIGHT			1024
 //ポイントライト。
 struct SPointLight {
-	float3	position;		//位置。
-	float3	positionInView;	//カメラ座標系でのポイントライトの位置。
-	float4	color;			//カラー。
-	float4  attn;			//減衰定数。(xを小さくするとライトの明るさが増す、yとzが大きくなるとライトが遠くまで届くようになる。)
+	float3	position;			//位置。
+	float3	positionInView;		//カメラ座標系でのポイントライトの位置。
+	float4	color;				//カラー。
+	float4  attn;				//減衰定数。(xを小さくするとライトの明るさが増す、yとzが大きくなるとライトが遠くまで届くようになる。)
+	float4  directionAndAngle;	//指向性ライトの方向と照射角度。
+								//xyzに方向、wに角度(ラジアン単位)が入ります。
+								//hasDirectionが1の時有効になります。
+	unsigned int hasDirection;	//!<このポイントライトが指向性ライトかどうかのフラグ。(スポットライトということ。)
 	unsigned int lightingMaterialIDGroup;
 };
 

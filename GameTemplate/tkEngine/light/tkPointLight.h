@@ -39,8 +39,42 @@ namespace tkEngine{
 			{
 				return light;
 			}
+			/// <summary>
+			/// このライトをスポットライトにする。
+			/// </summary>
+			void EnableSpotLight()
+			{
+				light.hasDirection = 1;
+			}
+			/// <summary>
+			/// スポットライトを無効にする。
+			/// </summary>
+			void DisableSpotLight()
+			{
+				light.hasDirection = 0;
+			}
+			/// <summary>
+			/// スポットライトの照射方向。
+			/// </summary>
+			/// <param name="dir">方向</param>
+			void SetSpotLightDirection(const CVector3& dir)
+			{
+				light.directionAndAngle.x = dir.x;
+				light.directionAndAngle.y = dir.y;
+				light.directionAndAngle.z = dir.z;
+			}
+			/// <summary>
+			/// スポットライトの照射角度。
+			/// </summary>
+			/// <param name="angle">照射角度(単位：ラジアン)</param>
+			void SetSpotLightAngle( float angle )
+			{
+				light.directionAndAngle.w = angle;
+			}
 		private:
 			SPointLight	light;
 		};
+
+		using CSpotLight = CPointLight;
 	}
 }

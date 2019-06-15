@@ -101,6 +101,10 @@ namespace prefab {
 		{
 			m_color = color;
 		}
+		void SetColor(const CVector4& color)
+		{
+			color.CopyTo(m_color);
+		}
 		/*!
 		 *@brief	回転を設定。
 		 *@param[in]	rotation	回転角度。単位はラジアン。
