@@ -30,8 +30,12 @@ void Game::Update()
 	m_position.y += Pad(0).GetLStickYF() * 10.0f;
 	m_position.z = 0.0f;	//2D‹óŠÔ‚Å•`‰æ‚·‚é‚È‚çz‚Í0‚Å‚¢‚¢B
 
+	m_scale.x += Pad(0).GetRStickXF() * 0.1f;
+	m_scale.y += Pad(0).GetRStickYF() * 0.1f;
+
 	//À•W‚Æ‰ñ“]‚ðÝ’èB
 	m_spriteRender->SetPosition(m_position);
 	m_spriteRender->SetRotation(m_rotation);
+	m_spriteRender->SetScale(m_scale);
 }
 

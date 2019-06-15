@@ -668,7 +668,9 @@
     <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\mikyan.jpg" />
+    <ImageContentTask Include="Assets\sprite\mikyan.jpg">
+      <GeneratePremultipliedAlpha Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GeneratePremultipliedAlpha>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\defferdShading.fx">

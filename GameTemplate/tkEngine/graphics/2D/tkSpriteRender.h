@@ -40,6 +40,20 @@ namespace tkEngine {
 				m_rotation = rot;
 			}
 			/*!
+			* @brief	Šg‘å—¦‚ğİ’è‚·‚éB
+			*/
+			void SetScale(const CVector3& scale)
+			{
+				m_scale = scale;
+			}
+			/*!
+			* @brief	Šg‘å—¦‚ğæ“¾B
+			*/
+			const CVector3& GetScale() const
+			{
+				return m_scale;
+			}
+			/*!
 			* @brief	‰ñ“]‚ğæ“¾B
 			*/
 			const CQuaternion& GetRotation() const
