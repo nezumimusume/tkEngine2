@@ -111,6 +111,14 @@ namespace tkEngine{
 		{
 			return m_waveFileBank;
 		}
+		/// <summary>
+		/// サウンドエンジンが利用可能かどうか判定。
+		/// </summary>
+		/// <returns>trueが返ってきたら利用可能です。</returns>
+		bool IsAvailable() const
+		{
+			return m_isInited;
+		}
 	private:
 		IXAudio2* m_xAudio2 = nullptr;
 		IXAudio2MasteringVoice* m_masteringVoice = nullptr;

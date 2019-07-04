@@ -92,13 +92,16 @@ namespace tkEngine{
 		if (FAILED(hr = XAudio2Create(&m_xAudio2, flags)))
 		{
 			
-			TK_ASSERT(false, "Faild XAudio2Create");
+			TK_WARNING_MESSAGE_BOX( "Faild XAudio2Create");
+			MessageBox(nullptr, "オーディオデバイスの初期化に失敗しました。", "エラー。", MB_OK);
+			return;
 		}
 		//マスターボリュームの作成。
 		if (FAILED(hr = m_xAudio2->CreateMasteringVoice(&m_masteringVoice)))
 		{
 			Release();
-			TK_ASSERT(false, "Faild CreateMasteringVoice");
+			TK_WARNING_MESSAGE_BOX( "Faild CreateMasteringVoice");
+			MessageBox(nullptr, "オーディオデバイスの初期化に失敗しました。", "エラー。", MB_OK);
 			return;
 		}
 
@@ -113,7 +116,8 @@ namespace tkEngine{
 
 		if (FAILED(hr = XAudio2CreateReverb(&m_reverbEffect, flags))) {
 			Release();
-			TK_ASSERT(false, "Faild XAudio2CreateReverb");
+			TK_WARNING_MESSAGE_BOX( "Faild XAudio2CreateReverb");
+			MessageBox(nullptr, "オーディオデバイスの初期化に失敗しました。", "エラー。", MB_OK);
 			return;
 		}
 		//サブミックスボイスを作成。
@@ -125,7 +129,8 @@ namespace tkEngine{
 			NULL, &effectChain)))
 		{
 			Release();
-			TK_ASSERT(false, "Faild CreateSubmixVoice");
+			TK_WARNING_MESSAGE_BOX( "Faild CreateSubmixVoice");
+			MessageBox(nullptr, "オーディオデバイスの初期化に失敗しました。", "エラー。", MB_OK);
 			return ;
 		}
 		//デフォルトのFXパラメータを設定。

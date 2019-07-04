@@ -470,9 +470,7 @@
     <ClInclude Include="graphics\preRender\shadow\tkDirectionShadowMap.h">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClInclude>
-    <ClInclude Include="online\tkLobbyManager.h">
-      <Filter>Source Files\online</Filter>
-    </ClInclude>
+    <ClInclude Include="light\tkSpotLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -757,8 +755,8 @@
     <ClCompile Include="graphics\preRender\shadow\tkDirectionShadowMap.cpp">
       <Filter>Source Files\graphics\preRender\shadow</Filter>
     </ClCompile>
-    <ClCompile Include="online\tkLobbyManager.cpp">
-      <Filter>Source Files\online</Filter>
+    <ClCompile Include="light\tkSpotLight.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

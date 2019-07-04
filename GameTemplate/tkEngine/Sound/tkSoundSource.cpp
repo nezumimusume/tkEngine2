@@ -34,6 +34,10 @@ namespace tkEngine{
 		}
 		void CSoundSource::Init(wchar_t* filePath, bool is3DSound)
 		{
+			if (SoundEngine().IsAvailable() == false) {
+				//サウンドエンジンが利用不可。
+				return;
+			}
 			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, filePath);
 			if (!m_waveFile) {
@@ -65,6 +69,10 @@ namespace tkEngine{
 		}
 		void CSoundSource::Init(const WNameKey& nameKey, bool is3DSound)
 		{
+			if (SoundEngine().IsAvailable() == false) {
+				//サウンドエンジンが利用不可。
+				return;
+			}
 			m_isAvailable = false;
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, nameKey);
 			if (!m_waveFile) {
@@ -90,6 +98,10 @@ namespace tkEngine{
 
 		void CSoundSource::InitStreaming(wchar_t* filePath, bool is3DSound, unsigned int ringBufferSize, unsigned int bufferSize)
 		{
+			if (SoundEngine().IsAvailable() == false) {
+				//サウンドエンジンが利用不可。
+				return;
+			}
 			m_isAvailable = false;
 			//ストリーミングはCWaveFileの使いまわしはできない。
 			m_waveFile.reset(new CWaveFile);
@@ -113,8 +125,10 @@ namespace tkEngine{
 		}
 		void CSoundSource::Release()
 		{
-			if (m_isStreaming) {
-				m_waveFile->Release();
+			if (m_isStreaming ) {
+				if (m_waveFile) {
+					m_waveFile->Release();
+				}
 			}
 			if (m_sourceVoice != nullptr) {
 				m_sourceVoice->DestroyVoice();
@@ -155,7 +169,6 @@ namespace tkEngine{
 		void CSoundSource::Play(bool isLoop)
 		{
 			if (m_isAvailable == false) {
-				
 				return;
 			}
 			if (m_isPlaying) {
